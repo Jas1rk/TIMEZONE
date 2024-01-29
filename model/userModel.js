@@ -1,23 +1,38 @@
 const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
-    name:{
+    username:{
         type:String,
-        required:true
+        required:true,
+        minlength:2,
+        maxlength:50
     },
     email: {
         type:String,
-        required:true
+        required:true,
+        unique:true
+    },
+    mobile: {
+        type:Number,
+        required:true,
+    
     },
     password:{
         type:String,
         required:true
     },
-    
-    mobile: {
+    isBlocked:{
+        type:Boolean,
+        required:true,
+        default:false
+    },
+    isAdmin:{
         type:Number,
+        default:0,
         required:true
+
     }
-})
+    
+},{versionKey:false})
 
 const User =  mongoose.model('User',userSchema)
 

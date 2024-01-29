@@ -18,9 +18,10 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="assets/css/maind134.css?v=3.4">
     <style>
-        .row{
-            display:flex;
-            justify-content:center;
+        .row {
+           display: flex;
+           justify-content: center;
+
         }
     </style>
 </head>
@@ -60,11 +61,11 @@
                                         <li><a href="#"><img src="assets/imgs/theme/flag-ru.png" alt="">Pусский</a></li>
                                     </ul>
                                 </li>
-                                <li><i class="fi-rs-user"></i><a href="page-login-register.html">Log In / Sign Up</a></li>
+                                <li><i class="fi-rs-user"></i><a href="login">Log In</a></li>
                             </ul>
                         </div>
-                    </div> -->
-                <!-- </div>
+                    </div>
+                </div>
             </div>
         </div> -->
         <div class="header-bottom sticky-bar sticky-white-bg">
@@ -75,17 +76,17 @@
                     </div>
                     <div class="main-menu main-menu-grow main-menu-padding-1 main-menu-lh-1 main-menu-mrg-1 hm3-menu-padding d-none d-lg-block hover-boder">
                         <nav>
-                           <ul>
-                               <li> <a class="active" href="/">Home<i class="fi-rs-angle-down"></i></a></li>
+                            <ul>
+                                <li><a class="active" href="/">Home <i class="fi-rs-angle-down"></i></a>
                                     <!-- <ul class="sub-menu">
                                         <li><a href="index.html">Home 1</a></li>
                                         <li><a href="index-2.html">Home 2</a></li>
                                         <li><a href="index-3.html">Home 3</a></li>
                                         <li><a href="index-4.html">Home 4</a></li>
                                     </ul> -->
-                                
-                                <!-- <li><a href="shop-grid-right.html">Shop <i class="fi-rs-angle-down"></i></a>
-                                    <ul class="sub-menu">
+                                </li>
+                                <!-- <li><a href="shop-grid-right.html">Shop <i class="fi-rs-angle-down"></i></a> -->
+                                    <!-- <ul class="sub-menu">
                                         <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
                                         <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
                                         <li><a href="shop-list-right.html">Shop List – Right Sidebar</a></li>
@@ -103,8 +104,8 @@
                                         <li><a href="shop-cart.html">Shop – Cart</a></li>
                                         <li><a href="shop-checkout.html">Shop – Checkout</a></li>
                                         <li><a href="shop-compare.html">Shop – Compare</a></li>
-                                    </ul>
-                                </li> -->
+                                    </ul> -->
+                                </li>
                                 <!-- <li class="position-static"><a href="#">Mega <i class="fi-rs-angle-down"></i></a>
                                     <ul class="mega-menu">
                                         <li class="sub-mega-menu sub-mega-menu-width-22">
@@ -116,8 +117,8 @@
                                                 <li><a href="shop-product-right.html">Wedding Dresses</a></li>
                                                 <li><a href="shop-product-right.html">Prom Dresses</a></li>
                                                 <li><a href="shop-product-right.html">Cosplay Costumes</a></li>
-                                            </ul> -->
-                                        <!-- </li>
+                                            </ul>
+                                        </li>
                                         <li class="sub-mega-menu sub-mega-menu-width-22">
                                             <a class="menu-title" href="#">Men's Fashion</a>
                                             <ul>
@@ -128,8 +129,8 @@
                                                 <li><a href="shop-product-right.html">Sweatpants</a></li>
                                                 <li><a href="shop-product-right.html">Harem Pants</a></li>
                                             </ul>
-                                        </li> -->
-                                        <!-- <li class="sub-mega-menu sub-mega-menu-width-22">
+                                        </li>
+                                        <li class="sub-mega-menu sub-mega-menu-width-22">
                                             <a class="menu-title" href="#">Technology</a>
                                             <ul>
                                                 <li><a href="shop-product-right.html">Gaming Laptops</a></li>
@@ -138,8 +139,8 @@
                                                 <li><a href="shop-product-right.html">Laptop Accessories</a></li>
                                                 <li><a href="shop-product-right.html">Tablet Accessories</a></li>
                                             </ul>
-                                        </li> -->
-                                        <!-- <li class="sub-mega-menu sub-mega-menu-width-34">
+                                        </li>
+                                        <li class="sub-mega-menu sub-mega-menu-width-34">
                                             <div class="menu-banner-wrap">
                                                 <a href="shop-product-right.html"><img src="assets/imgs/banner/menu-banner.jpg" alt="Evara"></a>
                                                 <div class="menu-banner-content">
@@ -159,8 +160,8 @@
                                                     </h3>
                                                 </div>
                                             </div>
-                                        </li> -->
-                                 <!-- </ul>
+                                        </li>
+                                    </ul>
                                 </li> -->
                                 <!-- <li><a href="blog-category-grid.html">Blog <i class="fi-rs-angle-down"></i></a>
                                     <ul class="sub-menu">
@@ -449,80 +450,92 @@
         </div> -->
         <section class="pt-150 pb-150">
             <div class="container">
-                <div class="row justify-content-center">
+                <div class="row">
                     <div class="col-lg-10 m-auto">
                         <div class="row">
-                            <div class="col-lg-5">
-                                <div class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5 text-center">
+                           
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-6">
+                                <div class="login_wrap widget-taber-content p-30 background-white border-radius-5">
                                     <div class="padding_eight_all bg-white">
                                         <div class="heading_s1">
-                                            <h3 class="mb-30">Login</h3>
+                                            <h3 class="mb-30">Recover your Password</h3>
                                         </div>
-                                        <form method="post" onsubmit="return validateUserInput(event)">
+                                        <!-- <p class="mb-50 font-sm">
+                                            Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy
+                                        </p> -->
+                                        <form method="post" action="">
+                                            <!-- <div class="form-group">
+                                                <input type="text" required="" name="username" placeholder="Username">
+                                            </div> -->
                                             <div class="form-group">
-                                                <input type="text"  id="email" name="email" placeholder="Your Email">
+                                                <input type="text" required="" name="email" placeholder="Email">
+                                            </div>
+                                            <!-- <div class="form-group">
+                                                <input type="number" required="" name="mobile" placeholder="Mobile">
+                                            </div> -->
+                                            <!-- <div class="form-group">
+                                                <input type="number" required="" name="otp" placeholder="Enter 4 Digital Code">
+                                            </div>
+         -->
+                                           
+                                            <!-- <div class="form-group">
+                                                <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">Verify</button>
+                                               
+                                            </div> -->
+                                            <div class="form-group">
+                                                <input required="" type="password" name="password1" placeholder="New Password">
                                             </div>
                                             <div class="form-group">
-                                                <input  type="password" id="password" name="password" placeholder="Password">
+                                                <input required="" type="password" name="password2" placeholder="Confirm Password">
                                             </div>
+                                           
                                             <div class="login_footer form-group">
                                                 <div class="chek-form">
-                                                    <div class="custome-checkbox">
-                                                        <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
-                                                        <label class="form-check-label" for="exampleCheckbox1"><span>Remember me</span></label>
-                                                    </div>
-                                                </div>
-                                                <a class="text" href="forget">Forgot password?</a>
-                                            </div>
-                                            <div class="form-group">
-                                                <a href="/">
-                                                    <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">Log in</button>
                                                     
-                                                        <!-- <p id="error" style="color: red; ;">password is wrong</p> -->
-                                                        <!-- <p id="emailError" style="color: red;display: none ;">email is wrong</p> -->
-                                                   
-                                                   
-                                                </a>
-                                               
-                                                <div class="text-muted text-center">Don't have an Accoount? <a href="register">Register here</a></div>
+                                              
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login" > <a href="/verify"></a>Submit </button>
                                             </div>
                                         </form>
+                                       
+                                        
+                                      
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
     <footer class="main">
-        <section class="newsletter p-30 text-white wow fadeIn animated" style="display: flex; justify-content: center; align-items: center;">
+        <section class="newsletter p-30 text-white wow fadeIn animated">
             <div class="container">
-              <div class="row">
-                <div class="col-lg-7 mb-md-3 mb-lg-0 d-flex justify-content-center align-items-center">
-                  <div class="row align-items-center">
-                    <div class="col flex-horizontal-center">
-                      <img class="icon-email" src="assets/imgs/theme/icons/icon-email.svg" alt="">
-                      <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4>
+                <div class="row align-items-center">
+                    <div class="col-lg-7 mb-md-3 mb-lg-0">
+                        <div class="row align-items-center">
+                            <div class="col flex-horizontal-center">
+                                <img class="icon-email" src="assets/imgs/theme/icons/icon-email.svg" alt="">
+                                <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4>
+                            </div>
+                            <div class="col my-4 my-md-0 des">
+                                <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>$25 coupon for first shopping.</strong></h5>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col my-4 my-md-0 des">
-                      <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>$25 coupon for first shopping.</strong></h5>
+                    <div class="col-lg-5">
+                        <!-- Subscribe Form -->
+                        <form class="form-subcriber d-flex wow fadeIn animated">
+                            <input type="email" class="form-control bg-white font-small" placeholder="Enter your email">
+                            <button class="btn bg-dark text-white" type="submit">Subscribe</button>
+                        </form>
+                        <!-- End Subscribe Form -->
                     </div>
-                  </div>
                 </div>
-                <div class="col-lg-5 d-flex justify-content-center align-items-center">
-                  <!-- Subscribe Form -->
-                  <form class="form-subcriber d-flex wow fadeIn animated">
-                    <input type="email" class="form-control bg-white font-small" placeholder="Enter your email">
-                    <button class="btn bg-dark text-white" type="submit">Subscribe</button>
-                  </form>
-                  <!-- End Subscribe Form -->
-                </div>
-              </div>
             </div>
-          </section>
-          
-          
+        </section>
         <section class="section-padding footer-mid">
             <div class="container pt-15 pb-20">
                 <div class="row">
@@ -645,45 +658,6 @@
     <script src="assets/js/plugins/jquery.theia.sticky.js"></script>
     <!-- Template  JS -->
     <script src="assets/js/maind134.js?v=3.4"></script>
-    <script>
-
-
-        function validateUserInput() {
-          
-    // Regular expression for name: Should not contain only spaces
-    const email = document.getElementById('email').value
-    const password = document.getElementById('password').value
-    const nameRegex = /\S/;
-
-    // Regular expression for email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    // Regular expression for password: At least 8 characters
-    const passwordRegex = /^.{8,}$/;
-
-    // Validate name
-    
-
-    // Validate email
-    if (!emailRegex.test(email)) {
-        let errorP = document.getElementById('emailError')
-    errorP.style.display = 'flex'
-        return { isValid: false, message: 'Invalid email format' };
-    }
-
-    // Validate password
-    if (!passwordRegex.test(password)) {
-    
-        let errorP = document.getElementById('error')
-    errorP.style.display = 'block'
-        return { isValid: false, message: 'Password should be at least 8 characters' };
-    }
-
-    
-    // All validations passed
-    return true
-}
-    </script>
 </body>
 
 

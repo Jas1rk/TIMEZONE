@@ -4,7 +4,7 @@ const session =  require('express-session')
 const userRoute = require('./route/userRoute')
 const adminRoute = require('./route/adminRoute')
 const mongoose = require('mongoose')
-const path = require('path')
+
 
 
 
