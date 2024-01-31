@@ -29,23 +29,21 @@ const userloginPost =  async(req,res)=>{
     const {email,password} = req.body
     console.log(req.body)
     const loggedUser = await User.findOne({email})
-    
-    if(loggedUser){
-        const passwordMatch = await bcrypt.compare(password,loggedUser.password)
-        console.log(passwordMatch)
-         if(passwordMatch){
-            if(loggedUser.isAdmin===1){
-                req.session.admin=loggedUser._id
-                return res.redirect('/adminhome')
-            }else{
-                req.session.user = loggedUser._id
-                return res.redirect('/')
-            }
-         }
-    }else{
-        res.render('userlogin',{message:"false"})
+    console.log(loggedUser);
+    if(!loggedUser){
+        res.status(400).json({message:"user not found "})
     }
-
+    const hashedPassword = await bcrypt.compare(password,loggedUser.password)
+    console.log(hashedPassword,"passsword");
+    if(hashedPassword){
+        if(loggedUser.isBlocked){
+            res.render('userlogin',{message:"user has been blocked "})
+        }
+        req.session.user = loggedUser
+        res.redirect('/')
+    }else{
+         res.render('userlogin',{message:"invalid passwword"})
+    }
 
   }catch(err){
     console.log(err)
@@ -65,6 +63,7 @@ const registerget = (req,res)=>{
 
 const registerPost = async(req,res)=>{
  try{
+    console.log(req.body,"body");
    const {username,email,mobile,password1,password2} = req.body
     if(!username,!email,!mobile,!password1,!password2){
         return res.status(400).json({error:"all fields are required"})
@@ -73,14 +72,15 @@ const registerPost = async(req,res)=>{
         return res.status(400).json({error:"password does not match"})
     }
     const existUser = await User.findOne({email:email})
-    console.log(existUser)
+    // console.log(existUser)
     if(existUser){
         return res.status(400).json({message:"user is already exist"})
        
     }else{
-        await emailVerification(email);
+       const otpVal =  await emailVerification(email);
+         console.log("otp:",otpVal)
+         req.session.temp = {username, email, mobile, password1, password2, otpVal};
 
-        req.session.temp = {username,email,mobile,password1,password2}
         res.redirect('/verify')
        }
  }catch(err){
@@ -89,13 +89,11 @@ const registerPost = async(req,res)=>{
 }
 
 
-let otpVal;
+
 const emailVerification = async (email) => {
     try {
-      otpVal = Math.floor(Math.random() * 10000).toString();
-  
-   console.log(otpVal)
-   console.log("otp entering")
+     const otpVal = Math.floor(Math.random() * 10000).toString();
+      console.log("otp is entering")
       const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
@@ -103,25 +101,31 @@ const emailVerification = async (email) => {
         requireTLS: true,
         auth: {
           user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASSWORD,
+          pass: process.env.EMAIL_PASSWORD
         },
         tls: {
           rejectUnauthorized: false,
         },
       });
-       
+  
       let mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: process.env.EMAIL,
         to: email,
         subject: "Email Verification Code",
-        text: otpVal,
+        text: `Your OTP is :${otpVal}`,
       };
-  
+
+    
+
       let info = await transporter.sendMail(mailOptions);
+      console.log(info)
+      return otpVal  
     } catch (error) {
-     console.log(error)
+      console.log(error)
+      throw error
     }
   };
+
 
 
 const  otpVerification =  (req,res)=>{
@@ -134,20 +138,34 @@ const  otpVerification =  (req,res)=>{
 
 const otpVerificationPost = async(req,res)=>{
     try{
+        console.log(req.session.temp);
        const otp =  req.body.otp
-       console.log(otp)
-       console.log(otpVal)
-       if(otp===otpVal){
+       const storedOtp = req.session.temp.otpVal; 
+       console.log("entered otp",otp)
+       console.log("stored otp",storedOtp)
+       if(otp===storedOtp){
+        console.log(req.session.temp,"sesssione");
         const {username,email,mobile,password1} = req.session.temp
+        console.log("username:",username)
+        console.log("email:",email)
+        console.log("mobile:",mobile)
+        console.log("password:",password1)
         const hashedpass =  await bcrypt.hash(password1,10)
-        const newUser  = new User({
-            username,
-            email,
-            mobile,
-            password:hashedpass
-        })
-        await newUser.save()
+        const existingUser = await User.findOne({email:email})
+        if(!existingUser){
+            const newUser  = new User({
+                username,
+                email,
+                mobile,
+                password:hashedpass
+            });
+            await newUser.save()
+        }
+        console.log('user saved successfully')
         res.redirect('/login')
+       }else{
+        console.log("invalid otp")
+        res.status(400).json({error:"invalid otp"})
        }
     }catch(err){
         console.log(err);
@@ -156,6 +174,7 @@ const otpVerificationPost = async(req,res)=>{
 
 
 const forgetPassGet = (req,res)=>{
+    console.log(req.session.temp);
   try{
      res.render('userforgot')
   }catch(err){
@@ -164,31 +183,73 @@ const forgetPassGet = (req,res)=>{
 }
 
 const forgetPassPost = async(req,res)=>{
-    try{
-        const {email ,password1,password2} = req.body
-        const existUser =  await User.findOne({email:email})
-        if(!existUser){
-            res.status(400).json({message:"User not found"})
-        }else{
-            emailVerification(email);
-            if(password1 == password2){
-                req.session.pas = password1;
-                res.render('userverifyotp')
-            }
+    try{  
+        console.log("hello");  
+      const {email,password1,password2}=req.body
+      console.log(req.body)
+                     
+       const existingUser = await User.findOne({email:email})
+       console.log(existingUser)
+       if(existingUser){
+        const otpVal = await emailVerification(email);
+        console.log(req.session.temp,"before modification");
+       
+        console.log(otpVal)
+        req.session.temp = {
+            email:email,
+            password1:password1,
+            password2:password2,
+            otpVal:otpVal,
+            username:existingUser.username,
+            mobile:existingUser.mobile
         }
-        
-     
+        console.log(req.session.temp,"after otp");
+        res.redirect('/verify')
+       }else{
+        console.log('user not found',email)
+       }
+           
+               
     }catch(err){
         console.log(err)
     }
 }
 
 const validateForgetPassOtp =async(req,res)=>{
+    console.log("callingggg");
+   try{
     const otp = req.body.otp;
-    if(otp == otpVal){
-      
+    console.log(otp)
+    const storedOtp = req.session.temp.otpVal
+    console.log(storedOtp)
+    if(!otp || !storedOtp){
+        return res.status(400).json({error:"otp could'nt find"})
     }
+    console.log(req.session.temp,"temp");
+    console.log(req.session.temp.password1,"password 1");
+
+    const hashedPassword = await bcrypt.hash(req.session.temp.password1,10)
+    if(otp === storedOtp){
+        const newUserPass = await User.findOneAndUpdate(
+            {email:req.session.temp.email},
+            {$set:{password:hashedPassword}})
+            console.log(newUserPass,"new userpass");
+            if(newUserPass){
+                res.redirect('/login')
+                console.log("password changed successfully")
+            }else{
+                console.log('user not found')
+            }
+           
+          
+    }else{
+        console.log("invalid otp")
+    }
+   }catch(err){
+    console.log(err)
+   }
 }
+
 
 
 
@@ -205,7 +266,8 @@ module.exports = {
     otpVerification,
     otpVerificationPost,
     forgetPassGet,
-    forgetPassPost
+    forgetPassPost,
+    validateForgetPassOtp
 
 }
 

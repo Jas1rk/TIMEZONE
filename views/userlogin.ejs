@@ -458,7 +458,10 @@
                                         <div class="heading_s1">
                                             <h3 class="mb-30">Login</h3>
                                         </div>
-                                        <form method="post" onsubmit="return validateUserInput(event)">
+                                        <form method="post" action="/login" onsubmit="return validateUserInput(event)">
+                                            <!-- <% if(locals.message) { %>
+                                                <div class="alert alert-danger"> <%= locals.message %></div>
+                                                  <% } %> -->
                                             <div class="form-group">
                                                 <input type="text"  id="email" name="email" placeholder="Your Email">
                                             </div>
@@ -475,15 +478,14 @@
                                                 <a class="text" href="forget">Forgot password?</a>
                                             </div>
                                             <div class="form-group">
-                                                <a href="/">
+                                               
                                                     <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">Log in</button>
                                                     
                                                         <!-- <p id="error" style="color: red; ;">password is wrong</p> -->
                                                         <!-- <p id="emailError" style="color: red;display: none ;">email is wrong</p> -->
                                                    
                                                    
-                                                </a>
-                                               
+                                              
                                                 <div class="text-muted text-center">Don't have an Accoount? <a href="register">Register here</a></div>
                                             </div>
                                         </form>

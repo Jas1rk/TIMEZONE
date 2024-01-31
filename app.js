@@ -4,6 +4,7 @@ const session =  require('express-session')
 const userRoute = require('./route/userRoute')
 const adminRoute = require('./route/adminRoute')
 const mongoose = require('mongoose')
+const nocache = require('nocache')
 
 
 
@@ -39,8 +40,11 @@ app.use(session({
 app.use(express.static('views'))
 app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
+app.use(nocache())
+
+
 app.use('/',userRoute)
-// app.use('/adminhome',adminRoute)
+app.use('/admin',adminRoute)
 
 
 
