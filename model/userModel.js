@@ -22,15 +22,8 @@ const userSchema = new mongoose.Schema({
     },
     isBlocked:{
         type:Boolean,
-        required:true,
         default:false
     },
-    isAdmin:{
-        type:Number,
-        default:0,
-        required:true
-
-    }
     
 },{versionKey:false})
 

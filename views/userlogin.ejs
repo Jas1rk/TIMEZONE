@@ -458,16 +458,23 @@
                                         <div class="heading_s1">
                                             <h3 class="mb-30">Login</h3>
                                         </div>
+                                        <%if(locals.message){%>
+                                            <p id="msg" class="text text-danger"><%=locals.message%></p>
+                                            <script>
+                                                setTimeout(() => {
+                                                   document.getElementById('msg').style.display="none" 
+                                                }, 3000);
+                                            </script>
+                                        <%}%>
                                         <form method="post" action="/login" onsubmit="return validateUserInput(event)">
-                                            <!-- <% if(locals.message) { %>
-                                                <div class="alert alert-danger"> <%= locals.message %></div>
-                                                  <% } %> -->
+                                           
                                             <div class="form-group">
                                                 <input type="text"  id="email" name="email" placeholder="Your Email">
                                             </div>
                                             <div class="form-group">
                                                 <input  type="password" id="password" name="password" placeholder="Password">
                                             </div>
+                                           
                                             <div class="login_footer form-group">
                                                 <div class="chek-form">
                                                     <div class="custome-checkbox">

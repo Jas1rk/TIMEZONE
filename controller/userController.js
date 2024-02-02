@@ -31,7 +31,7 @@ const userloginPost =  async(req,res)=>{
     const loggedUser = await User.findOne({email})
     console.log(loggedUser);
     if(!loggedUser){
-        res.status(400).json({message:"user not found "})
+        res.render('userlogin',{message:"User not Found"})
     }
     const hashedPassword = await bcrypt.compare(password,loggedUser.password)
     console.log(hashedPassword,"passsword");
@@ -42,6 +42,7 @@ const userloginPost =  async(req,res)=>{
         req.session.user = loggedUser
         res.redirect('/')
     }else{
+        console.log('invalid password')
          res.render('userlogin',{message:"invalid passwword"})
     }
 
@@ -146,10 +147,6 @@ const otpVerificationPost = async(req,res)=>{
        if(otp===storedOtp){
         console.log(req.session.temp,"sesssione");
         const {username,email,mobile,password1} = req.session.temp
-        console.log("username:",username)
-        console.log("email:",email)
-        console.log("mobile:",mobile)
-        console.log("password:",password1)
         const hashedpass =  await bcrypt.hash(password1,10)
         const existingUser = await User.findOne({email:email})
         if(!existingUser){
@@ -184,8 +181,10 @@ const forgetPassGet = (req,res)=>{
 
 const forgetPassPost = async(req,res)=>{
     try{  
-        console.log("hello");  
-      const {email,password1,password2}=req.body
+
+      const { email }=req.body
+      const password1 = req.body.password1
+      const password2 = req.body.password2
       console.log(req.body)
                      
        const existingUser = await User.findOne({email:email})
@@ -193,7 +192,6 @@ const forgetPassPost = async(req,res)=>{
        if(existingUser){
         const otpVal = await emailVerification(email);
         console.log(req.session.temp,"before modification");
-       
         console.log(otpVal)
         req.session.temp = {
             email:email,
@@ -204,7 +202,7 @@ const forgetPassPost = async(req,res)=>{
             mobile:existingUser.mobile
         }
         console.log(req.session.temp,"after otp");
-        res.redirect('/verify')
+        res.redirect('/forgotOtpPage')
        }else{
         console.log('user not found',email)
        }
@@ -216,7 +214,7 @@ const forgetPassPost = async(req,res)=>{
 }
 
 const validateForgetPassOtp =async(req,res)=>{
-    console.log("callingggg");
+   
    try{
     const otp = req.body.otp;
     console.log(otp)
@@ -227,22 +225,12 @@ const validateForgetPassOtp =async(req,res)=>{
     }
     console.log(req.session.temp,"temp");
     console.log(req.session.temp.password1,"password 1");
-
-    const hashedPassword = await bcrypt.hash(req.session.temp.password1,10)
+   
     if(otp === storedOtp){
-        const newUserPass = await User.findOneAndUpdate(
-            {email:req.session.temp.email},
-            {$set:{password:hashedPassword}})
-            console.log(newUserPass,"new userpass");
-            if(newUserPass){
-                res.redirect('/login')
-                console.log("password changed successfully")
-            }else{
-                console.log('user not found')
-            }
-           
+        res.redirect('/newPassPage')
           
     }else{
+        res.status(400).json({error:"Otp is incorrect"})
         console.log("invalid otp")
     }
    }catch(err){
@@ -251,7 +239,44 @@ const validateForgetPassOtp =async(req,res)=>{
 }
 
 
+const verifyForgotPassOtp = async  (req, res)=>{
+    try {
+        res.render("forgotpassotp")
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
+const UserNewPassGet = async(req,res)=>{
+    try{
+        res.render('newpassword')
+    }catch(error){
+        console.log(error)
+    }
+}
+
+
+const UserNewPassPost = async (req,res)=>{
+    try{
+        const {password1,password2} = req.body
+        const email = req.session.temp.email
+        if(password1 === password2){
+            const secureHashed = await bcrypt.hash(password1,10)
+            await User.updateOne({email:email},{
+                $set:{password:secureHashed}
+            })
+            .then((data)=>console.log(data))
+            res.redirect('/login')
+                
+        } else{
+          console.log('passwords are not match')
+          res.status(400).json({message:"password not match"})
+
+        }
+    }catch (error){
+       console.log(error)
+    }
+}
 
 
 
@@ -267,7 +292,11 @@ module.exports = {
     otpVerificationPost,
     forgetPassGet,
     forgetPassPost,
-    validateForgetPassOtp
+    validateForgetPassOtp,
+    verifyForgotPassOtp,
+    UserNewPassGet,
+    UserNewPassPost
+    
 
 }
 

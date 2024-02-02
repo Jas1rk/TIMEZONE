@@ -16,7 +16,10 @@ router.post('/verify',usercontroller.otpVerificationPost)
 
 router.get('/forget',usercontroller.forgetPassGet)
 router.post('/forget',usercontroller.forgetPassPost)
+router.get("/forgotOtpPage", usercontroller.verifyForgotPassOtp)
 router.post('/forgetOtpValidation',usercontroller.validateForgetPassOtp)
+router.get('/newPassPage',usercontroller.UserNewPassGet)
+router.post('/newPassPage',usercontroller.UserNewPassPost)
 
 
 
