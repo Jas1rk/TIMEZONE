@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
-const categorySchema = mongoose.Schema({
+const categorySchema =  new mongoose.Schema({
     name:{
         type:String,
         required:true
     },
 
-    desctription:{
+    description:{
         type:String,
-        required:true
+       
     }
 })
 
