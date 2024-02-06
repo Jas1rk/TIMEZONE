@@ -9,7 +9,7 @@ const nocache = require('nocache')
 
 
 
-mongoose.connect("mongodb://localhost:27017/TimeZone")
+mongoose.connect("mongodb://localhost:27017/timeZone")
 
 mongoose.connection.on('connected',()=>{
     console.log('mongodb Connected');

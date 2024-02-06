@@ -73,7 +73,7 @@ const registerPost = async(req,res)=>{
         return res.status(400).json({error:"password does not match"})
     }
     const existUser = await User.findOne({email:email})
-    // console.log(existUser)
+    
     if(existUser){
         return res.status(400).json({message:"user is already exist"})
        
@@ -93,7 +93,7 @@ const registerPost = async(req,res)=>{
 
 const emailVerification = async (email) => {
     try {
-     const otpVal = Math.floor(Math.random() * 10000).toString();
+     const otpVal = Math.floor(Math.random(4) * 10000).toString();
       console.log("otp is entering")
       const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -102,7 +102,7 @@ const emailVerification = async (email) => {
         requireTLS: true,
         auth: {
           user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASSWORD
+          pass: process.env.APP_PASSWORD
         },
         tls: {
           rejectUnauthorized: false,
