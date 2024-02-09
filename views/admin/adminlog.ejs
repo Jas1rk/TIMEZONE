@@ -33,7 +33,13 @@
         <section class="content-main mt-80 mb-80">
             <div class="card mx-auto card-login">
                 <div class="card-body">
+                   
                     <h4 class="card-title mb-4">Log in</h4>
+                    <% if (locals.message) { %>
+                        <p id="msg" class="text-danger"><%= message %></p>
+  
+                      <% } %>
+                      
                     <form method="post" action="/admin/">
                         <div class="mb-3">
                             <input class="form-control" placeholder="Email" type="text" name="email">
@@ -60,6 +66,12 @@
     <!-- Main Script -->
     <script src="/admin-assets/js/main.js" type="text/javascript"></script>
 </body>
+<script>
+
+    setTimeout(() => {
+        document.getElementById('msg').style.display="none"
+    },2000);
+</script>
 
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-account-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:33 GMT -->

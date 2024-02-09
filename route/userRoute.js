@@ -10,7 +10,6 @@ router.post('/login',usercontroller.userloginPost)
 
 router.get('/register',usercontroller.registerget)
 router.post('/register',usercontroller.registerPost)
-
 router.get('/verify',usercontroller.otpVerification)
 router.post('/verify',usercontroller.otpVerificationPost)
 

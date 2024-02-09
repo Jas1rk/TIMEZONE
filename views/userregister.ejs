@@ -77,7 +77,7 @@
                     <div class="main-menu main-menu-grow main-menu-padding-1 main-menu-lh-1 main-menu-mrg-1 hm3-menu-padding d-none d-lg-block hover-boder">
                         <nav>
                             <ul>
-                                <li><a class="active" href="/">Home <i class="fi-rs-angle-down"></i></a>
+                                <li><a class="active" href="/">Home <i class="fi-rs"></i></a>
                                     <!-- <ul class="sub-menu">
                                         <li><a href="index.html">Home 1</a></li>
                                         <li><a href="index-2.html">Home 2</a></li>
@@ -196,7 +196,7 @@
                             </ul>
                         </nav>
                     </div>
-                    <div class="header-action-right">
+                    <!-- <div class="header-action-right">
                         <div class="search-style-2">
                             <form action="#">
                                 <select class="select-active">
@@ -273,7 +273,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -416,7 +416,7 @@
                     </nav>
                     <!-- mobile menu end -->
                 </div>
-                <div class="mobile-header-info-wrap mobile-header-border">
+                <!-- <div class="mobile-header-info-wrap mobile-header-border">
                     <div class="single-mobile-header-info mt-30">
                         <a  href="page-contact.html"> Our location </a>
                     </div>
@@ -426,7 +426,7 @@
                     <div class="single-mobile-header-info">
                         <a href="#">(+01) - 2345 - 6789 </a>
                     </div>
-                </div>
+                </div> -->
                 <div class="mobile-social-icon">
                     <h5 class="mb-15 text-grey-4">Follow Us</h5>
                     <a href="#"><img src="assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
@@ -464,21 +464,24 @@
                                         <!-- <p class="mb-50 font-sm">
                                             Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy
                                         </p> -->
+                                        <% if (locals.message) { %>
+                                           <p id="msg" class=" text text-danger"><%= message %></p>
+                                        <% } %>
                                         <form method="post" action="/register">
                                             <div class="form-group">
-                                                <input type="text" required="" name="username" placeholder="Username">
+                                                <input type="text" name="username" placeholder="Username">
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" required="" name="email" placeholder="Email">
+                                                <input type="text"  name="email" placeholder="Email">
                                             </div>
                                             <div class="form-group">
-                                                <input type="number" required="" name="mobile" placeholder="Mobile">
+                                                <input type="number" name="mobile" placeholder="Mobile">
                                             </div>
                                             <div class="form-group">
-                                                <input required="" type="password" name="password1" placeholder="Password">
+                                                <input  type="password" name="password1" placeholder="Password">
                                             </div>
                                             <div class="form-group">
-                                                <input required="" type="password" name="password2" placeholder="Confirm password">
+                                                <input type="password" name="password2" placeholder="Confirm password">
                                             </div>
                                             <div class="login_footer form-group">
                                                 <div class="chek-form">
@@ -659,6 +662,11 @@
     <!-- Template  JS -->
     <script src="assets/js/maind134.js?v=3.4"></script>
 </body>
+<script>
+    setTimeout(() => {
+        document.getElementById("msg").style.display='none'
+    }, 2000);
+</script>
 
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/page-login-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->

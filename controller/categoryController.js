@@ -87,6 +87,7 @@ const adminCategoryEditPost = async(req,res)=>{
 
 
 
+
 module.exports = {
     admincategory,
     admincategoryPost,
@@ -94,6 +95,7 @@ module.exports = {
     adminCategoryUnblock,
     adminCategoryEditGet,
     adminCategoryEditPost,
+    
     
 
 }

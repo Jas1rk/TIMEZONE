@@ -6,7 +6,6 @@ const dotenv = require('dotenv').config()
 
 
 
-
 const userhome  = (req,res)=>{
     try{
         res.render('homepage')
@@ -65,17 +64,18 @@ const registerget = (req,res)=>{
 const registerPost = async(req,res)=>{
  try{
     console.log(req.body,"body");
-   const {username,email,mobile,password1,password2} = req.body
+    const {username,email,mobile,password1,password2} = req.body
     if(!username,!email,!mobile,!password1,!password2){
-        return res.status(400).json({error:"all fields are required"})
+        res.render('userregister',{message:"All fields are required"})
     }
     if(password1!==password2){
-        return res.status(400).json({error:"password does not match"})
+        res.render('userregister',{message:"Passwords don't match"})
     }
     const existUser = await User.findOne({email:email})
     
     if(existUser){
-        return res.status(400).json({message:"user is already exist"})
+        res.render('userregister',{message:"user is already exist"})
+      
        
     }else{
        const otpVal =  await emailVerification(email);
@@ -139,6 +139,7 @@ const  otpVerification =  (req,res)=>{
 
 const otpVerificationPost = async(req,res)=>{
     try{
+        console.log('otp getting')
         console.log(req.session.temp);
        const otp =  req.body.otp
        const storedOtp = req.session.temp.otpVal; 
@@ -160,7 +161,7 @@ const otpVerificationPost = async(req,res)=>{
         }
         console.log('user saved successfully')
         res.redirect('/login')
-       }else{
+       } else {
         console.log("invalid otp")
         res.status(400).json({error:"invalid otp"})
        }

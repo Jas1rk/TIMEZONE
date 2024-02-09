@@ -34,9 +34,11 @@ const adminlogPost = async(req,res)=>{
              }
            
         }else{
+            res.render('admin/adminlog',{message:"Invalid password"})
             res.redirect('/admin')
         }
     }else{
+        res.render('admin/adminlog',{message:"Cannot find admin"})
         console.log('conneot find admin')
     }
 

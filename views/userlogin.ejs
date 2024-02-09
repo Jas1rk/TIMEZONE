@@ -76,7 +76,7 @@
                     <div class="main-menu main-menu-grow main-menu-padding-1 main-menu-lh-1 main-menu-mrg-1 hm3-menu-padding d-none d-lg-block hover-boder">
                         <nav>
                            <ul>
-                               <li> <a class="active" href="/">Home<i class="fi-rs-angle-down"></i></a></li>
+                               <li> <a class="active" href="/">Home<i class="fi-rs"></i></a></li>
                                     <!-- <ul class="sub-menu">
                                         <li><a href="index.html">Home 1</a></li>
                                         <li><a href="index-2.html">Home 2</a></li>
@@ -195,7 +195,7 @@
                             </ul>
                         </nav>
                     </div>
-                    <div class="header-action-right">
+                    <!-- <div class="header-action-right">
                         <div class="search-style-2">
                             <form action="#">
                                 <select class="select-active">
@@ -272,7 +272,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -466,7 +466,7 @@
                                                 }, 3000);
                                             </script>
                                         <%}%>
-                                        <form method="post" action="/login" onsubmit="return validateUserInput(event)">
+                                        <form method="post" action="/login">
                                            
                                             <div class="form-group">
                                                 <input type="text"  id="email" name="email" placeholder="Your Email">
@@ -654,45 +654,7 @@
     <script src="assets/js/plugins/jquery.theia.sticky.js"></script>
     <!-- Template  JS -->
     <script src="assets/js/maind134.js?v=3.4"></script>
-    <script>
-
-
-        function validateUserInput() {
-          
-    // Regular expression for name: Should not contain only spaces
-    const email = document.getElementById('email').value
-    const password = document.getElementById('password').value
-    const nameRegex = /\S/;
-
-    // Regular expression for email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    // Regular expression for password: At least 8 characters
-    const passwordRegex = /^.{8,}$/;
-
-    // Validate name
     
-
-    // Validate email
-    if (!emailRegex.test(email)) {
-        let errorP = document.getElementById('emailError')
-    errorP.style.display = 'flex'
-        return { isValid: false, message: 'Invalid email format' };
-    }
-
-    // Validate password
-    if (!passwordRegex.test(password)) {
-    
-        let errorP = document.getElementById('error')
-    errorP.style.display = 'block'
-        return { isValid: false, message: 'Password should be at least 8 characters' };
-    }
-
-    
-    // All validations passed
-    return true
-}
-    </script>
 </body>
 
 

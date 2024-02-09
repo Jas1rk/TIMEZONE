@@ -9,11 +9,13 @@ const nocache = require('nocache')
 
 
 
+
 mongoose.connect("mongodb://localhost:27017/TimeZone")
 
 mongoose.connection.on('connected',()=>{
     console.log('mongodb Connected');
 })
+
 
 
 mongoose.connection.on('disconnected',()=>{
@@ -48,9 +50,11 @@ app.use('/admin',adminRoute)
 
 
 
+
 const PORT = 3008
+
 app.listen(PORT,()=>{
-    console.log('server is running')
+    console.log(`server is running on ${PORT}`)
 })
 
 
