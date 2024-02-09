@@ -22,5 +22,9 @@ admin_router.get('/admincategory',adminCategoryController.admincategory)
 admin_router.post('/admincategory',adminCategoryController.admincategoryPost)
 admin_router.get('/categoryblock',adminCategoryController.adminCategoryBlock)
 admin_router.get('/categoryunblock',adminCategoryController.adminCategoryUnblock)
+admin_router.get('/categoryedit',adminCategoryController.adminCategoryEditGet)
+admin_router.post('/categoryedit',adminCategoryController.adminCategoryEditPost)
+
+
 
 module.exports = admin_router

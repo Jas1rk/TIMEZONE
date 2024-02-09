@@ -65,13 +65,13 @@ const logoutAdmin = async(req,res)=>{
 }
 
 
-
 module.exports = {
     adiminlogGet,
     adminlogPost,
     adminDashGet,
     logoutAdmin
 }
+
 
 
 

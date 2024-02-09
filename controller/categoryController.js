@@ -53,6 +53,37 @@ const adminCategoryUnblock = async(req,res)=>{
 }
 
 
+const adminCategoryEditGet = async(req,res)=>{
+    try{
+       const cateid = req.query._id
+       console.log(cateid)
+       req.session.catId=cateid
+       const editId = await Category.findById({_id:cateid})
+       res.render('admin/admincategoryedit',{editId})
+
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
+
+const adminCategoryEditPost = async(req,res)=>{
+    try{
+        
+        const {name,description} = req.body
+        console.log(req.body)
+        const updatedCategory = await Category.findByIdAndUpdate({_id:req.session.catId},{$set:{
+            name,description
+        }},{new:true})
+        console.log(updatedCategory)
+        res.redirect('/admin/admincategory')
+
+
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
 
 
 
@@ -60,7 +91,9 @@ module.exports = {
     admincategory,
     admincategoryPost,
     adminCategoryBlock,
-    adminCategoryUnblock ,
+    adminCategoryUnblock,
+    adminCategoryEditGet,
+    adminCategoryEditPost,
     
 
 }
