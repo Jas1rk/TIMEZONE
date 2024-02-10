@@ -37,4 +37,5 @@ admin_router.post('/addproduct',upload.array("image",5),productcontroller.addPro
 
 
 
+
 module.exports = admin_router

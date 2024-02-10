@@ -183,13 +183,14 @@
                             <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
                             <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="#"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                            <a class="dropdown-item text-danger" href="/admin"><i class="material-icons md-exit_to_app"></i>Logout</a>
                         </div>
                     </li>
                 </ul>
             </div>
         </header>
         <section class="content-main">
+            <form method="post" action="/admin/addproduct">
             <div class="row">
                 <div class="col-9">
                     <div class="content-header">
@@ -203,10 +204,10 @@
                 <div class="col-lg-6">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h4>Basic</h4>
+                            <h4>Details</h4>
                         </div>
                         <div class="card-body">
-                            <form>
+                           
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Product Name</label>
                                     <input type="text" placeholder="Type here" class="form-control" id="product_name">
@@ -248,7 +249,7 @@
                                     <input class="form-check-input" type="checkbox" value="">
                                     <span class="form-check-label"> Make a template </span>
                                 </label> -->
-                            </form>
+                            
                         </div>
                     </div> <!-- card end// -->
                     <!-- <div class="card mb-4">
@@ -304,7 +305,7 @@
                                 <div class="col-sm-6 mb-3">
                                     <label class="form-label">Category</label>
                                     <select class="form-select">
-                                        <% catagData.forEach(element => { %>
+                                        <% categories.forEach(element => { %>
                                           
                                         <option>
                                              <%= element.name %>
@@ -330,6 +331,7 @@
                     </div> <!-- card end// -->
                 </div>
             </div>
+        </form>
         </section> <!-- content-main end// -->
         <!-- <footer class="main-footer font-xs">
             <div class="row pb-30 pt-15">
