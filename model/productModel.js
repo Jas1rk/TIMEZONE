@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 const productSchema = mongoose.Schema({
-    pname: {
+      pname: {
         type: String,
         required: true,
       },
     
-      price: {
+      regprice: {
         type: Number,
         required: true,
       },
@@ -30,10 +30,10 @@ const productSchema = mongoose.Schema({
         required: true,
       },
     
-      brand: {
-        type: String,
-        required: true,
-      },
+      // brand: {
+      //   type: String,
+      //   required: true,
+      // },
     
       color: {
         type: String,
@@ -45,10 +45,7 @@ const productSchema = mongoose.Schema({
         required: true,
       },
     
-      caseSize: {
-        type: String,
-        required: true,
-      },
+     
 
       isBlocked:{
         type:Boolean,

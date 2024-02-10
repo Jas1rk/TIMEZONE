@@ -4,6 +4,8 @@ const admincontroller = require('../controller/adminController')
 const userlistcontroller = require('../controller/userListConstroller')
 const adminCategoryController = require('../controller/categoryController')
 const productcontroller = require('../controller/productController')
+const multer = require('../controller/multer/multer')
+const upload = require('../controller/multer/multer')
 
 
 admin_router.get('/admindash',admincontroller.adminDashGet)
@@ -26,8 +28,12 @@ admin_router.get('/categoryunblock',adminCategoryController.adminCategoryUnblock
 admin_router.get('/categoryedit',adminCategoryController.adminCategoryEditGet)
 admin_router.post('/categoryedit',adminCategoryController.adminCategoryEditPost)
 
+admin_router.get('/productadmin',productcontroller.adminProductsGet)
+admin_router.get('/addproduct',productcontroller.addProductGet)
+admin_router.post('/addproduct',upload.array("image",5),productcontroller.addProductPost)
 
-admin_router.get('/addproduct',productcontroller.addProduct)
+
+
 
 
 
