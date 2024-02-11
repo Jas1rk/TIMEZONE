@@ -1,6 +1,7 @@
 const express  = require('express')
 const router = express.Router()
 const usercontroller = require('../controller/userController')
+const { isUser} = require('../middlewares/auth')
 
 
 router.get('/',usercontroller.userhome)
@@ -20,6 +21,8 @@ router.post('/forgetOtpValidation',usercontroller.validateForgetPassOtp)
 router.get('/newPassPage',usercontroller.UserNewPassGet)
 router.post('/newPassPage',usercontroller.UserNewPassPost)
 
+
+router.get('/userlogout',isUser,usercontroller.userLogout)
 
 
 module.exports =  router

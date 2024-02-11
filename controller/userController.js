@@ -280,6 +280,21 @@ const UserNewPassPost = async (req,res)=>{
 }
 
 
+const userLogout = async(req,res)=>{
+    try{
+        console.log('heeeee');
+        req.session.destroy((err)=>{
+            if(err){
+                console.log("error in logout")
+            }else{
+                res.redirect('/login')
+            }
+        })
+
+    }catch(err){
+        console.log(err.message)
+    }
+}
 
 
 
@@ -296,7 +311,8 @@ module.exports = {
     validateForgetPassOtp,
     verifyForgotPassOtp,
     UserNewPassGet,
-    UserNewPassPost
+    UserNewPassPost,
+    userLogout
     
 
 }

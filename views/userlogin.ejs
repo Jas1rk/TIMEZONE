@@ -22,6 +22,9 @@
             display:flex;
             justify-content:center;
         }
+        .error{
+            color: red;
+        }
     </style>
 </head>
 
@@ -470,9 +473,11 @@
                                            
                                             <div class="form-group">
                                                 <input type="text"  id="email" name="email" placeholder="Your Email">
+                                                <span id="email_error" class="error"></span>
                                             </div>
                                             <div class="form-group">
                                                 <input  type="password" id="password" name="password" placeholder="Password">
+                                                <span id="password_error" class="error"></span>
                                             </div>
                                            
                                             <div class="login_footer form-group">
@@ -486,7 +491,7 @@
                                             </div>
                                             <div class="form-group">
                                                
-                                                    <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">Log in</button>
+                                                    <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login" value="Submit" onclick="validform()">Log in</button>
                                                     
                                                         <!-- <p id="error" style="color: red; ;">password is wrong</p> -->
                                                         <!-- <p id="emailError" style="color: red;display: none ;">email is wrong</p> -->
@@ -656,6 +661,26 @@
     <script src="assets/js/maind134.js?v=3.4"></script>
     
 </body>
+<script>
+    function validform(){
+        document.getElementById('email_error').innerText = ''
+        document.getElementById('password_error').innerText = ''
+
+        var email = document.getElementById('email').value.trim()
+        var password = document.getElementById('password').value.trim()
+
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/ ;
+        if(!emailRegex.test(email)){
+            document.getElementById('email_error').innerText = "invalid email please type";
+            return
+        }
+
+        if(password.length < 6){
+            document.getElementById('password_error').innerText = 'password must be at least 8 charechters'
+        }
+       
+    }
+</script>
 
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/page-login-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->

@@ -28,6 +28,8 @@ const addProductGet = async(req,res)=>{
 
 const addProductPost = async (req,res)=>{
     try{
+        console.log('heloooo product is addding ');
+        console.log(req.body)
         const {pname,regprice,offprice,description,category,color,material} = req.body
         console.log(req.body)
         const images = req.files.map(file => file.originalname);

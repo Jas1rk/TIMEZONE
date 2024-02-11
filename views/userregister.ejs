@@ -467,21 +467,31 @@
                                         <% if (locals.message) { %>
                                            <p id="msg" class=" text text-danger"><%= message %></p>
                                         <% } %>
-                                        <form method="post" action="/register">
+                                        <form method="post" action="/register" onsubmit="return validateform()">
                                             <div class="form-group">
-                                                <input type="text" name="username" placeholder="Username">
+                                                <input type="text" name="username" placeholder="Username" id="username">
+                                                <div id="errorMessageUsername" class="errorMessage"></div>
+
                                             </div>
                                             <div class="form-group">
-                                                <input type="text"  name="email" placeholder="Email">
+                                                <input type="text"  name="email" placeholder="Email" id="email">
+                                                <div id="errorMessageEmail" class="errorMessage"></div>
+
                                             </div>
                                             <div class="form-group">
-                                                <input type="number" name="mobile" placeholder="Mobile">
+                                                <input type="number" name="mobile" placeholder="Mobile" id="mobile">
+                                                <div id="errorMessageMobile" class="errorMessage"></div>
+
                                             </div>
                                             <div class="form-group">
-                                                <input  type="password" name="password1" placeholder="Password">
+                                                <input  type="password" name="password1" placeholder="Password" id="pass1">
+                                                <div id="errorMessagePassword" class="errorMessage"></div>
+
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" name="password2" placeholder="Confirm password">
+                                                <input type="password"  name="password2" placeholder="Confirm password" id="pass2">
+                                                <div id="errorMessageConfirmpassword" class="errorMessage"></div>
+
                                             </div>
                                             <div class="login_footer form-group">
                                                 <div class="chek-form">
@@ -666,6 +676,56 @@
     setTimeout(() => {
         document.getElementById("msg").style.display='none'
     }, 2000);
+</script>
+<script>
+    function validateform(){
+        var username = document.getElementById('username').value
+        var email = document.getElementById('email').value
+        var mobile = document.getElementById('mobile').value
+        var password = document.getElementById('pass1').value
+        var confirmPassword = document.getElementById('pass2').value
+
+        if(username.length < 2){
+            displayErrormessage("errorMessageUsername","Username must be at least 3 characters long.")
+            return false
+        }
+
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if(!emailRegex.test(email)){
+            
+            displayErrormessage("errorMessageEmail","Invalid email address.")
+            return false
+        }
+
+        if(isNaN(mobile) || mobile.length !==10){
+            displayErrormessage("errorMessageMobile","Invalid mobile number.")
+            return false
+        }
+        if(password.length < 6){
+            displayErrormessage("errorMessagePassword","Password must be at least 6 characters long.")
+            return false
+
+        }
+        if(confirmPassword !==password){
+            displayErrormessage("errorMessageConfirmpassword","Passwords do not match.")
+            return true
+        }
+
+        clearErrorMessage()
+        return true
+    }
+    function displayErrormessage(elementId,message){
+        var errormessageElement = document.getElementById(elementId)
+        errormessageElement.innerHTML = message
+        errormessageElement.style.color = "red"
+    }
+
+    function clearErrorMessage(){
+        var errormessageElement = document.querySelectorAll('.errorMessage')
+        errormessageElement.forEach(element => {
+            element.innerHTML = ""
+        });
+    }
 </script>
 
 
