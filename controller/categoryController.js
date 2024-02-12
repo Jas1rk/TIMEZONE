@@ -1,3 +1,4 @@
+const { json } = require('express')
 const Category = require('../model/categoryModel')
 
 
@@ -15,13 +16,19 @@ const admincategoryPost = async(req,res)=>{
     try{
         const {name,description} = req.body
         console.log(req.body)
-        const newCategory = await new Category({
-            name:name,
-            description:description
-        })
-        await newCategory.save()
-        console.log(newCategory)
-        res.redirect('/admin/admincategory')
+        const existingCategory = await Category.findOne({name:name})
+        if(!existingCategory){
+            const newCategory = await new Category({
+                name:name,
+                description:description
+            })
+            await newCategory.save()
+            console.log(newCategory)
+            res.redirect('/admin/admincategory')
+        }else{
+            res.status(400).json({message:"category already exist"})
+        }
+       
 
     }catch(err){
         console.log(err.message)

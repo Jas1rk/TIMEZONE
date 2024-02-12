@@ -266,7 +266,6 @@ const UserNewPassPost = async (req,res)=>{
             await User.updateOne({email:email},{
                 $set:{password:secureHashed}
             })
-            .then((data)=>console.log(data))
             res.redirect('/login')
                 
         } else{

@@ -230,14 +230,21 @@
                     </div>
                 </header> <!-- card-header end// -->
                 <div class="card-body">
+                    
                     <div class="row gx-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5">
+                        <%  productData.forEach(element => { %>
+                         
+                       
                         <div class="col">
                             <div class="card card-product-grid">
-                                <a href="#" class="img-wrap"> <img src="/admin-assets/imgs/items/1.jpg" alt="Product"> </a>
+                              
+                                <a href="#" class="img-wrap"> <img src="/uploads/<%= element.images[0] %>" alt="Product"> </a>
                                 <div class="info-wrap">
-                                    <a href="#" class="title text-truncate">Just another product name</a>
-                                    <div class="price mb-2">₹179.00</div> <!-- price.// -->
-                                    <a href="#" class="btn btn-sm font-sm rounded btn-brand">
+                                    <div><%= element.pname %></div>
+                                    <a href="#" class="title text-truncate"><%= element.description %></a>
+                                    <div class="price mb-2">₹<%= element.regprice %></div> 
+                                  
+                                    <a href="/admin/productedit?_id=<%= element._id %>" class="btn btn-sm font-sm rounded btn-brand">
                                         <i class="material-icons md-edit"></i> Edit
                                     </a>
                                     <a href="#" class="btn btn-sm font-sm btn-light rounded">
@@ -246,12 +253,12 @@
                                 </div>
                             </div> 
                         </div> 
-                        <div class="col">
+                        <!-- <div class="col">
                             <div class="card card-product-grid">
                                 <a href="#" class="img-wrap"> <img src="/admin-assets/imgs/items/2.jpg" alt="Product"> </a>
                                 <div class="info-wrap">
                                     <a href="#" class="title text-truncate">Brown Winter Jacket for Men</a>
-                                    <div class="price mb-2">$179.00</div> <!-- price.// -->
+                                    <div class="price mb-2">$179.00</div> 
                                     <a href="#" class="btn btn-sm font-sm rounded btn-brand">
                                         <i class="material-icons md-edit"></i> Edit
                                     </a>
@@ -259,14 +266,14 @@
                                         <i class="material-icons md-delete_forever"></i> Delete
                                     </a>
                                 </div>
-                            </div> <!-- card-product  end// -->
-                        </div> <!-- col.// -->
-                        <div class="col">
+                            </div>
+                        </div>  -->
+                        <!-- <div class="col">
                             <div class="card card-product-grid">
                                 <a href="#" class="img-wrap"> <img src="/admin-assets/imgs/items/3.jpg" alt="Product"> </a>
                                 <div class="info-wrap">
                                     <a href="#" class="title text-truncate">Jeans short new model</a>
-                                    <div class="price mb-2">$179.00</div> <!-- price.// -->
+                                    <div class="price mb-2">$179.00</div> 
                                     <a href="#" class="btn btn-sm font-sm rounded btn-brand">
                                         <i class="material-icons md-edit"></i> Edit
                                     </a>
@@ -274,14 +281,14 @@
                                         <i class="material-icons md-delete_forever"></i> Delete
                                     </a>
                                 </div>
-                            </div> <!-- card-product  end// -->
-                        </div> <!-- col.// -->
-                        <div class="col">
+                            </div> 
+                        </div>  -->
+                        <!-- <div class="col">
                             <div class="card card-product-grid">
                                 <a href="#" class="img-wrap"> <img src="/admin-assets/imgs/items/4.jpg" alt="Product"> </a>
                                 <div class="info-wrap">
                                     <a href="#" class="title text-truncate">Travel Bag XL</a>
-                                    <div class="price mb-2">$179.00</div> <!-- price.// -->
+                                    <div class="price mb-2">$179.00</div> 
                                     <a href="#" class="btn btn-sm font-sm rounded btn-brand">
                                         <i class="material-icons md-edit"></i> Edit
                                     </a>
@@ -289,14 +296,14 @@
                                         <i class="material-icons md-delete_forever"></i> Delete
                                     </a>
                                 </div>
-                            </div> <!-- card-product  end// -->
-                        </div> <!-- col.// -->
-                        <div class="col">
+                            </div> 
+                        </div>  -->
+                        <!-- <div class="col">
                             <div class="card card-product-grid">
                                 <a href="#" class="img-wrap"> <img src="/admin-assets/imgs/items/5.jpg" alt="Product"> </a>
                                 <div class="info-wrap">
                                     <a href="#" class="title text-truncate">Just another product name</a>
-                                    <div class="price mb-2">$179.00</div> <!-- price.// -->
+                                    <div class="price mb-2">$179.00</div> 
                                     <a href="#" class="btn btn-sm font-sm rounded btn-brand">
                                         <i class="material-icons md-edit"></i> Edit
                                     </a>
@@ -304,14 +311,14 @@
                                         <i class="material-icons md-delete_forever"></i> Delete
                                     </a>
                                 </div>
-                            </div> <!-- card-product  end// -->
-                        </div> <!-- col.// -->
-                        <div class="col">
+                            </div>
+                        </div> -->
+                        <!-- <div class="col">
                             <div class="card card-product-grid">
                                 <a href="#" class="img-wrap"> <img src="/admin-assets/imgs/items/6.jpg" alt="Product"> </a>
                                 <div class="info-wrap">
                                     <a href="#" class="title text-truncate">Just another product name</a>
-                                    <div class="price mb-2">$179.00</div> <!-- price.// -->
+                                    <div class="price mb-2">$179.00</div> 
                                     <a href="#" class="btn btn-sm font-sm rounded btn-brand">
                                         <i class="material-icons md-edit"></i> Edit
                                     </a>
@@ -319,14 +326,14 @@
                                         <i class="material-icons md-delete_forever"></i> Delete
                                     </a>
                                 </div>
-                            </div> <!-- card-product  end// -->
-                        </div> <!-- col.// -->
-                        <div class="col">
+                            </div> 
+                        </div>  -->
+                        <!-- <div class="col">
                             <div class="card card-product-grid">
                                 <a href="#" class="img-wrap"> <img src="/admin-assets/imgs/items/7.jpg" alt="Product"> </a>
                                 <div class="info-wrap">
                                     <a href="#" class="title text-truncate">Just another product name</a>
-                                    <div class="price mb-2">$179.00</div> <!-- price.// -->
+                                    <div class="price mb-2">$179.00</div> 
                                     <a href="#" class="btn btn-sm font-sm rounded btn-brand">
                                         <i class="material-icons md-edit"></i> Edit
                                     </a>
@@ -334,14 +341,14 @@
                                         <i class="material-icons md-delete_forever"></i> Delete
                                     </a>
                                 </div>
-                            </div> <!-- card-product  end// -->
-                        </div> <!-- col.// -->
-                        <div class="col">
+                            </div> 
+                        </div>  -->
+                        <!-- <div class="col">
                             <div class="card card-product-grid">
                                 <a href="#" class="img-wrap"> <img src="/admin-assets/imgs/items/8.jpg" alt="Product"> </a>
                                 <div class="info-wrap">
                                     <a href="#" class="title text-truncate">Apple Airpods CB-133</a>
-                                    <div class="price mb-2">$179.00</div> <!-- price.// -->
+                                    <div class="price mb-2">$179.00</div> 
                                     <a href="#" class="btn btn-sm font-sm rounded btn-brand">
                                         <i class="material-icons md-edit"></i> Edit
                                     </a>
@@ -349,14 +356,14 @@
                                         <i class="material-icons md-delete_forever"></i> Delete
                                     </a>
                                 </div>
-                            </div> <!-- card-product  end// -->
-                        </div> <!-- col.// -->
-                        <div class="col">
+                            </div> 
+                        </div>  -->
+                        <!-- <div class="col">
                             <div class="card card-product-grid">
                                 <a href="#" class="img-wrap"> <img src="/admin-assets/imgs/items/9.jpg" alt="Product"> </a>
                                 <div class="info-wrap">
                                     <a href="#" class="title text-truncate">Apple Airpods CB-133</a>
-                                    <div class="price mb-2">$179.00</div> <!-- price.// -->
+                                    <div class="price mb-2">$179.00</div> 
                                     <a href="#" class="btn btn-sm font-sm rounded btn-brand">
                                         <i class="material-icons md-edit"></i> Edit
                                     </a>
@@ -364,14 +371,14 @@
                                         <i class="material-icons md-delete_forever"></i> Delete
                                     </a>
                                 </div>
-                            </div> <!-- card-product  end// -->
-                        </div> <!-- col.// -->
-                        <div class="col">
-                            <div class="card card-product-grid">
+                            </div>
+                        </div>  -->
+                        <!-- <div class="col"> -->
+                            <!-- <div class="card card-product-grid">
                                 <a href="#" class="img-wrap"> <img src="/admin-assets/imgs/items/10.jpg" alt="Product"> </a>
                                 <div class="info-wrap">
                                     <a href="#" class="title text-truncate">Apple Airpods CB-133</a>
-                                    <div class="price mb-2">$179.00</div> <!-- price.// -->
+                                    <div class="price mb-2">$179.00</div> 
                                     <a href="#" class="btn btn-sm font-sm rounded btn-brand">
                                         <i class="material-icons md-edit"></i> Edit
                                     </a>
@@ -379,9 +386,10 @@
                                         <i class="material-icons md-delete_forever"></i> Delete
                                     </a>
                                 </div>
-                            </div> <!-- card-product  end// -->
-                        </div> <!-- col.// -->
-                    </div> <!-- row.// -->
+                            </div>  -->
+                            <% }) %>
+                        </div>
+                    </div> 
                 </div> <!-- card-body end// -->
             </div> <!-- card end// -->
             <!-- <div class="pagination-area mt-30 mb-50">

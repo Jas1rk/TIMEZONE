@@ -490,7 +490,9 @@
                                             </div>
                                             <div class="form-group">
                                                 <input type="password"  name="password2" placeholder="Confirm password" id="pass2">
-                                                <div id="errorMessageConfirmpassword" class="errorMessage"></div>
+                                                <div id="errorMessageConfirmpassword" class="errorMessage">
+                                                    <p id="error1"></p>
+                                                </div>
 
                                             </div>
                                             <div class="login_footer form-group">
@@ -686,7 +688,10 @@
         var confirmPassword = document.getElementById('pass2').value
 
         if(username.length < 2){
-            displayErrormessage("errorMessageUsername","Username must be at least 3 characters long.")
+            document.getElementById("error1").textContent = "Username must be at least 2 characters long."
+            setTimeout(() => {
+                document.getElementById("error1").textContent = ""
+            }, 2000);
             return false
         }
 

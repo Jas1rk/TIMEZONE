@@ -19,6 +19,7 @@ const adiminlogGet = (req,res)=>{
 }
 
 
+
 const adminlogPost = async(req,res)=>{
    
     try{
@@ -28,10 +29,9 @@ const adminlogPost = async(req,res)=>{
       console.log(findAdmin)
       if(findAdmin){
         if(findAdmin.password === password){
-             const hasshedPasswordAdmin =  await bcrypt.hash(password,10)
-             if(hasshedPasswordAdmin){
+                req.session.admin = email
                 res.redirect('/admin/admindash')
-             }
+
            
         }else{
             res.render('admin/adminlog',{message:"Invalid password"})

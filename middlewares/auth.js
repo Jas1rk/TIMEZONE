@@ -4,15 +4,9 @@ const Admin = require('../model/adminModel')
 const isUser = async(req,res,next)=>{
     try{
         if(req.session.user){
-            await User.findOne({email: req.session.user}).lean()
-            .then((data)=>{
-                if(data.isBlocked === 1){
-                    res.redirect('/login')
-
-                }else{
-                    next()
-                }
-            })
+            next()
+        }else{
+            redirect("/")
         }
 
     }catch(err){
@@ -25,7 +19,7 @@ const isUser = async(req,res,next)=>{
 const isAdmin = async(req,res,next)=>{
     try{
         if(req.session.admin){
-            await Admin.findOne({email:req.session.admin}).lean()
+         Admin.findOne({email:req.session.admin}).lean()
             .then((data)=>{
                 if(data){
                     next()

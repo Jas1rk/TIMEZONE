@@ -29,20 +29,21 @@ const addProductGet = async(req,res)=>{
 const addProductPost = async (req,res)=>{
     try{
         console.log('heloooo product is addding ');
-        console.log(req.body)
-        const {pname,regprice,offprice,description,category,color,material} = req.body
-        console.log(req.body)
-        const images = req.files.map(file => file.originalname);
-        console.log(req.files)
+        const {pname,description,regularprice,offerprice,color,meterial,category} = req.body
+       
+        const images = req.files
+        console.log(images);
+        const imageFile = images.map(elements=> elements.filename)
+       
         const newProduct = new Product({
             pname,
-            regprice,
-            offprice,
             description,
-            category,
+            regprice:regularprice,
+            offprice:offerprice,
             color,
-            material,
-            images
+            material:meterial,
+            category,
+            images:imageFile
         })
         await newProduct.save()
         console.log(newProduct)
@@ -56,6 +57,19 @@ const addProductPost = async (req,res)=>{
 
 
 
+const adminProductEdit = async(req,res)=>{
+    try{
+        const productId = req.query._id
+        const productData = await Product.findOne({_id:productId});
+        console.log(productData)
+        const categoryData = await Category.find({isBlocked:false})
+        res.render('admin/admineditproduct',{productData,categoryData})
+
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
 
 
 
@@ -64,5 +78,6 @@ const addProductPost = async (req,res)=>{
 module.exports = {
     adminProductsGet,
     addProductGet,
-    addProductPost
+    addProductPost,
+    adminProductEdit
 }
