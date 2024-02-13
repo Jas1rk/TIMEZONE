@@ -1,14 +1,18 @@
 const User = require('../model/userModel')
 const bcrypt =  require('bcrypt')
 const nodemailer = require('nodemailer')
+const Product = require('../model/productModel')
+const Category = require('../model/categoryModel')
 const dotenv = require('dotenv').config()
 
 
 
 
-const userhome  = (req,res)=>{
+const userhome  = async(req,res)=>{
     try{
-        res.render('homepage')
+        const products = await Product.find({isBlocked:false})
+        const categories = await Category.find({isBlocked:false})
+        res.render('homepage',{products,categories})
     }catch(err){
         console.log(err);
     }
@@ -297,6 +301,21 @@ const userLogout = async(req,res)=>{
 
 
 
+
+const productList = async(req,res)=>{
+    try{
+      const productId = req.query._id
+      
+      req.session.productId = productId
+      const productData = await Product.findOne({_id:productId})
+      const categories = await Category.find({isBlocked:false})
+      console.log(productData)
+      res.render('userproductdetails',{productData,categories})
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
 module.exports = {
     userhome,
     userloginget,
@@ -311,7 +330,8 @@ module.exports = {
     verifyForgotPassOtp,
     UserNewPassGet,
     UserNewPassPost,
-    userLogout
+    userLogout,
+    productList
     
 
 }

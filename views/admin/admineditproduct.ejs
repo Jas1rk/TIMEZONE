@@ -296,6 +296,10 @@
                               
                                 <% for( let i = 0; i < productData.images.length; i++ ) { %>
                                     <img src="/uploads/<%= productData.images[i] %>" alt="sorry">
+                                   
+                                    <a href="/admin/deleteimage?_id=<%= productData._id %>">
+                                        <button class="btn btn-sm font-sm rounded btn-brand">Delete</button>
+                                    </a>
                                 <% } %>
                                 <input class="form-control" type="file" multiple  name="image">
                             </div>

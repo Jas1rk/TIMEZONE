@@ -22,6 +22,8 @@ router.get('/newPassPage',usercontroller.UserNewPassGet)
 router.post('/newPassPage',usercontroller.UserNewPassPost)
 
 
+router.get('/products',usercontroller.productList)
+
 router.get('/userlogout',isUser,usercontroller.userLogout)
 
 

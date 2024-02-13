@@ -16,12 +16,9 @@ mongoose.connection.on('connected',()=>{
     console.log('mongodb Connected');
 })
 
-
-
 mongoose.connection.on('disconnected',()=>{
     console.log('mongodb disConnected');
 })
-
 
 mongoose.connection.on('error',()=>{
     console.log('mongodb error');

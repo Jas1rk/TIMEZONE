@@ -23,11 +23,11 @@ admin_router.get('/userUnblock',isAdmin,userlistcontroller.unblockUser)
 
 
 admin_router.get('/admincategory',adminCategoryController.admincategory)
-admin_router.post('/admincategory',isAdmin,adminCategoryController.admincategoryPost)
-admin_router.get('/categoryblock',isAdmin,adminCategoryController.adminCategoryBlock)
-admin_router.get('/categoryunblock',isAdmin,adminCategoryController.adminCategoryUnblock)
-admin_router.get('/categoryedit',isAdmin,adminCategoryController.adminCategoryEditGet)
-admin_router.post('/categoryedit',isAdmin,adminCategoryController.adminCategoryEditPost)
+admin_router.post('/admincategory',adminCategoryController.admincategoryPost)
+admin_router.get('/categoryblock',adminCategoryController.adminCategoryBlock)
+admin_router.get('/categoryunblock',adminCategoryController.adminCategoryUnblock)
+admin_router.get('/categoryedit',adminCategoryController.adminCategoryEditGet)
+admin_router.post('/categoryedit',adminCategoryController.adminCategoryEditPost)
 
 admin_router.get('/productadmin',productcontroller.adminProductsGet)
 admin_router.get('/addproduct',productcontroller.addProductGet)
@@ -36,6 +36,8 @@ admin_router.get('/productedit',productcontroller.adminProductEdit)
 admin_router.post('/producteditpost',upload.array("image"),productcontroller.adminEditProductPost)
 admin_router.get('/blockproduct',productcontroller.adminProductBloack)
 admin_router.get('/unblockproduct',productcontroller.adminUnblockproduct)
+admin_router.get('/deleteimage', productcontroller.deleteImage);
+
 
 
 

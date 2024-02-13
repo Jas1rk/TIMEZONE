@@ -1,7 +1,7 @@
 const Product = require('../model/productModel')
 const Category = require('../model/categoryModel')
 const multer = require('../controller/multer/multer')
-const e = require('express')
+
 
 
 
@@ -29,9 +29,8 @@ const addProductGet = async(req,res)=>{
 
 const addProductPost = async (req,res)=>{
     try{
-        console.log('heloooo product is addding ');
+        
         const {pname,description,regularprice,offerprice,color,meterial,category} = req.body
-       
         const images = req.files
         console.log(images);
         const imageFile = images.map(elements=> elements.filename)
@@ -61,7 +60,7 @@ const addProductPost = async (req,res)=>{
 const adminProductEdit = async(req,res)=>{
     try{
         const productId = req.query._id
-        console.log(productId);
+        // console.log(productId);
         req.session.productId = productId
         const productData = await Product.findOne({_id:productId});
         const categoryData = await Category.find({isBlocked:false})
@@ -120,17 +119,36 @@ const adminProductBloack = async(req,res)=>{
 
 const adminUnblockproduct = async(req,res)=>{
     try{
-        productData = req.query._id
-        console.log('product unblocked',productData)
-        const data = await Product.findByIdAndUpdate(productData,{isBlocked:false})
-        res.redirect('/admin/productadmin')
-
+       const productId = req.query._id
+       console.log('haiii',productId)
     }catch(err){
         console.log(err.message)
     }
 }
 
+const deleteImage= async(req,res)=>{
+    try{
+        
+        const productData = req.query._id
+        const imageDelete = req.body
+        if(!productData){
+            res.status(404).send('invalid id ')
+            return
+        }
 
+        if(imageDelete){
+            await Product.findByIdAndUpdate({_id:productData},{$pull:{images:imageDelete}})
+            res.redirect('/admin/productedit')
+            console.log(imageDelete)
+        }else{
+            res.status(404).send('error in delete')
+            console.log("error in delete section")
+        }
+
+    }catch(err){
+        console.log(err.message)
+    }
+}
 
 module.exports = {
     adminProductsGet,
@@ -139,7 +157,8 @@ module.exports = {
     adminProductEdit,
     adminEditProductPost,
     adminProductBloack,
-    adminUnblockproduct
+    adminUnblockproduct,
+    deleteImage
 
 
 }

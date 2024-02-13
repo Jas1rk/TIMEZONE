@@ -215,16 +215,12 @@
                             <form action="#">
                                 <select class="select-active">
                                     <option>All Categories</option>
-                                    <option>Women's</option>
-                                    <option>Men's</option>
-                                    <option>Cellphones</option>
-                                    <option>Computer</option>
-                                    <option>Electronics</option>
-                                    <option> Accessories</option>
-                                    <option>Home & Garden</option>
-                                    <option>Luggage</option>
-                                    <option>Shoes</option>
-                                    <option>Mother & Kids</option>
+                                    <% categories.forEach(element => { %>
+                                     
+                                   
+                                    <option><%= element.name %></option>
+                                    <% }) %>
+                                    
                                 </select>
                                 <input type="text" placeholder="Search for items...">
                             </form>
@@ -293,7 +289,7 @@
                         <a href="index.html"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
                     </div>
                     <div class="header-nav d-none d-lg-flex">
-                        <div class="main-categori-wrap d-none d-lg-block">
+                        <!-- <div class="main-categori-wrap d-none d-lg-block">
                             <a class="categori-button-active open" href="#">
                                 <span class="fi-rs-apps"></span> Browse Categories
                             </a>
@@ -473,17 +469,17 @@
                                 </ul>
                                 <div class="more_categories">Show more...</div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
                             <nav>
                                 <ul>
-                                    <li><a class="active" href="index.html">Home <i class="fi-rs-angle-down"></i></a>
-                                        <ul class="sub-menu">
+                                    <li><a class="active" href="/">Home</a>
+                                        <!-- <ul class="sub-menu">
                                             <li><a href="index.html">Home 1</a></li>
                                             <li><a href="index-2.html">Home 2</a></li>
                                             <li><a href="index-3.html">Home 3</a></li>
                                             <li><a href="index-4.html">Home 4</a></li>
-                                        </ul>
+                                        </ul> -->
                                     </li>
                                     <li>
                                         <a href="page-about.html">About</a>
@@ -509,7 +505,7 @@
                                             <li><a href="shop-compare.html">Shop – Compare</a></li>
                                         </ul>
                                     </li>
-                                    <li class="position-static"><a href="#">Mega menu <i class="fi-rs-angle-down"></i></a>
+                                    <!-- <li class="position-static"><a href="#">Mega menu <i class="fi-rs-angle-down"></i></a>
                                         <ul class="mega-menu">
                                             <li class="sub-mega-menu sub-mega-menu-width-22">
                                                 <a class="menu-title" href="#">Women's Fashion</a>
@@ -565,8 +561,8 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                    </li>
-                                    <li><a href="blog-category-grid.html">Blog <i class="fi-rs-angle-down"></i></a>
+                                    </li> -->
+                                    <!-- <li><a href="blog-category-grid.html">Blog <i class="fi-rs-angle-down"></i></a>
                                         <ul class="sub-menu">
                                             <li><a href="blog-category-grid.html">Blog Category Grid</a></li>
                                             <li><a href="blog-category-list.html">Blog Category List</a></li>
@@ -580,7 +576,7 @@
                                                 </ul>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li> -->
                                     <li><a href="#">Pages <i class="fi-rs-angle-down"></i></a>
                                         <ul class="sub-menu">
                                             <li><a href="page-about.html">About Us</a></li>
@@ -711,7 +707,7 @@
                     <!-- mobile menu start -->
                     <nav>
                         <ul class="mobile-menu">
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="index.html">Home</a>
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="/">Home</a>
                                 <ul class="dropdown">
                                     <li><a href="index.html">Home 1</a></li>
                                     <li><a href="index-2.html">Home 2</a></li>
@@ -926,13 +922,16 @@
                         <div class="widget-category mb-30">
                             <h5 class="section-title style-1 mb-30 wow fadeIn animated">Category</h5>
                             <ul class="categories">
-                                <li><a href="shop-grid-right.html">Shoes & Bags</a></li>
-                                <li><a href="shop-grid-right.html">Blouses & Shirts</a></li>
+                                 <% for( let i = 0; i < categories.length; i++ ) { %>
+                            
+                                <li><a href="shop-grid-right.html"><%= categories[i].name %></a></li>
+                                <!-- <li><a href="shop-grid-right.html">Blouses & Shirts</a></li>
                                 <li><a href="shop-grid-right.html">Dresses</a></li>
                                 <li><a href="shop-grid-right.html">Swimwear</a></li>
                                 <li><a href="shop-grid-right.html">Beauty</a></li>
                                 <li><a href="shop-grid-right.html">Jewelry & Watch</a></li>
-                                <li><a href="shop-grid-right.html">Accessories</a></li>
+                                <li><a href="shop-grid-right.html">Accessories</a></li> -->
+                                <% } %>
                             </ul>
                         </div>
                         <div class="widget-category mb-30">
@@ -982,13 +981,18 @@
                         <div class="tab-content wow fadeIn animated" id="myTabContent">
                             <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
                                 <div class="row product-grid-4">
+                                    <% for( let i =0;   i < products.length; i++ ) { %>
+                                    
+                                   
+                                  
                                     <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
+                                               
                                                 <div class="product-img product-img-zoom">
-                                                    <a href="shop-product-right.html">
-                                                        <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
-                                                        <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
+                                                    <a href="/products?_id=<%= products[i]._id %>">
+                                                        <img class="default-img" src="/uploads/<%= products[i].images[0] %>" alt="">
+                                                        <img class="hover-img" src="/uploads/<%= products[i].images[1] %>" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="product-action-1">
@@ -996,32 +1000,38 @@
                                                     <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
                                                     <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                                 </div>
-                                                <div class="product-badges product-badges-position product-badges-mrg">
+                                                <!-- <div class="product-badges product-badges-position product-badges-mrg">
                                                     <span class="hot">Hot</span>
-                                                </div>
+                                                </div> -->
                                             </div>
+                                           
+                                            
                                             <div class="product-content-wrap">
                                                 <div class="product-category">
-                                                    <a href="shop-grid-right.html">Clothing</a>
+                                                    <a href="/products?_id=<%= products[i]._id %>"><%= products[i].pname %></a>
                                                 </div>
-                                                <h2><a href="shop-product-right.html">Colorful Pattern Shirts</a></h2>
-                                                <div class="rating-result" title="90%">
+                                                <h2><a href="/products?_id=<%= products[i]._id %>"><%= products[i].description %></a></h2>
+                                                <!-- <div class="rating-result" title="90%">
                                                     <span>
                                                         <span>90%</span>
                                                     </span>
-                                                </div>
+                                                </div> -->
                                                 <div class="product-price">
-                                                    <span>$238.85 </span>
-                                                    <span class="old-price">$245.8</span>
+                                                    <span>₹<%= products[i].offprice %></span>
+                                                    <span class="old-price">₹<%= products[i].regprice %></span>
                                                 </div>
                                                 <div class="product-action-1 show">
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
+                                               
                                             </div>
+                                           
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
-                                        <div class="product-cart-wrap mb-30">
+                                    <% } %>
+                                 
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6"> -->
+                                        <!-- <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html">
@@ -1057,8 +1067,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1095,8 +1105,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1133,8 +1143,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-xs-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1171,8 +1181,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-xs-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1209,8 +1219,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-xs-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1246,8 +1256,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-xs-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1281,8 +1291,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1316,7 +1326,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <!--End product-grid-4-->
                             </div>
