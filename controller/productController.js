@@ -1,6 +1,7 @@
 const Product = require('../model/productModel')
 const Category = require('../model/categoryModel')
 const multer = require('../controller/multer/multer')
+const e = require('express')
 
 
 
@@ -60,8 +61,9 @@ const addProductPost = async (req,res)=>{
 const adminProductEdit = async(req,res)=>{
     try{
         const productId = req.query._id
+        console.log(productId);
+        req.session.productId = productId
         const productData = await Product.findOne({_id:productId});
-        console.log(productData)
         const categoryData = await Category.find({isBlocked:false})
         res.render('admin/admineditproduct',{productData,categoryData})
 
@@ -71,7 +73,62 @@ const adminProductEdit = async(req,res)=>{
 }
 
 
+const adminEditProductPost = async(req,res)=>{
+    try{
+      
+        const productId = req.session.productId
+       const {pname,description,regularprice,offerprice,color,meterial,category} = req.body
+       console.log(req.body)
+       const images = req.files
+       const newImages = images.map(elements => elements.filename)
+       console.log(newImages);
+       if(images.length > 0){
+          await Product.findByIdAndUpdate({_id:productId},{$push:{images:{$each:newImages}}})
+       }
+        const updateProduct = await Product.findByIdAndUpdate({_id:productId},{$set:{
+            pname:pname,
+            description:description,
+            regprice:regularprice,
+            offprice:offerprice,
+            color:color,
+            material:meterial,
+            category:category
 
+        }})
+        console.log(updateProduct)
+        res.redirect('/admin/productadmin')
+        
+
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
+
+const adminProductBloack = async(req,res)=>{
+    try{
+        const productData = req.query._id
+        console.log('product blocked',productData)
+        const data = await Product.findByIdAndUpdate(productData,{isBlocked:true})
+        res.redirect('/admin/productadmin')
+
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
+
+const adminUnblockproduct = async(req,res)=>{
+    try{
+        productData = req.query._id
+        console.log('product unblocked',productData)
+        const data = await Product.findByIdAndUpdate(productData,{isBlocked:false})
+        res.redirect('/admin/productadmin')
+
+    }catch(err){
+        console.log(err.message)
+    }
+}
 
 
 
@@ -79,5 +136,10 @@ module.exports = {
     adminProductsGet,
     addProductGet,
     addProductPost,
-    adminProductEdit
+    adminProductEdit,
+    adminEditProductPost,
+    adminProductBloack,
+    adminUnblockproduct
+
+
 }

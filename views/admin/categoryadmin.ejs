@@ -18,6 +18,11 @@
     <!-- Template CSS -->
     <link href="/admin-assets//css/main.css" rel="stylesheet" type="text/css" />
 </head>
+<style>
+    .custom-align{
+        text-align: end;
+    }
+</style>
 
 <body>
     <div class="screen-overlay"></div>
@@ -36,7 +41,7 @@
                     <a class="menu-link" href="/admin/admindash"> <i class="icon material-icons md-home"></i>
                         <span class="text">Dashboard</span>
                     </a>
-                </li>
+                </li>   
                 <li class="menu-item ">
                     <a class="menu-link" href="/admin/productadmin"> <i class="icon material-icons md-shopping_bag"></i>
                         <span class="text">Products</span>
@@ -250,7 +255,7 @@
                                             <td><b><%= element.name %></b></td>
                                             <td><%= element.description %></td>
                                             <% if (element.isBlocked==true) { %>
-                                                <td><span class="badge rounded-pill alert-success">Inactive</span></td>
+                                                <td><span class="badge rounded-pill alert-success" >Inactive</span></td>
                                             <% } else { %>
                                                 <td><span class="badge rounded-pill alert-success">Active</span></td>
 
@@ -259,7 +264,7 @@
 
                                             <td>
                                                 <a href="/admin/categoryedit?_id=<%= element._id %>">
-                                                  <button style="background-color: #03a776; /* Green */
+                                                  <button style="background-color: #14213D; /* Green */
                                                                   border: none;
                                                                   color: white;
                                                                   padding: 4px 8px; /* Adjusted padding for a smaller size */
@@ -277,17 +282,14 @@
                                               
                                               
 
-                                            <td class="text-end">
+                                              <td class="custom-align">
                                                 <% if (element.isBlocked === true) { %>
-                                                    <button onclick="unblock('<%= element._id %>')"
-                                                     class="btn btn-sm btn-brand rounded font-sm mt-15">Unblock</button>
-                                                  <% } else { %>
-                                                    <button onclick="block('<%= element._id %>')"
-                                                    class="btn btn-sm btn-brand rounded font-sm mt-15">Block</button>
-                                                  <% } %>
-                                                   
-                                                    
+                                                    <button onclick="unblock('<%= element._id %>')" class="btn btn-sm btn-brand rounded font-sm mt-15">Unblock</button>
+                                                <% } else { %>
+                                                    <button onclick="block('<%= element._id %>')" class="btn btn-sm btn-brand rounded font-sm mt-15">Block</button>
+                                                <% } %>
                                             </td>
+                                            
                                         </tr>
                                     
                                         <% }) %>
