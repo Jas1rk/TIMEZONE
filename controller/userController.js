@@ -18,6 +18,16 @@ const userhome  = async(req,res)=>{
     }
 }
 
+const newArraivals = async(req,res)=>{
+  try {
+    const products = await Product.find({isBlocked:false}).sort({_id:-1}).limit(6)
+    const categories = await Category.find({isBlocked:false})
+    res.render('homepage',{products,categories})
+  } catch (error) {
+    console.log(err)
+  }
+}
+
 
 const userloginget = (req,res)=>{
     try{
@@ -283,16 +293,11 @@ const UserNewPassPost = async (req,res)=>{
 }
 
 
+
 const userLogout = async(req,res)=>{
     try{
-        console.log('heeeee');
-        req.session.destroy((err)=>{
-            if(err){
-                console.log("error in logout")
-            }else{
-                res.redirect('/login')
-            }
-        })
+        delete req.session.user
+        res.redirect('/')
 
     }catch(err){
         console.log(err.message)
@@ -331,7 +336,8 @@ module.exports = {
     UserNewPassGet,
     UserNewPassPost,
     userLogout,
-    productList
+    productList,
+    newArraivals
     
 
 }

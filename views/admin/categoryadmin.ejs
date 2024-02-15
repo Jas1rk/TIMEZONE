@@ -243,8 +243,7 @@
                                     </thead>
                                     <tbody>
                                         <% categories.forEach(element => { %>
-                                         
-                                        
+                                      
                                         <tr>
                                             <!-- <td class="text-center">
                                                 <div class="form-check">
@@ -252,7 +251,11 @@
                                                 </div>
                                             </td>
                                             -->
-                                            <td><b><%= element.name %></b></td>
+                                            
+                                            <td><b><%= element.name %></b><small class="text-muted">
+                                                <%= element._id %>
+
+                                            </small></td>
                                             <td><%= element.description %></td>
                                             <% if (element.isBlocked==true) { %>
                                                 <td><span class="badge rounded-pill alert-success" >Inactive</span></td>

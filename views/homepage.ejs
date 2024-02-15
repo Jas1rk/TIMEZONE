@@ -41,7 +41,7 @@
                                     <figure class="border-radius-10">
                                         <img src="assets/imgs/shop/product-16-2.jpg" alt="product image">
                                     </figure>
-                                    <figure class="border-radius-10">
+                                    <!-- <figure class="border-radius-10">
                                         <img src="assets/imgs/shop/product-16-1.jpg" alt="product image">
                                     </figure>
                                     <figure class="border-radius-10">
@@ -58,7 +58,7 @@
                                     </figure>
                                     <figure class="border-radius-10">
                                         <img src="assets/imgs/shop/product-16-7.jpg" alt="product image">
-                                    </figure>
+                                    </figure> -->
                                 </div>
                                 <!-- THUMBNAILS -->
                                 <div class="slider-nav-thumbnails pl-15 pr-15">
@@ -158,7 +158,7 @@
         </div>
     </div>
     <header class="header-area header-style-2 header-height-2">
-        <div class="header-top header-top-ptb-1 d-none d-lg-block">
+        <!-- <div class="header-top header-top-ptb-1 d-none d-lg-block">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-xl-3 col-lg-4">
@@ -185,10 +185,10 @@
                             <ul>
                                 <li>
                                     <a class="" href="#"> <i class="fi-rs-world"></i>English</a>
-                                    <!-- <ul class="language-dropdown">
+                                    <ul class="language-dropdown">
                                         <li><a href="#"><img src="assets/imgs/theme/flag-fr.png" alt="">Français</a></li>
                                         <li><a href="#"><img src="assets/imgs/theme/flag-ru.png" alt="">Pусский</a></li>
-                                    </ul> -->
+                                    </ul>
                                 </li>
                                 <li><i class="fi-rs-user"></i><a href="login">LogIn</a></li>
                                 <li><i class="fi-rs-user"></i><a href="register">SignIn</a></li>
@@ -203,12 +203,12 @@
                     
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
             <div class="container">
                 <div class="header-wrap">
                     <div class="logo logo-width-1">
-                        <a href="index.html"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
+                        <a href="/"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
@@ -227,11 +227,13 @@
                         </div>
                         <div class="header-action-right">
                             <div class="header-action-2">
+                              
                                 <div class="header-action-icon-2">
                                     <a href="shop-wishlist.html">
                                         <img class="svgInject" alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
                                         <span class="pro-count blue">4</span>
                                     </a>
+                                
                                 </div>
                                 <div class="header-action-icon-2">
                                     <a class="mini-cart-icon" href="shop-cart.html">
@@ -276,6 +278,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="header-action-icon-2">
+                                    <a href="/userprofile">
+                                        <img class="svgInject" alt="Evara" src="assets/imgs/theme/icons/pngwing.com.png">
+                                        
+                                    </a>
+                                
+                                </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -650,6 +660,7 @@
                                             
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <div class="header-action-icon-2 d-block d-lg-none">
@@ -966,13 +977,13 @@
                         <div class="tab-header">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one" type="button" role="tab" aria-controls="tab-one" aria-selected="true">Featured</button>
+                                    <button class="nav-link " id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one" type="button" role="tab" aria-controls="tab-one" aria-selected="true">Featured</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="nav-tab-two" data-bs-toggle="tab" data-bs-target="#tab-two" type="button" role="tab" aria-controls="tab-two" aria-selected="false">Popular</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="nav-tab-three" data-bs-toggle="tab" data-bs-target="#tab-three" type="button" role="tab" aria-controls="tab-three" aria-selected="false">New added</button>
+                                  <a href="/newarraival"><button class="nav-link" id="nav-tab-three"  type="button" >New added</button></a>
                                 </li>
                             </ul>
                             <a href="#" class="view-more d-none d-md-flex">View More<i class="fi-rs-angle-double-small-right"></i></a>
@@ -983,8 +994,6 @@
                                 <div class="row product-grid-4">
                                     <% for( let i =0;   i < products.length; i++ ) { %>
                                     
-                                   
-                                  
                                     <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
@@ -1677,13 +1686,15 @@
                             <!--En tab two (Popular)-->
                             <div class="tab-pane fade" id="tab-three" role="tabpanel" aria-labelledby="tab-three">
                                 <div class="row product-grid-4">
+                                    <% for( let i = 0; i < products.length; i++ ) { %>
+                                    
                                     <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html">
-                                                        <img class="default-img" src="assets/imgs/shop/product-2-1.jpg" alt="">
-                                                        <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt="">
+                                                        <img class="default-img" src="/uploads/<%= products[i].images[0] %>" alt="">
+                                                        <img class="hover-img" src="/uploads/<%= products[i].images[1] %>" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="product-action-1">
@@ -1691,23 +1702,23 @@
                                                     <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
                                                     <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                                 </div>
-                                                <div class="product-badges product-badges-position product-badges-mrg">
+                                                <!-- <div class="product-badges product-badges-position product-badges-mrg">
                                                     <span class="hot">Hot</span>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="product-content-wrap">
                                                 <div class="product-category">
-                                                    <a href="shop-grid-right.html">Music</a>
+                                                    <a href="shop-grid-right.html"><%= products[i].pname %></a>
                                                 </div>
-                                                <h2><a href="shop-product-right.html">Donec ut nisl rutrum</a></h2>
+                                                <h2><a href="shop-product-right.html"><%= products[i].description %></a></h2>
                                                 <div class="rating-result" title="90%">
-                                                    <span>
+                                                    <!-- <span>
                                                         <span>90%</span>
-                                                    </span>
+                                                    </span> -->
                                                 </div>
                                                 <div class="product-price">
-                                                    <span>$238.85 </span>
-                                                    <span class="old-price">$245.8</span>
+                                                    <span>$<%= products[i].offprice %> </span>
+                                                    <span class="old-price">$<%= products[i].regprice %></span>
                                                 </div>
                                                 <div class="product-action-1 show">
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
@@ -1715,7 +1726,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    <% } %>
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1752,8 +1764,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1790,8 +1802,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1828,8 +1840,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1866,8 +1878,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1904,8 +1916,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1942,8 +1954,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -1979,8 +1991,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                    </div> -->
+                                    <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6">
                                         <div class="product-cart-wrap mb-30">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
@@ -2014,7 +2026,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <!--End product-grid-4-->
                             </div>
@@ -2038,7 +2050,7 @@
             </div>
         </section>
         <section class="popular-categories section-padding mt-15">
-            <div class="container wow fadeIn animated">
+            <!-- <div class="container wow fadeIn animated">
                 <h3 class="section-title mb-20"><span>Popular</span> Categories</h3>
                 <div class="carausel-6-columns-cover position-relative">
                     <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-arrows"></div>
@@ -2093,10 +2105,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </section>
         <section class="deals section-padding">
-            <div class="container">
+            <!-- <div class="container">
                 <div class="row">
                     <div class="col-lg-6 deal-co">
                         <div class="deal wow fadeIn animated mb-md-4 mb-sm-4 mb-lg-0" style="background-image: url('assets/imgs/banner/menu-banner-7.jpg');">
@@ -2133,7 +2145,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </section>
         <section class="section-padding">
             <div class="container wow fadeIn animated">
@@ -2141,12 +2153,16 @@
                 <div class="carausel-6-columns-cover position-relative">
                     <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-2-arrows"></div>
                     <div class="carausel-6-columns carausel-arrow-center" id="carausel-6-columns-2">
+                       
+                        <% for( let i = 0; i < products.length; i++ ) { %>
+                        
+                     
                         <div class="product-cart-wrap small hover-up">
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
                                     <a href="shop-product-right.html">
-                                        <img class="default-img" src="assets/imgs/shop/product-2-1.jpg" alt="">
-                                        <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt="">
+                                        <img class="default-img" src="/uploads/<%= products[i].images[0] %>" alt="">
+                                        <img class="hover-img" src="/uploads/<%= products[i].images[1] %>" alt="">
                                     </a>
                                 </div>
                                 <div class="product-action-1">
@@ -2155,24 +2171,26 @@
                                     <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
                                     <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a>
                                 </div>
-                                <div class="product-badges product-badges-position product-badges-mrg">
+                                <!-- <div class="product-badges product-badges-position product-badges-mrg">
                                     <span class="hot">Hot</span>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="product-content-wrap">
-                                <h2><a href="shop-product-right.html">Lorem ipsum dolor</a></h2>
+                                <h2><a href="shop-product-right.html"><%= products[i].pname %></a></h2>
                                 <div class="rating-result" title="90%">
                                     <span>
                                     </span>
                                 </div>
                                 <div class="product-price">
-                                    <span>$238.85 </span>
-                                    <span class="old-price">$245.8</span>
+                                    <span>$<%= products[i].offprice %> </span>
+                                    <span class="old-price">$<%= products[i].regprice %></span>
                                 </div>
                             </div>
                         </div>
+                        <% } %>
+                       
                         <!--End product-cart-wrap-2-->
-                        <div class="product-cart-wrap small hover-up">
+                        <!-- <div class="product-cart-wrap small hover-up">
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
                                     <a href="shop-product-right.html">
@@ -2201,9 +2219,9 @@
                                     <span class="old-price">$185.8</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!--End product-cart-wrap-2-->
-                        <div class="product-cart-wrap small hover-up">
+                        <!-- <div class="product-cart-wrap small hover-up">
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
                                     <a href="shop-product-right.html">
@@ -2233,7 +2251,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--End product-cart-wrap-2-->
+                        End product-cart-wrap-2--
                         <div class="product-cart-wrap small hover-up">
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
@@ -2264,7 +2282,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--End product-cart-wrap-2-->
+                        <End product-cart-wrap-2--
                         <div class="product-cart-wrap small hover-up">
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
@@ -2295,7 +2313,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--End product-cart-wrap-2-->
+                        <!--End product-cart-wrap-2--
                         <div class="product-cart-wrap small hover-up">
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
@@ -2326,7 +2344,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--End product-cart-wrap-2-->
+                        <!--End product-cart-wrap-2--
                         <div class="product-cart-wrap small hover-up">
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
@@ -2353,7 +2371,7 @@
                                     <span class="old-price">$245.8</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!--End product-cart-wrap-2-->
                     </div>
                 </div>
@@ -2427,12 +2445,15 @@
                                 <div class="carausel-4-columns-cover arrow-center position-relative">
                                     <div class="slider-arrow slider-arrow-2 carausel-4-columns-arrow" id="carausel-4-columns-arrows"></div>
                                     <div class="carausel-4-columns carausel-arrow-center" id="carausel-4-columns">
+                                        <% for( let i = 0; i < products.length; i++ ) { %>
+                                        
+                                       
                                         <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html">
-                                                        <img class="default-img" src="assets/imgs/shop/product-1-1.jpg" alt="">
-                                                        <img class="hover-img" src="assets/imgs/shop/product-1-2.jpg" alt="">
+                                                        <img class="default-img" src="/uploads/<%= products[i].images[0] %>" alt="">
+                                                        <img class="hover-img" src="/uploads/<%= products[i].images[1] %>" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="product-action-1">
@@ -2447,24 +2468,25 @@
                                             </div>
                                             <div class="product-content-wrap">
                                                 <div class="product-category">
-                                                    <a href="shop-grid-right.html">Nulla</a>
+                                                    <a href="shop-grid-right.html"><%= products[i].pname %></a>
                                                 </div>
-                                                <h2><a href="shop-product-right.html">Maecenas eget</a></h2>
+                                                <h2><a href="shop-product-right.html"><%= products[i].description %></a></h2>
                                                 <div class="rating-result" title="90%">
-                                                    <span>
+                                                    <!-- <span>
                                                         <span>70%</span>
-                                                    </span>
+                                                    </span> -->
                                                 </div>
                                                 <div class="product-price">
-                                                    <span>$238.85 </span>
-                                                    <span class="old-price">$245.8</span>
+                                                    <span>$<%= products[i].offprice %> </span>
+                                                    <span class="old-price">$<%= products[i].regprice %></span>
                                                 </div>
                                                 <div class="product-action-1 show">
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="product-cart-wrap">
+                                        <% } %>
+                                        <!-- <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html">
@@ -2500,8 +2522,8 @@
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="product-cart-wrap">
+                                        </div> -->
+                                        <!-- <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html">
@@ -2537,8 +2559,8 @@
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="product-cart-wrap">
+                                        </div> -->
+                                        <!-- <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html">
@@ -2574,8 +2596,8 @@
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="product-cart-wrap">
+                                        </div> -->
+                                        <!-- <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html">
@@ -2611,7 +2633,7 @@
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -2620,12 +2642,15 @@
                                 <div class="carausel-4-columns-cover arrow-center position-relative">
                                     <div class="slider-arrow slider-arrow-2 carausel-4-columns-arrow" id="carausel-4-columns-2-arrows"></div>
                                     <div class="carausel-4-columns carausel-arrow-center" id="carausel-4-columns-2">
+                                        <% for( let i = 0; i < products.length; i++ ) { %>
+                                        
+                                      
                                         <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html">
-                                                        <img class="default-img" src="assets/imgs/shop/product-6-1.jpg" alt="">
-                                                        <img class="hover-img" src="assets/imgs/shop/product-6-2.jpg" alt="">
+                                                        <img class="default-img" src="/uploads/<%=products[i].images[0]  %>" alt="">
+                                                        <img class="hover-img" src="/uploads/<%= products[i].images[1] %>" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="product-action-1">
@@ -2640,24 +2665,25 @@
                                             </div>
                                             <div class="product-content-wrap">
                                                 <div class="product-category">
-                                                    <a href="shop-grid-right.html">Watch</a>
+                                                    <a href="shop-grid-right.html"><%= products[i].pname %></a>
                                                 </div>
-                                                <h2><a href="shop-product-right.html">Cotton Leaf Printed 2</a></h2>
+                                                <h2><a href="shop-product-right.html"><%= products[i].description %></a></h2>
                                                 <div class="rating-result" title="90%">
-                                                    <span>
+                                                    <!-- <span>
                                                         <span>70%</span>
-                                                    </span>
+                                                    </span> -->
                                                 </div>
                                                 <div class="product-price">
-                                                    <span>$238.85 </span>
-                                                    <span class="old-price">$245.8</span>
+                                                    <span>$<%= products[i].offprice %> </span>
+                                                    <span class="old-price">$<%= products[i].regprice %></span>
                                                 </div>
                                                 <div class="product-action-1 show">
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="product-cart-wrap">
+                                        <% } %>
+                                        <!-- <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html">
@@ -2693,8 +2719,8 @@
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="product-cart-wrap">
+                                        </div> -->
+                                        <!-- <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html">
@@ -2730,8 +2756,8 @@
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="product-cart-wrap">
+                                        </div> -->
+                                        <!-- <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html">
@@ -2767,8 +2793,8 @@
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="product-cart-wrap">
+                                        </div> -->
+                                        <!-- <div class="product-cart-wrap">
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="shop-product-right.html">
@@ -2804,7 +2830,7 @@
                                                     <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>

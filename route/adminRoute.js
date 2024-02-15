@@ -17,9 +17,9 @@ admin_router.get('/logout',admincontroller.logoutAdmin)
 
 
 
-admin_router.get('/userList',isAdmin,userlistcontroller.loadUserList)
-admin_router.get('/userBlock',isAdmin,userlistcontroller.blockUser)
-admin_router.get('/userUnblock',isAdmin,userlistcontroller.unblockUser)
+admin_router.get('/userList',userlistcontroller.loadUserList)
+admin_router.get('/userBlock',userlistcontroller.blockUser)
+admin_router.get('/userUnblock',userlistcontroller.unblockUser)
 
 
 admin_router.get('/admincategory',adminCategoryController.admincategory)
@@ -36,7 +36,7 @@ admin_router.get('/productedit',productcontroller.adminProductEdit)
 admin_router.post('/producteditpost',upload.array("image"),productcontroller.adminEditProductPost)
 admin_router.get('/blockproduct',productcontroller.adminProductBloack)
 admin_router.get('/unblockproduct',productcontroller.adminUnblockproduct)
-admin_router.get('/deleteimage', productcontroller.deleteImage);
+admin_router.post('/deleteimage', productcontroller.deleteImage);
 
 
 

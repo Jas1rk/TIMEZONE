@@ -1,12 +1,11 @@
 const User = require('../model/userModel')
-const Admin = require('../model/adminModel')
 
 const isUser = async(req,res,next)=>{
     try{
         if(req.session.user){
-            next()
+           res.redirect('/')
         }else{
-            redirect("/")
+          next()
         }
 
     }catch(err){
@@ -14,25 +13,23 @@ const isUser = async(req,res,next)=>{
     }
 }
 
+const isLogout = async(req,res,next)=>{
+    try{
+        if(req.session.user){
+            next()
+        }else{
+            redirect('/login')
+        }
+    }catch(err){
+        console.log(err)
+    }
+}
+
 
 
 const isAdmin = async(req,res,next)=>{
     try{
-        if(req.session.admin){
-         Admin.findOne({email:req.session.admin}).lean()
-            .then((data)=>{
-                if(data){
-                    next()
-                }else{
-                    res.redirect('/admin')
-                }
-            })
-            .catch((error)=>{
-                if(err){
-                    console.error("Error",error)
-                }
-            })
-        }
+       
 
     }catch(err){
       console.log(err.message)
@@ -40,5 +37,27 @@ const isAdmin = async(req,res,next)=>{
 }
 
 
+const isBlocked = async(req,res,next)=>{
+  try{
+    if(req.session.user){
+    const data = await User.findOne({email:req.session.user.email})
+   
+    if(data.isBlocked == true){
+     res.render('userlogin')
+    }else{
+     next()
+    }
+}else{
+    next()
+}
+  }catch(err){
+    console.log(err)
+  }
+}
 
-module.exports = {isUser,isAdmin}
+module.exports = {
+    isUser,
+    isAdmin,
+    isLogout,
+    isBlocked
+}
