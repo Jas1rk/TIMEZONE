@@ -464,36 +464,34 @@
                                         <!-- <p class="mb-50 font-sm">
                                             Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy
                                         </p> -->
-                                        <% if (locals.message) { %>
-                                           <p id="msg" class=" text text-danger"><%= message %></p>
-                                        <% } %>
+                                       
                                         <form id="form" method="post" action="/register">
                                             <div class="form-group">
-                                                <input type="text" name="username" placeholder="Username" id="username">
+                                                <input type="text" name="username" placeholder="Username" id="username" onclick="clrname()">
                                               
                                                 <p id="error1" style="color: red;"></p>
 
                                             </div>
                                             <div class="form-group">
-                                                <input type="text"  name="email" placeholder="Email" id="email">
+                                                <input type="text"  name="email" placeholder="Email" id="email" onclick="clremail()">
                                                
                                                 <p id="error2" style="color: red;"></p>
 
                                             </div>
                                             <div class="form-group">
-                                                <input type="number" name="mobile" placeholder="Mobile" id="mobile">
+                                                <input type="number" name="mobile" placeholder="Mobile" id="mobile" onclick="clrmobile()">
                                                
                                                 <p id="error3" style="color: red;"></p>
 
                                             </div>
                                             <div class="form-group">
-                                                <input  type="password" name="password1" placeholder="Password" id="pass1">
+                                                <input  type="password" name="password1" placeholder="Password" id="pass1" onclick="clrpassword1()">
                                                
                                                 <p id="error4" style="color: red;"></p>
 
                                             </div>
                                             <div class="form-group">
-                                                <input type="password"  name="password2" placeholder="Confirm password" id="pass2">
+                                                <input type="password"  name="password2" placeholder="Confirm password" id="pass2" onclick="clrpassword2()">
                                                
                                                 <p id="error5" style="color: red;"></p>
                                                    
@@ -679,12 +677,27 @@
     <!-- Template  JS -->
     <script src="assets/js/maind134.js?v=3.4"></script>
 </body>
-<script>
+<!-- <script>
     setTimeout(() => {
         document.getElementById("msg").style.display='none'
     }, 2000);
-</script>
+</script> -->
 <script>
+    function clrname(){
+        document.getElementById('error1').textContent = ""
+    }
+    function clremail(){
+        document.getElementById('error2').textContent = ""
+    }
+    function clrmobile(){
+        document.getElementById('error3').textContent = ""
+    }
+    function clrpassword1(){
+        document.getElementById('error4').textContent = ""
+    }
+    function clrpassword2(){
+        document.getElementById('error5').textContent = ""
+    }
     const userId = document.getElementById('username')
     const emailId = document.getElementById('email')
     const mobileId = document.getElementById('mobile')
@@ -739,7 +752,7 @@
            
         }else if(mobilevali.length!==10 ||/^(.)\1{9}$/.test(mobilevali)){
             error3.style.display ="block"
-            error3.innerHTML = ""
+            error3.innerHTML = "Number should be 10 digit"
         }else{
             error3.style.disply = "none"
             error3.innerHTML = ""
@@ -754,28 +767,26 @@
         if(passvali.length < 6){
             error4.style.display = ""
             error4.innerHTML = "Must have 6 charecters"
-            setTimeout(() => {
-                error4.style.display = "none"
-            }, 2000);
-        }else if(!passpatern.test(passvali)||!dgit.test(passvali)){
+           
+        }else if(!passpatern.test(passvali)||!digit.test(passvali)){
             error4.style.display ="block"
-            error.innerHTML = "Should contain Numbers and Alphabets"
+            error4.innerHTML = "Should contain Numbers and Alphabets"
         }
 
 
     }
 
     function confimePassvalidate(){
-        const passvali = confirmeId.value
+        const passvalid = confirmeId.value
         const passpatern =  /[a-zA-Z]/
         const digit = /\d/
 
-        if(passvali.length < 6){
-            error4.style.display = ""
-            error4.innerHTML = "Must have 6 charecters"
-        }else if(!passpatern.test(passvali)||!dgit.test(passvali)){
-            error4.style.display ="block"
-            error.innerHTML = "Should contain Numbers and Alphabets"
+        if(passvalid!==passvali){
+            error5.style.display = "block"
+            error5.innerHTML = "Passwords do not match"
+        }else if(!passpatern.test(passvalid)||!digit.test(passvalid)){
+            error5.style.display ="block"
+            error5.innerHTML = "Should contain Numbers and Alphabets"
         }
     }
 

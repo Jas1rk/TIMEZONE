@@ -213,15 +213,7 @@
                     <div class="header-right">
                         <div class="search-style-2">
                             <form action="#">
-                                <select class="select-active">
-                                    <option>All Categories</option>
-                                    <% categories.forEach(element => { %>
-                                     
-                                   
-                                    <option><%= element.name %></option>
-                                    <% }) %>
-                                    
-                                </select>
+                               
                                 <input type="text" placeholder="Search for items...">
                             </form>
                         </div>
@@ -977,10 +969,10 @@
                         <div class="tab-header">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link " id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one" type="button" role="tab" aria-controls="tab-one" aria-selected="true">Featured</button>
+                                  <a href="/"><button class="nav-link " id="nav-tab-one" >Featured</button></a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="nav-tab-two" data-bs-toggle="tab" data-bs-target="#tab-two" type="button" role="tab" aria-controls="tab-two" aria-selected="false">Popular</button>
+                                    <button class="nav-link" id="nav-tab-two">Popular</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                   <a href="/newarraival"><button class="nav-link" id="nav-tab-three"  type="button" >New added</button></a>
@@ -1005,7 +997,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="product-action-1">
-                                                    <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
+                                                    <!-- <a aria-label="Quick view" class="action-btn hover-up" href="/products?_id=<%= products[i]._id %>" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a> -->
                                                     <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
                                                     <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                                 </div>

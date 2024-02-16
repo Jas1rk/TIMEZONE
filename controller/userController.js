@@ -80,7 +80,7 @@ const registerPost = async(req,res)=>{
     console.log(req.body,"body");
     const {username,email,mobile,password1,password2} = req.body
     if(!username,!email,!mobile,!password1,!password2){
-        res.render('userregister',{message:"All fields are required"})
+       console.log('all fields required')
     }
     if(password1!==password2){
         res.render('userregister',{message:"Passwords don't match"})
@@ -177,7 +177,7 @@ const otpVerificationPost = async(req,res)=>{
         res.redirect('/login')
        } else {
         console.log("invalid otp")
-        res.status(400).json({error:"invalid otp"})
+        res.render('userverifyotp',{message:"Invalid Otp"})
        }
     }catch(err){
         console.log(err);
@@ -245,7 +245,7 @@ const validateForgetPassOtp =async(req,res)=>{
         res.redirect('/newPassPage')
           
     }else{
-        res.status(400).json({error:"Otp is incorrect"})
+        res.render('forgotpassotp',{message:"Invalid Otp"})
         console.log("invalid otp")
     }
    }catch(err){
@@ -296,6 +296,7 @@ const UserNewPassPost = async (req,res)=>{
 
 const userLogout = async(req,res)=>{
     try{
+        console.log('session deleted');
         delete req.session.user
         res.redirect('/')
 

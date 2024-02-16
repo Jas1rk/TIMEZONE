@@ -491,10 +491,9 @@
                                             </div>
                                             <div class="form-group">
                                                
-                                                    <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login" value="Submit" onclick="validform()">Log in</button>
+                                                    <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login" value="Submit" >Log in</button>
                                                     
-                                                        <!-- <p id="error" style="color: red; ;">password is wrong</p> -->
-                                                        <!-- <p id="emailError" style="color: red;display: none ;">email is wrong</p> -->
+                                                    
                                                    
                                                    
                                               
@@ -662,24 +661,7 @@
     
 </body>
 <script>
-    function validform(){
-        document.getElementById('email_error').innerText = ''
-        document.getElementById('password_error').innerText = ''
-
-        var email = document.getElementById('email').value.trim()
-        var password = document.getElementById('password').value.trim()
-
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/ ;
-        if(!emailRegex.test(email)){
-            document.getElementById('email_error').innerText = "invalid email please type";
-            return
-        }
-
-        if(password.length < 6){
-            document.getElementById('password_error').innerText = 'password must be at least 8 charechters'
-        }
-       
-    }
+  
 </script>
 
 

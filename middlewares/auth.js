@@ -15,10 +15,11 @@ const isUser = async(req,res,next)=>{
 
 const isLogout = async(req,res,next)=>{
     try{
+        
         if(req.session.user){
             next()
         }else{
-            redirect('/login')
+            redirect('/')
         }
     }catch(err){
         console.log(err)

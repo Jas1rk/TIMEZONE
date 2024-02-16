@@ -54,6 +54,9 @@
                                         <div class="heading_s1">
                                             <h3 class="mb-30">OTP</h3>
                                         </div>
+                                        <% if (locals.message) { %>
+                                         <p id="msg" class="text text-danger"><%= locals.message %></p>
+                                        <% } %>
                                         <form method="post" action="/verify">
                                             <div class="form-group">
                                                 <input type="number" required="" name="otp" placeholder="Enter 4 Digital Code">

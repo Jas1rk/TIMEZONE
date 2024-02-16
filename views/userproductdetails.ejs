@@ -32,10 +32,13 @@
                                 <span class="zoom-icon"><i class="fi-rs-search"></i></span>
                                 <!-- MAIN SLIDES -->
                                 <div class="product-image-slider">
+                                    <% for( let i = 0; i < productData.images.length; i++ ) { %>
+                                    
+                                    
                                     <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product-16-2.jpg" alt="product image">
+                                        <img src="/uploads/<%= productData.images[i] %>" alt="product image">
                                     </figure>
-                                    <figure class="border-radius-10">
+                                    <!-- <figure class="border-radius-10">
                                         <img src="assets/imgs/shop/product-16-1.jpg" alt="product image">
                                     </figure>
                                     <figure class="border-radius-10">
@@ -52,17 +55,22 @@
                                     </figure>
                                     <figure class="border-radius-10">
                                         <img src="assets/imgs/shop/product-16-7.jpg" alt="product image">
-                                    </figure>
+                                    </figure> -->
+                                    <% } %>
                                 </div>
                                 <!-- THUMBNAILS -->
                                 <div class="slider-nav-thumbnails pl-15 pr-15">
-                                    <div><img src="assets/imgs/shop/thumbnail-3.jpg" alt="product image"></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-4.jpg" alt="product image"></div>
+                                    <% for( let i = 0; i < productData.images.length; i++ ) { %>
+                                    
+                                    
+                                    <div><img src="/uploads/<%= productData.images[i] %>" alt="product image"></div>
+                                    <!-- <div><img src="assets/imgs/shop/thumbnail-4.jpg" alt="product image"></div>
                                     <div><img src="assets/imgs/shop/thumbnail-5.jpg" alt="product image"></div>
                                     <div><img src="assets/imgs/shop/thumbnail-6.jpg" alt="product image"></div>
                                     <div><img src="assets/imgs/shop/thumbnail-7.jpg" alt="product image"></div>
                                     <div><img src="assets/imgs/shop/thumbnail-8.jpg" alt="product image"></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-9.jpg" alt="product image"></div>
+                                    <div><img src="assets/imgs/shop/thumbnail-9.jpg" alt="product image"></div> -->
+                                    <% } %>
                                 </div>
                             </div>
                             <!-- End Gallery -->
@@ -200,15 +208,7 @@
                     <div class="header-right">
                         <div class="search-style-2">
                             <form action="#">
-                                <select class="select-active">
-                                    <option>All Categories</option>
-                                    <% categories.forEach(element => { %>
-                                     
-                                   
-                                    <option><%= element.name %></option>
-                                    <% }) %>
-                                   
-                                </select>
+                               
                                 <input type="text" placeholder="Search for items...">
                             </form>
                         </div>
@@ -1263,17 +1263,19 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="row related-products">
+                                        <% for( let i = 0; i < productData.length; i++ ) { %>
+                                        
                                         <div class="col-lg-3 col-md-4 col-12 col-sm-6">
                                             <div class="product-cart-wrap small hover-up">
                                                 <div class="product-img-action-wrap">
                                                     <div class="product-img product-img-zoom">
-                                                        <a href="shop-product-right.html" tabindex="0">
-                                                            <img class="default-img" src="assets/imgs/shop/product-2-1.jpg" alt="">
-                                                            <img class="hover-img" src="assets/imgs/shop/product-2-2.jpg" alt="">
+                                                        <a href="/products?_id=<%= productData[i]._id %>" tabindex="0">
+                                                            <img class="default-img" src="/uploads/<%= productData[i].images[0] %>" alt="">
+                                                            <img class="hover-img" src="/uploads/<%= productData[i].images[1] %>" alt="">
                                                         </a>
                                                     </div>
                                                     <div class="product-action-1">
-                                                        <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-search"></i></a>
+                                                        <!-- <a aria-label="Quick view" class="action-btn small hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-search"></i></a> -->
                                                         <a aria-label="Add To Wishlist" class="action-btn small hover-up" href="shop-wishlist.html" tabindex="0"><i class="fi-rs-heart"></i></a>
                                                         <a aria-label="Compare" class="action-btn small hover-up" href="shop-compare.html" tabindex="0"><i class="fi-rs-shuffle"></i></a>
                                                     </div>
@@ -1282,19 +1284,20 @@
                                                     </div>
                                                 </div>
                                                 <div class="product-content-wrap">
-                                                    <h2><a href="shop-product-right.html" tabindex="0">Ulstra Bass Headphone</a></h2>
+                                                    <h2><a href="/products?_id=<%= productData[i]._id %>" tabindex="0"><%= productData.pname %></a></h2>
                                                     <div class="rating-result" title="90%">
-                                                        <span>
-                                                        </span>
+                                                        <!-- <span>
+                                                        </span> -->
                                                     </div>
                                                     <div class="product-price">
-                                                        <span>$238.85 </span>
-                                                        <span class="old-price">$245.8</span>
+                                                        <span><%= productData[i].offprice %> </span>
+                                                        <span class="old-price">$<%= productData[i].regprice %></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                                        <% } %>
+                                        <!-- <div class="col-lg-3 col-md-4 col-12 col-sm-6">
                                             <div class="product-cart-wrap small hover-up">
                                                 <div class="product-img-action-wrap">
                                                     <div class="product-img product-img-zoom">
@@ -1324,8 +1327,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                                        </div> -->
+                                        <!-- <div class="col-lg-3 col-md-4 col-12 col-sm-6">
                                             <div class="product-cart-wrap small hover-up">
                                                 <div class="product-img-action-wrap">
                                                     <div class="product-img product-img-zoom">
@@ -1355,8 +1358,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                                        </div> -->
+                                        <!-- <div class="col-lg-3 col-md-4 col-12 col-sm-6">
                                             <div class="product-cart-wrap small hover-up mb-0">
                                                 <div class="product-img-action-wrap">
                                                     <div class="product-img product-img-zoom">
@@ -1386,7 +1389,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
