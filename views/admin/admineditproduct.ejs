@@ -406,7 +406,7 @@
                 index
             },
             success:(response)=>{
-                if(response.data){
+                if(response.status === 'success'){
                     window.location.reload()
                 }
             }

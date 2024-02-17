@@ -1,4 +1,6 @@
 const User = require('../model/userModel')
+const Product = require('../model/productModel')
+const Category = require('../model/categoryModel')
 
 const isUser = async(req,res,next)=>{
     try{
@@ -15,11 +17,12 @@ const isUser = async(req,res,next)=>{
 
 const isLogout = async(req,res,next)=>{
     try{
+      
         
         if(req.session.user){
             next()
         }else{
-            redirect('/')
+            res.redirect('/')
         }
     }catch(err){
         console.log(err)

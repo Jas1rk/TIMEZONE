@@ -149,7 +149,7 @@ const deleteImage = async (req, res) => {
         prod.images.splice(index,1)
         await prod.save();
      
-        res.json('success')
+        res.json({status:'success'})
        
     } catch (err) {
         console.log(err.message)

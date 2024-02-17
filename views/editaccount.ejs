@@ -65,7 +65,7 @@
             <div class="container">
                 <div class="header-wrap header-space-between position-relative">
                     <div class="logo logo-width-1">
-                        <a href="index.html"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
+                        <a href="/"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
                     </div>
                     <div class="main-menu main-menu-grow main-menu-padding-1 main-menu-lh-1 main-menu-mrg-1 hm3-menu-padding d-none d-lg-block hover-boder">
                         <nav>
@@ -446,24 +446,23 @@
                 <div class="row">
                     <div class="col-lg-10 m-auto">
                         <div class="row">
-
                             <div class="col-md-4">
                                 <div class="dashboard-menu">
                                     <ul class="nav flex-column" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link " id="dashboard-tab"  href="/userprofile" ><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
+                                            <a class="nav-link " id="dashboard-tab" href="/userprofile"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="orders-tab"  href="#orders" ><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
+                                            <a class="nav-link" id="orders-tab"  href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="track-orders-tab" href="/changepassword" ><i class="fi-rs-shopping-cart-check mr-10"></i>Change Password</a>
+                                            <a class="nav-link " id="track-orders-tab"  href="/changepassword"><i class="fi-rs-shopping-cart-check mr-10"></i>Change Password</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="address-tab"  href="/address"><i class="fi-rs-marker mr-10"></i>My Address</a>
+                                            <a class="nav-link" id="address-tab"  href="/address" ><i class="fi-rs-marker mr-10"></i>My Address</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="account-detail-tab"  href="/useraccount"><i class="fi-rs-user mr-10"></i>Account details</a>
+                                            <a class="nav-link" id="account-detail-tab"  href="/useraccount" ><i class="fi-rs-user mr-10"></i>Account details</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="/userlogout"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
@@ -473,54 +472,43 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="tab-content dashboard-content">
-                                    <div class="tab-pane fade active show" id="dashboard" >
-                                        <div class="card">
-                                            <div class="card-header d-flex justify-content-between align-items-center">
-                                                <h5 class="mb-0">Hello <%= addressData.username %>!</h5>
-                                                
-                                                   <a href="/addressadd"><button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit">Add Address</button></a>
-                                            
-                                            </div>
-                                            <div class="card-body text-center">
-                                              <p>No Address Found</p>
-                                            </div>
-                                        </div>
+                                    
 
-                                    </div>
-                                   
-                                    <div id="address " style="margin-top: 70px;" >
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="card mb-3 mb-lg-0">
-                                                    <div class="card-header">
-                                                        <h5 class="mb-0">Billing Address</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <address>3522 Interstate<br> 75 Business Spur,<br> Sault Ste. <br>Marie, MI 49783</address>
-                                                        <p>New York</p>
-                                                        
-                                                            <button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit">Save</button>
-                                                      
-                                                    </div>
-                                                </div>
+
+                                    <div  id="account-detail">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Edit Profile</h5>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5 class="mb-0">Shipping Address</h5>
+                                            <div class="card-body">
+                                                
+                                               
+                                                    <div class="row">
+                                                       
+                                                        <div class="form-group col-md-12">
+                                                            <label>Name <span class="required">*</span></label>
+                                                            <input  class="form-control square" name="name" type="text" id="name" value="<%= accountData.username %>">
+                                                            <p id="currenterror" class="text-danger"></p>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Email <span class="required">*</span></label>
+                                                            <input  class="form-control square" name="email" type="text" id="email" value="<%= accountData.email %>">
+                                                            <p id="newpasserror" class="text-danger"></p>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Mobile <span class="required">*</span></label>
+                                                            <input  class="form-control square" name="mobile" type="number" id="mobile" value="<%= accountData.mobile %>">
+                                                            <p id="confirmerror" class="text-danger"></p>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit" onclick="editprofile()">Save</button>
+                                                        </div>
                                                     </div>
-                                                    <div class="card-body">
-                                                        <address>4299 Express Lane<br>
-                                                            Sarasota, <br>FL 34249 USA <br>Phone: 1.941.227.4444</address>
-                                                        <p>Sarasota</p>
-                                                        
-                                                            <button type="submit" class="btn btn submit" name="submit" value="Submit">Save</button>
-                                                        
-                                                    </div>
-                                                </div>
+                                               
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
+
 
                                 </div>
                             </div>
@@ -626,25 +614,13 @@
             </div>
         </section>
         <div class="container pb-20 wow fadeIn animated">
-            <!-- <div class="row">
-                <div class="col-12 mb-20">
-                    <div class="footer-bottom"></div>
-                </div>
-                <div class="col-lg-6">
-                    <p class="float-md-left font-sm text-muted mb-0">&copy; 2022, <strong class="text-brand">Evara</strong> - HTML Ecommerce Template </p>
-                </div>
-                <div class="col-lg-6">
-                    <p class="text-lg-end text-start font-sm text-muted mb-0">
-                        Designed by <a href="http://alithemes.com/" target="_blank">Alithemes.com</a>. All rights reserved
-                    </p>
-                </div>
-            </div> -->
+           
         </div>
     </footer>
     <!-- Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
+            <!-- <div class="preloader-inner position-relative">
                 <div class="text-center">
                     <h5 class="mb-5">Now Loading</h5>
                     <div class="loader">
@@ -653,7 +629,7 @@
                         <div class="bar bar3"></div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- Vendor JS-->
@@ -678,7 +654,36 @@
     <script src="assets/js/plugins/jquery.theia.sticky.js"></script>
     <!-- Template  JS -->
     <script src="assets/js/maind134.js?v=3.4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 </body>
+ <script>
+    function editprofile(){
+        const name = document.getElementById('name').value
+        const email = document.getElementById('email').value
+        const mobile = document.getElementById('mobile').value
+      
+      $.ajax({
+        url:'/useraccountedit',
+        method:"post",
+        data:{
+            name,
+            email,
+            mobile
+
+        },
+        success:(response)=>{
+           if(response.status === "success"){
+            window.location.href = "/useraccount"
+           }
+
+           
+        }
+      })
+    }
+ </script>
 
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/page-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:11:15 GMT -->

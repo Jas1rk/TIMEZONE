@@ -46,7 +46,9 @@ app.use(nocache())
 app.use('/',userRoute)
 app.use('/admin',adminRoute)
 
-
+app.use('*',(req,res,next)=>{
+    res.render('error404')
+})
 
 
 const PORT = 3008

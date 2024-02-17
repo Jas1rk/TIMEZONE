@@ -40,9 +40,9 @@ const userloginget = (req,res)=>{
 const userloginPost =  async(req,res)=>{
   try {
     const {email,password} = req.body
-    console.log(req.body)
+    
     const loggedUser = await User.findOne({email})
-    console.log(loggedUser);
+   
     if(!loggedUser){
         res.render('userlogin',{message:"User not Found"})
     }

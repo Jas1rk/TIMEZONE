@@ -1263,7 +1263,9 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="row related-products">
-                                        <% for( let i = 0; i < productData.length; i++ ) { %>
+                                       <% for( let i = 0; i < productData.length; i++ ) { %>
+                                       
+                                     
                                         
                                         <div class="col-lg-3 col-md-4 col-12 col-sm-6">
                                             <div class="product-cart-wrap small hover-up">
@@ -1272,6 +1274,7 @@
                                                         <a href="/products?_id=<%= productData[i]._id %>" tabindex="0">
                                                             <img class="default-img" src="/uploads/<%= productData[i].images[0] %>" alt="">
                                                             <img class="hover-img" src="/uploads/<%= productData[i].images[1] %>" alt="">
+                                                           
                                                         </a>
                                                     </div>
                                                     <div class="product-action-1">
@@ -1284,7 +1287,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="product-content-wrap">
-                                                    <h2><a href="/products?_id=<%= productData[i]._id %>" tabindex="0"><%= productData.pname %></a></h2>
+                                                    <h2><a href="/products?_id=<%= productData[i]._id %>" tabindex="0"><%= productData[i].pname %></a></h2>
                                                     <div class="rating-result" title="90%">
                                                         <!-- <span>
                                                         </span> -->
@@ -1327,8 +1330,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> -->
-                                        <!-- <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                                        </div> 
+                                      <div class="col-lg-3 col-md-4 col-12 col-sm-6">
                                             <div class="product-cart-wrap small hover-up">
                                                 <div class="product-img-action-wrap">
                                                     <div class="product-img product-img-zoom">

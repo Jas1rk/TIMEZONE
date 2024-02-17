@@ -30,10 +30,14 @@ router.get('/userlogout',middle.isLogout,usercontroller.userLogout)
 
 
 router.get('/userprofile',userProfileController.userProfile)
-router.get('/changepassword',userProfileController.userChangePassword)
+router.get('/changepassword',middle.isLogout,userProfileController.userChangePassword)
+router.post('/changepassword',userProfileController.changePasswordPost)
 router.get('/address',userProfileController.addressGet)
 router.get('/addressadd',userProfileController.useraddAddress)
 router.get('/useraccount',userProfileController.userAccount)
+router.get('/useraccountedit',userProfileController.userAccountEdit)
+router.post('/useraccountedit',userProfileController.useraccountEditPost)
+
 
 
 
