@@ -322,6 +322,22 @@ const productList = async(req,res)=>{
     }
 }
 
+
+
+const priceLow = async(req,res)=>{
+    try{
+        
+      
+       const priceLowProducts = await Product.find({}).sort({regprice:1})
+       res.render('productsright',{priceLowProducts})
+       console.log(priceLowProducts)
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
+
+
 module.exports = {
     userhome,
     userloginget,
@@ -338,7 +354,8 @@ module.exports = {
     UserNewPassPost,
     userLogout,
     productList,
-    newArraivals
+    newArraivals,
+    priceLow
     
 
 }

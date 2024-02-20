@@ -25,15 +25,19 @@ router.post('/newPassPage',usercontroller.UserNewPassPost)
 
 router.get('/products',usercontroller.productList)
 router.get('/newarraival',usercontroller.newArraivals)
+router.get('/pricelow',usercontroller.priceLow)
 
 router.get('/userlogout',middle.isLogout,usercontroller.userLogout)
 
 
 router.get('/userprofile',userProfileController.userProfile)
-router.get('/changepassword',middle.isLogout,userProfileController.userChangePassword)
+router.get('/changepassword',userProfileController.userChangePassword)
 router.post('/changepassword',userProfileController.changePasswordPost)
 router.get('/address',userProfileController.addressGet)
 router.get('/addressadd',userProfileController.useraddAddress)
+router.post('/addressadd',userProfileController.addAddressPost)
+router.get('/addressedit',userProfileController.addressEditGet)
+router.post('/addressedit',userProfileController.addressEditPost)
 router.get('/useraccount',userProfileController.userAccount)
 router.get('/useraccountedit',userProfileController.userAccountEdit)
 router.post('/useraccountedit',userProfileController.useraccountEditPost)
