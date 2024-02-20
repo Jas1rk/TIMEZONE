@@ -18,6 +18,24 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="assets/css/maind134.css?v=3.4">
 </head>
+<style>
+   
+.edit-btn {
+  font-size: 12px; 
+  background-color: black;
+  color: white; 
+  
+}
+
+
+.delete-btn {
+  font-size: 12px;
+  background-color: black;
+  color: white;
+
+}
+
+</style>
 
 <body>
     <header class="header-area header-style-5">
@@ -475,58 +493,67 @@
                                 <div class="tab-content dashboard-content">
                                     <div class="tab-pane fade active show" id="dashboard" >
                                         <div class="card">
-                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                            <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #EEEDEB;">
                                               
+                                                <h5 style="color: rgb(0, 0, 0);">Hello !!!  <%= userData.username %></h5>
                                                 
-                                                   <a href="/addressadd"><button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit">Add Address</button></a>
+                                                   <a href="/addressadd"><button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit" style="margin-left:auto; border-color: black; background-color: transparent; color: black;">Add Address</button></a>
                                             
                                             </div>
-                                            <div class="card-body  text-center">
-                                              <p>No Address Found</p>
-                                            </div>
+                                           
                                         </div>
 
                                     </div>
-                                   
-                                    <div id="address " style="margin-top: 70px;" >
-                                        <div class="row">
-                                            <%if(locals.addressData){%>
-                                                <% addressData.forEach(element => { %>
-                                            <div class="col-lg-6">
-                                                <div class="card mb-3 mb-lg-0">
-                                                    <div class="card-header">
-                                                        <h5 class="mb-0">Home/work</h5>
-                                                    </div>
-                                                 
-                                                         
-                                                            <div class="card-body">
-                                                                <address>
-                                                                    <%= element.uname %>
-                                                                    <br><%= element.umobile %>
-                                                                    <br> <%= element.uaddress %>
-                                                                    <br><%= element.upin %>
-                                                                    <br><%= element.ulocation %>
-                                                                    <br><%= element.ucity %>
-                                                                    <br><%= element.ustate %>
-                                                                    <br><%= element.ucountry %>
-                                                                    <br><%= element.uaddresstype %>
-                                                                </address>
-                                                               
-                                                                <a href="/addressedit?_id=<%= element._id %>"><button type="submit" class="btn btn submit" name="submit" value="Submit">Edit</button></a>
-                                                                <button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit">Delete</button>
-                                                              
-                                                            </div>
+                                    <% if (addressData.length ===0) { %>
+                                        <div class="card-body  text-center" style="background-color: rgb(252, 251, 188); border-radius: 5px; margin-top: 15px; height: 100px;">
+                                            <h5 style="padding-top: 30px;">No Address Found</h5>
+                                          </div>
+                                    <% } else {%>
+                                        <div id="address " style="margin-top: 70px;" >
+                                            <div class="row">
+                                                <%if(locals.addressData){%>
+                                                    <% addressData.forEach(element => { %>
+                                                <div class="col-lg-6">
+                                                    <div class="card mb-3 mb-lg-0">
+                                                        <div class="card-header" style="background-color: #12372A;">
+                                                            <h5 class="mb-0" style="color: aliceblue;">Home/work</h5>
+                                                        </div>
+                                                     
+                                                             
+                                                                <div class="card-body" style="background-color: #EEEDEB">
+                                                                    <address>
+                                                                        <%= element.uname %>
+                                                                        <br><%= element.umobile %>
+                                                                        <br> <%= element.uaddress %>
+                                                                        <br><%= element.upin %>
+                                                                        <br><%= element.ulocation %>
+                                                                        <br><%= element.ucity %>
+                                                                        <br><%= element.ustate %>
+                                                                        <br><%= element.ucountry %>
+                                                                        <br><%= element.uaddresstype %>
+                                                                    </address>
+                                                                   
+                                                                    <a href="/addressedit?_id=<%= element._id %>">
+                                                                        <button type="submit" class=" edit-btn" name="submit" value="Submit" style="background-color: rgb(3, 3, 3)">Edit</button>
+                                                                      </a>
+                                                                      <button type="submit" class=" delete-btn" name="submit" value="Submit">Delete</button>
+                                                                      
+                                                                  
+                                                                </div>
+                                                           
                                                        
-                                                   
+                                                    </div>
                                                 </div>
+    
+                                                <% }) %>
+                                                <% } %>
+                                            
+                                               
                                             </div>
+                                        </div> 
 
-                                            <% }) %>
-                                            <%}%>
-                                        
-                                           
-                                        </div>
-                                    </div> 
+                                    <%}%>
+
 
                                 </div>
                             </div>

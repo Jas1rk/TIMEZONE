@@ -72,7 +72,8 @@ const addressGet = async (req, res) => {
     try {
         const userId = req.session.user
         const addressData = await Address.find({ user: userId })
-        res.render('address', { addressData })
+        const userData = await User.findOne({email:req.session.user.email})
+        res.render('address', { addressData,userData })
 
     } catch (err) {
         console.log(err.message)
@@ -90,7 +91,6 @@ const useraddAddress = async (req, res) => {
 const addAddressPost = async (req, res) => {
     try {
 
-      
         const userFind = await User.findOne({ email: req.session.user.email })
       
         if (userFind) {
@@ -120,6 +120,13 @@ const addAddressPost = async (req, res) => {
     }
 }
 
+const deletAddress = async(req,res)=>{
+    try{
+       
+    }catch(err){
+        console.log(err.message)
+    }
+}
 
 const addressEditGet = async(req,res)=>{
     try{
@@ -135,11 +142,11 @@ const addressEditGet = async(req,res)=>{
 
 const addressEditPost = async(req,res)=>{
     try{
+       
       const findAddress = await Address.findOne({_id:req.session.addressid})
       if(findAddress){
         const { name, mobile, address, pincode, location, city, sate, country, addresstype } = req.body
-
-        const updateAddress = await Address.findByIdAndUpdate(findAddress._id,{$set:{
+        const uData = {
             uname: name,
             umobile: mobile,
             uaddress: address,
@@ -149,9 +156,17 @@ const addressEditPost = async(req,res)=>{
             ustate: sate,
             ucountry: country,
             uaddresstype: addresstype
-        }})
-        console.log("updatted data",updateAddress)
-        res.json({staus:"updated"})
+        }
+        console.log(uData)
+        const updateAddress = await Address.updateOne({_id:findAddress._id},{$set:uData})
+       
+        console.log("updatted data",updateAddress);
+        if(updateAddress.modifiedCount===1){
+            res.json({status:"success"})
+        }else{
+            console.log('no changes found')
+        }
+       
       }else{
         console.log('connot find ')
       }
@@ -216,7 +231,8 @@ module.exports = {
     useraccountEditPost,
     addAddressPost,
     addressEditGet,
-    addressEditPost
+    addressEditPost,
+    deletAddress
 }
 
 

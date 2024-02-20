@@ -607,31 +607,37 @@
                                                 <h5> Add Address</h5>
                                             </div>
                                             <div class="card-body">
-                                              
+                                                  <p id="fillerror" class="text-danger"></p>
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
                                                             <label>Name <span class="required">*</span></label>
-                                                            <input  class="form-control square" name="uname" type="name" id="name">
+                                                            <input  class="form-control square" name="uname" type="name" id="name" onclick="clrname()">
+                                                            <p id="error1" class="text-danger"></p>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>Mobile <span class="required">*</span></label>
-                                                            <input  class="form-control square" name="umobile" type="number" id="mobile">
+                                                            <input  class="form-control square" name="umobile" type="number" id="mobile" onclick="clrphone()">
+                                                            <p id="error2" class="text-danger"></p>
                                                         </div>
-                                                        <div class="form-group col-md-12">
+                                                        <div class="group col-md-12">
                                                             <label>Address <span class="required">*</span></label>
-                                                            <textarea  name="uaddress" id="address" placeholder="Address"></textarea>
+                                                            <textarea  name="uaddress" id="address" placeholder="Address" onclick="clraddress()"></textarea>
+                                                            <p id="error3" class="text-danger"></p>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>Pincode <span class="required">*</span></label>
-                                                            <input  class="form-control square" name="upin" type="number" id="pincode">
+                                                            <input  class="form-control square" name="upin" type="number" id="pincode" onclick="clrpincode()">
+                                                            <p id="error4" class="text-danger"></p>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>Locality<span class="required">*</span></label>
-                                                            <input  class="form-control square" name="ulocation" type="text" id="location">
+                                                            <input  class="form-control square" name="ulocation" type="text" id="location" onclick="clrclocation()">
+                                                            <p id="error5" class="text-danger"></p>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>City/Town <span class="required">*</span></label>
-                                                            <input  class="form-control square" name="ucity" type="text" id="city">
+                                                            <input  class="form-control square" name="ucity" type="text" id="city" onclick="clrcity()">
+                                                            <p id="error6" class="text-danger"></p>
                                                         </div>
                                                         <div class=" col-md-6" >
                                                             <label>State <span class="required">*</span></label>
@@ -668,7 +674,8 @@
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                          <label>Country <span class="required">*</span></label>
-                                                         <input type="text" class="form-control square " name="country" id="country">
+                                                         <input type="text" class="form-control square " name="country" id="country" onclick="clrcountry()">
+                                                         <p id="error7" class="text-danger"></p>
 
                                                         </div>
                                                       <div class="col-lg-6 mb-20">
@@ -685,7 +692,9 @@
                                                     
                                                         <div class="col-md-12">
                                                             <button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit" onclick="addaddress()">Save</button>
+                                                            <a href="/address"><button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit">Cancel</button></a>
                                                         </div>
+                                                        
                                                     </div>
                                                
                                             </div>
@@ -851,19 +860,122 @@
 
 </body>
 <script>
-    
+    function clrname (){
+        document.getElementById('error1').textContent=""
+    }
+    function clrphone(){
+        document.getElementById('error2').textContent = ""
+    }
+    function clraddress(){
+        document.getElementById('error3').textContent = ""
+    }
+    function clrpincode(){
+        document.getElementById('error4').textContent = ""
+    }
+    function clrclocation (){
+        document.getElementById('error5').textContent = ""
+    }
+    function clrcity(){
+        document.getElementById('error6').textContent = ""
+    }
+    function clrcountry (){
+        document.getElementById('error7').textContent = ""
+    }
     function addaddress(){
-        const name = document.getElementById('name').value
-        const mobile = document.getElementById('mobile').value
-        const address = document.getElementById('address').value
-        const pincode = document.getElementById('pincode').value
-        const location = document.getElementById('location').value
-        const city = document.getElementById('city').value
+        const name = document.getElementById('name').value.trim()
+        const mobile = document.getElementById('mobile').value.trim()
+        const address = document.getElementById('address').value.trim()
+        const pincode = document.getElementById('pincode').value.trim()
+        const location = document.getElementById('location').value.trim()
+        const city = document.getElementById('city').value.trim()
         const sate = document.getElementById('sate').value
-        const country = document.getElementById('country').value
+        const country = document.getElementById('country').value.trim()
         const addresstype = document.getElementById('addresstype').value
+
+        const fillerror = document.getElementById('fillerror')
+        const nameError = document.getElementById('error1')
+        const phoneError = document.getElementById('error2')
+        const addressError = document.getElementById('error3')
+        const pinError = document.getElementById('error4')
+        const locationError = document.getElementById('error5')
+        const cityError = document.getElementById('error6')
+        const countryError = document.getElementById('error7')
+       
+        fillerror.textContent = ""
+        nameError.textContent = ""
+        phoneError.textContent = ""
+        addressError.textContent =""
+        pinError.textContent =""
+        locationError.textContent = ""
+        cityError.textContent =""
+        countryError.textContent=""
+
+        if(name==""){
+            nameError.textContent = "Name is required"
+        }else if(name.legth < 3){
+            nameError.textContent = "Name must have 3 charecter"
+        }else if(!/^[A-Za-z\s]+$/.test(name)){
+            nameError.textContent = "Name can only contain alphabets and spaces"
+        }
+        
+
+
+        if(mobile===""){
+            phoneError.textContent="Mobile is required"
+        }else if(!/^\d+$/.test(mobile)){
+            phoneError.textContent ="Phone number must contain only numbers"
+        }else if(mobile.length!==10){
+            phoneError.textContent = "Number Should be 10 digit"
+        }
+
+        if(address===""){
+            addressError.textContent = "Address is required"
+        }else if(!/^[a-zA-Z0-9\s,'/.()-]+$/.test(address)){
+            addressError.textContent = "Enter a valid"
+        }
+        
+
+        if(pincode===""){
+          pinError.textContent = "Pincode is required"
+        }else if(!/^\d+$/.test(pincode)){
+            pinError.textContent = "Pincode must contain only numbers"
+        }else if(pincode.length!== 6){
+            alert(pincode.length)
+            pinError.textContent = "Pincode must be 6 digit"
+        }
+ 
+        if(location ===""){
+            locationError.textContent = "Location is required"
+        }else if(!/^[a-zA-Z0-9\s,'-]+$/.test(location)){
+            locationError.textContent = "Enter valid location"
+        }
+
+
+
+
+        if(city===""){
+            cityError.textContent = "City is required"
+        }else if(!/^[a-zA-Z0-9\s,'-]+$/.test(city)){
+            cityError.textContent = "Enter a valid city"
+        }
+        
+
+        if(country==""){
+            countryError.textContent = "Country is required";
+        }else if (!/^[a-zA-Z0-9\s,'-]+$/.test(country))
+            countryError.textContent = "Enter a valid Country";
+
+
+        if(nameError.textContent!==""||phoneError.textContent!==""||addressError.textContent!==""||pinError.textContent!==""||locationError.textContent!==""||cityError.textContent!==""||countryError.textContent!==""){
+            fillerror.textContent = "Enter all fields"
+            setTimeout(() => {
+                fillerror.textContent = ""
+            }, 3000);
+        }else {
+           
         $.ajax({
-            url:"/addressadd",
+            
+            url:'/addressadd',
             method:"post",
             data:{
                 name,
@@ -881,11 +993,11 @@
                 if(response.status === "success"){
                     window.location.href = "/address"
 
-                }else{
-
                 }
             }
         })
+
+      }
     }
 </script>
 

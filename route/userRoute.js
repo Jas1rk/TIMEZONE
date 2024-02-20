@@ -41,6 +41,7 @@ router.post('/addressedit',userProfileController.addressEditPost)
 router.get('/useraccount',userProfileController.userAccount)
 router.get('/useraccountedit',userProfileController.userAccountEdit)
 router.post('/useraccountedit',userProfileController.useraccountEditPost)
+router.delete('deleteaddress',userProfileController.deletAddress)
 
 
 

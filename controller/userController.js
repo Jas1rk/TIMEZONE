@@ -47,7 +47,7 @@ const userloginPost =  async(req,res)=>{
         res.render('userlogin',{message:"User not Found"})
     }
     const hashedPassword = await bcrypt.compare(password,loggedUser.password)
-    console.log(hashedPassword,"passsword");
+    
     if(hashedPassword){
         if(loggedUser.isBlocked){
             res.render('userlogin',{message:"user has been blocked "})
@@ -83,21 +83,23 @@ const registerPost = async(req,res)=>{
        console.log('all fields required')
     }
     if(password1!==password2){
-        res.render('userregister',{message:"Passwords don't match"})
-    }
-    const existUser = await User.findOne({email:email})
-    
-    if(existUser){
-        res.render('userregister',{message:"user is already exist"})
-      
-       
+       console.log('passwords do not match')
     }else{
-       const otpVal =  await emailVerification(email);
-         console.log("otp:",otpVal)
-         req.session.temp = {username, email, mobile, password1, password2, otpVal};
-
-        res.redirect('/verify')
-       }
+        const existUser = await User.findOne({email:email})
+    
+        if(existUser){
+            res.render('userregister',{message:"user is already exist"})
+          
+           
+        }else{
+           const otpVal =  await emailVerification(email);
+             console.log("otp:",otpVal)
+             req.session.temp = {username, email, mobile, password1, password2, otpVal};
+    
+            res.redirect('/verify')
+           }
+    }
+  
  }catch(err){
     console.log(err);
  } 
