@@ -53,6 +53,7 @@ const userloginPost =  async(req,res)=>{
             res.render('userlogin',{message:"user has been blocked "})
         }
         req.session.user = loggedUser
+        
         res.redirect('/')
     }else{
         console.log('invalid password')
@@ -313,11 +314,11 @@ const userLogout = async(req,res)=>{
 const productList = async(req,res)=>{
     try{
       const productId = req.query._id
-      
+     
       req.session.productId = productId
       const productData = await Product.findOne({_id:productId})
       const categories = await Category.find({isBlocked:false})
-      console.log(productData)
+     
       res.render('userproductdetails',{productData,categories})
     }catch(err){
         console.log(err.message)

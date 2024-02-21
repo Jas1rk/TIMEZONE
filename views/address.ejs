@@ -20,12 +20,10 @@
 </head>
 <style>
    
-.edit-btn {
-  font-size: 12px; 
-  background-color: black;
-  color: white; 
-  
-}
+ #buttonedit :hover{
+   background-color: white !important; 
+   color: #3F2520 !important;
+ } 
 
 
 .delete-btn {
@@ -478,7 +476,7 @@
                                             <a class="nav-link" id="track-orders-tab" href="/changepassword" ><i class="fi-rs-shopping-cart-check mr-10"></i>Change Password</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="address-tab"  href="/address"><i class="fi-rs-marker mr-10"></i>My Address</a>
+                                            <a class="nav-link active" style="background-color: #3F2520;" id="address-tab"  href="/address"><i class="fi-rs-marker mr-10"></i>My Address</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="account-detail-tab"  href="/useraccount"><i class="fi-rs-user mr-10"></i>Account details</a>
@@ -493,18 +491,18 @@
                                 <div class="tab-content dashboard-content">
                                     <div class="tab-pane fade active show" id="dashboard" >
                                         <div class="card">
-                                            <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #EEEDEB;">
+                                            <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #3F2520;">
                                               
-                                                <h5 style="color: rgb(0, 0, 0);">Hello !!!  <%= userData.username %></h5>
+                                                <h5 style="color: white;">Hello !!!  <%= userData.username %></h5>
                                                 
-                                                   <a href="/addressadd"><button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit" style="margin-left:auto; border-color: black; background-color: transparent; color: black;">Add Address</button></a>
+                                                   <a href="/addressadd"><button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit" style="margin-left:auto; border-color: white; background-color: transparent; color: white;">Add Address</button></a>
                                             
                                             </div>
                                            
                                         </div>
 
                                     </div>
-                                    <% if (addressData.length ===0) { %>
+                                    <% if (addressData.length === 0) { %>
                                         <div class="card-body  text-center" style="background-color: rgb(252, 251, 188); border-radius: 5px; margin-top: 15px; height: 100px;">
                                             <h5 style="padding-top: 30px;">No Address Found</h5>
                                           </div>
@@ -515,12 +513,12 @@
                                                     <% addressData.forEach(element => { %>
                                                 <div class="col-lg-6">
                                                     <div class="card mb-3 mb-lg-0">
-                                                        <div class="card-header" style="background-color: #12372A;">
-                                                            <h5 class="mb-0" style="color: aliceblue;">Home/work</h5>
+                                                        <div class="card-header" style="background-color: #3F2520;">
+                                                            <h5 class="mb-0" style="color: aliceblue;"><%= element.uaddresstype %></h5>
                                                         </div>
                                                      
                                                              
-                                                                <div class="card-body" style="background-color: #EEEDEB">
+                                                                <div class="card-body" style="background-color: #ffffff; border :1px solid #3F2520 ; margin-top: 5px;" >
                                                                     <address>
                                                                         <%= element.uname %>
                                                                         <br><%= element.umobile %>
@@ -530,13 +528,13 @@
                                                                         <br><%= element.ucity %>
                                                                         <br><%= element.ustate %>
                                                                         <br><%= element.ucountry %>
-                                                                        <br><%= element.uaddresstype %>
+                                                                      
                                                                     </address>
                                                                    
                                                                     <a href="/addressedit?_id=<%= element._id %>">
-                                                                        <button type="submit" class=" edit-btn" name="submit" value="Submit" style="background-color: rgb(3, 3, 3)">Edit</button>
+                                                                        <button type="submit"  name="submit" value="Submit" style="background:#3F2520;" id="buttonedit">Edit</button>
                                                                       </a>
-                                                                      <button type="submit" class=" delete-btn" name="submit" value="Submit">Delete</button>
+                                                                      <a href="/deleteaddress?_id=<%= element._id %>"><button type="submit"  name="submit" value="Submit" style="border-color: black; background-color: transparent; color: black;">Delete</button></a>
                                                                       
                                                                   
                                                                 </div>

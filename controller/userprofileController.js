@@ -120,9 +120,17 @@ const addAddressPost = async (req, res) => {
     }
 }
 
+
+
 const deletAddress = async(req,res)=>{
     try{
-       
+        console.log('deleeeted')
+       const addressID = req.query._id
+       console.log(addressID)
+       const addressData = await Address.deleteOne({_id:addressID})
+       console.log('address deleted',addressData)
+       res.redirect('/address')
+
     }catch(err){
         console.log(err.message)
     }

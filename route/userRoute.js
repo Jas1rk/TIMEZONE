@@ -2,6 +2,7 @@ const express  = require('express')
 const router = express.Router()
 const usercontroller = require('../controller/userController')
 const userProfileController = require('../controller/userprofileController')
+const userCartController = require('../controller/cartController')
 const middle = require('../middlewares/auth')
 
 
@@ -41,11 +42,12 @@ router.post('/addressedit',userProfileController.addressEditPost)
 router.get('/useraccount',userProfileController.userAccount)
 router.get('/useraccountedit',userProfileController.userAccountEdit)
 router.post('/useraccountedit',userProfileController.useraccountEditPost)
-router.delete('deleteaddress',userProfileController.deletAddress)
+router.get('/deleteaddress',userProfileController.deletAddress)
 
 
 
-
+router.get('/usercart',userCartController.userCartGet)
+router.post('/usercart',userCartController.addToCart)
 
 
 module.exports =  router

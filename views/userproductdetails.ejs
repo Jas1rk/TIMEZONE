@@ -134,11 +134,11 @@
                                 </div>
                                 <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                                 <div class="detail-extralink">
-                                    <div class="detail-qty border radius">
+                                    <!-- <div class="detail-qty border radius">
                                         <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
                                         <span class="qty-val">1</span>
                                         <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                    </div>
+                                    </div> -->
                                     <div class="product-extra-link2">
                                         <button type="submit" class="button button-add-to-cart">Add to cart</button>
                                         <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
@@ -225,9 +225,9 @@
                                         <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
                                         <span class="pro-count blue">2</span>
                                     </a>
-                                    <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                        <ul>
-                                            <li>
+                                    <!-- <div class="cart-dropdown-wrap cart-dropdown-hm2"> -->
+                                        <!-- <ul> -->
+                                            <!-- <li>
                                                 <div class="shopping-cart-img">
                                                     <a href="shop-product-right.html"><img alt="Evara" src="assets/imgs/shop/thumbnail-3.jpg"></a>
                                                 </div>
@@ -238,8 +238,8 @@
                                                 <div class="shopping-cart-delete">
                                                     <a href="#"><i class="fi-rs-cross-small"></i></a>
                                                 </div>
-                                            </li>
-                                            <li>
+                                            </li> -->
+                                            <!-- <li>
                                                 <div class="shopping-cart-img">
                                                     <a href="shop-product-right.html"><img alt="Evara" src="assets/imgs/shop/thumbnail-2.jpg"></a>
                                                 </div>
@@ -250,17 +250,17 @@
                                                 <div class="shopping-cart-delete">
                                                     <a href="#"><i class="fi-rs-cross-small"></i></a>
                                                 </div>
-                                            </li>
-                                        </ul>
-                                        <div class="shopping-cart-footer">
-                                            <div class="shopping-cart-total">
+                                            </li> -->
+                                        <!-- </ul> -->
+                                        <!-- <div class="shopping-cart-footer"> -->
+                                            <!-- <div class="shopping-cart-total">
                                                 <h4>Total <span>$4000.00</span></h4>
-                                            </div>
-                                            <div class="shopping-cart-button">
+                                            </div> -->
+                                            <!-- <div class="shopping-cart-button">
                                                 <a href="shop-cart.html" class="outline">View cart</a>
                                                 <a href="shop-checkout.html">Checkout</a>
-                                            </div>
-                                        </div>
+                                            </div> -->
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -953,13 +953,16 @@
                                         <!-- </div> -->
                                         <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                                         <div class="detail-extralink">
-                                            <div class="detail-qty border radius">
+                                            <!-- <div class="detail-qty border radius">
                                                 <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
                                                 <span class="qty-val">1</span>
                                                 <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                            </div>
+                                            </div> -->
+                                            <input type="hidden" name="cart" id="cart" value="<%= productData._id %>">
+                                            <a href="usercart"><button type="submit" class="button button-add-to-cart" onclick="addtocart('<%= productData.regprice %>')">Add to cart</button></a>
                                             <div class="product-extra-link2">
-                                                <button type="submit" class="button button-add-to-cart">Add to cart</button>
+                                                
+                                                
                                                 <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
                                                 <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                             </div>
@@ -1257,6 +1260,9 @@
                                     </div>
                                 </div>
                             </div>
+
+
+
                             <div class="row mt-60">
                                 <div class="col-12">
                                     <h3 class="section-title style-1 mb-30">Related products</h3>
@@ -1672,8 +1678,31 @@
     <!-- Template  JS -->
     <script src="assets/js/maind134.js?v=3.4"></script>
     <script src="assets/js/shopd134.js?v=3.4"></script>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+</body>
+<script>
+    
+    function addtocart(price){
+        
+        const id = document.getElementById('cart').value
+       
+        $.ajax({
+          url:"/usercart",
+          method:"post",
+          data:{
+            id,
+            price
+          },
+         success:(response)=>{
+            if(response.status === "viewcart"){
+                window.location.href = "/"
+            }
+         }
+        })
+    }
+
+</script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-product-right.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:05 GMT -->
 </html>

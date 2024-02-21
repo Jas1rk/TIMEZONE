@@ -451,7 +451,7 @@
                                 <div class="dashboard-menu">
                                     <ul class="nav flex-column" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="dashboard-tab"  href="/userprofile" ><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
+                                            <a class="nav-link active" id="dashboard-tab" style="background-color: #3F2520;"  href="/userprofile" ><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="orders-tab"  href="#orders" ><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
@@ -475,11 +475,12 @@
                                 <div class="tab-content dashboard-content">
                                     <div class="tab-pane fade active show" id="dashboard" >
                                         <div class="card">
-                                            <div class="card-header">
-                                                <h5 class="mb-0">Hello <%= profileData.username %></h5>
+                                            <div class="card-header" style="background-color: #3F2520;">
+                                                <h5 class="mb-0" style="color: blanchedalmond;" >Hello <%= profileData.username %></h5>
                                             </div>
-                                            <div class="card-body">
-                                                <p> Hello and thank you for visiting our website! We are delighted to have you here.
+                                            <div class="card-body " style=" margin-top: 5px; border :1px solid #3F2520">
+                                                <p> 
+                                                    Hello and thank you for visiting our website! We are delighted to have you here.
                                                     Whether you are a first-time visitor or a returning user, we appreciate your time and interest.</p>
                                             </div>
                                         </div>
