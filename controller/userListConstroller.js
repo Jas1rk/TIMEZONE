@@ -30,7 +30,7 @@ const blockUser = async(req,res)=>{
 const unblockUser = async(req,res)=>{
     try{
         const userData = req.query._id
-        console.log(userData)
+       
         const data = await User.findByIdAndUpdate(userData,{ isBlocked:false})
         res.redirect('/admin/userList')
 

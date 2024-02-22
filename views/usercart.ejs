@@ -18,7 +18,20 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="assets/css/maind134.css?v=3.4">
 </head>
+<style>
+    .detail-qty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.qty-btn {
+    display: inline-block;
+    margin: 0;
+    padding: 5px 10px; /* Adjust padding as needed */
+}
+
+</style>
 <body>
     <header class="header-area header-style-1 header-height-2">
         <!-- <div class="header-top header-top-ptb-1 d-none d-lg-block">
@@ -732,15 +745,19 @@
                                             </p>
                                         </td>
                                         <td class="price" data-title="Price"><span>$<%= element.productId.offprice %> </span></td>
+
                                         <td class="text-center" data-title="Stock">
-                                            <div class="detail-qty border radius  m-auto">
-                                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                                <span class="qty-val">1</span>
-                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                            <div class="detail-qty border radius m-auto" style="gap: 3px;">
+                                                <button id="decrement" class="qty-btn" style="border: none; ">-</button>
+                                                <span class="qty-val" id="spnid">1</span>
+                                                <button id="increment" class="qty-btn" style="border: none; background-color: #3F2520; color: aliceblue;" onclick="increment(`<%= element.productId._id %>`,`<%= element.quantity  %>`)">+</button>
                                             </div>
                                         </td>
+                                        
+
                                         <td class="text-right" data-title="Cart">
-                                            <span>$<%= element.price %> </span>
+       
+                                            <span style="color: #3F2520;">$<%= element.price * element.quantity%> </span>
                                         </td>
                                         <td class="action" data-title="Remove"><a href="#" class="text-muted"><i class="fi-rs-trash"></i></a></td>
                                     </tr>
@@ -1104,7 +1121,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="cart_total_label">Cart Subtotal</td>
-                                                    <td class="cart_total_amount"><span class="font-lg fw-900 text-brand">$240.00</span></td>
+                                                    <td class="cart_total_amount"><span class="font-lg fw-900 text-brand" style="color: #3F2520;">$<%= cartFind.total %></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Shipping</td>
@@ -1112,7 +1129,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Total</td>
-                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">$240.00</span></strong></td>
+                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand">$<%= cartFind.total %></span></strong></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1277,7 +1294,24 @@
     <!-- Template  JS -->
     <script src="assets/js/maind134.js?v=3.4"></script>
     <script src="assets/js/shopd134.js?v=3.4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </body>
+<script>
+    function increment(id){
+       
+      const quantity = document.getElementById('spnid').textContent='2'  
+      $.ajax({
+        url:"/increment",
+        method:"post",
+        data:{
+            id,
+            quantity
+        }
+      })
+     
+    }
+</script>
 
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->

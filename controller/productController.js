@@ -33,7 +33,7 @@ const addProductGet = async (req, res) => {
 const addProductPost = async (req, res) => {
     try {
 
-        const { pname, description, regularprice, offerprice, color, meterial, category } = req.body
+        const { pname, description, regularprice, offerprice, color, meterial, category ,stock} = req.body
         const images = req.files
         console.log(images);
         const imageFile = images.map(elements => elements.filename)
@@ -46,7 +46,8 @@ const addProductPost = async (req, res) => {
             color,
             material: meterial,
             category,
-            images: imageFile
+            images: imageFile,
+            stock:stock
         })
         await newProduct.save()
         console.log(newProduct)
@@ -79,7 +80,7 @@ const adminEditProductPost = async (req, res) => {
     try {
 
         const productId = req.session.productId
-        const { pname, description, regularprice, offerprice, color, meterial, category } = req.body
+        const { pname, description, regularprice, offerprice, color, meterial, category , stock} = req.body
         console.log(req.body)
         const images = req.files
         const newImages = images.map(elements => elements.filename)
@@ -95,7 +96,8 @@ const adminEditProductPost = async (req, res) => {
                 offprice: offerprice,
                 color: color,
                 material: meterial,
-                category: category
+                category: category,
+                stock:stock
 
             }
         })
@@ -156,6 +158,8 @@ const deleteImage = async (req, res) => {
     }
 }
 
+
+
 module.exports = {
     adminProductsGet,
     addProductGet,
@@ -164,7 +168,8 @@ module.exports = {
     adminEditProductPost,
     adminProductBloack,
     adminUnblockproduct,
-    deleteImage
+    deleteImage,
+   
 
 
 }

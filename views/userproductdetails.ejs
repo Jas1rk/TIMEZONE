@@ -959,7 +959,19 @@
                                                 <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
                                             </div> -->
                                             <input type="hidden" name="cart" id="cart" value="<%= productData._id %>">
-                                            <a href="usercart"><button type="submit" class="button button-add-to-cart" onclick="addtocart('<%= productData.regprice %>')">Add to cart</button></a>
+                                            <% if (locals.cartStatus) { %>
+                                                <a href="usercart"><button type="submit" id="btv"  class="button button-add-to-cart">View cart</button></a>
+
+                                            <% }else { %>
+                                                <a href="usercart"><button type="submit" id="btc" class="button button-add-to-cart" onclick="addtocart('<%= productData.offprice %>')">Add to cart</button></a>
+
+                                           <% } %>
+                                           
+
+                                          
+
+                                        
+
                                             <div class="product-extra-link2">
                                                 
                                                 
@@ -1682,9 +1694,10 @@
 
 </body>
 <script>
+//     const btnView = document.getElementById('btv')
+//    const btnCart = document.getElementById('btc')
     
     function addtocart(price){
-        
         const id = document.getElementById('cart').value
        
         $.ajax({

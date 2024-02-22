@@ -44,5 +44,4 @@ admin_router.post('/deleteimage', productcontroller.deleteImage);
 
 
 
-
 module.exports = admin_router

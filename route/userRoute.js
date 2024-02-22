@@ -48,6 +48,7 @@ router.get('/deleteaddress',userProfileController.deletAddress)
 
 router.get('/usercart',userCartController.userCartGet)
 router.post('/usercart',userCartController.addToCart)
+router.post('/increment',userCartController.quantityIncrement)
 
 
 module.exports =  router

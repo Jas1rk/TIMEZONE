@@ -43,7 +43,11 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true,
       },
-    
+     
+      stock:{
+        type:Number,
+        
+      },
      
 
       isBlocked:{

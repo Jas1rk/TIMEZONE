@@ -3,6 +3,7 @@ const bcrypt =  require('bcrypt')
 const nodemailer = require('nodemailer')
 const Product = require('../model/productModel')
 const Category = require('../model/categoryModel')
+const Cart = require('../model/cartModel')
 const dotenv = require('dotenv').config()
 
 
@@ -318,8 +319,14 @@ const productList = async(req,res)=>{
       req.session.productId = productId
       const productData = await Product.findOne({_id:productId})
       const categories = await Category.find({isBlocked:false})
-     
-      res.render('userproductdetails',{productData,categories})
+      const cartFind = await Cart.findOne({user:req.session.user._id,"products.productId":productId})
+      let cartStatus;
+      if(cartFind){
+        cartStatus=true;
+      }else{
+        cartStatus=false;
+      }
+      res.render('userproductdetails',{productData,categories,cartStatus})
     }catch(err){
         console.log(err.message)
     }
