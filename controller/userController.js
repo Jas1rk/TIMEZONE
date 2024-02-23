@@ -315,11 +315,12 @@ const userLogout = async(req,res)=>{
 const productList = async(req,res)=>{
     try{
       const productId = req.query._id
-     
       req.session.productId = productId
       const productData = await Product.findOne({_id:productId})
       const categories = await Category.find({isBlocked:false})
-      const cartFind = await Cart.findOne({user:req.session.user._id,"products.productId":productId})
+      
+      const cartFind = await Cart.findOne({user:req.session.user,"products.productId":productId})
+      
       let cartStatus;
       if(cartFind){
         cartStatus=true;

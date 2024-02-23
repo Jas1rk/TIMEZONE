@@ -114,8 +114,8 @@ const adminEditProductPost = async (req, res) => {
 const adminProductBloack = async (req, res) => {
     try {
         const productData = req.query._id
-        console.log('product blocked', productData)
         const data = await Product.findByIdAndUpdate(productData, { isBlocked: true })
+        console.log('product blocked', data)
         res.redirect('/admin/productadmin')
 
     } catch (err) {
@@ -126,8 +126,10 @@ const adminProductBloack = async (req, res) => {
 
 const adminUnblockproduct = async (req, res) => {
     try {
-        const productId = req.query._id
-        console.log('haiii', productId)
+        const productData = req.query._id
+        const data = await Product.findByIdAndUpdate(productData,{isBlocked:false})
+        console.log('productunblocked', data)
+        res.redirect('/admin/productadmin')
     } catch (err) {
         console.log(err.message)
     }

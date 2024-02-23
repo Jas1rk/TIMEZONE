@@ -59,9 +59,38 @@ const isBlocked = async(req,res,next)=>{
   }
 }
 
+const isLogged = async(req,res,next)=>{
+    try{
+      if(req.session.user){
+        next()
+      }else{
+        res.redirect('/login')
+      }
+    }catch(err){
+        console.log(err)
+    }
+}
+
+
+const isproductBlock = async(req,res,next)=>{
+    try{
+       const data = await Product.find({})
+       console.log(data)
+       if(data.isBlocked == true){
+        res.render('userhome')
+       }else{
+        next()
+       }
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
 module.exports = {
     isUser,
     isAdmin,
     isLogout,
-    isBlocked
+    isBlocked,
+    isLogged,
+    isproductBlock
 }

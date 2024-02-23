@@ -744,12 +744,17 @@
                                                 <!-- <br> distingy magndapibus. -->
                                             </p>
                                         </td>
-                                        <td class="price" data-title="Price"><span>$<%= element.productId.offprice %> </span></td>
+                                        <td class="price" id="price"><span id="single">$<%= element.productId.offprice %> </span></td>
 
                                         <td class="text-center" data-title="Stock">
                                             <div class="detail-qty border radius m-auto" style="gap: 3px;">
-                                                <button id="decrement" class="qty-btn" style="border: none; ">-</button>
-                                                <span class="qty-val" id="spnid">1</span>
+
+                                                <button id="decrement" class="qty-btn2" style="border: none; ">-</button>
+                                                
+                                                <span class="qty-val" id="spnid<%=element.productId._id%>">
+                                                    <%= element.quantity  %>
+                                                </span>
+                                                
                                                 <button id="increment" class="qty-btn" style="border: none; background-color: #3F2520; color: aliceblue;" onclick="increment(`<%= element.productId._id %>`,`<%= element.quantity  %>`)">+</button>
                                             </div>
                                         </td>
@@ -757,9 +762,10 @@
 
                                         <td class="text-right" data-title="Cart">
        
-                                            <span style="color: #3F2520;">$<%= element.price * element.quantity%> </span>
+                                            <span id="total" style="color: #3F2520;">$<%= element.price * element.quantity%> </span>
                                         </td>
-                                        <td class="action" data-title="Remove"><a href="#" class="text-muted"><i class="fi-rs-trash"></i></a></td>
+                                      
+                                        <td class="action" data-title="Remove" class="text-muted"><i class="fi-rs-trash" onclick="cartdelete(`<%= element.productId._id %>`,`<%= element.quantity  %>`)"></i></td>
                                     </tr>
                                     <% }) %>
                                     
@@ -1090,9 +1096,9 @@
                                     </div>
                                 </form> -->
                                 <!-- <div class="mb-30 mt-50">
-                                    <div class="heading_s1 mb-3">
+                                 <div class="heading_s1 mb-3">
                                         <h4>Apply Coupon</h4>
-                                    </div>
+                                    </div> 
                                     <div class="total-amount">
                                         <div class="left">
                                             <div class="coupon">
@@ -1105,7 +1111,7 @@
                                                             <button class="btn  btn-sm"><i class="fi-rs-label mr-10"></i>Apply</button>
                                                         </div>
                                                     </div>
-                                                </form>
+                                                </form> 
                                             </div>
                                         </div>
                                     </div>
@@ -1142,7 +1148,7 @@
                 </div>
             </div>
             <% } else {  %>
-                <div id="text-center" style="text-align: center;"><h4>Your cart is Empty Please add products to the cart</h4></div>
+                <div id="text-center" class="text-center "style="text-align: center; background-color: antiquewhite;"><h4>Your cart is Empty Please add products to the cart</h4></div>
            <% } %>
         </section>
     </main>
@@ -1258,7 +1264,7 @@
         </div>
     </footer>
     <!-- Preloader Start -->
-    <div id="preloader-active">
+    <!-- <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
                 <div class="text-center">
@@ -1271,7 +1277,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Vendor JS-->
     <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
@@ -1298,19 +1304,55 @@
 
 </body>
 <script>
+    const pricevalue = document.getElementById('total').textContent
+    const singleprprice = document.getElementById('single').textContent
+    console.log(pricevalue)
+    console.log(singleprprice)
+
+
     function increment(id){
-       
-      const quantity = document.getElementById('spnid').textContent='2'  
+      
+      const quantity = document.getElementById(`spnid${id}`).innerHTML;
+   
       $.ajax({
         url:"/increment",
         method:"post",
         data:{
             id,
             quantity
+        },
+        success:(response)=>{
+            if(response.status === "increment",total){
+                
+                 const ele  = document.getElementById(`spnid${id}`).innerHTML = parseInt(quantity)+1
+                 pricevalue.textContent = parseInt(pricevalue)+parseInt(singleprprice)
+                 pricevalue.innerHTML = response.total
+
+                //  window.location.reload()
+            }
         }
       })
      
     }
+
+
+    function cartdelete(id,quantity){
+     
+        $.ajax({
+            url:"/deletecart",
+            method:"delete",
+            data:{
+                id,
+                quantity
+            },
+            success:(response)=>{
+                if(response.status === 'delete'){
+                    window.location.href = "/usercart"
+                }
+            }
+        })
+    }
+
 </script>
 
 

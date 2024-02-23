@@ -1709,8 +1709,14 @@
           },
          success:(response)=>{
             if(response.status === "viewcart"){
-                window.location.href = "/"
+
+                window.location.href = "/usercart"
+                
+            }else if(response.status === "true"){
+
+                window.location.href = "/usercart"
             }
+                
          }
         })
     }

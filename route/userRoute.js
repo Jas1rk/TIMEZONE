@@ -24,14 +24,14 @@ router.get('/newPassPage',middle.isUser,usercontroller.UserNewPassGet)
 router.post('/newPassPage',usercontroller.UserNewPassPost)
 
 
-router.get('/products',usercontroller.productList)
+router.get('/products',middle.isproductBlock,usercontroller.productList)
 router.get('/newarraival',usercontroller.newArraivals)
 router.get('/pricelow',usercontroller.priceLow)
 
 router.get('/userlogout',middle.isLogout,usercontroller.userLogout)
 
 
-router.get('/userprofile',userProfileController.userProfile)
+router.get('/userprofile',middle.isLogged,userProfileController.userProfile)
 router.get('/changepassword',userProfileController.userChangePassword)
 router.post('/changepassword',userProfileController.changePasswordPost)
 router.get('/address',userProfileController.addressGet)
@@ -46,9 +46,10 @@ router.get('/deleteaddress',userProfileController.deletAddress)
 
 
 
-router.get('/usercart',userCartController.userCartGet)
+router.get('/usercart',middle.isLogged,userCartController.userCartGet)
 router.post('/usercart',userCartController.addToCart)
 router.post('/increment',userCartController.quantityIncrement)
+router.delete('/deletecart',userCartController.cartDelete)
 
 
 module.exports =  router
