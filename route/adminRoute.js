@@ -5,11 +5,12 @@ const userlistcontroller = require('../controller/userListConstroller')
 const adminCategoryController = require('../controller/categoryController')
 const productcontroller = require('../controller/productController')
 const upload = require('../controller/multer/multer')
+const middle = require('../middlewares/auth')
 
-const { isAdmin } = require('../middlewares/auth')
 
 
-admin_router.get('/admindash',admincontroller.adminDashGet)
+
+admin_router.get('/admindash',middle.isAdmin,admincontroller.adminDashGet)
 
 admin_router.get('/',admincontroller.adiminlogGet)
 admin_router.post('/',admincontroller.adminlogPost)

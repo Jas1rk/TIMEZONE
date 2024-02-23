@@ -484,21 +484,21 @@
                                                 
                                                
                                                     <div class="row">
-                                                       
+                                                       <p id="fillerror " class="text-danger"></p>
                                                         <div class="form-group col-md-12">
                                                             <label>Name <span class="required">*</span></label>
                                                             <input  class="form-control square" name="name" type="text" id="name" value="<%= accountData.username %>">
-                                                            <p id="currenterror" class="text-danger"></p>
+                                                            <p id="nameerror" class="text-danger"></p>
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                             <label>Email <span class="required">*</span></label>
                                                             <input  class="form-control square" name="email" type="text" id="email" value="<%= accountData.email %>">
-                                                            <p id="newpasserror" class="text-danger"></p>
+                                                            <p id="emailerror" class="text-danger"></p>
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                             <label>Mobile <span class="required">*</span></label>
                                                             <input  class="form-control square" name="mobile" type="number" id="mobile" value="<%= accountData.mobile %>">
-                                                            <p id="confirmerror" class="text-danger"></p>
+                                                            <p id="mobileerror" class="text-danger"></p>
                                                         </div>
                                                         <div class="col-md-12">
                                                             <button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit" onclick="editprofile()">Save</button>
@@ -663,11 +663,52 @@
     function editprofile(){
 
         
-        const name = document.getElementById('name').value
-        const email = document.getElementById('email').value
-        const mobile = document.getElementById('mobile').value
-      
-      $.ajax({
+        const name = document.getElementById('name').value.trim()
+        const email = document.getElementById('email').value.trim()
+        const mobile = document.getElementById('mobile').value.trim()
+
+        const fillError = document.getElementById('fillerror')
+        const nameError = document.getElementById('nameerror')
+        const emailError = document.getElementById('emailerror')
+        const mobileError = document.getElementById('mobileerror')
+
+        fillError.textContent = ""
+        nameError.textContent = ""
+        emailError.textContent = ""
+        mobileError.textContent = ""
+
+        if(name===""){
+            nameError.textContent = "Name is required"
+        }else if(name.length < 3){
+            nameError.textContent = "Name must have 3 charecter"
+        }else if(!/^[A-Za-z\s]+$/.test(name)){
+            nameError.textContent = "Enter a valid name"
+        }
+
+        if(email===""){
+            emailError.textContent = "Email is required"
+        }else if(! /^([a-zA-Z0-9._-]+)@([a-zA-Z.-]+).([a-zA-z]{2,4})$/ .test(email)){
+            emailError.textContent = "Enter a valid email"
+        }
+
+        if(mobile ===""){
+            mobileError.textContent = "Mobile is required"
+        }else if(!/^\d+$/.test(mobile)){
+            mobileError.textContent = "Phone number must be contain only number"
+        }else if(mobile.length!==10){
+            mobileError.textContent = "Phone number should be 10 digit"
+        }
+
+       
+
+        if(!nameError.textContent==""||!emailError.textContent==""||!mobileError.textContent==""){
+            fillError.textContent = "All fields required"
+            setTimeout(() => {
+                fillError.textContent = ""
+            }, 3000);
+        }else{
+            console.log('heloooo')
+        $.ajax({
         url:'/useraccountedit',
         method:"post",
         data:{
@@ -684,6 +725,9 @@
            
         }
       })
+        }
+      
+   
     }
  </script>
 

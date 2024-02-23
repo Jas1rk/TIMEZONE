@@ -33,7 +33,11 @@ const isLogout = async(req,res,next)=>{
 
 const isAdmin = async(req,res,next)=>{
     try{
-       
+       if(req.session.admin){
+        next()
+       }else{
+        res.redirect('/admin')
+       }
 
     }catch(err){
       console.log(err.message)
@@ -74,11 +78,12 @@ const isLogged = async(req,res,next)=>{
 
 const isproductBlock = async(req,res,next)=>{
     try{
-        
+        // const {id} = req.body
+        // const proId = req.session.proId
        const data = await Product.findOne({})
        
        if(data.isBlocked == true){
-        res.render('userhome')
+        res.redirect('/')
        }else{
         next()
        }
