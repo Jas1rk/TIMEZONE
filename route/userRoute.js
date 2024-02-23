@@ -32,7 +32,7 @@ router.get('/userlogout',middle.isLogout,usercontroller.userLogout)
 
 
 router.get('/userprofile',middle.isLogged,userProfileController.userProfile)
-router.get('/changepassword',userProfileController.userChangePassword)
+router.get('/changepassword',middle.isLogged,userProfileController.userChangePassword)
 router.post('/changepassword',userProfileController.changePasswordPost)
 router.get('/address',userProfileController.addressGet)
 router.get('/addressadd',userProfileController.useraddAddress)
@@ -49,6 +49,7 @@ router.get('/deleteaddress',userProfileController.deletAddress)
 router.get('/usercart',middle.isLogged,userCartController.userCartGet)
 router.post('/usercart',userCartController.addToCart)
 router.post('/increment',userCartController.quantityIncrement)
+router.post('/decrement',userCartController.quantityDecrement)
 router.delete('/deletecart',userCartController.cartDelete)
 
 

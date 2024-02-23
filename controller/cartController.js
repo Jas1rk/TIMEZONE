@@ -99,7 +99,7 @@ const quantityIncrement = async(req,res)=>{
                                 if(element.quantity < 10){
                                     element.quantity +=1
                                     findQuantity.total += price
-                                    res.json({status:"increment",total:price})
+                                    res.json({status:"increment"})
                                 } else{
                                     console.log('you reached limit')
                                    res.json({status:"limit"})
@@ -118,7 +118,35 @@ const quantityIncrement = async(req,res)=>{
     }
 }
 
+const quantityDecrement = async(req,res)=>{
+    try{
+       const user = req.session.user
+       const {id} = req.body
+       const parseQuantity = parseInt(req.body.quantity)
+       const productData = await Product.findOne({_id:id})
+       const quantityData = await Cart.findOne({user:user,'products.productId':id})
+       const stock = productData.stock
+       const price = productData.offprice
 
+      quantityData.products.forEach(element => {
+        if(element.productId == id){
+            if(element.quantity > 1){
+                element.quantity -=1
+                quantityData.total -=price
+                res.json({status:"decrement"})
+            }else{
+                console.log('qunatity is already 0')
+            }
+        }else{
+            console.log('Cannot find id ')
+        }
+      })
+      await quantityData.save()
+      
+    }catch(err){
+      console.log(err.message)
+    }
+}
 
 const cartDelete = async(req,res)=>{
     try{
@@ -128,7 +156,6 @@ const cartDelete = async(req,res)=>{
      console.log(findCart)
      if(findCart){
         const productTodelete = findCart.products.find(product => product.productId == id)
-        console.log('helooooo',productTodelete)
         const price = productTodelete.price
         const totalDecerement =  price*quantity
         const deleteItem = await Cart.updateOne(
@@ -147,36 +174,19 @@ const cartDelete = async(req,res)=>{
         res.json({status:"delete"})
      }
 
-    //  console.log(findCart)
-    //  let total = 0
-    //  const price = findCart.offprice
-    //  if(findCart){
-    //     const itemDelete = await Cart.updateOne({user:userId},{
-    //         $pull:{
-    //             products:[{
-    //                 productId:id,
-    //                 quantity:quantity
-    //             }]
-    //         },
-    //         $inc:{total-price}
-            
-    //     })
-    //     await itemDelete.save()
-
-    //     res.json({status:"delete"})
-    //     console.log('product deleted ',itemDelete)
-    //  }else{
-    //     console.log("connot find the user")
-    //  }
 
     }catch(err){
         console.log(err.message)
     }
 }
+
+
+
 module.exports = {
     userCartGet,
     addToCart,
     quantityIncrement,
+    quantityDecrement,
     cartDelete
 
 }

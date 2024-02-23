@@ -74,8 +74,9 @@ const isLogged = async(req,res,next)=>{
 
 const isproductBlock = async(req,res,next)=>{
     try{
-       const data = await Product.find({})
-       console.log(data)
+        
+       const data = await Product.findOne({})
+       
        if(data.isBlocked == true){
         res.render('userhome')
        }else{
