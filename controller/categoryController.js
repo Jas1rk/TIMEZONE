@@ -16,10 +16,11 @@ const admincategoryPost = async(req,res)=>{
     try{
         const {name,description} = req.body
         console.log(req.body)
-        const existingCategory = await Category.findOne({name:name})
+        const lowerCasename = name.toLowerCase()
+        const existingCategory = await Category.findOne({name:lowerCasename})
         if(!existingCategory){
             const newCategory = await new Category({
-                name:name,
+                name:lowerCasename,
                 description:description
             })
             await newCategory.save()

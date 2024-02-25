@@ -10,6 +10,8 @@ const middle = require('../middlewares/auth')
 
 
 
+
+
 admin_router.get('/admindash',middle.isAdmin,admincontroller.adminDashGet)
 
 admin_router.get('/',admincontroller.adiminlogGet)
@@ -18,26 +20,26 @@ admin_router.get('/logout',admincontroller.logoutAdmin)
 
 
 
-admin_router.get('/userList',userlistcontroller.loadUserList)
-admin_router.get('/userBlock',userlistcontroller.blockUser)
-admin_router.get('/userUnblock',userlistcontroller.unblockUser)
+admin_router.get('/userList',middle.isAdmin,userlistcontroller.loadUserList)
+admin_router.get('/userBlock',middle.isAdmin,userlistcontroller.blockUser)
+admin_router.get('/userUnblock',middle.isAdmin,userlistcontroller.unblockUser)
 
 
-admin_router.get('/admincategory',adminCategoryController.admincategory)
-admin_router.post('/admincategory',adminCategoryController.admincategoryPost)
-admin_router.get('/categoryblock',adminCategoryController.adminCategoryBlock)
-admin_router.get('/categoryunblock',adminCategoryController.adminCategoryUnblock)
-admin_router.get('/categoryedit',adminCategoryController.adminCategoryEditGet)
-admin_router.post('/categoryedit',adminCategoryController.adminCategoryEditPost)
+admin_router.get('/admincategory',middle.isAdmin,adminCategoryController.admincategory)
+admin_router.post('/admincategory',middle.isAdmin,adminCategoryController.admincategoryPost)
+admin_router.get('/categoryblock',middle.isAdmin,adminCategoryController.adminCategoryBlock)
+admin_router.get('/categoryunblock',middle.isAdmin,adminCategoryController.adminCategoryUnblock)
+admin_router.get('/categoryedit',middle.isAdmin,adminCategoryController.adminCategoryEditGet)
+admin_router.post('/categoryedit',middle.isAdmin,adminCategoryController.adminCategoryEditPost)
 
-admin_router.get('/productadmin',productcontroller.adminProductsGet)
-admin_router.get('/addproduct',productcontroller.addProductGet)
-admin_router.post('/addproduct',upload.array("image"),productcontroller.addProductPost)
-admin_router.get('/productedit',productcontroller.adminProductEdit)
-admin_router.post('/producteditpost',upload.array("image"),productcontroller.adminEditProductPost)
-admin_router.get('/blockproduct',productcontroller.adminProductBloack)
-admin_router.get('/unblockproduct',productcontroller.adminUnblockproduct)
-admin_router.post('/deleteimage', productcontroller.deleteImage);
+admin_router.get('/productadmin',middle.isAdmin,productcontroller.adminProductsGet)
+admin_router.get('/addproduct',middle.isAdmin,productcontroller.addProductGet)
+admin_router.post('/addproduct',middle.isAdmin,upload.array("image"),productcontroller.addProductPost)
+admin_router.get('/productedit',middle.isAdmin,productcontroller.adminProductEdit)
+admin_router.post('/producteditpost',middle.isAdmin,upload.array("image"),productcontroller.adminEditProductPost)
+admin_router.get('/blockproduct',middle.isAdmin,middle.isAdmin,productcontroller.adminProductBloack)
+admin_router.get('/unblockproduct',middle.isAdmin,productcontroller.adminUnblockproduct)
+admin_router.post('/deleteimage',middle.isAdmin,productcontroller.deleteImage);
 
 
 

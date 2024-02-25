@@ -39,12 +39,11 @@ const changePasswordPost = async (req, res) => {
 
             const isValid = await bcrypt.compare(currectPass, comparePass)
             if (isValid) {
-                console.log(isValid)
+              
                 if (newPass.length >= 6 && /[a-zA-Z]/.test(newPass) && /\d/.test(newPass)) {
 
                     if (newPass === confirmPass) {
                         const securedPass = await bcrypt.hash(newPass, 10);
-
                         const updatePass = await User.findOneAndUpdate({ email: req.session.user.email }, { $set: { password: securedPass } })
                         console.log('pasword updated', updatePass)
                         res.json({ status: "success" })

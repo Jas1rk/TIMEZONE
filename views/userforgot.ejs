@@ -56,11 +56,12 @@
                                         <div class="heading_s1">
                                             <h3 class="mb-30">Verification</h3>
                                         </div>
-                                       
-                                        <form method="post" action="/forget">
+                                       <p id="fillerror" class="text-danger"></p>
+                                        <!-- <form method="post" action="/forget"> -->
                                           
                                             <div class="form-group">
-                                                <input type="text" required="" name="email" placeholder="Email">
+                                                <input type="text"name="email" placeholder="Email" id="email" onclick="clremail()">
+                                                 <p id="emailerror" class="text-danger"></p>
                                             </div>
                                            
                                             <!-- <div class="form-group">
@@ -75,9 +76,9 @@
                                                     
                                               
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login" > <a href="/verify"></a>Submit </button>
+                                                <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login" onclick="emailverify()">Submit </button>
                                             </div>
-                                        </form>
+                                        <!-- </form> -->
                                        
                                         
                                       
@@ -128,8 +129,54 @@
     <script src="assets/js/plugins/jquery.theia.sticky.js"></script>
     <!-- Template  JS -->
     <script src="assets/js/maind134.js?v=3.4"></script>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+</body>
+<script>
+
+    function clremail(){
+     document.getElementById('emailerror').textContent = ""
+    }
+
+    function emailverify(){
+      
+       const email = document.getElementById('email').value.trim()
+
+       const fillError = document.getElementById('fillerror')
+       const emailError = document.getElementById('emailerror')
+
+       fillError.textContent = ""
+       emailError.textContent = ""
+
+       if(email===""){
+        emailError.textContent = "Email is required"
+       }else if(!/^([a-zA-Z0-9._-]+)@([a-zA-Z.-]+).([a-zA-z]{2,4})$/.test(email)){
+        emailError.textContent = "Enter a valid email"
+       }
+
+       if(emailError.textContent!==""){
+        fillError.textContent = "Enter your email"
+        setTimeout(() => {
+           fillError.textContent = "" 
+        }, 3000);
+       }else{
+        $.ajax({
+        url:"/forget",
+        method:"post",
+        data:{
+            email
+        },
+        success:(response)=>{
+            if(response.status === 'success'){
+                window.location.href = "/forgotOtpPage"
+            }
+        }
+       })
+       }
+     
+      
+    }
+</script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/page-login-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->
 </html>

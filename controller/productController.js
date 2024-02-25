@@ -4,6 +4,7 @@ const multer = require('../controller/multer/multer')
 const { render } = require('ejs')
 const fs = require('fs')
 const { log } = require('console')
+const { NONAME } = require('dns')
 
 
 
@@ -35,7 +36,7 @@ const addProductPost = async (req, res) => {
 
         const { pname, description, regularprice, offerprice, color, meterial, category ,stock} = req.body
         const images = req.files
-        console.log(images);
+        const catData = await Category.findOne({name:category})
         const imageFile = images.map(elements => elements.filename)
 
         const newProduct = new Product({
@@ -45,7 +46,7 @@ const addProductPost = async (req, res) => {
             offprice: offerprice,
             color,
             material: meterial,
-            category,
+            category:catData._id,
             images: imageFile,
             stock:stock
         })
@@ -64,7 +65,6 @@ const addProductPost = async (req, res) => {
 const adminProductEdit = async (req, res) => {
     try {
         const productId = req.query._id
-        // console.log(productId);
         req.session.productId = productId
         const productData = await Product.findOne({ _id: productId });
         const categoryData = await Category.find({ isBlocked: false })
@@ -81,8 +81,9 @@ const adminEditProductPost = async (req, res) => {
 
         const productId = req.session.productId
         const { pname, description, regularprice, offerprice, color, meterial, category , stock} = req.body
-        console.log(req.body)
         const images = req.files
+        const catData = await Category.findOne({name:category})
+        console.log('helooooo',catData);
         const newImages = images.map(elements => elements.filename)
         console.log(newImages);
         if (images.length > 0) {
@@ -96,7 +97,7 @@ const adminEditProductPost = async (req, res) => {
                 offprice: offerprice,
                 color: color,
                 material: meterial,
-                category: category,
+                category: catData._id,
                 stock:stock
 
             }

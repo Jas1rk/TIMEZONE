@@ -138,7 +138,7 @@ const quantityDecrement = async(req,res)=>{
                 console.log('qunatity is already 0')
             }
         }else{
-            console.log('Cannot find id ')
+            console.log('Cannot find id  decrement')
         }
       })
       await quantityData.save()

@@ -288,7 +288,7 @@
             <div class="container">
                 <div class="header-wrap header-space-between position-relative">
                     <div class="logo logo-width-1 d-block d-lg-none">
-                        <a href="index.html"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
+                        <a href="/"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
                     </div>
                     <div class="header-nav d-none d-lg-flex">
                         <!-- <div class="main-categori-wrap d-none d-lg-block">
@@ -711,12 +711,12 @@
                     <nav>
                         <ul class="mobile-menu">
                             <li class="menu-item-has-children"><span class="menu-expand"></span><a href="/">Home</a>
-                                <ul class="dropdown">
+                                <!-- <ul class="dropdown">
                                     <li><a href="index.html">Home 1</a></li>
                                     <li><a href="index-2.html">Home 2</a></li>
                                     <li><a href="index-3.html">Home 3</a></li>
                                     <li><a href="index-4.html">Home 4</a></li>
-                                </ul>
+                                </ul> -->
                             </li>
                             <li class="menu-item-has-children"><span class="menu-expand"></span><a href="shop-grid-right.html">shop</a>
                                 <ul class="dropdown">
@@ -927,7 +927,7 @@
                             <ul class="categories">
                                  <% for( let i = 0; i < categories.length; i++ ) { %>
                             
-                                <li><a href="shop-grid-right.html"><%= categories[i].name %></a></li>
+                                <li><a href="/filter?_id=<%= categories[i]._id  %>"><%= categories[i].name %></a></li>
                                 <!-- <li><a href="shop-grid-right.html">Blouses & Shirts</a></li>
                                 <li><a href="shop-grid-right.html">Dresses</a></li>
                                 <li><a href="shop-grid-right.html">Swimwear</a></li>
@@ -942,18 +942,18 @@
                             <ul class="categories">
                                 <li><a href="shop-grid-right.html">Popularity</a></li>
                                 <li><a href="shop-grid-right.html">Average rating</a></li>
-                                <li><a href="/pricelow">Price: Low to High</a></li>
-                                <li><a href="shop-grid-right.html">Price: High to Low</a></li>
+                                <li><a href="/sort?shop=pricetolow">Price: Low to High</a></li>
+                                <li><a href="/sort?shop=pricetohigh">Price: High to Low</a></li>
                             </ul>
                         </div>
                         <div class="widget-category mb-30">
-                            <h5 class="section-title style-1 mb-30 wow fadeIn animated">Price Range</h5>
+                            <h5 class="section-title style-1 mb-30 wow fadeIn animated">Sort</h5>
                             <ul class="categories">
-                                <li><a href="shop-grid-right.html">$0-$200</a></li>
-                                <li><a href="shop-grid-right.html">$200-$400</a></li>
-                                <li><a href="shop-grid-right.html">$400-$600</a></li>
+                                <li><a href="/sort?shop=atoz">aA - zZ</a></li>
+                                <li><a href="/sort?shop=ztoa">zZ - aA</a></li>
+                                <!-- <li><a href="shop-grid-right.html">$400-$600</a></li>
                                 <li><a href="shop-grid-right.html">$600-$800</a></li>
-                                <li><a href="shop-grid-right.html">800$+</a></li>
+                                <li><a href="shop-grid-right.html">800$+</a></li> -->
                             </ul>
                         </div>
                         <div class="banner-img wow fadeIn mb-45mb-lg-0 animated d-lg-block d-none">
@@ -971,9 +971,9 @@
                                 <li class="nav-item" role="presentation">
                                   <a href="/"><button class="nav-link " id="nav-tab-one" >Featured</button></a>
                                 </li>
-                                <li class="nav-item" role="presentation">
+                                <!-- <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="nav-tab-two">Popular</button>
-                                </li>
+                                </li> -->
                                 <li class="nav-item" role="presentation">
                                   <a href="/newarraival"><button class="nav-link" id="nav-tab-three"  type="button" >New added</button></a>
                                 </li>
@@ -2421,6 +2421,7 @@
                     </div>
                 </div>
                 <div class="row">
+
                     <div class="col-lg-3 d-none d-lg-flex">
                         <div class="banner-img style-2 wow fadeIn animated">
                             <img src="assets/imgs/banner/banner-9.jpg" alt="">
@@ -2431,6 +2432,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-9 col-md-12">
                         <div class="tab-content wow fadeIn animated" id="myTabContent-1">
                             <div class="tab-pane fade show active" id="tab-one-1" role="tabpanel" aria-labelledby="tab-one-1">
@@ -3480,8 +3482,34 @@
     <!-- Template  JS -->
     <script src="assets/js/maind134.js?v=3.4"></script>
     <script src="assets/js/shopd134.js?v=3.4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
+<script>
+      function addtocart(price){
+        const id = document.getElementById('cart').value
+       
+        $.ajax({
+          url:"/usercart",
+          method:"post",
+          data:{
+            id,
+            price
+          },
+         success:(response)=>{
+            if(response.status === "viewcart"){
 
+                window.location.href = "/usercart"
+                
+            }else if(response.status === "true"){
+
+                window.location.href = "/usercart"
+            }
+                
+         }
+        })
+    }
+
+</script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->
 </html>

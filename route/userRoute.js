@@ -3,6 +3,7 @@ const router = express.Router()
 const usercontroller = require('../controller/userController')
 const userProfileController = require('../controller/userprofileController')
 const userCartController = require('../controller/cartController')
+const sortcontroller = require('../controller/sortController')
 const middle = require('../middlewares/auth')
 
 
@@ -26,7 +27,15 @@ router.post('/newPassPage',usercontroller.UserNewPassPost)
 
 router.get('/products',middle.isproductBlock,usercontroller.productList)
 router.get('/newarraival',usercontroller.newArraivals)
-router.get('/pricelow',usercontroller.priceLow)
+
+router.get('/sort',sortcontroller.sortItems)
+
+// router.get('/pricelow',sortcontroller.priceLow)
+// router.get('/pricehigh',sortcontroller.priceHigh)
+// router.get('/aatozz',sortcontroller.aaToZz)
+// router.get('/zztozz',sortcontroller.zzToAa)
+// router.get('/filter',sortcontroller.filterCategory)
+
 
 router.get('/userlogout',middle.isLogout,usercontroller.userLogout)
 
@@ -34,7 +43,7 @@ router.get('/userlogout',middle.isLogout,usercontroller.userLogout)
 router.get('/userprofile',middle.isLogged,userProfileController.userProfile)
 router.get('/changepassword',middle.isLogged,userProfileController.userChangePassword)
 router.post('/changepassword',userProfileController.changePasswordPost)
-router.get('/address',userProfileController.addressGet)
+router.get('/address',middle.isLogged,userProfileController.addressGet)
 router.get('/addressadd',userProfileController.useraddAddress)
 router.post('/addressadd',userProfileController.addAddressPost)
 router.get('/addressedit',userProfileController.addressEditGet)

@@ -484,21 +484,21 @@
                                                 
                                                
                                                     <div class="row">
-                                                       <p id="fillerror " class="text-danger"></p>
+                                                       <p id="fillerror" class="text-danger"></p>
                                                         <div class="form-group col-md-12">
                                                             <label>Name <span class="required">*</span></label>
-                                                            <input  class="form-control square" name="name" type="text" id="name" value="<%= accountData.username %>">
-                                                            <p id="nameerror" class="text-danger"></p>
+                                                            <input  class="form-control square" name="name" type="text" id="name" value="<%= accountData.username %>" onclick="clrname()">
+                                                            <p id="error1" class="text-danger"></p>
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                             <label>Email <span class="required">*</span></label>
-                                                            <input  class="form-control square" name="email" type="text" id="email" value="<%= accountData.email %>">
-                                                            <p id="emailerror" class="text-danger"></p>
+                                                            <input  class="form-control square" name="email" type="text" id="email" value="<%= accountData.email %>" onclick="clremail()">
+                                                            <p id="error2" class="text-danger"></p>
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                             <label>Mobile <span class="required">*</span></label>
-                                                            <input  class="form-control square" name="mobile" type="number" id="mobile" value="<%= accountData.mobile %>">
-                                                            <p id="mobileerror" class="text-danger"></p>
+                                                            <input  class="form-control square" name="mobile" type="number" id="mobile" value="<%= accountData.mobile %>" onclick="clrmobile()">
+                                                            <p id="error3" class="text-danger"></p>
                                                         </div>
                                                         <div class="col-md-12">
                                                             <button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit" onclick="editprofile()">Save</button>
@@ -660,6 +660,18 @@
 
 </body>
  <script>
+   function clrname(){
+    document.getElementById('error1').textContent = ""
+   }
+   function clremail(){
+    document.getElementById('error2').textContent = ""
+   }
+   function clrmobile(){
+    document.getElementById('error3').textContent = ""
+   }
+
+
+
     function editprofile(){
 
         
@@ -668,15 +680,15 @@
         const mobile = document.getElementById('mobile').value.trim()
 
         const fillError = document.getElementById('fillerror')
-        const nameError = document.getElementById('nameerror')
-        const emailError = document.getElementById('emailerror')
-        const mobileError = document.getElementById('mobileerror')
-
+        const nameError = document.getElementById('error1')
+        const emailError = document.getElementById('error2')
+        const mobileError = document.getElementById('error3')
+        
         fillError.textContent = ""
         nameError.textContent = ""
         emailError.textContent = ""
+        
         mobileError.textContent = ""
-
         if(name===""){
             nameError.textContent = "Name is required"
         }else if(name.length < 3){
@@ -701,7 +713,7 @@
 
        
 
-        if(!nameError.textContent==""||!emailError.textContent==""||!mobileError.textContent==""){
+        if(nameError.textContent!==""||emailError.textContent!==""||mobileError.textContent!==""){
             fillError.textContent = "All fields required"
             setTimeout(() => {
                 fillError.textContent = ""

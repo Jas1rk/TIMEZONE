@@ -41,9 +41,7 @@ const userloginget = (req,res)=>{
 const userloginPost =  async(req,res)=>{
   try {
     const {email,password} = req.body
-    
     const loggedUser = await User.findOne({email})
-   
     if(!loggedUser){
         res.render('userlogin',{message:"User not Found"})
     }
@@ -221,7 +219,7 @@ const forgetPassPost = async(req,res)=>{
             mobile:existingUser.mobile
         }
         console.log(req.session.temp,"after otp");
-        res.redirect('/forgotOtpPage')
+        res.json({status:"success"})
        }else{
         console.log('user not found',email)
        }
@@ -335,19 +333,6 @@ const productList = async(req,res)=>{
 
 
 
-const priceLow = async(req,res)=>{
-    try{
-        
-      
-       const priceLowProducts = await Product.find({}).sort({regprice:1})
-       res.render('productsright',{priceLowProducts})
-       console.log(priceLowProducts)
-    }catch(err){
-        console.log(err.message)
-    }
-}
-
-
 
 module.exports = {
     userhome,
@@ -366,7 +351,7 @@ module.exports = {
     userLogout,
     productList,
     newArraivals,
-    priceLow
+   
     
 
 }

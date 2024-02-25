@@ -78,11 +78,11 @@ const isLogged = async(req,res,next)=>{
 
 const isproductBlock = async(req,res,next)=>{
     try{
-        // const {id} = req.body
-        // const proId = req.session.proId
-       const data = await Product.findOne({})
+       const id = req.query._id
+       const data = await Product.findOne({_id:id})
+       console.log(data)
        
-       if(data.isBlocked == true){
+       if(data.isBlocked === true){
         res.redirect('/')
        }else{
         next()
