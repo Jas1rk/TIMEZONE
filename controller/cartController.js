@@ -1,6 +1,7 @@
 const Cart = require('../model/cartModel')
 const User = require('../model/userModel')
 const Product = require('../model/productModel')
+const Address = require('../model/addressModel')
 
 
 const userCartGet = async(req,res)=>{
@@ -153,20 +154,14 @@ const cartDelete = async(req,res)=>{
      const userId = req.session.user
      const {id,quantity} = req.body
      const findCart = await Cart.findOne({user:userId,'products.productId':id})
-     console.log(findCart)
      if(findCart){
         const productTodelete = findCart.products.find(product => product.productId == id)
         const price = productTodelete.price
-        const totalDecerement =  price*quantity
+        const totalDecerement =  price*productTodelete.quantity
         const deleteItem = await Cart.updateOne(
-            {user:userId},
+            {user:userId,'products.productId':id},
             {
-                $pull:{
-                    products:{
-                        productId:id,
-                        quantity:quantity
-                    }
-                },
+                $pull:{products:{productId:id}},
                 $inc:{total: -totalDecerement}
             }
         )
@@ -182,11 +177,49 @@ const cartDelete = async(req,res)=>{
 
 
 
+const userCheckoutGet = async(req,res)=>{
+    try{
+        const userId = req.session.user
+        const addressData = await Address.find({user:userId})
+        const cartFind = await Cart.findOne({user:userId}).populate('products.productId')
+        res.render('usercheckout',{addressData,cartFind})
+      
+       
+    }catch(err){
+        console.log(err.message);
+    }
+}
+
+const userCheckoutPage = async(req,res)=>{
+    try{
+        const userId = req.session.user
+        const addressData = await Address.find({user:userId})
+        const cartFind = await Cart.findOne({user:userId}).populate('products.productId')
+        cartFind.products.forEach(element => {
+            console.log(cartFind)
+            if(element.productId.stock < element.quantity){
+                
+                res.json({status:"checked"})
+                console.log('quantity greater than stock')
+            }else{
+              res.json({status:true})
+              console.log('quantity is ok')
+            }
+        })
+       
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
+
 module.exports = {
     userCartGet,
     addToCart,
     quantityIncrement,
     quantityDecrement,
-    cartDelete
+    cartDelete,
+    userCheckoutGet,
+    userCheckoutPage 
 
 }

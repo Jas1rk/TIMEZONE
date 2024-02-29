@@ -29,12 +29,7 @@ router.get('/products',middle.isproductBlock,usercontroller.productList)
 router.get('/newarraival',usercontroller.newArraivals)
 
 router.get('/sort',sortcontroller.sortItems)
-
-// router.get('/pricelow',sortcontroller.priceLow)
-// router.get('/pricehigh',sortcontroller.priceHigh)
-// router.get('/aatozz',sortcontroller.aaToZz)
-// router.get('/zztozz',sortcontroller.zzToAa)
-// router.get('/filter',sortcontroller.filterCategory)
+router.get('/filter',sortcontroller.filterCategory)
 
 
 router.get('/userlogout',middle.isLogout,usercontroller.userLogout)
@@ -44,7 +39,7 @@ router.get('/userprofile',middle.isLogged,userProfileController.userProfile)
 router.get('/changepassword',middle.isLogged,userProfileController.userChangePassword)
 router.post('/changepassword',userProfileController.changePasswordPost)
 router.get('/address',middle.isLogged,userProfileController.addressGet)
-router.get('/addressadd',userProfileController.useraddAddress)
+router.get('/addressadd',middle.isLogged,userProfileController.useraddAddress)
 router.post('/addressadd',userProfileController.addAddressPost)
 router.get('/addressedit',userProfileController.addressEditGet)
 router.post('/addressedit',userProfileController.addressEditPost)
@@ -60,6 +55,9 @@ router.post('/usercart',userCartController.addToCart)
 router.post('/increment',userCartController.quantityIncrement)
 router.post('/decrement',userCartController.quantityDecrement)
 router.delete('/deletecart',userCartController.cartDelete)
+router.get('/checkout',middle.isLogged,userCartController.userCheckoutGet)
+router.get('/checkoutpage',userCartController.userCheckoutPage)
+
 
 
 module.exports =  router
