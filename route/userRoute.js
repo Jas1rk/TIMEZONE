@@ -4,6 +4,7 @@ const usercontroller = require('../controller/userController')
 const userProfileController = require('../controller/userprofileController')
 const userCartController = require('../controller/cartController')
 const sortcontroller = require('../controller/sortController')
+const ordercontroller = require('../controller/orderController')
 const middle = require('../middlewares/auth')
 
 
@@ -57,6 +58,9 @@ router.post('/decrement',userCartController.quantityDecrement)
 router.delete('/deletecart',userCartController.cartDelete)
 router.get('/checkout',middle.isLogged,userCartController.userCheckoutGet)
 router.get('/checkoutpage',userCartController.userCheckoutPage)
+
+router.post('/placeorder',ordercontroller.placeOrderPost)
+router.get('/success',ordercontroller.successPageGet)
 
 
 

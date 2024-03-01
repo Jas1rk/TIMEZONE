@@ -18,7 +18,19 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="assets/css/maind134.css?v=3.4">
 </head>
+<style>
+.input-radio {
+        width: 15px;   /* Set the width of the radio button */
+        height: 15px;  /* Set the height of the radio button */
+        margin-top: 4px;
+    }
 
+    /* Optional: You can add some margin to give space around the radio button */
+    .radio-container {
+        margin-right: 10px;  /* Adjust the margin as needed */
+    
+}
+</style>
 <body>
     <header class="header-area header-style-1 header-height-2">
         <!-- <div class="header-top header-top-ptb-1 d-none d-lg-block">
@@ -772,14 +784,19 @@
                         <% } else {%>
                             <div id="address " style="margin-top: 70px;" >
                                 <div class="row">
+                                    <p id="typeerror" style="color: red;"></p>
                                     <%if(locals.addressData){%>
                                         <% addressData.forEach(element => { %>
                                     <div class="col-lg-12">
                                         <div class="card mb-3 mb-lg-0">
                                             <div class="card-header" style="background-color: #3F2520;">
-                                                <h5 class="mb-0" style="color: aliceblue;"><%= element.uaddresstype %></h5>
+                                                <label class="radio-container d-flex" style="gap: 10px;">
+                                                    <input id="addresstype" type="radio" class="input-radio" name="payment_method" value="<%= element._id %>" onclick="handleAddress('<%= element._id %>')">
+                                                   
+                                                    <span class="radio-text" style="color: #ffffff;"><%= element.uaddresstype %></span>
+                                                  
+                                                </label>
                                             </div>
-                                         
                                                  
                                                     <div class="card-body" style="background-color: #ffffff; border :1px solid #3F2520 ; margin-top: 5px;" >
                                                         <address>
@@ -861,31 +878,26 @@
                                 <div class="mb-25">
                                     <h5>Payment</h5>
                                 </div>
+                                <p id="typeerror" style="color: red;"></p>
                                 <div class="payment_option">
                                     <div class="custome-radio" style="color: #3F2520;">
-                                        <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios3" checked="">
+                                        <input class="form-check-input" required="" type="radio" name="payment_option" id="cashondelivery" checked="" value="cash on delevery">
                                         <label class="form-check-label" for="exampleRadios3" data-bs-toggle="collapse" data-target="#bankTranfer" aria-controls="bankTranfer">Cash on Delivery</label>
                                         <div class="form-group collapse in" id="bankTranfer">
                                             <p class="text-muted mt-5">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration. </p>
                                         </div>
                                     </div>
-                                    <div class="custome-radio">
+                                    <!-- <div class="custome-radio">
                                         <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios4" checked="">
                                         <label class="form-check-label" for="exampleRadios4" data-bs-toggle="collapse" data-target="#checkPayment" aria-controls="checkPayment">Razorpay</label>
                                         <div class="form-group collapse in" id="checkPayment">
                                             <p class="text-muted mt-5">Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode. </p>
                                         </div>
-                                    </div>
-                                    <!-- <div class="custome-radio">
-                                        <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios5" checked="">
-                                        <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#paypal" aria-controls="paypal">Paypal</label>
-                                        <div class="form-group collapse in" id="paypal">
-                                            <p class="text-muted mt-5">Pay via PayPal; you can pay with your credit card if you don't have a PayPal account.</p>
-                                        </div>
                                     </div> -->
+                                   
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-fill-out btn-block mt-30" style="background-color: #3F2520;">Place Order</a>
+                            <a class="btn btn-fill-out btn-block mt-30" style="background-color: #3F2520;" onclick="placeOrder('<%= cartFind._id %>')">Place Order</a>
                         </div>
                     </div>
                 </div>
@@ -1041,7 +1053,49 @@
     <script src="assets/js/maind134.js?v=3.4"></script>
     <script src="assets/js/shopd134.js?v=3.4"></script>
 </body>
+<script>
 
+    let selectAddressId = null
+    function handleAddress(addressId){
+        selectAddressId = addressId
+
+        if(selectAddressId !== null){
+            document.getElementById('typeerror').textContent = ""
+        }
+       
+    }
+   
+    const handlePAyment = document.getElementById('cashondelivery').value
+    
+    function placeOrder(cid){
+       
+       if(selectAddressId === null){
+         document.getElementById('typeerror').textContent = "Please select an address before placing the order."
+       
+       }else{
+    
+        $.ajax({  
+        url:'/placeorder',
+        method:'post',
+        data:{
+            cid,
+            handlePAyment,
+            selectAddressId,
+           
+    
+        },
+        success:(response)=>{
+            if(response.status === 'ordersuccess'){
+                window.location.href = "/success"
+            }
+        }
+
+
+      })
+    }
+       }
+    
+</script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->
 </html>

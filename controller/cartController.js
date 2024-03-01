@@ -196,7 +196,7 @@ const userCheckoutPage = async(req,res)=>{
         const addressData = await Address.find({user:userId})
         const cartFind = await Cart.findOne({user:userId}).populate('products.productId')
         cartFind.products.forEach(element => {
-            console.log(cartFind)
+            
             if(element.productId.stock < element.quantity){
                 
                 res.json({status:"checked"})
