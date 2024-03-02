@@ -16,18 +16,19 @@ const admincategoryPost = async(req,res)=>{
     try{
         const {name,description} = req.body
         console.log(req.body)
-        const lowerCasename = name.toLowerCase()
-        const existingCategory = await Category.findOne({name:lowerCasename})
+       
+        const existingCategory = await Category.findOne({name:name})
         if(!existingCategory){
             const newCategory = await new Category({
-                name:lowerCasename,
+                name:name,
                 description:description
             })
             await newCategory.save()
             console.log(newCategory)
             res.redirect('/admin/admincategory')
         }else{
-            res.status(400).json({message:"category already exist"})
+            const categories = await Category.find({})
+            res.render('admin/categoryadmin',{message1:"Category already exist",categories})
         }
        
 
@@ -79,14 +80,24 @@ const adminCategoryEditPost = async(req,res)=>{
     try{
         
         const {name,description} = req.body
-        console.log(req.body)
-        const updatedCategory = await Category.findByIdAndUpdate({_id:req.session.catId},{$set:{
-            name,description
-        }},{new:true})
+        const existingCategory = await Category.findOne({name:name})
+        const editId = await Category.findById({_id:req.session.catId})
+        if(existingCategory && existingCategory._id.toString() !== req.session.catId){
+            
+            console.log('Name already exists in another category');
+            res.render('admin/admincategoryedit',{mess:'Name already exists in another category',editId})
+            return;
+        }
+
+        const updatedCategory = await Category.findByIdAndUpdate(
+            {_id:req.session.catId},
+            {$set:{ name , description }},
+            { new :true }
+        )
+
         console.log(updatedCategory)
         res.redirect('/admin/admincategory')
-
-
+       
     }catch(err){
         console.log(err.message)
     }

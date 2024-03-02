@@ -62,7 +62,9 @@ const placeOrderPost = async(req,res)=>{
 
 const orderDetails = async(req,res)=>{
     try{
-      const orderDetails = await Order.find({})
+        const user = req.session.user
+      const orderDetails = await Order.find({user:user._id}).sort({_id:-1})
+      console.log(orderDetails)
       res.render('orderdetails',{orderDetails})
     }catch(err){
         console.log(err.message)
@@ -124,7 +126,7 @@ const cancelOrder = async(req,res)=>{
 
 const adminOrderList = async(req,res)=>{
     try{
-      const orders = await Order.find({}).populate('user')
+      const orders = await Order.find({}).sort({_id:-1}).populate('user')
       res.render('admin/orderlist',{orders})
     }catch(err){
         cosnole.log(err.message)
@@ -152,8 +154,30 @@ const statusChanging = async(req,res)=>{
             $set:{status:status}
         })
         const updatetedStatus = await updateStatus.save()
+        if(updatetedStatus === "Cancelled"){
+          let productSet = []
+          updatetedStatus.products.forEach(element =>{
+            let productStore = {
+                productId:element.productId,
+                quantity:element.quantity
+            }
+            productSet.push(productStore)
+            console.log(productSet,"ayachuuuuuu")
+          })  
+          productSet.forEach(async(element)=>{
+            const product = await Product.findByIdAndUpdate({_id:element.productId},{
+                $inc:{
+                    stock:element.quantity
+                }
+            },{new:true})
+          })
+
+        }
         
         res.json({status:"updated"})
+        
+
+
     }catch(err){
         console.log(err.message)
     }

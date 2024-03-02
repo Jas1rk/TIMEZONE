@@ -185,7 +185,7 @@
                             <small class="text-muted">Order ID: <%= orderData.orderid %></small>
                         </div>
                         <div class="col-lg-6 col-md-6 ms-auto text-md-end">
-                            <% if (orderData.status === "Delivered" || orderData.status === "Pending" ||orderData.status === "Shipped" || orderData.status === "Cancelled") { %>
+                            <% if (orderData.status === "Delivered" ||  orderData.status === "Cancelled") { %>
                                 <a class="btn btn-primary" onclick="back()">Back</a>
                             <% } else { %>
                                 <select id="status" class="form-select d-inline-block mb-lg-0 mb-15 mw-200">
@@ -359,9 +359,11 @@
 </body>
 
 <script>
-    const status = document.getElementById('status').value
+  
     function changeStatus(id){
-       alert(id)
+        const status = document.getElementById('status').value
+        alert(status)
+      
        $.ajax({
         url:'/admin/status',
         method:'post',

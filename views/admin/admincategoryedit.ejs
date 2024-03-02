@@ -204,15 +204,25 @@
                             <form method="post" action="/admin/categoryedit">
                                 <div class="mb-4" >
                                     <label for="product_name"  class="form-label">Name</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="product_name"  name="name" value="<%= editId.name  %>"/>
+                                    <input type="text" placeholder="Type here" class="form-control" id="name"  name="name" value="<%= editId.name  %>"/>
+                                    <% if (locals.mess) { %>
+                                        <p id="exist" class="text-danger"><%= locals.mess %></p>
+                                    <% } %>
+                                    <script>
+                                        setTimeout(() => {
+                                           document.getElementById('exist').style.display= "none" 
+                                        }, 2000);
+                                    </script>
+                                     <p id="error1" class="text-danger"></p>
                                 </div>
                                
                                 <div class="mb-4">
                                     <label class="form-label">Description</label>
-                                    <textarea placeholder="Type here" class="form-control" name="description"><%= editId.description %></textarea >
+                                    <textarea placeholder="Type here" class="form-control" name="description" id="description"><%= editId.description %></textarea >
+                                        <p id="error2" class="text-danger"></p>
                                 </div>
                                 <div class="d-grid">
-                                    <button class="btn btn-primary">Update</button>
+                                    <button class="btn btn-primary" onclick="createCat()">Update</button>
                                 </div>
                             </form>
                         </div>
@@ -232,6 +242,45 @@
     <script src="/admin-assets//js/main.js" type="text/javascript"></script>
     
 </body>
+<script>
+    function createCat(){
+      const catname = document.getElementById('name').value.trim()
+     const catdes = document.getElementById('description').value.trim()
+     
+     const fillError = document.getElementById('fillerror')
+     const nameError = document.getElementById('error1')
+     const descError = document.getElementById('error2')
+     
+     fillError.textContent = ""
+     nameError.textContent = ""
+     descError.textContent = ""
+
+     if(catname === ""){
+        nameError.textContent = "Category name is required"
+     }else if(catname.length < 3){
+        nameError.textContent = "Name must be atleast 3 charecter "
+     }else if(!/^[A-Z]+$/.test(catname)){
+
+        nameError.textContent = "Name can only contain alphabets and spaces"
+     }
+
+     if(catdes === ""){
+        descError.textContent = "Address is required"
+     }else if(!/^[a-zA-Z0-9\s,'/.()-]+$/.test(catdes)){
+        descError.textContent = "Enter valid description"
+     }
+
+     if(nameError.textContent||descError.textContent){
+        event.preventDefault()
+         fillError.textContent= "Enter fields"
+         setTimeout(() => {
+            fillError.textContent = ""
+         }, 3000);
+     }
+
+    }
+
+</script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-categories.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->
 </html>

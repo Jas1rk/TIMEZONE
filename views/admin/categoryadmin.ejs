@@ -209,10 +209,18 @@
                     <div class="row">
                         <p id="fillerror" class="text-danger"></p>
                         <div class="col-md-3">
-                            <form method="post" action="/admin/admincategory">
+                            <form id="form" method="post" action="/admin/admincategory">
                                 <div class="mb-4">
                                     <label for="product_name"  class="form-label">Name</label>
                                     <input  type="text" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
+                                    <% if (locals.message1) { %>
+                                        <p id="exist" class="text-danger"><%= locals.message1 %></p>
+                                    <% } %>
+                                    <script>
+                                        setTimeout(() => {
+                                           document.getElementById('exist').style.display= "none" 
+                                        }, 3000);
+                                    </script>
                                     <p id="error1" class="text-danger"></p>
                                 </div>
                                
@@ -257,7 +265,7 @@
                                             
                                             <td><b><%= element.name %></b><small class="text-muted">
                                                 <%= element._id %>
-
+                     
                                             </small></td>
                                             <td><%= element.description %></td>
                                             <% if (element.isBlocked==true) { %>
@@ -350,8 +358,9 @@
         nameError.textContent = "Category name is required"
      }else if(catname.length < 3){
         nameError.textContent = "Name must be atleast 3 charecter "
-     }else if(!/^[A-Za-z\s]+$/.test(catname)){
-        nameError.textContent = "Name can only contain alphabets and spaces"
+     }else if(!/^[A-Z]+$/.test(catname)){
+
+        nameError.textContent = "Name can only contain capital letter"
      }
 
      if(catdes === ""){
@@ -360,8 +369,12 @@
         descError.textContent = "Enter valid description"
      }
 
-     if(nameError.textContent!==""||descError.textContent!==""){
-
+     if(nameError.textContent||descError.textContent){
+        event.preventDefault()
+         fillError.textContent= "Enter fields"
+         setTimeout(() => {
+            fillError.textContent = ""
+         }, 3000);
      }
 
     }
