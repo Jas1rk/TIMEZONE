@@ -207,19 +207,22 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
+                        <p id="fillerror" class="text-danger"></p>
                         <div class="col-md-3">
                             <form method="post" action="/admin/admincategory">
                                 <div class="mb-4">
                                     <label for="product_name"  class="form-label">Name</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="product_name"  name="name"/>
+                                    <input  type="text" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
+                                    <p id="error1" class="text-danger"></p>
                                 </div>
                                
                                 <div class="mb-4">
                                     <label class="form-label">Description</label>
-                                    <textarea placeholder="Type here" class="form-control" name="description"></textarea>
+                                    <textarea placeholder="Type here" class="form-control" name="description" id="description" onclick="clrdes()"></textarea>
+                                    <p id="error2" class="text-danger"></p>
                                 </div>
                                 <div class="d-grid">
-                                    <button class="btn btn-primary">Create category</button>
+                                    <button class="btn btn-primary" onclick="createCat()">Create category</button>
                                 </div>
                             </form>
                         </div>
@@ -329,6 +332,40 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 <script>
+    function createCat(){
+
+   
+     const catname = document.getElementById('name').value.trim()
+     const catdes = document.getElementById('description').value.trim()
+     
+     const fillError = document.getElementById('fillerror')
+     const nameError = document.getElementById('error1')
+     const descError = document.getElementById('error2')
+     
+     fillError.textContent = ""
+     nameError.textContent = ""
+     descError.textContent = ""
+
+     if(catname === ""){
+        nameError.textContent = "Category name is required"
+     }else if(catname.length < 3){
+        nameError.textContent = "Name must be atleast 3 charecter "
+     }else if(!/^[A-Za-z\s]+$/.test(catname)){
+        nameError.textContent = "Name can only contain alphabets and spaces"
+     }
+
+     if(catdes === ""){
+        descError.textContent = "Address is required"
+     }else if(!/^[a-zA-Z0-9\s,'/.()-]+$/.test(catdes)){
+        descError.textContent = "Enter valid description"
+     }
+
+     if(nameError.textContent!==""||descError.textContent!==""){
+
+     }
+
+    }
+
      function unblock(id) {
         const _id = id
         if (_id) {

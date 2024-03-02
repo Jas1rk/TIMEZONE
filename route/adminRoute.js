@@ -4,6 +4,7 @@ const admincontroller = require('../controller/adminController')
 const userlistcontroller = require('../controller/userListConstroller')
 const adminCategoryController = require('../controller/categoryController')
 const productcontroller = require('../controller/productController')
+const orderController = require('../controller/orderController')
 const upload = require('../controller/multer/multer')
 const middle = require('../middlewares/auth')
 
@@ -40,6 +41,11 @@ admin_router.post('/producteditpost',middle.isAdmin,upload.array("image"),produc
 admin_router.get('/blockproduct',middle.isAdmin,middle.isAdmin,productcontroller.adminProductBloack)
 admin_router.get('/unblockproduct',middle.isAdmin,productcontroller.adminUnblockproduct)
 admin_router.post('/deleteimage',middle.isAdmin,productcontroller.deleteImage);
+
+
+admin_router.get('/orderslist',middle.isAdmin,orderController.adminOrderList)
+admin_router.get('/orderdetails',middle.isAdmin,orderController.adminOrderDetails)
+admin_router.post('/status',middle.isAdmin,orderController.statusChanging)
 
 
 

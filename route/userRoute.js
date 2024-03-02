@@ -60,7 +60,10 @@ router.get('/checkout',middle.isLogged,userCartController.userCheckoutGet)
 router.get('/checkoutpage',userCartController.userCheckoutPage)
 
 router.post('/placeorder',ordercontroller.placeOrderPost)
-router.get('/success',ordercontroller.successPageGet)
+router.get('/orders',middle.isLogged,ordercontroller.orderDetails)
+router.get('/vieworder',middle.isLogged,ordercontroller.userOrderView)
+router.post('/cancelorder',ordercontroller.cancelOrder)
+router.get('/success',middle.isLogged,ordercontroller.successPageGet)
 
 
 

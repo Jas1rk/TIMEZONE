@@ -37,6 +37,10 @@ const orderSchema = new mongoose.Schema({
     createdate:{
         type:Date,
         default:Date.now()
+    },
+    orderid:{
+        type:Number,
+        required:true
     }
 })
 
