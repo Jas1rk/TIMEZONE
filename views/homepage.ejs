@@ -928,12 +928,7 @@
                                  <% for( let i = 0; i < categories.length; i++ ) { %>
                             
                                 <li><a href="/filter?_id=<%= categories[i]._id  %>"><%= categories[i].name %></a></li>
-                                <!-- <li><a href="shop-grid-right.html">Blouses & Shirts</a></li>
-                                <li><a href="shop-grid-right.html">Dresses</a></li>
-                                <li><a href="shop-grid-right.html">Swimwear</a></li>
-                                <li><a href="shop-grid-right.html">Beauty</a></li>
-                                <li><a href="shop-grid-right.html">Jewelry & Watch</a></li>
-                                <li><a href="shop-grid-right.html">Accessories</a></li> -->
+                               
                                 <% } %>
                             </ul>
                         </div>
@@ -1011,7 +1006,7 @@
                                                 <div class="product-category">
                                                     <a href="/products?_id=<%= products[i]._id %>"><%= products[i].pname %></a>
                                                 </div>
-                                                <h2><a href="/products?_id=<%= products[i]._id %>"><%= products[i].description %></a></h2>
+                                                <h2 class="title text-truncate"><a href="/products?_id=<%= products[i]._id %>"><%= products[i].description %></a></h2>
                                                 <!-- <div class="rating-result" title="90%">
                                                     <span>
                                                         <span>90%</span>
@@ -1030,6 +1025,18 @@
                                         </div>
                                     </div>
                                     <% } %>
+                                    <div class="pagination-area mt-15 mb-50">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination justify-content-start">
+                                                <% for (let i = 1; i <= numofPage; i++) { %>
+                                                    <li class="page-item <% if (i === currentPage) { %>active<% } %>">
+                                                        <a class="page-link" href="/?page=<%= i %>"><%= i %></a>
+                                                    </li>
+                                                <% } %>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    
                                  
                                     <!-- <div class="col-lg-4 col-md-4 col-12 col-sm-6"> -->
                                         <!-- <div class="product-cart-wrap mb-30">

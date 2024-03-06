@@ -11,9 +11,16 @@ const dotenv = require('dotenv').config()
 
 const userhome  = async(req,res)=>{
     try{
-        const products = await Product.find({isBlocked:false})
+        const pages = req.query.page || 1
+        const sizeOfPage = 6
+        const productSkip = (pages-1)*sizeOfPage
+        const productCount = await Product.find({isBlocked:false}).count()
+        const numofPage = Math.ceil(productCount/sizeOfPage)
+        const products = await Product.find({isBlocked:false}).skip(productSkip).limit(sizeOfPage)
         const categories = await Category.find({isBlocked:false})
-        res.render('homepage',{products,categories})
+
+        const currentPage = parseInt(pages,10)
+        res.render('homepage',{products,categories,numofPage,currentPage})
     }catch(err){
         console.log(err);
     }
@@ -21,11 +28,18 @@ const userhome  = async(req,res)=>{
 
 const newArraivals = async(req,res)=>{
   try {
-    const products = await Product.find({isBlocked:false}).sort({_id:-1}).limit(6)
+    const pages = req.query.page || 1
+    const sizeOfPage = 6
+    const productSkip = (pages-1)*sizeOfPage
+    const productCount = await Product.find({isBlocked:false}).count()
+    const numofPage = Math.ceil(productCount/sizeOfPage)
+
+    const currentPage = parseInt(pages,10)
+    const products = await Product.find({isBlocked:false}).sort({_id:-1}).limit(sizeOfPage).skip(productSkip)
     const categories = await Category.find({isBlocked:false})
-    res.render('homepage',{products,categories})
+    res.render('homepage',{products,categories,numofPage,currentPage})
   } catch (error) {
-    console.log(err)
+    console.log(error)
   }
 }
 

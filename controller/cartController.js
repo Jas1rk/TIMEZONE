@@ -72,7 +72,7 @@ const addToCart = async(req,res)=>{
            uCart.total = price;
            console.log('user has cart',uCart)
            await uCart.save()
-           res.json({status:"true"})
+           res.json({status:true})
        }
       
       

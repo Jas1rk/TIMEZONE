@@ -126,8 +126,15 @@ const cancelOrder = async(req,res)=>{
 
 const adminOrderList = async(req,res)=>{
     try{
-      const orders = await Order.find({}).sort({_id:-1}).populate('user')
-      res.render('admin/orderlist',{orders})
+      const pages =  req.query.page || 1 
+      const sizeOfPage =  4
+      const productSkip = (pages-1) * sizeOfPage
+      const productCount = await Order.find({}).sort({_id:-1}).populate('user').count()
+      const numsOfPage = Math.ceil(productCount / sizeOfPage)
+      const orders = await Order.find({}).sort({_id:-1}).populate('user').skip(productSkip).limit(sizeOfPage)
+
+      const currentPage = parseInt(pages,10)
+      res.render('admin/orderlist',{orders,numsOfPage,currentPage})
     }catch(err){
         cosnole.log(err.message)
     }

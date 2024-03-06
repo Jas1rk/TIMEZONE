@@ -340,6 +340,14 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 <script>
+    function clrname(){
+        document.getElementById('error1').textContent = ""
+    }
+    function clrdes(){
+        document.getElementById('error2').textContent = ""
+    }
+
+
     function createCat(){
 
    
@@ -369,7 +377,7 @@
         descError.textContent = "Enter valid description"
      }
 
-     if(nameError.textContent||descError.textContent){
+     if(nameError.textContent!==""||descError.textContent!==""){
         event.preventDefault()
          fillError.textContent= "Enter fields"
          setTimeout(() => {

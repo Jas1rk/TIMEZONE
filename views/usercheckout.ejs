@@ -782,7 +782,11 @@
                             </div>
                             
                         <% } else {%>
+                            
                             <div id="address " style="margin-top: 70px;" >
+                                <a href="/addressadd">
+                                    <button type="submit" name="submit" value="Submit" style="background:#3F2520;" id="buttonedit" class="btn btn-primary">Add address</button>
+                                </a>
                                 <div class="row">
                                     <p id="typeerror" style="color: red;"></p>
                                     <%if(locals.addressData){%>
@@ -1067,32 +1071,31 @@
    
     const handlePayment = document.getElementById('cashondelivery').value
     
-    function placeOrder(cid){
+    function placeOrder(cid) {
+    if (selectAddressId === null) {
+        document.getElementById('typeerror').textContent = "Please select an address before placing the order.";
+    } else {
+      
+          
+                $.ajax({
+                    url: '/placeorder',
+                    method: 'post',
+                    data: {
+                        cid,
+                        handlePayment,
+                        selectAddressId,
+                    },
+                    success: (response) => {
+                        if (response.status === 'ordersuccess') {
+                            window.location.href = "/success";
+                        }
+                    }
+                });
+            
        
-       if(selectAddressId === null){
-         document.getElementById('typeerror').textContent = "Please select an address before placing the order."
-       
-       }else{
-    
-        $.ajax({  
-        url:'/placeorder',
-        method:'post',
-        data:{
-            cid,
-            handlePayment,
-            selectAddressId,
-        },
-        success:(response)=>{
-            if(response.status === 'ordersuccess'){
-                window.location.href = "/success"
-            }
-        }
-
-
-      })
     }
-       }
-    
+}
+
 </script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->
