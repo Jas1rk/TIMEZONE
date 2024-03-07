@@ -17,11 +17,12 @@ router.get('/register',middle.isUser,usercontroller.registerget)
 router.post('/register',usercontroller.registerPost)
 router.get('/verify',middle.isUser,usercontroller.otpVerification)
 router.post('/verify',usercontroller.otpVerificationPost)
-
+router.post('/registerresend',usercontroller.registerResendOtp)
 router.get('/forget',middle.isUser,usercontroller.forgetPassGet)
 router.post('/forget',usercontroller.forgetPassPost)
 router.get("/forgotOtpPage",middle.isUser,usercontroller.verifyForgotPassOtp)
 router.post('/forgetOtpValidation',usercontroller.validateForgetPassOtp)
+router.post('/forgetresend',usercontroller.forgetResendPost)
 router.get('/newPassPage',middle.isUser,usercontroller.UserNewPassGet)
 router.post('/newPassPage',usercontroller.UserNewPassPost)
 

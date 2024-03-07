@@ -57,6 +57,11 @@
                                         <% if (locals.message) { %>
                                          <p id="msg" class="text text-danger"><%= locals.message %></p>
                                         <% } %>
+                                        <script>
+                                            setTimeout(() => {
+                                                document.getElementById('msg').style.display = "none"
+                                            },2000);
+                                        </script>
                                         <form method="post" action="/verify">
                                             <div class="form-group">
                                                 <input type="number" name="otp" placeholder="Enter 4 Digital Code" id="otp">
@@ -64,21 +69,27 @@
         
                                            
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">Verify</button>
+                                                <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login" id="confirmbtn">Verify</button>
                                                
                                             </div>
+                                            
+                                        <p id="resendmessage" style="color: red; display: none;">
+                                            Time's up.<br>  resend a new OTP to confirm
+                                        </p>
+                                        <p id="timer">00:59</p>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login" onclick="resetOtp()" id="resendbutton">Resend</button>
                                            
-
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">Resend</button>
-                                               
-                                            </div>
+                                        </div>
+                                           
                                         </form>
+                                       
                                     </div>
                                 </div>
                             </div>
                     </div>
                 </div>
+            </div>
             </div>
         </section>
     </main>
@@ -232,7 +243,55 @@
     <script src="assets/js/plugins/jquery.theia.sticky.js"></script>
     <!-- Template  JS -->
     <script src="assets/js/maind134.js?v=3.4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </body>
+
+<script>
+
+    function resetOtp(){
+      $.ajax({
+        url:"/registerresend",
+        method:"post",
+        success:(response)=>{
+            if(response.status === 'resend'){
+                window.location.href = "/verify"
+            }
+        }
+      })  
+    }
+
+    function updateCountdown() {
+		var countdownElement = document.getElementById('timer');
+		var time = countdownElement.innerText;
+		var timeArray = time.split(':');
+		var minutes = parseInt(timeArray[0]);
+		var seconds = parseInt(timeArray[1]);
+
+		if (seconds === 0) {
+			if (minutes === 0) {
+				clearInterval(timer);
+				document.getElementById('resendbutton').style.display = 'block'; 
+				document.getElementById('timer').style.display = "none"
+				document.getElementById('resendmessage').style.display = "block"
+				document.getElementById('confirmbtn').style.display = "none";
+				// document.getElementById('enterotp').style.display = "none"
+				document.getElementById('otp').style.display = "none"
+				return;
+			} else {
+				minutes--;
+			}
+		} else {
+			seconds--;
+		}
+		var minutesStr = minutes < 10 ? '0' + minutes : minutes;
+		var secondsStr = seconds < 10 ? '0' + seconds : seconds;
+
+		countdownElement.innerText = minutesStr + ':' + secondsStr;
+	}
+	var timer = setInterval(updateCountdown, 1000);
+
+</script>
 
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/page-login-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->

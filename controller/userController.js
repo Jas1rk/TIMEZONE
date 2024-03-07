@@ -107,7 +107,7 @@ const registerPost = async(req,res)=>{
            
         }else{
            const otpVal =  await emailVerification(email);
-             console.log("otp:",otpVal)
+             console.log("oldotpto mail:",otpVal)
              req.session.temp = {username, email, mobile, password1, password2, otpVal};
     
             res.redirect('/verify')
@@ -169,14 +169,11 @@ const  otpVerification =  (req,res)=>{
 
 const otpVerificationPost = async(req,res)=>{
     try{
-        console.log('otp getting')
-        console.log(req.session.temp);
        const otp =  req.body.otp
        const storedOtp = req.session.temp.otpVal; 
        console.log("entered otp",otp)
        console.log("stored otp",storedOtp)
-       if(otp===storedOtp){
-        console.log(req.session.temp,"sesssione");
+       if(otp === storedOtp){
         const {username,email,mobile,password1} = req.session.temp
         const hashedpass =  await bcrypt.hash(password1,10)
         const existingUser = await User.findOne({email:email})
@@ -201,6 +198,21 @@ const otpVerificationPost = async(req,res)=>{
 }
 
 
+
+const registerResendOtp = async(req,res)=>{
+    try{
+       const userEmail = req.session.temp.email
+       const resendOtp = await emailVerification(userEmail);
+       req.session.temp.otpVal = resendOtp 
+       console.log('changed otp', req.session.temp.otpVal);
+       res.json({status:"resend"})
+      
+
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
 const forgetPassGet = (req,res)=>{
     console.log(req.session.temp);
   try{
@@ -216,14 +228,11 @@ const forgetPassPost = async(req,res)=>{
       const { email }=req.body
       const password1 = req.body.password1
       const password2 = req.body.password2
-      console.log(req.body)
                      
        const existingUser = await User.findOne({email:email})
        console.log(existingUser)
        if(existingUser){
         const otpVal = await emailVerification(email);
-        console.log(req.session.temp,"before modification");
-        console.log(otpVal)
         req.session.temp = {
             email:email,
             password1:password1,
@@ -244,18 +253,27 @@ const forgetPassPost = async(req,res)=>{
     }
 }
 
+const forgetResendPost = async(req,res)=>{
+    try{
+        const userEmail = req.session.temp.email
+        const resendOtp = await emailVerification(userEmail);
+        req.session.temp.otpVal = resendOtp 
+        console.log('changed otp', req.session.temp.otpVal);
+        res.json({status:"resend"})
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
 const validateForgetPassOtp =async(req,res)=>{
    
    try{
     const otp = req.body.otp;
     console.log(otp)
     const storedOtp = req.session.temp.otpVal
-    console.log(storedOtp)
     if(!otp || !storedOtp){
         return res.status(400).json({error:"otp could'nt find"})
     }
-    console.log(req.session.temp,"temp");
-    console.log(req.session.temp.password1,"password 1");
    
     if(otp === storedOtp){
         res.redirect('/newPassPage')
@@ -365,7 +383,8 @@ module.exports = {
     userLogout,
     productList,
     newArraivals,
-   
+    registerResendOtp,
+    forgetResendPost
     
 
 }
