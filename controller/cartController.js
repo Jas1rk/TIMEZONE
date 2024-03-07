@@ -55,9 +55,7 @@ const addToCart = async(req,res)=>{
             res.json({status:"viewcart"})
             
           }
-           
-         
-
+          
        }else{
            const uCart = await new Cart({
             user:userData._id,
@@ -136,6 +134,7 @@ const quantityDecrement = async(req,res)=>{
                 quantityData.total -=price
                 res.json({status:"decrement"})
             }else{
+                res.json({status:"minimum"})
                 console.log('qunatity is already 0')
             }
         }else{

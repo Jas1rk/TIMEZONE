@@ -32,6 +32,12 @@
         padding: 5px 10px;
         /* Adjust padding as needed */
     }
+
+    
+.black-ok-button {
+    background-color: #3F2520 !important;
+    color: white !important;
+}
 </style>
 
 <body>
@@ -761,7 +767,7 @@
                                                 <td class="image product-thumbnail"><img
                                                         src="/uploads/<%= element.productId.images[0] %>" alt="#"></td>
                                                 <td class="product-des product-name">
-                                                    <h5 class="product-name"><a href="shop-product-right.html">
+                                                    <h5 class="product-name"><a href="shop-product-right.html" style="color: #3F2520;">
                                                             <%= element.productId.pname %>
                                                         </a></h5>
                                                     <p class="font-xs">
@@ -806,49 +812,9 @@
                                             </tr>
                                             <% }) %>
 
-                                                <!-- <tr>
-                                        <td class="image"><img src="assets/imgs/shop/product-11-2.jpg" alt="#"></td>
-                                        <td class="product-des">
-                                            <h5 class="product-name"><a href="shop-product-right.html">Amazon Essentials Women's Tank</a></h5>
-                                            <p class="font-xs">Sit at ipsum amet clita no est,<br> sed amet sadipscing et gubergren</p>
-                                        </td>
-                                        <td class="price" data-title="Price"><span>$75.00 </span></td>
-                                        <td class="text-center" data-title="Stock">
-                                            <div class="detail-qty border radius  m-auto">
-                                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                                <span class="qty-val">2</span>
-                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                            </div>
-                                        </td>
-                                        <td class="text-right" data-title="Cart">
-                                            <span>$150.00 </span>
-                                        </td>
-                                        <td class="action" data-title="Remove"><a href="#" class="text-muted"><i class="fi-rs-trash"></i></a></td>
-                                    </tr> -->
-                                                <!-- <tr>
-                                        <td class="image"><img src="assets/imgs/shop/product-6-1.jpg" alt="#"></td>
-                                        <td class="product-des">
-                                            <h5 class="product-name"><a href="shop-product-right.html">Amazon Brand - Daily Ritual Women's Jersey </a></h5>
-                                            <p class="font-xs">Erat amet et et amet diam et et.<br> Justo amet at dolore
-                                            </p>
-                                        </td>
-                                        <td class="price" data-title="Price"><span>$62.00 </span></td>
-                                        <td class="text-center" data-title="Stock">
-                                            <div class="detail-qty border radius  m-auto">
-                                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                                <span class="qty-val">1</span>
-                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                            </div>
-                                        </td>
-                                        <td class="text-right" data-title="Cart">
-                                            <span>$62.00 </span>
-                                        </td>
-                                        <td class="action" data-title="Remove"><a href="#" class="text-muted"><i class="fi-rs-trash"></i></a></td>
-                                    </tr> -->
+                                     
                                                 <tr>
-                                                    <!-- <td colspan="6" class="text-end">
-                                            <a href="#" class="text-muted"> <i class="fi-rs-cross-small"></i> Clear Cart</a>
-                                        </td> -->
+                                            
                                                 </tr>
                                     </tbody>
                                 </table>
@@ -1164,9 +1130,9 @@
                                                 <tbody>
                                                     <tr>
                                                         <td class="cart_total_label">Cart Subtotal</td>
-                                                        <td class="cart_total_amount"><span
+                                                        <td style="color: #3F2520;"><span
                                                                 class="font-lg fw-900 text-brand"
-                                                                style="color: #3F2520;" id="carttotal1">
+                                                                 id="carttotal1">
                                                                 <%= cartFind.total %>
                                                             </span></td>
                                                     </tr>
@@ -1374,6 +1340,10 @@
                         icon: "warning",
                         title: "Oops...",
                         text: "check your Cart!",
+                        iconColor:"#3F2520",
+                        customClass: {
+                            confirmButton: 'black-ok-button'
+                    },
 
                     });
 
@@ -1418,7 +1388,54 @@
                     totalElement.innerHTML = ttl + x
 
 
-                }
+                }else if(response.status === "limit" ){
+                    Swal.fire({
+                    title: "You've reaced limit",
+                    icon: "warning",
+                    customClass: {
+                            confirmButton: 'black-ok-button'
+                    },
+                    showClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                        `
+                    },
+                    hideClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeOutDown
+                        animate__faster
+                        `
+                    },
+                    iconColor: "#3F2520"
+                    });
+                }else if(response.status === "outofstock"){
+
+                    Swal.fire({
+                    title: "Out Of Stock",
+                    icon: "warning",
+                    customClass: {
+                        confirmButton: 'black-ok-button'
+                    },
+                    showClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                        `
+                    },
+                    hideClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeOutDown
+                        animate__faster
+                        `
+                    },
+                    iconColor: "#3F2520"
+                    });
+                } 
             }
         })
 
@@ -1452,6 +1469,29 @@
 
                     totalElement.innerHTML = ttl - x
 
+                }else if(response.status === "minimum"){
+                    Swal.fire({
+                    title: "Minimum 1 product",
+                    icon: "warning",
+                    customClass: {
+                        confirmButton: 'black-ok-button'
+                    },
+                    showClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                        `
+                    },
+                    hideClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeOutDown
+                        animate__faster
+                        `
+                    },
+                    iconColor: "#3F2520"
+                    });
                 }
             }
 

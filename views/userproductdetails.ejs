@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Evara - eCommerce HTML Template</title>
+    <title>TimeZone</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +19,14 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="assets/css/maind134.css?v=3.4">
 </head>
+<style>
 
+.black-ok-button {
+    background-color: #3F2520 !important;
+    color: white !important;
+}
+
+</style>
 <body>
     <!-- Quick view -->
     <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel"
@@ -40,38 +47,16 @@
                                         <figure class="border-radius-10">
                                             <img src="/uploads/<%= productData.images[i] %>" alt="product image">
                                         </figure>
-                                        <!-- <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product-16-1.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product-16-3.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product-16-4.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product-16-5.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product-16-6.jpg" alt="product image">
-                                    </figure>
-                                    <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product-16-7.jpg" alt="product image">
-                                    </figure> -->
+                                       
                                         <% } %>
                                 </div>
-                                <!-- THUMBNAILS -->
+                               
                                 <div class="slider-nav-thumbnails pl-15 pr-15">
                                     <% for( let i=0; i < productData.images.length; i++ ) { %>
 
 
                                         <div><img src="/uploads/<%= productData.images[i] %>" alt="product image"></div>
-                                        <!-- <div><img src="assets/imgs/shop/thumbnail-4.jpg" alt="product image"></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-5.jpg" alt="product image"></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-6.jpg" alt="product image"></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-7.jpg" alt="product image"></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-8.jpg" alt="product image"></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-9.jpg" alt="product image"></div> -->
+                                     
                                         <% } %>
                                 </div>
                             </div>
@@ -602,9 +587,9 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="hotline d-none d-lg-block">
-                        <p><i class="fi-rs-headset"></i><span>Hotline</span> 1900 - 888 </p>
-                    </div>
+                        <!-- <div class="hotline d-none d-lg-block">
+                            <p><i class="fi-rs-headset"></i><span>Hotline</span> 1900 - 888 </p>
+                        </div> -->
                     <p class="mobile-promotion">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%
                     </p>
                     <div class="header-action-right d-block d-lg-none">
@@ -869,7 +854,7 @@
 
                                     <div class="detail-gallery">
                                         <span class="zoom-icon"><i class="fi-rs-search"></i></span>
-                                        <!-- MAIN SLIDES -->
+                                        
 
 
 
@@ -882,26 +867,9 @@
                                                         alt="product image">
                                                 </figure>
                                                 <% } %>
-                                                    <!-- <figure class="border-radius-10">
-                                                <img src="assets/imgs/shop/product-16-1.jpg" alt="product image">
-                                            </figure>
-                                            <figure class="border-radius-10">
-                                                <img src="assets/imgs/shop/product-16-3.jpg" alt="product image">
-                                            </figure>
-                                            <figure class="border-radius-10">
-                                                <img src="assets/imgs/shop/product-16-4.jpg" alt="product image">
-                                            </figure>
-                                            <figure class="border-radius-10">
-                                                <img src="assets/imgs/shop/product-16-5.jpg" alt="product image">
-                                            </figure>
-                                            <figure class="border-radius-10">
-                                                <img src="assets/imgs/shop/product-16-6.jpg" alt="product image">
-                                            </figure>
-                                            <figure class="border-radius-10">
-                                                <img src="assets/imgs/shop/product-16-7.jpg" alt="product image">
-                                            </figure> -->
+                                           
                                         </div>
-                                        <!-- THUMBNAILS -->
+                                       
                                         <div class="slider-nav-thumbnails pl-15 pr-15">
                                             <% for( let i=0; i < productData.images.length; i++ ) { %>
 
@@ -910,12 +878,7 @@
                                                         alt="product image">
                                                 </div>
                                                 <% } %>
-                                                    <!-- //  <div><img src="assets/imgs/shop/thumbnail-4.jpg" alt="product image"></div>
-                                            // <div><img src="assets/imgs/shop/thumbnail-5.jpg" alt="product image"></div>
-                                            // <div><img src="assets/imgs/shop/thumbnail-6.jpg" alt="product image"></div>
-                                            // <div><img src="assets/imgs/shop/thumbnail-7.jpg" alt="product image"></div>
-                                            // <div><img src="assets/imgs/shop/thumbnail-8.jpg" alt="product image"></div>
-                                            // <div><img src="assets/imgs/shop/thumbnail-9.jpg" alt="product image"></div>  -->
+                                          
                                         </div>
                                     </div>
 
@@ -1015,10 +978,10 @@
                                                         class="button button-add-to-cart">View cart</button></a>
 
                                                 <% }else { %>
-                                                    <a href="usercart"><button type="submit" id="btc"
+                                                    <button type="submit" id="btc"
                                                             class="button button-add-to-cart"
                                                             onclick="addtocart('<%= productData.offprice %>')">Add to
-                                                            cart</button></a>
+                                                            cart</button>
 
                                                     <% } %>
 
@@ -1866,17 +1829,33 @@
             success: (response) => {
                 if (response.status === "viewcart") {
                    
-                        window.location.href = "/usercart"
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "Product added to cart!",
+                        icon: "success",
+                        customClass: {
+                            confirmButton: 'black-ok-button'
+                        },
+                        iconColor: '#3F2520'
+                    }) .then((result)=>{
+                        window.location.reload()
+                     })
+
+                     
                   
                 } else if (response.status === true) {
                     Swal.fire({
+                        title: "Good job!",
+                        text: "Product added to cart!",
                         icon: "success",
-                        title: "Your work has been saved",
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then((result)=>{
-                        window.location.href = "/usercart"
-                    });
+                        customClass: {
+                            confirmButton: 'black-ok-button'
+                        },
+                        iconColor: '#3F2520'
+                    }) .then((result)=>{
+                        window.location.reload()
+                     })
+
 
                   
                 }

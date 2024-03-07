@@ -59,12 +59,18 @@
                                         <% } %>
                                         <form method="post" action="/verify">
                                             <div class="form-group">
-                                                <input type="number" required="" name="otp" placeholder="Enter 4 Digital Code">
+                                                <input type="number" name="otp" placeholder="Enter 4 Digital Code" id="otp">
                                             </div>
         
                                            
                                             <div class="form-group">
                                                 <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">Verify</button>
+                                               
+                                            </div>
+                                           
+
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login">Resend</button>
                                                
                                             </div>
                                         </form>
