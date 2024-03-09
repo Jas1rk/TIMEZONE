@@ -25,21 +25,76 @@
     <link rel="stylesheet" href="assets/css/maind134.css?v=3.4">
 </head>
 <style>
-       .search-style-2 {
-        position: relative;
+    .search-result {
+        display: none;
+        position: absolute;
     }
 
-    .search-result {
+    .no-product-found {
         position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: red;
-        z-index: 9999;
-        /* display: none; */
-        
+        display: none;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    #searchResultsContainer {
+        background-color: white; 
+        border-radius: 10px; 
+        width: 52vw;
+        flex-wrap: wrap;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 15px; /* Add padding for better visual appeal */
+    }
+
+    .product-container {
+        width: 200px;
+        margin: 10px;
+        text-align: left;
+    }
+
+    .product-container img {
+        margin-left: -2px;
+        max-width: 25%;
+        height: auto;
+        transform: rotate(0deg); /* Initial rotation angle */
+        transition: transform 0.5s ease; /* Transition for smooth rotation */
+        padding: 0;
+    }
+
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: -57px;
+    }
+
+    .product-info p {
+        margin: -5px 0;
+        font-size: 11px;
+        margin-top: -1px;
+        color: black;
+    }
+
+    /* Add a class for additional rotation steps if needed */
+    .rotate-90 {
+        transform: rotate(90deg);
+    }
+
+    .rotate-180 {
+        transform: rotate(180deg);
+    }
+
+    .rotate-270 {
+        transform: rotate(270deg);
     }
 </style>
+
+
+
 <body>
     <!-- Quick view -->
     <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
@@ -186,8 +241,13 @@
                             <input id="inputtype" type="text" placeholder="Search for products . . ." onkeyup="searchProduct()"> 
                             
                            <div class="search-result">
-                            <p>heloooo</p>
-                           </div>
+                               <div id="searchResultsContainer">
+
+                               </div>
+                           </div> 
+
+                           <h5 class="no-product-found">No products found</h5>
+                          
                                
                         </div>
                        
@@ -206,43 +266,7 @@
                                         <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
                                         <span class="pro-count blue">2</span>
                                     </a>
-                                    <!-- <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                                        <ul>
-                                            <li>
-                                                <div class="shopping-cart-img">
-                                                    <a href="shop-product-right.html"><img alt="Evara" src="assets/imgs/shop/thumbnail-3.jpg"></a>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="shop-product-right.html">Daisy Casual Bag</a></h4>
-                                                    <h4><span>1 × </span>$800.00</h4>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="shopping-cart-img">
-                                                    <a href="shop-product-right.html"><img alt="Evara" src="assets/imgs/shop/thumbnail-2.jpg"></a>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4><a href="shop-product-right.html">Corduroy Shirts</a></h4>
-                                                    <h4><span>1 × </span>$3200.00</h4>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <div class="shopping-cart-footer">
-                                            <div class="shopping-cart-total">
-                                                <h4>Total <span>$4000.00</span></h4>
-                                            </div>
-                                            <div class="shopping-cart-button">
-                                                <a href="shop-cart.html" class="outline">View cart</a>
-                                                <a href="shop-checkout.html">Checkout</a>
-                                            </div>
-                                        </div>
-                                    </div> -->
+                                   
                                 </div>
                                 <div class="header-action-icon-2">
                                     <a href="/userprofile">
@@ -264,7 +288,7 @@
                     <div class="logo logo-width-1 d-block d-lg-none">
                         <a href="/"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
                     </div>
-                    <div class="header-nav d-none d-lg-flex">
+                    <div class="header-nav d-none d-lg-flex" style="z-index: -1;">
                         <!-- <div class="main-categori-wrap d-none d-lg-block">
                             <a class="categori-button-active open" href="#">
                                 <span class="fi-rs-apps"></span> Browse Categories
@@ -3409,24 +3433,85 @@
         })
     }
      
+    const inputElement = document.getElementById('inputtype');
+    let timeoutId;
 
-    const inputElement =  document.getElementById('inputtype')
-
-    function debounce(func,delay){
-        let timeoutId;
-        return function(){
+    function debounce(func, delay) {
+        return function () {
             clearTimeout(timeoutId);
-            timeoutId = setTimeout(func,delay)
+            timeoutId = setTimeout(() => {
+                func();
+            }, delay);
+        };
+    }
+
+    function showSearchResult() {
+        const searchResult = document.querySelector('.search-result');
+        searchResult.style.display = 'block';
+    }
+
+    function hideSearchResult() {
+        const searchResult = document.querySelector('.search-result');
+        searchResult.style.display = 'none';
+    }
+
+    function showNoProductFound() {
+        const noProductFound = document.querySelector('.no-product-found');
+        noProductFound.style.display = 'block';
+    }
+
+    function hideNoProductFound() {
+        const noProductFound = document.querySelector('.no-product-found');
+        noProductFound.style.display = 'none';
+    }
+
+    function searchProduct() {
+        const searchDataValue = inputElement.value.trim();
+
+        if (searchDataValue !== "") {
+            showSearchResult();
+            debounce(() => {
+                $.ajax({
+                    url: "/search",
+                    method: "post",
+                    data: {
+                        searchDataValue
+                    },
+                    success: (response) => {
+                        const searchResultsContainer = document.getElementById('searchResultsContainer')
+                        searchResultsContainer.innerHTML = ""
+
+                        if (response.searchProducts.length > 0) {
+                            response.searchProducts.forEach(element => {
+                                const productContainer = document.createElement('div');
+                                productContainer.classList.add('product-container');
+
+                                const productElement = document.createElement('div');
+                                productElement.innerHTML = `
+                                    <img src="/uploads/${element.images[0]}" alt="product">
+                                    <div class="product-info">
+                                        <p>${element.pname}</p>
+                                        <p>₹${element.offprice}</p>
+                                    </div>
+                                `;
+
+                                productContainer.appendChild(productElement);
+                                searchResultsContainer.appendChild(productContainer);
+                            });
+                            hideNoProductFound();
+                        } else {
+                            hideSearchResult();
+                            showNoProductFound();
+                        }
+                    }
+                })
+            }, 500)();
+        } else {
+            hideSearchResult();
+            hideNoProductFound();
         }
     }
-
-    function searchProduct(){
-        const searchDataValue = inputElement.value
-        console.log(searchDataValue)
-    
-    }
-
-</script>
+    </script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->
 </html>

@@ -50,7 +50,12 @@ const filterCategory = async(req,res)=>{
 
  const searchProducts = async(req,res)=>{
     try{
-        
+        const {searchDataValue} = req.body
+        const searchProducts = await Product.find({pname:{
+            $regex: searchDataValue , $options: 'i'
+        }})
+        console.log(searchProducts)
+        res.json({status:"searched",searchProducts})
 
     }catch(err){
         console.log(err);
