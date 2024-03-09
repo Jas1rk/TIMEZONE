@@ -54,14 +54,14 @@
                                         <div class="heading_s1">
                                             <h3 class="mb-30">OTP</h3>
                                         </div>
-                                        <% if (locals.message) { %>
-                                         <p id="msg" class="text text-danger"><%= locals.message %></p>
-                                        <% } %>
-                                        <script>
+                                        <% if (locals.message1) { %>
+                                         <p id="msg" class="text text-danger"><%= locals.message1    %></p>
+                                         <script>
                                             setTimeout(() => {
                                                 document.getElementById('msg').style.display = "none"
                                             },2000);
                                         </script>
+                                        <% } %>
                                         <form method="post" action="/verify">
                                             <div class="form-group">
                                                 <input type="number" name="otp" placeholder="Enter 4 Digital Code" id="otp">
@@ -78,7 +78,7 @@
                                         </p>
                                         <p id="timer">00:59</p>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login" onclick="resetOtp()" id="resendbutton">Resend</button>
+                                            <button style="display: none;" type="submit" class="btn btn-fill-out btn-block hover-up" name="login" onclick="resetOtp()" id="resendbutton">Resend</button>
                                            
                                         </div>
                                            

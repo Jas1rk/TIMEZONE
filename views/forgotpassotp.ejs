@@ -56,13 +56,14 @@
                                         </div>
                                         <% if (locals.message) { %>
                                          <p id="msg" class="text text-danger"><%= locals.message %></p>
-                                        <% } %>
-                                        <script>
+                                         <script>
                                             setTimeout(() => {
                                                 document.getElementById('msg').style.display = "none"
                                             },2000);
                                         </script>
-                                        <form method="post" action="/verify">
+                                        <% } %>
+                                       
+                                        <form method="post" action="/forgetOtpValidation">
                                             <div class="form-group">
                                                 <input type="number" name="otp" placeholder="Enter 4 Digital Code" id="otp">
                                             </div>
@@ -78,10 +79,10 @@
                                         </p>
                                         <p id="timer">00:59</p>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-fill-out btn-block hover-up" name="login" onclick="resetOtp()" id="resendbutton">Resend</button>
+                                            <button style="display: none;" type="submit" class="btn btn-fill-out btn-block hover-up" name="login" onclick="resetOtp()" id="resendbutton">Resend</button>
                                            
                                         </div>
-                                           
+                                            
                                         </form>
                                        
                                     </div>
@@ -252,7 +253,7 @@
         method:"post",
         success:(response)=>{
             if(response.status === 'resend'){
-                window.location.href = "/verify"
+                window.location.href = "/forgotOtpPage"
             }
         }
       })  
@@ -277,9 +278,13 @@
 				return;
 			} else {
 				minutes--;
+				// document.getElementById('resendbutton').style.display = 'none'; 
+
 			}
 		} else {
 			seconds--;
+				// document.getElementById('resendbutton').style.display = 'none'; 
+
 		}
 		var minutesStr = minutes < 10 ? '0' + minutes : minutes;
 		var secondsStr = seconds < 10 ? '0' + seconds : seconds;

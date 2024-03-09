@@ -32,6 +32,7 @@ router.get('/newarraival',usercontroller.newArraivals)
 
 router.get('/sort',sortcontroller.sortItems)
 router.get('/filter',sortcontroller.filterCategory)
+router.post('/search',sortcontroller.searchProducts)
 
 
 router.get('/userlogout',middle.isLogout,usercontroller.userLogout)

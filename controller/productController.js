@@ -1,10 +1,6 @@
 const Product = require('../model/productModel')
 const Category = require('../model/categoryModel')
 const multer = require('../controller/multer/multer')
-const { render } = require('ejs')
-const fs = require('fs')
-const { log } = require('console')
-const { NONAME } = require('dns')
 
 
 
@@ -83,6 +79,7 @@ const adminEditProductPost = async (req, res) => {
         const { pname, description, regularprice, offerprice, color, meterial, category , stock} = req.body
         const images = req.files
         const catData = await Category.findOne({name:category})
+        console.log("helloo",catData)
         const newImages = images.map(elements => elements.filename)
         if (images.length > 0) {
             await Product.findByIdAndUpdate({ _id: productId }, { $push: { images: { $each: newImages } } })

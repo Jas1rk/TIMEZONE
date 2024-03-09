@@ -171,8 +171,6 @@ const otpVerificationPost = async(req,res)=>{
     try{
        const otp =  req.body.otp
        const storedOtp = req.session.temp.otpVal; 
-       console.log("entered otp",otp)
-       console.log("stored otp",storedOtp)
        if(otp === storedOtp){
         const {username,email,mobile,password1} = req.session.temp
         const hashedpass =  await bcrypt.hash(password1,10)
@@ -214,7 +212,7 @@ const registerResendOtp = async(req,res)=>{
 }
 
 const forgetPassGet = (req,res)=>{
-    console.log(req.session.temp);
+   
   try{
      res.render('userforgot')
   }catch(err){
@@ -233,6 +231,7 @@ const forgetPassPost = async(req,res)=>{
        console.log(existingUser)
        if(existingUser){
         const otpVal = await emailVerification(email);
+        console.log(otpVal,"kitti mooone");
         req.session.temp = {
             email:email,
             password1:password1,
@@ -241,7 +240,6 @@ const forgetPassPost = async(req,res)=>{
             username:existingUser.username,
             mobile:existingUser.mobile
         }
-        console.log(req.session.temp,"after otp");
         res.json({status:"success"})
        }else{
         console.log('user not found',email)
@@ -269,17 +267,14 @@ const validateForgetPassOtp =async(req,res)=>{
    
    try{
     const otp = req.body.otp;
-    console.log(otp)
     const storedOtp = req.session.temp.otpVal
-    if(!otp || !storedOtp){
-        return res.status(400).json({error:"otp could'nt find"})
-    }
-   
+    
     if(otp === storedOtp){
+        console.log('otp entered success fully')
         res.redirect('/newPassPage')
           
     }else{
-        res.render('forgotpassotp',{message:"Invalid Otp"})
+        res.render('forgotpassotp',{message1:"Invalid Otp"})
         console.log("invalid otp")
     }
    }catch(err){

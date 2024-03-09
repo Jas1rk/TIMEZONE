@@ -192,12 +192,16 @@
         <section class="content-main">
             <form method="post" action="/admin/addproduct" enctype="multipart/form-data">
             <div class="row">
+               
                 <div class="col-9">
+                    <p id="fillError" class="text-danger"></p>
+
                     <div class="content-header">
                         <h2 class="content-title">Add New Product</h2>
+                        
                         <div>
-                            <!-- <button class="btn btn-light rounded font-sm mr-5 text-body hover-up">Save to draft</button> -->
-                            <button class="btn btn-md rounded font-sm hover-up">Publish</button>
+                           
+                            <button  class="btn btn-md rounded font-sm hover-up" onclick="addproductValidatiion()">Publish</button>
                         </div>
                     </div>
                 </div>
@@ -211,84 +215,53 @@
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Product Name</label>
                                     <input type="text" placeholder="Type here" class="form-control" id="name" name="pname">
+                                    <p id="nameError" class="text-danger"></p>
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Description</label>
-                                    <textarea placeholder="Type here" class="form-control" rows="4" name="description"></textarea>
+                                    <textarea placeholder="Type here" class="form-control" rows="4" name="description" id="description"></textarea>
+                                    <p id="descriptionError" class="text-danger"></p>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="mb-4">
                                             <label class="form-label">Regular price</label>
                                             <div class="row gx-2">
-                                                <input type="number" placeholder="₹" type="numder" class="form-control" name="regularprice">
+                                                <input placeholder="₹" type="numder" class="form-control" name="regularprice" id="regularprice">
+                                                <p id="regpriceError" class="text-danger"></p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="mb-4">
                                             <label class="form-label">Offer price</label>
-                                            <input placeholder="₹" type="number" class="form-control" name="offerprice">
+                                            <input placeholder="₹" type="number" class="form-control" name="offerprice" id="offprice">
+                                            <p id="offpriceError" class="text-danger"></p>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="mb-4">
                                             <label class="form-label">Item Stock</label>
-                                            <input placeholder="Type here" type="number" class="form-control" name="stock">
+                                            <input placeholder="Type here" type="number" class="form-control" name="stock" id="stock">
+                                            <p id="stockError" class="text-danger"></p>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="mb-4">
                                         <label class="form-label">Colour</label>
-                                        <input type="text" placeholder="Type here" class="form-control" id="product_color" name="color">
-                                        <!-- <select class="form-select">
-                                            <option> USD </option>
-                                            <option> EUR </option>
-                                            <option> RUBL </option>
-                                        </select> -->
+                                        <input type="text" placeholder="Type here" class="form-control" id="color" name="color">
+                                        <p id="colorError" class="text-danger"></p>
                                     </div>
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Material</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="meterial">
+                                    <input type="text" placeholder="Type here" class="form-control" id="meterial" name="meterial">
+                                    <p id="materialError" class="text-danger"></p>
                                 </div>
-                                <!-- <label class="form-check mb-4">
-                                    <input class="form-check-input" type="checkbox" value="">
-                                    <span class="form-check-label"> Make a template </span>
-                                </label> -->
+                               
                             
                         </div>
-                    </div> <!-- card end// -->
-                    <!-- <div class="card mb-4">
-                        <div class="card-header">
-                            <h4>Shipping</h4>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-4">
-                                            <label for="product_name" class="form-label">Width</label>
-                                            <input type="text" placeholder="inch" class="form-control" id="product_name">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-4">
-                                            <label for="product_name" class="form-label">Height</label>
-                                            <input type="text" placeholder="inch" class="form-control" id="product_name">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="product_name" class="form-label">Weight</label>
-                                    <input type="text" placeholder="gam" class="form-control" id="product_name">
-                                </div>
-                                <div class="mb-4">
-                                    <label for="product_name" class="form-label">Shipping fees</label>
-                                    <input type="text" placeholder="$" class="form-control" id="product_name">
-                                </div>
-                            </form>
-                        </div>
-                    </div>  -->
+                    </div>
+                  
                 </div>
                 <div class="col-lg-3">
                     <div class="card mb-4">
@@ -298,7 +271,8 @@
                         <div class="card-body">
                             <div class="input-upload">
                                 <img src="/admin-assets/imgs/theme/upload.svg" alt="">
-                                <input class="form-control" type="file" multiple  name="image">
+                                <input class="form-control" type="file" multiple  name="image" id="image">
+                                <p id="imageError" class="text-danger"></p>
                             </div>
                         </div>
                     </div> <!-- card end// -->
@@ -319,32 +293,20 @@
                                         <% }) %>
                                     </select>
                                 </div>
-                                <!-- <div class="col-sm-6 mb-3">
-                                    <label class="form-label">Sub-category</label>
-                                    <select class="form-select">
-                                        <option> Nissan </option>
-                                        <option> Honda </option>
-                                        <option> Mercedes </option>
-                                        <option> Chevrolet </option>
-                                    </select>
-                                </div> -->
-                                <!-- <div class="mb-4">
-                                    <label for="product_name" class="form-label">Tags</label>
-                                    <input type="text" class="form-control">
-                                </div> -->
-                            </div> <!-- row.// -->
+                              
+                            </div>
                         </div>
-                    </div> <!-- card end// -->
+                    </div> 
                 </div>
             </div>
         </form>
-        </section> <!-- content-main end// -->
-        <!-- <footer class="main-footer font-xs">
+        </section>
+        <footer class="main-footer font-xs">
             <div class="row pb-30 pt-15">
                 <div class="col-sm-6">
                     <script>
                     document.write(new Date().getFullYear())
-                    </script> ©, Evara - HTML Ecommerce Template .
+                    </script> ©, TimeZone.
                 </div>
                 <div class="col-sm-6">
                     <div class="text-sm-end">
@@ -352,7 +314,7 @@
                     </div>
                 </div>
             </div>
-        </footer> -->
+        </footer>
     </main>
     <script src="/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
     <script src="/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
@@ -362,6 +324,114 @@
     <!-- Main Script -->
     <script src="/admin-assets/js/main.js" type="text/javascript"></script>
 </body>
+<script>
+    function addproductValidatiion(){
+    
+    const name  = document.getElementById('name').value.trim()
+    const description = document.getElementById('description').value.trim()
+    const regularprice = document.getElementById('regularprice').value
+    const offerprice =  document.getElementById('offprice').value
+    const stock = document.getElementById('stock').value.trim()
+    const color = document.getElementById('color').value.trim()
+    const meterial = document.getElementById('meterial').value.trim()
+    const image = document.getElementById('image').value
+   
+   
+
+    const fillError = document.getElementById('fillError')
+    const nameError = document.getElementById('nameError')
+    const descriptionError = document.getElementById('descriptionError')
+    const regularpriceError = document.getElementById('regpriceError')
+    const offerpriceError  = document.getElementById('offpriceError')
+    const stockError = document.getElementById('stockError')
+    const colorError =  document.getElementById('colorError')
+    const materialError =  document.getElementById('materialError')
+    const imageError = document.getElementById('imageError')
+
+    fillError.textContent = ""
+    nameError.textContent = ""
+    descriptionError.textContent = ""
+    regularpriceError.textContent = ""
+    offerpriceError.textContent = ""
+    stockError.textContent = ""
+    colorError.textContent = ""
+    materialError.textContent = ""
+    imageError.textContent = ""
+
+    if(name === ""){
+        nameError.textContent = "Name is required"
+    }else if (!/^[A-Z]+$/.test(name)){
+        nameError.textContent = "Name bust be captal"
+    }else if(name.length < 3){
+        nameError.textContent = "Name atleast 3 charecter"
+    
+    
+    }
+     
+    
+    if(description === ""){
+        descriptionError.textContent = "Description is required."
+    }else if(!/^[a-zA-Z0-9\s,'/.()-]+$/.test(description)){
+        descriptionError.textContent = "Enter a valid description."
+    }
+
+    if(regularprice === ""){
+        regularpriceError.textContent = "Regular price is required."
+    }else if(parseInt(regularprice) < parseInt(offerprice)){
+        regularpriceError.textContent = "Regular price must be higher than the offer price."
+    }else if(/-/.test(regularprice)){
+        regularpriceError.textContent = "Regular price should not contain a hyphen ("-")."
+    }
+
+    if(offerprice === ""){
+        offerpriceError.textContent = "Offer price is required."
+    }else if(parseInt(offerprice) > parseInt(regularprice)){
+        offerpriceError.textContent = " Offer price must be lower than the regular price."
+    }else if(/-/.test(offerprice)){
+        offerpriceError.textContent = "Offer price should not contain a hyphen ("-")."
+    }
+
+    if(stock === ""){
+        stockError.textContent = "Stock is required"
+    }else if(!/^[^0\.\-]+$/.test(stock)){
+        stockError.textContent = "Invalid stock value. It should not contain zero, hyphen, or dot."
+    }
+
+    if(color === ""){
+        colorError.textContent = "Colour is required"
+    }else if(!/^[A-Za-z]+$/.test(color)){
+        colorError.textContent = "It should contain only letters."
+    }else if(color.length < 3){
+        colorError.textContent = "Letter must be atleast 3 charecter"
+    }
+
+    if(meterial === ""){
+        materialError.textContent = "Meterial is required"
+    }else if(!/^[A-Za-z]+$/.test(meterial)){
+        materialError.textContent = "It should contain only letters."
+    }else if(meterial.length < 3)
+        materialError.textContent = "Letter must be atleast 3 charecter"
+
+
+    if(image === ""){
+        imageError.textContent = "Image is required"
+    }else if(image.length < 3){
+        imageError.textContent = "Image should be atleast 3"
+    }else if(!/\.(png|jpe?g|gif|bmp|svg)$/.test(image)){
+        imageError.textContent = "Invalid image file. Please upload a valid image file."
+    }
+
+    if(nameError.textContent||descriptionError.textContent||regularpriceError.textContent||offerprice.textContent||stockError.textContent||colorError.textContent||materialError.textContent||imageError.textContent){
+        event.preventDefault()
+        fillError.textContent = "Fill all fields"
+        setTimeout(() => {
+            fillError.textContent = ""
+        }, 3000);
+    }
+
+}
+
+</script>
 
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:32 GMT -->

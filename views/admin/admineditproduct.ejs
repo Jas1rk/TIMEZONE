@@ -43,96 +43,31 @@
                     <a class="menu-link" href="/admin/productadmin"> <i class="icon material-icons md-shopping_bag"></i>
                         <span class="text">Products</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-products-list.html">Product List</a>
-                        <a href="page-products-grid.html">Product grid</a>
-                        <a href="page-products-grid-2.html">Product grid 2</a>
-                        <a href="page-categories.html">Categories</a>
-                    </div> -->
+                  
                 </li>
                 <li class="menu-item">
                     <a class="menu-link" href="/admin/admincategory"> <i
                             class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Category</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-orders-1.html">Order list 1</a>
-                        <a href="page-orders-2.html">Order list 2</a>
-                        <a href="page-orders-detail.html">Order detail</a>
-                    </div> -->
+                 
                 </li>
                 <li class="menu-item">
                     <a class="menu-link" href="/admin/userlist"> <i class="icon material-icons md-store"></i>
                         <span class="text">User List</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-sellers-cards.html">Sellers cards</a>
-                        <a href="page-sellers-list.html">Sellers list</a>
-                        <a href="page-seller-detail.html">Seller profile</a>
-                    </div> -->
+                  
                 </li>
                 <li class="menu-item">
                     <a class="menu-link" href="/admin/addproduct"> <i class="icon material-icons md-add_box"></i>
                         <span class="text">Add product</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-form-product-1.html" class="active">Add product 1</a>
-                        <a href="page-form-product-2.html">Add product 2</a>
-                        <a href="page-form-product-3.html">Add product 3</a>
-                        <a href="page-form-product-4.html">Add product 4</a>
-                    </div> -->
+                   
                 </li>
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-transactions-1.html"> <i class="icon material-icons md-monetization_on"></i>
-                        <span class="text">Transactions</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-transactions-1.html">Transaction 1</a>
-                        <a href="page-transactions-2.html">Transaction 2</a>
-                    </div>
-                </li> -->
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
-                        <span class="text">Account</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-account-login.html">User login</a>
-                        <a href="page-account-register.html">User registration</a>
-                        <a href="page-error-404.html">Error 404</a>
-                    </div>
-                </li> -->
-                <!-- <li class="menu-item">
-                    <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
-                        <span class="text">Reviews</span>
-                    </a>
-                </li> -->
-                <!-- <li class="menu-item">
-                    <a class="menu-link" href="page-brands.html"> <i class="icon material-icons md-stars"></i>
-                        <span class="text">Brands</span> </a>
-                </li> -->
-                <!-- <li class="menu-item">
-                    <a class="menu-link" disabled href="#"> <i class="icon material-icons md-pie_chart"></i>
-                        <span class="text">Statistics</span>
-                    </a>
-                </li> -->
+               
             </ul>
             <hr>
-            <!-- <ul class="menu-aside">
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#"> <i class="icon material-icons md-settings"></i>
-                        <span class="text">Settings</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-settings-1.html">Setting sample 1</a>
-                        <a href="page-settings-2.html">Setting sample 2</a>
-                    </div>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="page-blank.html"> <i class="icon material-icons md-local_offer"></i>
-                        <span class="text"> Starter page </span>
-                    </a>
-                </li>
-            </ul> -->
+           
             <br>
             <br>
         </nav>
@@ -141,10 +76,7 @@
         <header class="main-header navbar">
             <div class="col-search">
                 <form class="searchform">
-                    <!-- <div class="input-group">
-                        <input list="search_terms" type="text" class="form-control" placeholder="Search term">
-                        <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
-                    </div> -->
+                
                     <datalist id="search_terms">
                         <option value="Products">
                         <option value="New orders">
@@ -211,11 +143,12 @@
             <form method="post" action="/admin/producteditpost" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-9">
+                        <p id="fillError" class="text-danger"></p>
                         <div class="content-header">
                             <h2 class="content-title">Edit Product</h2>
                             <div>
 
-                                <button type="submit" class="btn btn-md rounded font-sm hover-up">Update</button>
+                                <button type="submit" class="btn btn-md rounded font-sm hover-up" onclick="addproductValidatiion()">Update</button>
                             </div>
                         </div>
                     </div>
@@ -229,14 +162,17 @@
 
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Product Name</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="product_name"
+                                    <input type="text" placeholder="Type here" class="form-control" id="name"
                                         name="pname" value="<%= productData.pname %>">
-                                        
+                                        <p id="nameError" class="text-danger"></p>
+
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Description</label>
                                     <textarea placeholder="Type here" class="form-control" rows="4"
-                                        name="description"><%= productData.description %></textarea>
+                                        name="description" id="description"><%= productData.description %></textarea>
+                                        <p id="descriptionError" class="text-danger"></p>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-4">
@@ -244,77 +180,52 @@
                                             <label class="form-label">Regular price</label>
                                             <div class="row gx-2">
                                                 <input placeholder="₹" type="text" class="form-control"
-                                                    name="regularprice" value="<%= productData.regprice %>">
+                                                    name="regularprice" id="regularprice" value="<%= productData.regprice %>">
+                                                    <p id="regpriceError" class="text-danger"></p>
+
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="mb-4">
                                             <label class="form-label">Offer price</label>
-                                            <input placeholder="₹" type="text" class="form-control" name="offerprice"
+                                            <input placeholder="₹" type="text" class="form-control" name="offerprice" id="offprice"
                                                 value="<%= productData.offprice %>" >
+                                                <p id="offpriceError" class="text-danger"></p>
+
+                                                
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="mb-4">
                                             <label class="form-label">Item Stock</label>
                                             <input placeholder="Type here" type="number" class="form-control" name="stock" value="<%= productData.stock %>" id="stock">
+                                            <p id="stockError" class="text-danger"></p>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <label class="form-label">Colour</label>
                                         <input type="text" placeholder="Type here" class="form-control"
-                                            id="product_color" name="color" value="<%= productData.color %>">
-                                        <!-- <select class="form-select">
-                                            <option> USD </option>
-                                            <option> EUR </option>
-                                            <option> RUBL </option>
-                                        </select> -->
+                                            id="color" name="color" value="<%= productData.color %>">
+                                            <p id="colorError" class="text-danger"></p>
+
+                                      
                                     </div>
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Material</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="product_name"
+                                    <input type="text" placeholder="Type here" class="form-control" id="meterial"
                                         name="meterial" value="<%= productData.material %>">
+                                        <p id="materialError" class="text-danger"></p>
+
                                 </div>
-                                <!-- <label class="form-check mb-4">
-                                    <input class="form-check-input" type="checkbox" value="">
-                                    <span class="form-check-label"> Make a template </span>
-                                </label> -->
+                                
 
                             </div>
-                        </div> <!-- card end// -->
-                        <!-- <div class="card mb-4">
-                        <div class="card-header">
-                            <h4>Shipping</h4>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-4">
-                                            <label for="product_name" class="form-label">Width</label>
-                                            <input type="text" placeholder="inch" class="form-control" id="product_name">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-4">
-                                            <label for="product_name" class="form-label">Height</label>
-                                            <input type="text" placeholder="inch" class="form-control" id="product_name">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="product_name" class="form-label">Weight</label>
-                                    <input type="text" placeholder="gam" class="form-control" id="product_name">
-                                </div>
-                                <div class="mb-4">
-                                    <label for="product_name" class="form-label">Shipping fees</label>
-                                    <input type="text" placeholder="$" class="form-control" id="product_name">
-                                </div>
-                            </form>
-                        </div>
-                    </div>  -->
+                        </div> 
+                        
+                        
                     </div>
                     <div class="col-lg-3">
                         <div class="card mb-4">
@@ -332,7 +243,9 @@
                                                 onclick="deleteImage('<%= productData._id %>' ,'<%= i %>')">Delete</button>
                                         </a>
                                         <% } %>
-                                            <input class="form-control" type="file" multiple name="image">
+                                            <input class="form-control" type="file" multiple name="image" id="image">
+                                            <p id="imageError" class="text-danger"></p>
+
                                 </div>
                             </div>
                         </div> <!-- card end// -->
@@ -358,32 +271,20 @@
                                                         <% }) %>
                                         </select>
                                     </div>
-                                    <!-- <div class="col-sm-6 mb-3">
-                                    <label class="form-label">Sub-category</label>
-                                    <select class="form-select">
-                                        <option> Nissan </option>
-                                        <option> Honda </option>
-                                        <option> Mercedes </option>
-                                        <option> Chevrolet </option>
-                                    </select>
-                                </div> -->
-                                    <!-- <div class="mb-4">
-                                    <label for="product_name" class="form-label">Tags</label>
-                                    <input type="text" class="form-control">
-                                </div> -->
-                                </div> <!-- row.// -->
+                                  
+                                </div>
                             </div>
-                        </div> <!-- card end// -->
+                        </div>
                     </div>
                 </div>
             </form>
-        </section> <!-- content-main end// -->
-        <!-- <footer class="main-footer font-xs">
+        </section>
+        <footer class="main-footer font-xs">
             <div class="row pb-30 pt-15">
                 <div class="col-sm-6">
                     <script>
                     document.write(new Date().getFullYear())
-                    </script> ©, Evara - HTML Ecommerce Template .
+                    </script> ©,TimeZone .
                 </div>
                 <div class="col-sm-6">
                     <div class="text-sm-end">
@@ -391,7 +292,7 @@
                     </div>
                 </div>
             </div>
-        </footer> -->
+        </footer>
     </main>
     <script src="/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
     <script src="/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
@@ -420,6 +321,113 @@
         })
 
     }
+
+    function addproductValidatiion(){
+        const name  = document.getElementById('name').value.trim()
+        alert('jjjjj')
+    const description = document.getElementById('description').value.trim()
+    const regularprice = document.getElementById('regularprice').value
+    const offerprice =  document.getElementById('offprice').value
+    const stock = document.getElementById('stock').value.trim()
+    const color = document.getElementById('color').value.trim()
+    const meterial = document.getElementById('meterial').value.trim()
+    const image = document.getElementById('image').value
+   
+   
+
+    const fillError = document.getElementById('fillError')
+    const nameError = document.getElementById('nameError')
+    const descriptionError = document.getElementById('descriptionError')
+    const regularpriceError = document.getElementById('regpriceError')
+    const offerpriceError  = document.getElementById('offpriceError')
+    const stockError = document.getElementById('stockError')
+    const colorError =  document.getElementById('colorError')
+    const materialError =  document.getElementById('materialError')
+    const imageError = document.getElementById('imageError')
+
+    fillError.textContent = ""
+    nameError.textContent = ""
+    descriptionError.textContent = ""
+    regularpriceError.textContent = ""
+    offerpriceError.textContent = ""
+    stockError.textContent = ""
+    colorError.textContent = ""
+    materialError.textContent = ""
+    imageError.textContent = ""
+
+    if(name === ""){
+        nameError.textContent = "Name is required"
+    }else if (!/^[A-Z]+$/.test(name)){
+        nameError.textContent = "Name bust be captal"
+    }else if(name.length < 3){
+        nameError.textContent = "Name atleast 3 charecter"
+    
+    
+    }
+     
+    
+    if(description === ""){
+        descriptionError.textContent = "Description is required."
+    }else if(!/^[a-zA-Z0-9\s,'/.()-]+$/.test(description)){
+        descriptionError.textContent = "Enter a valid description."
+    }
+
+    if(regularprice === ""){
+        regularpriceError.textContent = "Regular price is required."
+    }else if(parseInt(regularprice) < parseInt(offerprice)){
+        regularpriceError.textContent = "Regular price must be higher than the offer price."
+    }else if(/-/.test(regularprice)){
+        regularpriceError.textContent = "Regular price should not contain a hyphen ("-")."
+    }
+
+    if(offerprice === ""){
+        offerpriceError.textContent = "Offer price is required."
+    }else if(parseInt(offerprice) > parseInt(regularprice)){
+        offerpriceError.textContent = " Offer price must be lower than the regular price."
+    }else if(/-/.test(offerprice)){
+        offerpriceError.textContent = "Offer price should not contain a hyphen ("-")."
+    }
+
+    if(stock === ""){
+        stockError.textContent = "Stock is required"
+    }else if(!/^[^0\.\-]+$/.test(stock)){
+        stockError.textContent = "Invalid stock value. It should not contain zero, hyphen, or dot."
+    }
+
+    if(color === ""){
+        colorError.textContent = "Colour is required"
+    }else if(!/^[A-Za-z]+$/.test(color)){
+        colorError.textContent = "It should contain only letters."
+    }else if(color.length < 3){
+        colorError.textContent = "Letter must be atleast 3 charecter"
+    }
+
+    if(meterial === ""){
+        materialError.textContent = "Meterial is required"
+    }else if(!/^[A-Za-z]+$/.test(meterial)){
+        materialError.textContent = "It should contain only letters."
+    }else if(meterial.length < 3)
+        materialError.textContent = "Letter must be atleast 3 charecter"
+
+
+    if(image === ""){
+        imageError.textContent = "Image is required"
+    }else if(image.length < 3){
+        imageError.textContent = "Image should be atleast 3"
+    }else if(!/\.(png|jpe?g|gif|bmp|svg)$/.test(image)){
+        imageError.textContent = "Invalid image file. Please upload a valid image file."
+    }
+
+    if(nameError.textContent||descriptionError.textContent||regularpriceError.textContent||offerprice.textContent||stockError.textContent||colorError.textContent||materialError.textContent||imageError.textContent){
+        event.preventDefault()
+        fillError.textContent = "Fill all fields"
+        setTimeout(() => {
+            fillError.textContent = ""
+        }, 3000);
+    }
+
+}
+
 </script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:32 GMT -->

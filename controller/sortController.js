@@ -38,8 +38,8 @@ const filterCategory = async(req,res)=>{
     try{ 
         const catData = req.query._id
         const findCat = await Category.findById({_id:catData})
-        const  data = await Product.find({category:findCat._id})
-        const products = await Product.find({isBlocked:false}).sort({_id:-1}).limit(3)
+        const data = await Product.find({category:findCat._id})
+        const products = await Product.find({isBlocked:false}).sort({_id:-1})
         console.log(data)
         res.render('productsright',{data,products})
         
@@ -48,8 +48,27 @@ const filterCategory = async(req,res)=>{
     }
 }
 
+ const searchProducts = async(req,res)=>{
+    try{
+        
+
+    }catch(err){
+        console.log(err);
+    }
+ }
+
+// const adminFilterCategory = async(req,res)=>{
+//     try{
+//        const catData =  req.query._id
+//        console.log(catData);
+//     }catch(err){
+//         console.log(err.message)
+//     }
+// }
 
 module.exports = {
     sortItems,
-    filterCategory
+    filterCategory,
+    searchProducts
+    // adminFilterCategory
 }

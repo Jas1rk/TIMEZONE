@@ -5,6 +5,7 @@ const userlistcontroller = require('../controller/userListConstroller')
 const adminCategoryController = require('../controller/categoryController')
 const productcontroller = require('../controller/productController')
 const orderController = require('../controller/orderController')
+const sortController = require('../controller/sortController')
 const upload = require('../controller/multer/multer')
 const middle = require('../middlewares/auth')
 
@@ -32,6 +33,7 @@ admin_router.get('/categoryblock',middle.isAdmin,adminCategoryController.adminCa
 admin_router.get('/categoryunblock',middle.isAdmin,adminCategoryController.adminCategoryUnblock)
 admin_router.get('/categoryedit',middle.isAdmin,adminCategoryController.adminCategoryEditGet)
 admin_router.post('/categoryedit',middle.isAdmin,adminCategoryController.adminCategoryEditPost)
+// admin_router.get('/filtercategroy',middle.isAdmin,sortController.adminFilterCategory)
 
 admin_router.get('/productadmin',middle.isAdmin,productcontroller.adminProductsGet)
 admin_router.get('/addproduct',middle.isAdmin,productcontroller.addProductGet)
