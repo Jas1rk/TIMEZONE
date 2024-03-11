@@ -41,95 +41,37 @@
                     <a class="menu-link " href="/admin/productadmin"> <i class="icon material-icons md-shopping_bag" ></i>
                         <span class="text">Products</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-products-list.html">Product List</a>
-                        <a href="page-products-grid.html" class="active">Product grid</a>
-                        <a href="page-products-grid-2.html">Product grid 2</a>
-                        <a href="page-categories.html">Categories</a>
-                    </div> -->
+                 
+                       
                 </li>
                 <li class="menu-item">
                     <a class="menu-link" href="/admin/admincategory"> <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Category</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-orders-1.html">Order list 1</a>
-                        <a href="page-orders-2.html">Order list 2</a>
-                        <a href="page-orders-detail.html">Order detail</a>
-                    </div> -->
+                  
                 </li>
                 <li class="menu-item">
                     <a class="menu-link" href="/admin/userlist"> <i class="icon material-icons md-store"></i>
                         <span class="text">User List</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-sellers-cards.html">Sellers cards</a>
-                        <a href="page-sellers-list.html">Sellers list</a>
-                        <a href="page-seller-detail.html">Seller profile</a>
-                    </div> -->
+                  
                 </li>
                 <li class="menu-item">
                     <a class="menu-link" href="/admin/addproduct"> <i class="icon material-icons md-add_box"></i>
                         <span class="text">Add product</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-form-product-1.html">Add product 1</a>
-                        <a href="page-form-product-2.html">Add product 2</a>
-                        <a href="page-form-product-3.html">Add product 3</a>
-                        <a href="page-form-product-4.html">Add product 4</a>
-                    </div> -->
-                </li>
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-transactions-1.html"> <i class="icon material-icons md-monetization_on"></i>
-                        <span class="text">Transactions</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-transactions-1.html">Transaction 1</a>
-                        <a href="page-transactions-2.html">Transaction 2</a>
-                    </div>
-                </li> -->
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
-                        <span class="text">Account</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-account-login.html">User login</a>
-                        <a href="page-account-register.html">User registration</a>
-                        <a href="page-error-404.html">Error 404</a>
-                    </div>
-                </li> -->
-                <!-- <li class="menu-item">
-                    <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
-                        <span class="text">Reviews</span>
-                    </a>
-                </li> -->
-                <!-- <li class="menu-item">
-                    <a class="menu-link" href="page-brands.html"> <i class="icon material-icons md-stars"></i>
-                        <span class="text">Brands</span> </a>
-                </li> -->
-                <!-- <li class="menu-item">
-                    <a class="menu-link" disabled href="#"> <i class="icon material-icons md-pie_chart"></i>
-                        <span class="text">Statistics</span>
-                    </a>
-                </li> -->
-            </ul>
-            <hr>
-            <!-- <ul class="menu-aside">
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#"> <i class="icon material-icons md-settings"></i>
-                        <span class="text">Settings</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-settings-1.html">Setting sample 1</a>
-                        <a href="page-settings-2.html">Setting sample 2</a>
-                    </div>
+                  
                 </li>
                 <li class="menu-item">
-                    <a class="menu-link" href="page-blank.html"> <i class="icon material-icons md-local_offer"></i>
-                        <span class="text"> Starter page </span>
+                    <a class="menu-link" href="/admin/orderslist"> <i class="icon material-icons md-monetization_on"></i>
+                        <span class="text">Orders</span>
                     </a>
+                   
                 </li>
-            </ul> -->
+               
+            </ul>
+            <hr>
+          
             <br>
             <br>
         </nav>
@@ -196,8 +138,7 @@
                     <!-- <p>Lorem ipsum dolor sit amet.</p> -->
                 </div>
                 <div>
-                    <!-- <a href="#" class="btn btn-light rounded font-md">Export</a>
-                    <a href="#" class="btn btn-light rounded  font-md">Import</a> -->
+                  
                     <a href="/admin/addproduct" class="btn btn-primary btn-sm rounded">Create new</a>
                 </div>
             </div>
@@ -242,8 +183,13 @@
                                     
                                     
                                <% } else { %>
-                                <div style="margin-top: 200;"><p style="color: red;">(<%= element.stock %>) Items left</p>
-                               </div>
+                                <div style="position: relative; z-index: 999; display: inline-block;">
+                                        
+                                    
+                                    <div style="position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 255, 255, 0.8); padding: 10px; text-align: center;margin-top: 200px; width: 300px ; ">
+                                        <h5 style="color: black"><%= element.stock %> Items left</h5>
+                                    </div>
+                                </div>
                                 <% } %>
                                 
                                 <a href="#" class="img-wrap"> <img src="/uploads/<%= element.images[0] %>" alt="Product"> </a>
@@ -272,25 +218,29 @@
                     </div> 
                 </div> <!-- card-body end// -->
             </div> <!-- card end// -->
-            <!-- <div class="pagination-area mt-30 mb-50">
+            <div class="pagination-area mt-30 mb-50">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-start">
-                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                        <li class="page-item"><a class="page-link" href="#">02</a></li>
-                        <li class="page-item"><a class="page-link" href="#">03</a></li>
-                        <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">16</a></li>
-                        <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+                        <% for( let i = 1; i <= numsOfPage; i++ ) { %>
+                        
+                       
+                        <li class="page-item <% if (i === currentPage) { %>active <% } %>">
+                         
+                       
+                            <a class="page-link" href="/admin/productadmin?page=<%= i %>"><%= i %></a>
+                        </li>
+                        <% } %>
+                        
                     </ul>
                 </nav>
-            </div> -->
-        </section> <!-- content-main end// -->
-        <!-- <footer class="main-footer font-xs">
+            </div>
+        </section> 
+        <footer class="main-footer font-xs">
             <div class="row pb-30 pt-15">
                 <div class="col-sm-6">
                     <script>
                     document.write(new Date().getFullYear())
-                    </script> ©, Evara - HTML Ecommerce Template .
+                    </script> ©, TimeZone
                 </div>
                 <div class="col-sm-6">
                     <div class="text-sm-end">
@@ -298,7 +248,7 @@
                     </div>
                 </div>
             </div>
-        </footer> -->
+        </footer>
     </main>
     <script src="/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
     <script src="/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>

@@ -10,7 +10,7 @@ const userCartGet = async(req,res)=>{
         
       const cartFind = await Cart.findOne({user:req.session.user._id}).populate('products.productId')
       
-      if(cartFind===0){
+      if(cartFind === 0){
          res.render('usercart')
       }else{
         res.render('usercart',{cartFind})
@@ -197,7 +197,7 @@ const userCheckoutPage = async(req,res)=>{
         cartFind.products.forEach(element => {
             
             if(element.productId.stock < element.quantity){
-                
+                console.log("ndndnndnnndndnndnddn")
                 res.json({status:"checked"})
                 console.log('quantity greater than stock')
             }else{

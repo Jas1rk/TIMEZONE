@@ -41,95 +41,36 @@
                     <a class="menu-link" href="/admin/productadmin"> <i class="icon material-icons md-shopping_bag"></i>
                         <span class="text">Products</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-products-list.html">Product List</a>
-                        <a href="page-products-grid.html">Product grid</a>
-                        <a href="page-products-grid-2.html">Product grid 2</a>
-                        <a href="page-categories.html">Categories</a>
-                    </div> -->
+                  
                 </li>
                 <li class="menu-item">
                     <a class="menu-link" href="/admin/admincategory"> <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Category</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-orders-1.html" class="active">Order list 1</a>
-                        <a href="page-orders-2.html">Order list 2</a>
-                        <a href="page-orders-detail.html">Order detail</a>
-                    </div> -->
+                  
                 </li>
                 <li class="menu-item">
                     <a class="menu-link" href="/admin/userList"> <i class="icon material-icons md-store"></i>
                         <span class="text">User List</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-sellers-cards.html">Sellers cards</a>
-                        <a href="page-sellers-list.html">Sellers list</a>
-                        <a href="page-seller-detail.html">Seller profile</a>
-                    </div> -->
+                   
                 </li>
                 <li class="menu-item">
                     <a class="menu-link" href="/admin/addproduct"> <i class="icon material-icons md-add_box"></i>
                         <span class="text">Add product</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-form-product-1.html">Add product 1</a>
-                        <a href="page-form-product-2.html">Add product 2</a>
-                        <a href="page-form-product-3.html">Add product 3</a>
-                        <a href="page-form-product-4.html">Add product 4</a>
-                    </div> -->
+                    
                 </li>
                 <li class="menu-item active">
                     <a class="menu-link" href="page-transactions-1.html"> <i class="icon material-icons md-monetization_on"></i>
                         <span class="text">Orders</span>
                     </a>
-                    <!-- <div class="submenu">
-                        <a href="page-transactions-1.html">Transaction 1</a>
-                        <a href="page-transactions-2.html">Transaction 2</a>
-                    </div> -->
+                   
                 </li>
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
-                        <span class="text">Account</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-account-login.html">User login</a>
-                        <a href="page-account-register.html">User registration</a>
-                        <a href="page-error-404.html">Error 404</a>
-                    </div>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
-                        <span class="text">Reviews</span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="page-brands.html"> <i class="icon material-icons md-stars"></i>
-                        <span class="text">Brands</span> </a>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" disabled href="#"> <i class="icon material-icons md-pie_chart"></i>
-                        <span class="text">Statistics</span>
-                    </a>
-                </li> -->
+                
             </ul>
             <hr>
-            <!-- <ul class="menu-aside">
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#"> <i class="icon material-icons md-settings"></i>
-                        <span class="text">Settings</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-settings-1.html">Setting sample 1</a>
-                        <a href="page-settings-2.html">Setting sample 2</a>
-                    </div>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="page-blank.html"> <i class="icon material-icons md-local_offer"></i>
-                        <span class="text"> Starter page </span>
-                    </a>
-                </li>
-            </ul> -->
+            
             <br>
             <br>
         </nav>
@@ -195,33 +136,12 @@
                     <h2 class="content-title card-title">Order List </h2>
                    
                 </div>
-                <div>
-                    <input type="text" placeholder="Search order ID" class="form-control bg-white">
-                </div>
+              
             </div>
             <div class="card mb-4">
                 <header class="card-header">
-                    <div class="row gx-3">
-                        <div class="col-lg-4 col-md-6 me-auto">
-                            <input type="text" placeholder="Search..." class="form-control">
-                        </div>
-                        <div class="col-lg-2 col-6 col-md-3">
-                            <select class="form-select">
-                                <option>Status</option>
-                                <option>Active</option>
-                                <option>Disabled</option>
-                                <option>Show all</option>
-                            </select>
-                        </div>
-                        <!-- <div class="col-lg-2 col-6 col-md-3">
-                            <select class="form-select">
-                                <option>Show 20</option>
-                                <option>Show 30</option>
-                                <option>Show 40</option>
-                            </select>
-                        </div> -->
-                    </div>
-                </header> <!-- card-header end// -->
+                   
+                </header>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover">
@@ -245,18 +165,19 @@
                                     <td><b><%= element.user.username %></b></td>
                                     <td><%= element.user.email %></td>
                                     <td>₹<%= element.totalamount %></td>
-                                    <td><span class="badge rounded-pill alert-warning"><%= element.status %></span></td>
+                                    <% if (element.status === "Cancelled") { %>
+                                        <td><span class="badge rounded-pill alert-warning"><%= element.status %></span></td>
+                                    <% }else{ %>
+                                        <td><span class="badge rounded-pill alert-success"><%= element.status %></span></td>
+
+                                  <%  } %>
+                                   
                                     <td><%= new Date (element.createdate).toLocaleDateString() %></td>
+
                                     <td class="text-end">
+                                        
                                         <a href="/admin/orderdetails?_id=<%= element._id %>" class="btn btn-md rounded font-sm">Detail</a>
-                                        <!-- <div class="dropdown">
-                                            <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">View detail</a>
-                                                <a class="dropdown-item" href="#">Edit info</a>
-                                                <a class="dropdown-item text-danger" href="#">Delete</a>
-                                            </div>
-                                        </div>  -->
+                                      
                                     </td>
                                 </tr>
                                 <% }) %>
@@ -282,18 +203,18 @@
             
         </section> <!-- content-main end// -->
         <footer class="main-footer font-xs">
-            <!-- <div class="row pb-30 pt-15">
+            <div class="row pb-30 pt-15">
                 <div class="col-sm-6">
                     <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
                     document.write(new Date().getFullYear())
-                    </script> ©, Evara - HTML Ecommerce Template .
+                    </script> ©, TimeZone
                 </div>
                 <div class="col-sm-6">
                     <div class="text-sm-end">
                         All rights reserved
                     </div>
                 </div>
-            </div> -->
+            </div>
         </footer>
     </main>
     <script src="/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>

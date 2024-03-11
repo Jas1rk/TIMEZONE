@@ -354,7 +354,14 @@
                                                             <tr>
                                                                 <td><%= element.orderid %></td>
                                                                 <td><%= new Date (element.createdate).toLocaleDateString() %></td>
-                                                                <td><%= element.status %></td>
+                                                                <% if (element.status === "Delivered") { %>
+                                                                    <td><span class="badge rounded-pill alert-success"><%= element.status %></span></td>
+
+                                                                <% }else{ %>
+                                                                    <td><span class="badge rounded-pill alert-warning"><%= element.status %></span></td>
+
+                                                               <% } %>
+                                                               
                                                                 <td><%= element.totalamount %></td>
                                                                 <td><a href="/vieworder?_id=<%= element._id %>" class="btn-small d-block">View</a></td>
                                                             </tr>

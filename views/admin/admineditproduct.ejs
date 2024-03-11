@@ -19,7 +19,9 @@
     <!-- Template CSS -->
     <link href="/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
 </head>
-
+<style>
+ 
+</style>
 <body>
     <div class="screen-overlay"></div>
     <aside class="navbar-aside" id="offcanvas_aside">
@@ -61,6 +63,12 @@
                 <li class="menu-item">
                     <a class="menu-link" href="/admin/addproduct"> <i class="icon material-icons md-add_box"></i>
                         <span class="text">Add product</span>
+                    </a>
+                   
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/orderslist"> <i class="icon material-icons md-monetization_on"></i>
+                        <span class="text">Orders</span>
                     </a>
                    
                 </li>
@@ -227,7 +235,7 @@
                         
                         
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-5">
                         <div class="card mb-4">
                             <div class="card-header">
                                 <h4>Image</h4>
@@ -238,10 +246,10 @@
                                     <% for( let i=0; i < productData.images.length; i++ ) { %>
                                         <img src="/uploads/<%= productData.images[i] %>" alt="sorry">
 
-                                        <a href="">
-                                            <button class="btn btn-sm font-sm rounded btn-brand"
+                                        
+                                            <button class="btn btn-sm font-sm rounded btn-brand" id="deletimage" style="background-color: #3F2520; margin-bottom: 60px;"
                                                 onclick="deleteImage('<%= productData._id %>' ,'<%= i %>')">Delete</button>
-                                        </a>
+                                        
                                         <% } %>
                                             <input class="form-control" type="file" multiple name="image" id="image">
                                             <p id="imageError" class="text-danger"></p>
@@ -258,17 +266,17 @@
                                     <div class="col-sm-6 mb-3">
                                         <label class="form-label">Category</label>
                                         <select name="category" class="form-select" id="product_category">
-                                            <option>
-                                                <%= productData.category %>
-                                            </option>
-                                            <% categoryData.forEach(element=> { %>
-                                                <% if (element.name !=productData.category) { %>
-                                                    <option>
-                                                        <%= element.name %>
-                                                    </option>
+                                           
+                                            
+                                             <% categoryData.forEach(el =>{ %>
+                                                
+                                                  <option  <%= el.name === productData.category.name ? 'selected' : '' %> ><%=el.name %></option>
+                                             <%})%>
+                                                  
+                                                    
 
-                                                    <% } %>
-                                                        <% }) %>
+                                                    
+                                                        
                                         </select>
                                     </div>
                                   
@@ -323,8 +331,7 @@
     }
 
     function addproductValidatiion(){
-        const name  = document.getElementById('name').value.trim()
-        alert('jjjjj')
+    const name  = document.getElementById('name').value.trim()
     const description = document.getElementById('description').value.trim()
     const regularprice = document.getElementById('regularprice').value
     const offerprice =  document.getElementById('offprice').value
@@ -390,7 +397,9 @@
 
     if(stock === ""){
         stockError.textContent = "Stock is required"
-    }else if(!/^[^0\.\-]+$/.test(stock)){
+    }else if(!/^[1-9]\d*$/.test(stock)){
+
+
         stockError.textContent = "Invalid stock value. It should not contain zero, hyphen, or dot."
     }
 
@@ -409,13 +418,11 @@
     }else if(meterial.length < 3)
         materialError.textContent = "Letter must be atleast 3 charecter"
 
-
-    if(image === ""){
-        imageError.textContent = "Image is required"
-    }else if(image.length < 3){
-        imageError.textContent = "Image should be atleast 3"
-    }else if(!/\.(png|jpe?g|gif|bmp|svg)$/.test(image)){
+    
+     if(image && !/\.(png|jpe?g|gif|bmp|svg)$/.test(image)){
         imageError.textContent = "Invalid image file. Please upload a valid image file."
+    }else{
+        imageError.textContent = ""
     }
 
     if(nameError.textContent||descriptionError.textContent||regularpriceError.textContent||offerprice.textContent||stockError.textContent||colorError.textContent||materialError.textContent||imageError.textContent){

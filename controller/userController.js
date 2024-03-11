@@ -12,14 +12,14 @@ const dotenv = require('dotenv').config()
 const userhome  = async(req,res)=>{
     try{
         const pages = req.query.page || 1
-        const sizeOfPage = 6
+        const sizeOfPage = 9
         const productSkip = (pages-1)*sizeOfPage
         const productCount = await Product.find({isBlocked:false}).count()
         const numofPage = Math.ceil(productCount/sizeOfPage)
         const products = await Product.find({isBlocked:false}).skip(productSkip).limit(sizeOfPage)
         const categories = await Category.find({isBlocked:false})
-
-        const currentPage = parseInt(pages,10)
+        
+        const currentPage = parseInt(pages)
         res.render('homepage',{products,categories,numofPage,currentPage})
     }catch(err){
         console.log(err);

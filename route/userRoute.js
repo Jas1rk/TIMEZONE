@@ -34,6 +34,8 @@ router.get('/sort',sortcontroller.sortItems)
 router.get('/filter',sortcontroller.filterCategory)
 router.post('/search',sortcontroller.searchProducts)
 
+// router.get('/filtercat',sortcontroller.filterProducts)
+
 
 router.get('/userlogout',middle.isLogout,usercontroller.userLogout)
 
@@ -44,22 +46,22 @@ router.post('/changepassword',userProfileController.changePasswordPost)
 router.get('/address',middle.isLogged,userProfileController.addressGet)
 router.get('/addressadd',middle.isLogged,userProfileController.useraddAddress)
 router.post('/addressadd',userProfileController.addAddressPost)
-router.get('/addressedit',userProfileController.addressEditGet)
+router.get('/addressedit',middle.isLogged,userProfileController.addressEditGet)
 router.post('/addressedit',userProfileController.addressEditPost)
-router.get('/useraccount',userProfileController.userAccount)
-router.get('/useraccountedit',userProfileController.userAccountEdit)
+router.get('/useraccount',middle.isLogged,userProfileController.userAccount)
+router.get('/useraccountedit',middle.isLogged,userProfileController.userAccountEdit)
 router.post('/useraccountedit',userProfileController.useraccountEditPost)
 router.get('/deleteaddress',userProfileController.deletAddress)
 
 
 
 router.get('/usercart',middle.isLogged,userCartController.userCartGet)
-router.post('/usercart',userCartController.addToCart)
+router.post('/usercart',middle.isLogged,userCartController.addToCart)
 router.post('/increment',userCartController.quantityIncrement)
 router.post('/decrement',userCartController.quantityDecrement)
 router.delete('/deletecart',userCartController.cartDelete)
 router.get('/checkout',middle.isLogged,userCartController.userCheckoutGet)
-router.get('/checkoutpage',userCartController.userCheckoutPage)
+router.get('/checkoutpage',middle.isLogged,userCartController.userCheckoutPage)
 
 router.post('/placeorder',ordercontroller.placeOrderPost)
 router.get('/orders',middle.isLogged,ordercontroller.orderDetails)
