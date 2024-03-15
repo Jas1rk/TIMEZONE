@@ -471,7 +471,7 @@
                                             <a class="nav-link" id="track-orders-tab" href="/changepassword" ><i class="fi-rs-shopping-cart-check mr-10"></i>Change Password</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="address-tab"  href="/addressadd"><i class="fi-rs-marker mr-10"></i>My Address</a>
+                                            <a class="nav-link active" style="background-color: #3F2520;" id="address-tab"  href="/addressadd"><i class="fi-rs-marker mr-10"></i>My Address</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="account-detail-tab"  href="/useraccount"><i class="fi-rs-user mr-10"></i>Account details</a>
@@ -603,45 +603,45 @@
                                     <div  id="account-detail">
                                        
                                         <div class="card">
-                                            <div class="card-header">
-                                                <h5> Add Address</h5>
+                                            <div class="card-header" style="background-color: #3F2520;">
+                                                <h5 style="color: aliceblue;"> Add Address</h5>
                                             </div>
                                             <div class="card-body">
                                                   <p id="fillerror" class="text-danger"></p>
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
                                                             <label>Name <span class="required">*</span></label>
-                                                            <input  class="form-control square" name="uname" type="name" id="name" onclick="clrname()">
+                                                            <input  class="form-control square" name="uname" type="name" id="name" onclick="clrname()" style="border-color: black; background-color: transparent; color: black;">
                                                             <p id="error1" class="text-danger"></p>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>Mobile <span class="required">*</span></label>
-                                                            <input  class="form-control square" name="umobile" type="number" id="mobile" onclick="clrphone()">
+                                                            <input  class="form-control square" name="umobile" type="number" id="mobile" onclick="clrphone()" style="border-color: black; background-color: transparent; color: black;">
                                                             <p id="error2" class="text-danger"></p>
                                                         </div>
                                                         <div class="group col-md-12">
                                                             <label>Address <span class="required">*</span></label>
-                                                            <textarea  name="uaddress" id="address" placeholder="Address" onclick="clraddress()"></textarea>
+                                                            <textarea  name="uaddress" id="address" placeholder="Address" onclick="clraddress()" style="border-color: black; background-color: transparent; color: black;"></textarea>
                                                             <p id="error3" class="text-danger"></p>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>Pincode <span class="required">*</span></label>
-                                                            <input  class="form-control square" name="upin" type="number" id="pincode" onclick="clrpincode()">
+                                                            <input  class="form-control square" name="upin" type="number" id="pincode" onclick="clrpincode()" style="border-color: black; background-color: transparent; color: black;">
                                                             <p id="error4" class="text-danger"></p>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>Locality<span class="required">*</span></label>
-                                                            <input  class="form-control square" name="ulocation" type="text" id="location" onclick="clrclocation()">
+                                                            <input  class="form-control square" name="ulocation" type="text" id="location" onclick="clrclocation()" style="border-color: black; background-color: transparent; color: black;">
                                                             <p id="error5" class="text-danger"></p>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label>City/Town <span class="required">*</span></label>
-                                                            <input  class="form-control square" name="ucity" type="text" id="city" onclick="clrcity()">
+                                                            <input  class="form-control square" name="ucity" type="text" id="city" onclick="clrcity()" style="border-color: black; background-color: transparent; color: black;">
                                                             <p id="error6" class="text-danger"></p>
                                                         </div>
                                                         <div class=" col-md-6" >
-                                                            <label>State <span class="required">*</span></label>
-                                                           <select name="ustate" id="sate" class="form-control square">
+                                                            <label>State <span class="required" style="border-color: black; background-color: transparent; color: black;">*</span></label>
+                                                           <select name="ustate" id="sate" class="form-control square" style="border-color: black; background-color: transparent; color: black;">
                                                             <option value="Andhra Pradesh">Andhra Pradesh</option>
                                                             <option value="Arunachal Pradesh">Arunachal Pradesh</option>
                                                             <option value="Assam">Assam</option>
@@ -672,15 +672,15 @@
                                                             <option value="West Bengal">West Bengal</option>
                                                            </select>
                                                         </div>
-                                                        <div class="form-group col-md-12">
-                                                         <label>Country <span class="required">*</span></label>
-                                                         <input type="text" class="form-control square " name="country" id="country" onclick="clrcountry()">
+                                                        <div class="form-group col-md-12" >
+                                                         <label>Country <span class="required" >*</span></label>
+                                                         <input type="text" class="form-control square " name="country" id="country" onclick="clrcountry()" style="border-color: black; background-color: transparent; color: black;">
                                                          <p id="error7" class="text-danger"></p>
 
                                                         </div>
                                                       <div class="col-lg-6 mb-20">
                                                         <label for="address-type">Address Type</label>
-                                                        <select name="Address-type" id="addresstype">
+                                                        <select name="Address-type" id="addresstype" style="border-color: black; background-color: transparent; color: black;">
                                                             <option value="Home">Home</option>
                                                             <option value="Work">Work</option>
                                                         </select>
@@ -691,8 +691,8 @@
                                                             
                                                     
                                                         <div class="col-md-12">
-                                                            <button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit" onclick="addaddress()">Save</button>
-                                                            <a href="/address"><button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit">Cancel</button></a>
+                                                            <button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit" style="background-color: #3F2520;" onclick="addaddress()">Save</button>
+                                                            <a href="/address"><button type="submit" class="btn btn-fill-out submit" name="submit" value="Submit" style="background-color: aliceblue; color: #3F2520;border-color: black; background-color: transparent; color: black;">Cancel</button></a>
                                                         </div>
                                                         
                                                     </div>

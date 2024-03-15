@@ -37,7 +37,7 @@ const addToCart = async(req,res)=>{
           console.log(existingProduct)
           if(existingProduct){
            res.json({status:'viewcart'})
-           console.log('existing cart')
+           
           }else{
            const ucData = await Cart.findOneAndUpdate({user:userData._id},{
                $push:{
@@ -51,7 +51,7 @@ const addToCart = async(req,res)=>{
                 
            })
           
-            console.log('product addes in to cart',ucData)
+           
             res.json({status:"viewcart"})
             
           }
@@ -68,7 +68,6 @@ const addToCart = async(req,res)=>{
            
            })
            uCart.total = price;
-           console.log('user has cart',uCart)
            await uCart.save()
            res.json({status:true})
        }
@@ -197,12 +196,12 @@ const userCheckoutPage = async(req,res)=>{
         cartFind.products.forEach(element => {
             
             if(element.productId.stock < element.quantity){
-                console.log("ndndnndnnndndnndnddn")
+               
                 res.json({status:"checked"})
-                console.log('quantity greater than stock')
+               
             }else{
               res.json({status:true})
-              console.log('quantity is ok')
+             
             }
         })
        

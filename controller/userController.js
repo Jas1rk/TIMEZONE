@@ -142,8 +142,18 @@ const emailVerification = async (email) => {
       let mailOptions = {
         from: process.env.EMAIL,
         to: email,
-        subject: "Email Verification Code",
+        subject: "TimeZone",
         text: `Your OTP is :${otpVal}`,
+        html: `
+            <div style="font-family: Helvetica, Arial, sans-serif; min-width: 100px; overflow: auto; line-height: 2">
+                <div style="margin: 50px auto; width: 70%; padding: 20px 0">
+                    <p style="font-size: 1.1em">Hi ${email},</p>
+                    <p>This message from TimeZone. Use the following OTP to complete your register procedures. OTP is valid for 1 minutes</p>
+                    <h2 style="background: #00466a; margin: 0 auto; width: max-content; padding: 0 10px; color: #fff; border-radius: 4px;">${otpVal}</h2>
+                    <p style="font-size: 0.9em;">Regards,<br />TimeZone</p>
+                    <hr style="border: none; border-top: 1px solid #eee" />
+                </div>
+            </div>`
       };
 
     
@@ -200,6 +210,7 @@ const otpVerificationPost = async(req,res)=>{
 const registerResendOtp = async(req,res)=>{
     try{
        const userEmail = req.session.temp.email
+       console.log(userEmail)
        const resendOtp = await emailVerification(userEmail);
        req.session.temp.otpVal = resendOtp 
        console.log('changed otp', req.session.temp.otpVal);
@@ -207,8 +218,7 @@ const registerResendOtp = async(req,res)=>{
       
 
     }catch(err){
-        console.log(err.message)
-    }
+        console.log(err.message)    }
 }
 
 const forgetPassGet = (req,res)=>{
@@ -341,7 +351,7 @@ const productList = async(req,res)=>{
     try{
       const productId = req.query._id
       req.session.productId = productId
-      const productData = await Product.findOne({_id:productId})
+      const productData = await Product.findOne({_id:productId}).populate('category')
       const categories = await Category.find({isBlocked:false})
       
       const cartFind = await Cart.findOne({user:req.session.user,"products.productId":productId})

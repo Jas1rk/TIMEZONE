@@ -13,6 +13,7 @@ const adminProductsGet = async (req, res) => {
         const productSkip = (pages-1)*sizeOfPage
         const productCount =  await Product.find({}).count()
         const numsOfPage = Math.ceil(productCount/sizeOfPage)
+        console.log(numsOfPage);
         const catagData = await Category.find({})
         const productData = await Product.find({}).skip(productSkip).limit(sizeOfPage)
 
@@ -88,9 +89,8 @@ const adminEditProductPost = async (req, res) => {
         const productId = req.session.productId
         const { pname, description, regularprice, offerprice, color, meterial, category , stock} = req.body
         const images = req.files
-        console.log("img is"+images);
         const catData = await Category.findOne({name:category})
-        console.log("helloo",catData)
+       
         const newImages = images.map(elements => elements.filename)
         console.log("nw images is"+newImages)
         if (images.length > 0) {
@@ -149,7 +149,6 @@ const deleteImage = async (req, res) => {
     try {
         const productData = req.body.id
         const index = req.body.index
-        console.log(index);
        const prod = await Product.findById(productData)
        const imageToDelete = prod.images[index]
         fs.unlink(imageToDelete,(err)=>{

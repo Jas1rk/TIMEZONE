@@ -165,7 +165,7 @@
                                     <td><b><%= element.user.username %></b></td>
                                     <td><%= element.user.email %></td>
                                     <td>₹<%= element.totalamount %></td>
-                                    <% if (element.status === "Cancelled") { %>
+                                    <% if (element.status === "Cancelled" ) { %>
                                         <td><span class="badge rounded-pill alert-warning"><%= element.status %></span></td>
                                     <% }else{ %>
                                         <td><span class="badge rounded-pill alert-success"><%= element.status %></span></td>
@@ -192,14 +192,37 @@
             <div class="pagination-area mt-15 mb-50">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-start">
-                        <% for (let i = 1; i <= numsOfPage; i++) { %>
-                            <li class="page-item <% if (i === currentPage) { %>active<% } %>">
-                                <a class="page-link" href="/admin/orderslist?page=<%= i %>"><%= i %></a>
+                        <% if (currentPage > 1) { %>
+                            <li class="page-item">
+                                <a class="page-link" href="/admin/orderslist?page=<%= currentPage - 1 %>">Pr</a>
+                            </li>
+                        <% } %>
+            
+                        <% if (currentPage <= 2) { %>
+                            <% for (let i = 1; i <= Math.min(numsOfPage, 2); i++) { %>
+                                <li class="page-item <% if (i === currentPage) { %>active<% } %>">
+                                    <a class="page-link" href="/admin/orderslist?page=<%= i %>"><%= i %></a>
+                                </li>
+                            <% } %>
+                        <% } else { %>
+                            <li class="page-item disabled">
+                                <span class="page-link">1</span>
+                            </li>
+                            <li class="page-item active">
+                                <span class="page-link"><%= currentPage %></span>
+                            </li>
+                        <% } %>
+            
+                        <% if (currentPage < numsOfPage) { %>
+                            <li class="page-item">
+                                <a class="page-link" href="/admin/orderslist?page=<%= currentPage + 1 %>">Nt</a>
                             </li>
                         <% } %>
                     </ul>
                 </nav>
             </div>
+            
+            
             
         </section> <!-- content-main end// -->
         <footer class="main-footer font-xs">

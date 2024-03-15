@@ -63,9 +63,15 @@ const placeOrderPost = async(req,res)=>{
 const orderDetails = async(req,res)=>{
     try{
         const user = req.session.user
-      const orderDetails = await Order.find({user:user._id}).sort({_id:-1})
-      console.log(orderDetails)
-      res.render('orderdetails',{orderDetails})
+       
+        const pages = req.query.page || 1
+        const sizeOfPage = 3
+        const productSkip = (pages-1) * sizeOfPage
+        const productCount =  await Order.countDocuments({user:user._id})
+        const numsOfPage = Math.ceil(productCount / sizeOfPage)
+      const orderDetails = await Order.find({user:user._id}).sort({_id:-1}).skip(productSkip).limit(sizeOfPage)
+      const currentPage = parseInt(pages)
+      res.render('orderdetails',{orderDetails,numsOfPage,currentPage})
     }catch(err){
         console.log(err.message)
     }
@@ -129,12 +135,13 @@ const adminOrderList = async(req,res)=>{
       const pages =  req.query.page || 1 
       const sizeOfPage =  4
       const productSkip = (pages-1) * sizeOfPage
-      const productCount = await Order.find({}).sort({_id:-1}).populate('user').count()
+      const productCount = await Order.countDocuments({})
       const numsOfPage = Math.ceil(productCount / sizeOfPage)
       const orders = await Order.find({}).sort({_id:-1}).populate('user').skip(productSkip).limit(sizeOfPage)
-
-      const currentPage = parseInt(pages,10)
-      res.render('admin/orderlist',{orders,numsOfPage,currentPage})
+        console.log("sec0000000"+(orders))
+      const currentPage = parseInt(pages)
+     
+      res.render('admin/orderlist',{orders,numsOfPage,currentPage,pages})
     }catch(err){
         cosnole.log(err.message)
     }
@@ -157,11 +164,13 @@ const statusChanging = async(req,res)=>{
        
         const {id, status} = req.body
         const findOrder = await Order.findOne({_id:id})
-        const updateStatus = await Order.findByIdAndUpdate({_id:id},{
-            $set:{status:status}
-        })
+        const updateStatus = await Order.findById(id)
+
+        updateStatus.status=status
         const updatetedStatus = await updateStatus.save()
-        if(updatetedStatus === "Cancelled"){
+
+        console.log(updateStatus,'THIS IS STAtu');
+        if(updatetedStatus.status === "Cancelled"){
           let productSet = []
           updatetedStatus.products.forEach(element =>{
             let productStore = {
@@ -169,7 +178,7 @@ const statusChanging = async(req,res)=>{
                 quantity:element.quantity
             }
             productSet.push(productStore)
-            console.log(productSet,"ayachuuuuuu")
+           
           })  
           productSet.forEach(async(element)=>{
             const product = await Product.findByIdAndUpdate({_id:element.productId},{
@@ -179,12 +188,48 @@ const statusChanging = async(req,res)=>{
             },{new:true})
           })
 
+        }else if(updatetedStatus.status === "Returned"){
+            console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeellsseee");
+            let productSet = []
+            updatetedStatus.products.forEach(element =>{
+            let productStore = {
+                productId:element.productId,
+                quantity:element.quantity
+            }
+            productSet.push(productStore)
+           
+          })  
+          productSet.forEach(async(element)=>{
+            const quantity =  element.quantity
+            console.log("helooo",quantity);
+            const product = await Product.findByIdAndUpdate({_id:element.productId},{
+                $inc:{
+                    stock:element.quantity
+                }
+            },{new:true})
+          })
         }
         
         res.json({status:"updated"})
         
 
 
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
+
+const orderReturn = async(req,res)=>{
+    try{
+      const {id} =  req.body
+      const findOrder = await Order.findOne({_id:id}) 
+        if(findOrder.status === "Delivered"){
+            const updateStatud = await Order.findByIdAndUpdate(id,{$set:{   status:"Requested"}})
+            res.json({status:"return"})
+        }else {
+            console.log('order is not delivered')
+        }
     }catch(err){
         console.log(err.message)
     }
@@ -198,5 +243,6 @@ module.exports = {
     cancelOrder,
     adminOrderList,
     adminOrderDetails,
-    statusChanging
+    statusChanging,
+    orderReturn
 }

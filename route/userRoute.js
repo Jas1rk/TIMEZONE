@@ -5,6 +5,7 @@ const userProfileController = require('../controller/userprofileController')
 const userCartController = require('../controller/cartController')
 const sortcontroller = require('../controller/sortController')
 const ordercontroller = require('../controller/orderController')
+const wishlistcontroller =  require('../controller/wishlistController')
 const middle = require('../middlewares/auth')
 
 
@@ -68,7 +69,10 @@ router.get('/orders',middle.isLogged,ordercontroller.orderDetails)
 router.get('/vieworder',middle.isLogged,ordercontroller.userOrderView)
 router.post('/cancelorder',ordercontroller.cancelOrder)
 router.get('/success',middle.isLogged,ordercontroller.successPageGet)
+router.post('/return',ordercontroller.orderReturn)
 
+
+router.get('/wishlist',wishlistcontroller.getWishlistPage)
 
 
 module.exports =  router
