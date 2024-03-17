@@ -179,15 +179,15 @@
                         <div class="header-action-right">
                             <div class="header-action-2">
                                 <div class="header-action-icon-2">
-                                    <a href="shop-wishlist.html">
+                                    <a href="/wishlist">
                                         <img class="svgInject" alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
-                                        <span class="pro-count blue">4</span>
+                                        <span class="pro-count blue"><%= headerStatusWishlist %></span>
                                     </a>
                                 </div>
                                 <div class="header-action-icon-2">
-                                    <a class="mini-cart-icon" href="shop-cart.html">
+                                    <a class="mini-cart-icon" href="/usercart">
                                         <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
-                                        <span class="pro-count blue">2</span>
+                                        <span class="pro-count blue"><%= headerStatusCart %></span>
                                     </a>
                                    
                                 </div>
@@ -566,11 +566,9 @@
 
 
                                                             <a aria-label="Add To Wishlist" class="action-btn hover-up"
-                                                                href="shop-wishlist.html"><i
+                                                                onclick="addToWishlist('<%= productData._id %>')"><i
                                                                     class="fi-rs-heart"></i></a>
-                                                            <a aria-label="Compare" class="action-btn hover-up"
-                                                                href="shop-compare.html"><i
-                                                                    class="fi-rs-shuffle"></i></a>
+                                                          
                                                         </div>
                                         </div>
                                       
@@ -1176,8 +1174,7 @@
 
 </body>
 <script>
-    //     const btnView = document.getElementById('btv')
-    //    const btnCart = document.getElementById('btc')
+   
 
     function addtocart(price) {
         const id = document.getElementById('cart').value
@@ -1225,6 +1222,77 @@
 
             }
         })
+    }
+
+    function addToWishlist(pid){
+       $.ajax({
+        url:'/wishlist',
+        method:'post',
+        data:{
+            pid
+        },
+        success:(response)=>{
+           if(response.status === 'viewwishlist'){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "success",
+                title: "Product added to wishlist",
+                color: 'black',
+                iconColor:'#3F2520'
+                })
+               
+                
+               
+           }else if(response.status === true){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "success",
+                title: "Product added to wishlist",
+                color: 'black',
+                iconColor:'#3F2520'
+                });
+           } else if(response.status === 'viewwishlistcheck'){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "warning",
+                title: "Product is already in wishlist",
+                color: 'black',
+                iconColor:'#3F2520'
+                });
+           }
+        }
+
+       })
     }
 
 </script>

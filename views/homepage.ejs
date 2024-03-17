@@ -99,6 +99,13 @@
     .rotate-270 {
         transform: rotate(270deg);
     }
+
+    .product-action-1 .action-btn:hover .fi-rs-heart,
+.product-action-1 .action-btn.hover-up:hover .fi-rs-heart {
+    color: #3F2520;
+}
+
+
 </style>
 
 
@@ -266,8 +273,8 @@
                               
                                 <div class="header-action-icon-2">
                                     <a href="/wishlist">
-                                        <img class="svgInject" alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
-                                        <!-- <span class="pro-count blue">4</span> -->
+                                        <img class="svgInject" alt="TimeZone" src="assets/imgs/theme/icons/icon-heart.svg">
+                                        <span class="pro-count blue"><%= headerStatusWishlist %></span>
                                     </a>
                                 
                                 </div>
@@ -275,7 +282,7 @@
                                     <a class="mini-cart-icon" href="usercart">
                                         <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
 
-                                        <span class="pro-count blue">2</span>
+                                        <span class="pro-count blue"><%= headerStatusCart %></span>
                                     </a>
                                    
                                 </div>
@@ -636,9 +643,7 @@
                                 <li class="nav-item" role="presentation">
                                   <a href="/"><button class="nav-link " id="nav-tab-one" >Featured</button></a>
                                 </li>
-                                <!-- <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="nav-tab-two">Popular</button>
-                                </li> -->
+                                
                                 <li class="nav-item" role="presentation">
                                   <a href="/newarraival"><button class="nav-link" id="nav-tab-three"  type="button" >New added</button></a>
                                 </li>
@@ -671,8 +676,9 @@
                                                     </a>
                                                 </div>
                                                 <div class="product-action-1">
-                                                    <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                                    <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
+
+                                                    <a aria-label="Add To Wishlist"  class="action-btn hover-up"  onclick="addToWishlist('<%= products[i]._id %>')"><i class="fi-rs-heart"></i></a>
+                                                   
                                                 </div>
                                               
                                             </div>
@@ -694,10 +700,12 @@
                                                     <span class="old-price">₹<%= products[i].regprice %></span>
                                                 </div>
                                                 <div class="product-action-1 show">
-                                                    <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
+                                                   
+                                                    <a aria-label="Add To Cart" class="action-btn hover-up " onclick="addtocart('<%= products[i]._id %>','<%= products[i].offprice %>')"><i class="fi-rs-shopping-bag-add"></i></a>
                                                 </div>
-                                               
+                                                
                                             </div>
+                                            
                                            
                                         </div>
                                     </div>
@@ -1722,32 +1730,91 @@
     <script src="assets/js/maind134.js?v=3.4"></script>
     <script src="assets/js/shopd134.js?v=3.4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 <script>
-      function addtocart(price){
-        const id = document.getElementById('cart').value
+
+function addtocart(id,price) {
+       
        
         $.ajax({
-          url:"/usercart",
-          method:"post",
-          data:{
-            id,
-            price
-          },
-         success:(response)=>{
-            if(response.status === "viewcart"){
+            url: "/usercart",
+            method: "post",
+            data: {
+                id,
+                price
+            },
+            success: (response) => {
+                if (response.status === "viewcart") {
+                  
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "success",
+                title: "Product added to cart",
+                color: 'black',
+                iconColor:'#3F2520'
+                });
+                     
+                  
+                } else if (response.status === true) {
+                   
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "success",
+                title: "Product added to cart",
+                color: 'black',
+                iconColor:'#3F2520'
+                });
 
-                window.location.href = "/usercart"
-                
-            }else if(response.status === "true"){
 
-                window.location.href = "/usercart"
+                  
+                }
+                else if(response.status === 'viewcartchecking'){
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "warning",
+                title: "Product is already in cart",
+                color: 'black',
+                iconColor:'#3F2520'
+                });
+                }
+
             }
-                
-         }
         })
     }
-     
+
+
+
     const inputElement = document.getElementById('inputtype');
     let timeoutId;
 
@@ -1827,6 +1894,81 @@
             hideSearchResult();
             hideNoProductFound();
         }
+
+
+
+    }
+
+
+    function addToWishlist(pid){
+       $.ajax({
+        url:'/wishlist',
+        method:'post',
+        data:{
+            pid
+        },
+        success:(response)=>{
+           if(response.status === 'viewwishlist'){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "success",
+                title: "Product added to wishlist",
+                color: 'black',
+                iconColor:'#3F2520'
+                })
+               
+                
+               
+           }else if(response.status === true){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "success",
+                title: "Product added to wishlist",
+                color: 'black',
+                iconColor:'#3F2520'
+                });
+           } else if(response.status === 'viewwishlistcheck'){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "warning",
+                title: "Product is already in wishlist",
+                color: 'black',
+                iconColor:'#3F2520'
+                });
+           }
+        }
+
+       })
     }
     </script>
 

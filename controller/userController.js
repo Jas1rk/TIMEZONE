@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer')
 const Product = require('../model/productModel')
 const Category = require('../model/categoryModel')
 const Cart = require('../model/cartModel')
+const Wishlist = require('../model/wishlistModel')
 const dotenv = require('dotenv').config()
 
 
@@ -11,6 +12,7 @@ const dotenv = require('dotenv').config()
 
 const userhome  = async(req,res)=>{
     try{
+        const userId = req.session.user
         const pages = req.query.page || 1
         const sizeOfPage = 9
         const productSkip = (pages-1)*sizeOfPage
@@ -18,9 +20,21 @@ const userhome  = async(req,res)=>{
         const numofPage = Math.ceil(productCount/sizeOfPage)
         const products = await Product.find({isBlocked:false}).skip(productSkip).limit(sizeOfPage)
         const categories = await Category.find({isBlocked:false})
-        
         const currentPage = parseInt(pages)
-        res.render('homepage',{products,categories,numofPage,currentPage})
+
+        const cartFind = await Cart.findOne({user:userId}).populate('products.productId')
+        const headerStatusCart = cartFind ? cartFind.products.length : 0
+        const findWishlist =  await Wishlist.findOne({user:userId}).populate('products.productId')
+        const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
+        res.render('homepage',{
+            products,
+            categories,
+            numofPage,
+            currentPage,
+            headerStatusWishlist,
+            headerStatusCart
+        })
+
     }catch(err){
         console.log(err);
     }
@@ -354,15 +368,24 @@ const productList = async(req,res)=>{
       const productData = await Product.findOne({_id:productId}).populate('category')
       const categories = await Category.find({isBlocked:false})
       
+      const cartData = await Cart.findOne({user:req.session.user}).populate('products.productId')
+      const headerStatusCart = cartData ? cartData.products.length : 0
+      const findWishlist =  await Wishlist.findOne({user:req.session.user}).populate('products.productId')
+      const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
       const cartFind = await Cart.findOne({user:req.session.user,"products.productId":productId})
-      
       let cartStatus;
       if(cartFind){
         cartStatus=true;
       }else{
         cartStatus=false;
       }
-      res.render('userproductdetails',{productData,categories,cartStatus})
+      res.render('userproductdetails',{
+        productData,
+        categories,
+        cartStatus,
+        headerStatusWishlist,
+        headerStatusCart
+    })
     }catch(err){
         console.log(err.message)
     }

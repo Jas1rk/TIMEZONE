@@ -9,7 +9,7 @@ const userCartGet = async(req,res)=>{
       
         
       const cartFind = await Cart.findOne({user:req.session.user._id}).populate('products.productId')
-      
+      console.log("productID",cartFind)
       if(cartFind === 0){
          res.render('usercart')
       }else{
@@ -34,9 +34,8 @@ const addToCart = async(req,res)=>{
        if(cartData){ 
           const existingProduct = await Cart.findOne({user:userId,'products.productId':id})
        
-          console.log(existingProduct)
           if(existingProduct){
-           res.json({status:'viewcart'})
+           res.json({status:'viewcartchecking'})
            
           }else{
            const ucData = await Cart.findOneAndUpdate({user:userData._id},{

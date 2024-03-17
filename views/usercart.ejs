@@ -64,13 +64,7 @@
                                         <span class="pro-count blue">4</span>
                                     </a>
                                 </div>
-                                <div class="header-action-icon-2">
-                                    <a class="mini-cart-icon" href="shop-cart.html">
-                                        <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
-                                        <span class="pro-count blue">2</span>
-                                    </a>
-                                    
-                                </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -762,12 +756,13 @@
 
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            color : 'black',
             icon: "question",
+            iconColor:'#3F2520',
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonColor: "#3F2520",
+            cancelButtonColor: "#000000",
+            confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({

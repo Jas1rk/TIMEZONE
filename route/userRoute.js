@@ -72,7 +72,9 @@ router.get('/success',middle.isLogged,ordercontroller.successPageGet)
 router.post('/return',ordercontroller.orderReturn)
 
 
-router.get('/wishlist',wishlistcontroller.getWishlistPage)
+router.get('/wishlist',middle.isLogged,wishlistcontroller.getWishlistPage)
+router.post('/wishlist',middle.isLogged,wishlistcontroller.addToWishlist)
+router.delete('/deletewishlist',wishlistcontroller.userDeleteWishlist)
 
 
 module.exports =  router
