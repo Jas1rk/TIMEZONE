@@ -216,7 +216,9 @@
                                 <tbody>
 
 
-                                    <% productswish.products.forEach(element => { %>
+                                    <% productswish.products.forEach((element , i) => {  %>
+                                       
+                                        
                                      
                                     
                                     <tr>
@@ -239,16 +241,17 @@
                                         <td class="text-right" data-title="Cart">
                                            
 
-                                            <% if (locals.cartStatus) { %>
-                                                <button class="btn btn-sm"  style="border-color: black; background-color: transparent; color: black;"><i class="fi-rs-shopping-bag mr-5" ></i>view cart</button>
+                                            <% if (cartStatus[i]) { %>
+                                              <a href=""> <button class="btn btn-sm"  style="border-color: black; background-color: transparent; color: black;" ><i class="fi-rs-shopping-bag mr-5" ></i>view cart</button></a>
                                             <% }else { %>
 
-                                                <button class="btn btn-sm" style="background-color: #3F2520;"><i class="fi-rs-shopping-bag mr-5" ></i>Add to cart</button>
-                                          <%  } %>
+                                                <button class="btn btn-sm" style="background-color: #3F2520;" onclick="addtocart('<%= element.productId._id %>','<%= element.productId.offprice %>')" ><i class="fi-rs-shopping-bag mr-5"></i>Add to cart</button>
+                                          <% } %>
                                         </td>
                                         <td class="action" data-title="Remove" ><a onclick="deleteWishlist('<%= element.productId._id %>')"><i class="fi-rs-trash" style="color: #3F2520;"></i></a></td>
                                     </tr>
-
+                                    
+                                     
                                     <% }) %>
                                 </tbody>
                             </table>
@@ -467,6 +470,86 @@
        
     
     }
+
+    function addtocart(id,price) {
+     
+       $.ajax({
+           url: "/usercart",
+           method: "post",
+           data: {
+               id,
+               price
+           },
+           success: (response) => {
+               if (response.status === "viewcart") {
+                 
+               const Toast = Swal.mixin({
+               toast: true,
+               position: "bottom",
+               showConfirmButton: false,
+               timer: 3000,
+               timerProgressBar: true,
+               didOpen: (toast) => {
+                   toast.onmouseenter = Swal.stopTimer;
+                   toast.onmouseleave = Swal.resumeTimer;
+               }
+               });
+               Toast.fire({
+               icon: "success",
+               title: "Product added to cart",
+               color: 'black',
+               iconColor:'#3F2520'
+               });
+                    
+                 
+               } else if (response.status === true) {
+                  
+               const Toast = Swal.mixin({
+               toast: true,
+               position: "bottom",
+               showConfirmButton: false,
+               timer: 3000,
+               timerProgressBar: true,
+               didOpen: (toast) => {
+                   toast.onmouseenter = Swal.stopTimer;
+                   toast.onmouseleave = Swal.resumeTimer;
+               }
+               });
+               Toast.fire({
+               icon: "success",
+               title: "Product added to cart",
+               color: 'black',
+               iconColor:'#3F2520'
+               });
+
+
+                 
+               }
+               else if(response.status === 'viewcartchecking'){
+               const Toast = Swal.mixin({
+               toast: true,
+               position: "bottom",
+               showConfirmButton: false,
+               timer: 3000,
+               timerProgressBar: true,
+               didOpen: (toast) => {
+                   toast.onmouseenter = Swal.stopTimer;
+                   toast.onmouseleave = Swal.resumeTimer;
+               }
+               });
+               Toast.fire({
+               icon: "warning",
+               title: "Product is already in cart",
+               color: 'black',
+               iconColor:'#3F2520'
+               });
+               }
+
+           }
+       })
+   }
+
+
 </script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-wishlist.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:05 GMT -->

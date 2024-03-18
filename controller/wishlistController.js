@@ -5,29 +5,38 @@ const Wishlist =  require('../model/wishlistModel')
 const Cart = require('../model/cartModel')
 
 
-const getWishlistPage = async(req,res)=>{
-    try{
-        const userId = req.session.user
-        const productswish = await Wishlist.findOne({user:userId._id}).populate('products.productId')
-        // const userObjId= new mongoose.
-        // const productwish=await Wishlist.aggregate([{$match:{}}])
-        
-        const cartFind = await Cart.findOne({user:userId._id}).populate('products.productId')
-        // console.log("Productss==>>",productswish.products)
-        // console.log("CartItems ==>" ,cartFind);
-        let cartStatus;
-        if(cartFind){
-            console.log('view cart');
-            cartStatus=true
-        }else{
-            console.log('add to cart')
-            cartStatus=false
+const getWishlistPage = async(req, res) => {
+    try {
+        const userId = req.session.user;
+        const productswish = await Wishlist.findOne({user: userId._id}).populate('products.productId');
+
+        let cartStatus = false;
+        const cartFind = await Cart.findOne({user: userId._id}).populate('products.productId');
+        if (cartFind) {
+            cartStatus = productswish.products.map(wishlistProduct => {
+               const wishlistProductId =  wishlistProduct.productId.toString()
+               const fountInCart = cartFind.products.some(cartProduct => {
+                const cartProductId = cartProduct.productId.toString()
+                const isEqual = cartProductId === wishlistProductId
+                console.log(`Comparing Wishlist Product: ${wishlistProductId} with Cart Product: ${cartProductId}. Result: ${isEqual}`);
+                return isEqual
+            })
+            console.log('productFound ===>',fountInCart)
+            return fountInCart
+            });
+
+            console.log('cart status ===>',cartStatus);
+
+           
         }
-        res.render('wishlist',{productswish,cartStatus , cartFind})
-    }catch(err){
-        console.log(err.message)
+        console.log(cartStatus)
+        console.log(productswish)
+        res.render('wishlist', {productswish, cartStatus});
+    } catch(err) {
+        console.log(err.message);
     }
 }
+
 
 const addToWishlist = async(req,res)=>{
     try{

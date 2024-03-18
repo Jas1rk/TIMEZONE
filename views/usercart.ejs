@@ -47,7 +47,7 @@
             <div class="container">
                 <div class="header-wrap">
                     <div class="logo logo-width-1">
-                        <a href="index.html"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
+                        <a href="/"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
@@ -59,9 +59,9 @@
                         <div class="header-action-right">
                             <div class="header-action-2">
                                 <div class="header-action-icon-2">
-                                    <a href="shop-wishlist.html">
+                                    <a href="/wishlist">
                                         <img class="svgInject" alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
-                                        <span class="pro-count blue">4</span>
+                                        <span class="pro-count blue"><%= headerStatusWishlist %></span>
                                     </a>
                                 </div>
                                
@@ -298,8 +298,13 @@
             </div>
         </div> -->
         <section class="mt-50 mb-50">
-            <% if (locals.cartFind) { %>
+            <% if (!locals.cartFind || cartFind.products.length == 0) { %>
 
+                <div id="text-center"
+                style="display: flex; align-items: center; justify-content: center; text-align: center; background-color: rgb(252, 251, 188); height: 100px;">
+                <h4>Your cart is Empty !!! Please add products to the cart</h4>
+            </div>
+            <% } else { %>
 
                 <div class="container">
                     <div class="row">
@@ -442,12 +447,8 @@
                         </div>
                     </div>
                 </div>
-                <% } else { %>
-                    <div id="text-center"
-                        style="display: flex; align-items: center; justify-content: center; text-align: center; background-color: rgb(252, 251, 188); height: 100px;">
-                        <h4>Your cart is Empty !!! Please add products to the cart</h4>
-                    </div>
-
+                
+                   
 
                     <% } %>
         </section>

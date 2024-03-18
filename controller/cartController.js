@@ -2,6 +2,7 @@ const Cart = require('../model/cartModel')
 const User = require('../model/userModel')
 const Product = require('../model/productModel')
 const Address = require('../model/addressModel')
+const Wishlist = require('../model/wishlistModel')
 
 
 const userCartGet = async(req,res)=>{
@@ -9,13 +10,14 @@ const userCartGet = async(req,res)=>{
       
         
       const cartFind = await Cart.findOne({user:req.session.user._id}).populate('products.productId')
-      console.log("productID",cartFind)
-      if(cartFind === 0){
-         res.render('usercart')
-      }else{
-        res.render('usercart',{cartFind})
+      const findWishlist =  await Wishlist.findOne({user:req.session.user}).populate('products.productId')
+      const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
+        res.render('usercart',{
+            cartFind,
+            headerStatusWishlist
+        })
 
-      }
+      
     }catch(err){
         console.log(err.message)
     }
