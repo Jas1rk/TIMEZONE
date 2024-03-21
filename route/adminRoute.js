@@ -53,6 +53,7 @@ admin_router.post('/status',middle.isAdmin,orderController.statusChanging)
 
 admin_router.get('/sales',middle.isAdmin,salesController.salesReportGet)
 admin_router.post('/sales',middle.isAdmin,salesController.filterSalesReportbyDate)
+admin_router.post('/daterangesales',middle.isAdmin,salesController.filteringDateRange)
 
 
 

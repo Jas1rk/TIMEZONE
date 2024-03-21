@@ -207,13 +207,13 @@
             
                         <% if (currentPage <= 2) { %>
                             <% for (let i = 1; i <= Math.min(numsOfPage, 2); i++) { %>
-                                <li class="page-item <% if (i === currentPage) { %>active<% } %>">
-                                    <a class="page-link" href="/admin/orderslist?page=<%= i %>"><%= i %></a>
+                                <li class="page-item <% if (i === currentPage) { %>active<% } %>" >
+                                    <a class="page-link " href="/admin/orderslist?page=<%= i %>" ><%= i %></a>
                                 </li>
                             <% } %>
                         <% } else { %>
                             <li class="page-item disabled">
-                                <span class="page-link">1</span>
+                                <span class="page-link" >1</span>
                             </li>
                             <li class="page-item active">
                                 <span class="page-link"><%= currentPage %></span>

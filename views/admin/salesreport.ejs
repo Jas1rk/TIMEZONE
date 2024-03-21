@@ -146,20 +146,25 @@
                                     <!-- <div class="col-lg-5 col-6 me-auto">
                                         <input type="text" placeholder="Search..." class="form-control">
                                     </div> -->
-                                    
+                                    <p id="err" class="text-danger"></p>
+                                    <p id="err1" class="text-danger"></p>
                                     <div class="col-lg-4 col-6  d-flex ">
+                                        
                                         <input type="date" id="startdate" class="form-control w-50 mx-2">
+                        
                                         <input type="date" id="enddate" class="form-control w-50 mx-2">
+                                        
                                         <a onclick="filterDate()" class="btn  mx-2 text-center" style="background-color: rgb(255, 236, 178);color: black;">Take</a>
                                     </div>
                                     
                                     
                                     <div class="col-lg-2 col-6">
                                         
-                                        <select class="form-select">
+                                        <select class="form-select" onchange="dateChange()">
                                             <option>Daily</option>
                                             <option>Weekly</option>
                                             <option>Monthly</option>
+                                            <option>Yearly</option>
                                             
                                         </select>
                                         
@@ -179,7 +184,7 @@
                                            
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody style="color: black;">
 
                                         <% orderData.forEach(element => { %>
                                          
@@ -246,7 +251,20 @@
     function filterDate() {
       const startDate =  document.getElementById('startdate').value
       const endDate = document.getElementById('enddate').value
-      $.ajax({
+
+      const dateError = document.getElementById('err')
+      const dateError1 = document.getElementById('err1')
+
+      dateError.textContent = ""
+      dateError1.textContent =""
+
+
+      if(startDate > endDate){
+        dateError.textContent = "This date should not be future date"
+      } else if(endDate < startDate ){
+        dateError1.textContent = "This date should not be previous date "
+      }else{
+        $.ajax({
         url:'/admin/sales',
         method:'post',
         data:{
@@ -260,6 +278,8 @@
         }
       })
     }
+      }
+    
 
     function displayOrders(orders){
         const tbody = document.querySelector('table tbody')
@@ -277,6 +297,25 @@
             `;
             tbody.appendChild(row)
         })
+    }
+
+    function dateChange(){
+        const selectOption = document.querySelector('.form-select').value
+       
+        $.ajax({
+            url:'/admin/daterangesales',
+            method:'post',
+            data:{
+                selectOption
+            },
+            success:(response)=>{
+                if(response.orders){
+                    displayOrders(response.orders)
+                }
+            }
+
+        })
+         
     }
 </script>
 
