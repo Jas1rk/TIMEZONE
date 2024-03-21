@@ -62,10 +62,17 @@
                     
                 </li>
                 <li class="menu-item active">
-                    <a class="menu-link" href="page-transactions-1.html"> <i class="icon material-icons md-monetization_on"></i>
-                        <span class="text">Orders</span>
+                    <a class="menu-link" style="background-color: #3F2520;" href="page-transactions-1.html"> <i class="icon material-icons md-shopping_cart" style="color: aliceblue;"></i>
+
+                        <span class="text" style="color: aliceblue;">Orders</span>
                     </a>
                    
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link"  href="/admin/sales"> <i class="icon material-icons md-receipt" ></i>
+                        <span class="text" >Sales report</span>
+                    </a>
+                  
                 </li>
                 
             </ul>
@@ -176,7 +183,7 @@
 
                                     <td class="text-end">
                                         
-                                        <a href="/admin/orderdetails?_id=<%= element._id %>" class="btn btn-md rounded font-sm">Detail</a>
+                                        <a href="/admin/orderdetails?_id=<%= element._id %>" class="btn btn-md rounded font-sm" style="background-color: #3F2520;">Detail</a>
                                       
                                     </td>
                                 </tr>
@@ -194,7 +201,7 @@
                     <ul class="pagination justify-content-start">
                         <% if (currentPage > 1) { %>
                             <li class="page-item">
-                                <a class="page-link" href="/admin/orderslist?page=<%= currentPage - 1 %>">Pr</a>
+                                <a class="page-link" style="width: 70px;" href="/admin/orderslist?page=<%= currentPage - 1 %>">Preview</a>
                             </li>
                         <% } %>
             
@@ -215,7 +222,7 @@
             
                         <% if (currentPage < numsOfPage) { %>
                             <li class="page-item">
-                                <a class="page-link" href="/admin/orderslist?page=<%= currentPage + 1 %>">Nt</a>
+                                <a class="page-link" style="width: 50px;" href="/admin/orderslist?page=<%= currentPage + 1 %>">Next</a>
                             </li>
                         <% } %>
                     </ul>

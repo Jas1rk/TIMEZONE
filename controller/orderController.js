@@ -5,6 +5,14 @@ const Address = require('../model/addressModel')
 const Cart = require('../model/cartModel')
 const Product = require('../model/productModel')
 const generateOrderid =  require('../controller/genarator')
+const Razorpay = require('razorpay')
+
+let razorInstance = new Razorpay({ 
+    key_id: 'zp_test_ymZP4ImziZlWcK',
+   key_secret: '95HXuXE1nLLqZuTGfuO56MNf'
+ })
+
+  
 
 const placeOrderPost = async(req,res)=>{
     try{
@@ -12,9 +20,13 @@ const placeOrderPost = async(req,res)=>{
        const userData = await User.findOne({_id:userId})
        const {cid,handlePayment,selectAddressId} = req.body
        const addressData = await Address.findOne({_id:selectAddressId}) 
+
+       let cartData;
+       let cartProduct;
+
        if(handlePayment == 'cash on delevery'){
-          const cartData = await Cart.findOne({_id:cid}).populate('products.productId')
-          const cartProduct = cartData.products.map((element)=>{
+          cartData = await Cart.findOne({_id:cid}).populate('products.productId')
+          cartProduct = cartData.products.map((element)=>{
             let productStore = {
                 productId:element.productId,
                 quantity:element.quantity
@@ -50,10 +62,46 @@ const placeOrderPost = async(req,res)=>{
           const deleteCart = await Cart.findByIdAndDelete({_id:cid})
           res.json({status:"ordersuccess"})
           
-       }else{
-        console.log('error in cash on delivery')
-       }
-       
+       } else if(handlePayment == "razorpay") {
+        const orderidGenarate = generateOrderid()
+        cartData = await Cart.findOne({_id:cid}).populate('products.productId')
+        cartProduct = cartData.products.map((element)=>{
+            let productStore = {
+                productId:element.productId,
+                quantity:element.quantity
+            }
+            return productStore
+          })
+           const newOrder = {
+            user:userData,
+            address:addressData,
+            products:cartProduct,
+            totalamount:cartData.total,
+            paymentmethod:handlePayment,
+            status:'Processing',
+            orderid:orderidGenarate
+           }
+           console.log('cartData ===>',newOrder)
+
+           var options = {
+            amount: cartData.total * 100,
+            currency: "INR",
+            receipt: "" + orderidGenarate
+            
+          }
+          console.log('options',options)
+
+          razorInstance.orders.create(options, async(error,order)=>{
+            console.log(order)
+            console.log(error)
+            if(!error){
+                console.log("online paymet successfully")
+                res.json({status:"onlinepayment", razorpayOrder:order,orderDetails:newOrder})
+            }else{
+                console.log(error)
+            }
+          })
+       }   
     }catch(err){
         console.log(err.message)
     }
@@ -189,7 +237,7 @@ const statusChanging = async(req,res)=>{
           })
 
         }else if(updatetedStatus.status === "Returned"){
-            console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeellsseee");
+           
             let productSet = []
             updatetedStatus.products.forEach(element =>{
             let productStore = {

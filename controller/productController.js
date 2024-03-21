@@ -13,7 +13,6 @@ const adminProductsGet = async (req, res) => {
         const productSkip = (pages-1)*sizeOfPage
         const productCount =  await Product.find({}).count()
         const numsOfPage = Math.ceil(productCount/sizeOfPage)
-        console.log(numsOfPage);
         const catagData = await Category.find({})
         const productData = await Product.find({}).skip(productSkip).limit(sizeOfPage)
 

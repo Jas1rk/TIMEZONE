@@ -33,42 +33,47 @@
             </div>
         </div>
         <nav>
-            <ul class="menu-aside">
-                <li class="menu-item">
-                    <a class="menu-link" href="/admin/admindash"> <i class="icon material-icons md-home"></i>
+            <ul class="menu-aside" >
+                <li class="menu-item"> 
+                    <a class="menu-link " href="/admin/admindash"> <i class="icon material-icons md-home"></i>
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
                 <li class="menu-item ">
-                    <a class="menu-link" href="/admin/productadmin"> <i
-                            class="icon material-icons md-shopping_bag"></i>
+                    <a class="menu-link" href="/admin/productadmin"> <i class="icon material-icons md-shopping_bag"></i>
                         <span class="text">Products</span>
                     </a>
-                   
+                  
                 </li>
                 <li class="menu-item ">
                     <a class="menu-link" href="/admin/admincategory"> <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Category</span>
                     </a>
+                    
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" style="background-color: #3F2520;" href="/admin/userList"> <i class="icon material-icons md-store" style="color: aliceblue;"></i>
+                        <span class="text" style="color: aliceblue;">User List</span>
+                    </a>
                   
                 </li>
-                <li class="menu-item active ">
-                    <a class="menu-link" href="/admin/userList"> <i class="icon material-icons md-store"></i>
-                        <span class="text">User List</span>
-                    </a>
-                   
-                </li>
-                <li class="menu-item">
+                <li class="menu-item ">
                     <a class="menu-link" href="/admin/addproduct"> <i class="icon material-icons md-add_box"></i>
                         <span class="text">Add product</span>
                     </a>
-                
+                  
                 </li>
-                <li class="menu-item">
+                <li class="menu-item ">
                     <a class="menu-link" href="/admin/orderslist"> <i class="icon material-icons md-monetization_on"></i>
                         <span class="text">Orders</span>
                     </a>
                    
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link"  href="/admin/sales"> <i class="icon material-icons md-receipt" ></i>
+                        <span class="text" >Sales report</span>
+                    </a>
+                  
                 </li>
                
             </ul>
@@ -101,20 +106,7 @@
                         <a href="#" class="requestfullscreen nav-link btn-icon"><i
                                 class="material-icons md-cast"></i></a>
                     </li>
-                    <!-- <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage"
-                            aria-expanded="false"><i class="material-icons md-public"></i></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-                            <a class="dropdown-item text-brand" href="#"><img src="/admin-assets/imgs/theme/flag-us.png"
-                                    alt="English">English</a>
-                            <a class="dropdown-item" href="#"><img src="/admin-assets/imgs/theme/flag-fr.png"
-                                    alt="Français">Français</a>
-                            <a class="dropdown-item" href="#"><img src="/admin-assets/imgs/theme/flag-jp.png"
-                                    alt="Français">日本語</a>
-                            <a class="dropdown-item" href="#"><img src="/admin-assets/imgs/theme/flag-cn.png"
-                                    alt="Français">中国人</a>
-                        </div>
-                    </li> -->
+                 
                     <li class="dropdown nav-item">
                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount"
                             aria-expanded="false"> <img class="img-xs rounded-circle"
@@ -159,20 +151,14 @@
                                 <option>Show all</option>
                             </select>
                         </div>
-                        <!-- <div class="col-lg-2 col-md-3 col-6">
-                            <select class="form-select">
-                                <option>Show 20</option>
-                                <option>Show 30</option>
-                                <option>Show 40</option>
-                            </select>
-                        </div> -->
+                       
                     </div>
                 </header> <!-- card-header end// -->
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover">
-                            <thead>
-                                <tr class="text-center">
+                            <thead style="background-color: #3F2520;">
+                                <tr class="text-center" style="color: aliceblue;">
                                     <th>Users</th>
                                     <th>Email</th>
                                     <th>Mobile</th>
@@ -218,11 +204,11 @@
                                                          <% if (element.isBlocked==true) { %>
 
                                                         <button onclick="unblock('<%= element._id %>')"
-                                                        class="btn btn-sm btn-brand rounded font-sm mt-15">Unblock</button>
+                                                        class="btn btn-sm btn-brand rounded font-sm mt-15" style="border-color: black; background-color: rgb(255, 236, 178); color: black">Unblock</button>
                                                         <% } else { %>
 
                                                             <button onclick="block('<%= element._id %>')"
-                                                                class="btn btn-sm btn-brand rounded font-sm mt-15">block</button>
+                                                                class="btn btn-sm btn-brand rounded font-sm mt-15" style="border-color: black; background-color: rgb(255, 236, 178); color: white">block</button>
                                                        <% } %>
                                                 
                                                 

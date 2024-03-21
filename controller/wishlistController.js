@@ -18,20 +18,18 @@ const getWishlistPage = async(req, res) => {
                const fountInCart = cartFind.products.some(cartProduct => {
                 const cartProductId = cartProduct.productId.toString()
                 const isEqual = cartProductId === wishlistProductId
-                console.log(`Comparing Wishlist Product: ${wishlistProductId} with Cart Product: ${cartProductId}. Result: ${isEqual}`);
                 return isEqual
             })
-            console.log('productFound ===>',fountInCart)
+           
             return fountInCart
             });
 
-            console.log('cart status ===>',cartStatus);
-
-           
+          
         }
-        console.log(cartStatus)
-        console.log(productswish)
-        res.render('wishlist', {productswish, cartStatus});
+        const headerStatusWishlist =  cartFind ? cartFind.products.length : 0
+       
+        res.render('wishlist', {productswish, cartStatus,headerStatusWishlist});
+
     } catch(err) {
         console.log(err.message);
     }

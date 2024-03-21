@@ -49,8 +49,8 @@
                   
                 </li>
                 <li class="menu-item active">
-                    <a class="menu-link" href="/admin/admincategory"> <i class="icon material-icons md-shopping_cart"></i>
-                        <span class="text">Category</span>
+                    <a class="menu-link" style="background-color: #3F2520;" href="/admin/admincategory"> <i class="icon material-icons md-shopping_cart" style="color: aliceblue;"></i>
+                        <span class="text" style="color: aliceblue;">Category</span>
                     </a>
                    
                 </li>
@@ -74,6 +74,13 @@
                         <span class="text">Orders</span>
                     </a>
                    
+                </li>
+
+                <li class="menu-item">
+                    <a class="menu-link"  href="/admin/sales"> <i class="icon material-icons md-receipt" ></i>
+                        <span class="text" >Sales report</span>
+                    </a>
+                  
                 </li>
               
             </ul>
@@ -174,21 +181,16 @@
                                     <p id="error2" class="text-danger"></p>
                                 </div>
                                 <div class="d-grid">
-                                    <button class="btn btn-primary" onclick="createCat()">Create category</button>
+                                    <button class="btn btn-primary" style="background-color: #3F2520;" onclick="createCat()">Create category</button>
                                 </div>
                             </form>
                         </div>
                         <div class="col-md-9">
                             <div class="table-responsive">
                                 <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <!-- <th class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" />
-                                                </div>
-                                            </th> -->
-                                           
+                                    <thead style="background-color: #3F2520;">
+                                        <tr style="color: aliceblue;">
+                                          
                                             <th>Name</th>
                                             <th>Description</th>
                                             <th>Status</th>
@@ -200,12 +202,7 @@
                                         <% categories.forEach(element => { %>
                                       
                                         <tr>
-                                            <!-- <td class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" />
-                                                </div>
-                                            </td>
-                                            -->
+                                          
                                             
                                             <td><b><%= element.name %></b><small class="text-muted">
                                                 <%= element._id %>
@@ -222,7 +219,7 @@
 
                                             <td>
                                                 <a href="/admin/categoryedit?_id=<%= element._id %>">
-                                                  <button style="background-color: #14213D; /* Green */
+                                                  <button style="background-color:#3F2520; /* Green */
                                                                   border: none;
                                                                   color: white;
                                                                   padding: 4px 8px; /* Adjusted padding for a smaller size */
@@ -242,9 +239,9 @@
 
                                               <td class="custom-align">
                                                 <% if (element.isBlocked === true) { %>
-                                                    <button onclick="unblock('<%= element._id %>')" class="btn btn-sm btn-brand rounded font-sm mt-15">Unblock</button>
+                                                    <button onclick="unblock('<%= element._id %>')" class="btn btn-sm btn-brand rounded font-sm mt-" style="border-color: black; background-color: rgb(255, 236, 178); color: black">Unblock</button>
                                                 <% } else { %>
-                                                    <button onclick="block('<%= element._id %>')" class="btn btn-sm btn-brand rounded font-sm mt-15">Block</button>
+                                                    <button onclick="block('<%= element._id %>')" class="btn btn-sm btn-brand rounded font-sm mt-6" style="border-color: black; background-color: rgb(255, 236, 178); color: black">Block</button>
                                                 <% } %>
                                             </td>
                                             

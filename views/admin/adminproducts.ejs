@@ -37,9 +37,9 @@
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
-                <li class="menu-item active">
-                    <a class="menu-link " href="/admin/productadmin"> <i class="icon material-icons md-shopping_bag" ></i>
-                        <span class="text">Products</span>
+                <li class="menu-item active" style="background-color: #3F2520;">
+                    <a class="menu-link " style="background-color: #3F2520;" href="/admin/productadmin"> <i class="icon material-icons md-shopping_bag" style="color: aliceblue;" ></i>
+                        <span class="text" style="color: aliceblue;">Products</span>
                     </a>
                  
                        
@@ -67,6 +67,12 @@
                         <span class="text">Orders</span>
                     </a>
                    
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link"  href="/admin/sales"> <i class="icon material-icons md-receipt" ></i>
+                        <span class="text" >Sales report</span>
+                    </a>
+                  
                 </li>
                
             </ul>
@@ -139,7 +145,7 @@
                 </div>
                 <div>
                   
-                    <a href="/admin/addproduct" class="btn btn-primary btn-sm rounded">Create new</a>
+                    <a href="/admin/addproduct" class="btn btn-primary btn-sm rounded" style="background-color: #3F2520;">Create new</a>
                 </div>
             </div>
             <div class="card mb-4">
@@ -198,15 +204,15 @@
                                     <a href="#" class="title text-truncate"><%= element.description %></a>
                                     <div class="price mb-2">₹<%= element.regprice %></div> 
                                   
-                                    <a href="/admin/productedit?_id=<%= element._id %>" class="btn btn-sm font-sm rounded btn-brand">
+                                    <a href="/admin/productedit?_id=<%= element._id %>" class="btn btn-sm font-sm rounded btn-brand" style="background-color: #3F2520;">
                                         <i class="material-icons md-edit"></i> Edit
                                     </a>
                                      <% if (element.isBlocked === true) { %>
                                         <button onclick="unblock('<%= element._id %>')"
-                                            class="btn btn-sm font-sm btn-danger rounded" style="background-color: green;">Unblock</button>
+                                            class="btn btn-sm font-sm  rounded" style=" background-color: rgb(255, 236, 178); color: black">Unblock</button>
                                      <% } else { %>
                                         <button onclick="block('<%= element._id %>')"
-                                            class="btn btn-sm font-sm btn-danger rounded">Block</button>
+                                            class="btn btn-sm font-sm rounded" style=" background-color: rgb(255, 236, 178); color: black">Block</button>
                                      <% } %>
                                       
                                 </div>
@@ -223,13 +229,13 @@
                     <ul class="pagination justify-content-start">
                         <% if (currentPage > 1) { %>
                             <li class="page-item">
-                                <a class="page-link" href="/admin/productadmin?page=<%= currentPage - 1 %>">Pr</a>
+                                <a class="page-link" style="width: 70px;" href="/admin/productadmin?page=<%= currentPage - 1 %>">Preview</a>
                             </li>
                         <% } %>
             
                         <% if (currentPage <= 2) { %>
                             <% for (let i = 1; i <= Math.min(numsOfPage, 2); i++) { %>
-                                <li class="page-item <% if (i === currentPage) { %>active<% } %>">
+                                <li class="page-item  <% if (i === currentPage) { %>active<% } %> ">
                                     <a class="page-link" href="/admin/productadmin?page=<%= i %>"><%= i %></a>
                                 </li>
                             <% } %>
@@ -244,7 +250,7 @@
             
                         <% if (currentPage < numsOfPage) { %>
                             <li class="page-item">
-                                <a class="page-link" href="/admin/productadmin?page=<%= currentPage + 1 %>">Nt</a>
+                                <a class="page-link" style="width:50px ;" href="/admin/productadmin?page=<%= currentPage + 1 %>">Next</a>
                             </li>
                         <% } %>
                     </ul>

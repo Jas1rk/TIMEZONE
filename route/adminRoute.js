@@ -6,6 +6,7 @@ const adminCategoryController = require('../controller/categoryController')
 const productcontroller = require('../controller/productController')
 const orderController = require('../controller/orderController')
 const sortController = require('../controller/sortController')
+const salesController = require('../controller/salesController')
 const upload = require('../controller/multer/multer')
 const middle = require('../middlewares/auth')
 
@@ -50,6 +51,8 @@ admin_router.get('/orderdetails',middle.isAdmin,orderController.adminOrderDetail
 admin_router.post('/status',middle.isAdmin,orderController.statusChanging)
 
 
+admin_router.get('/sales',middle.isAdmin,salesController.salesReportGet)
+admin_router.post('/sales',middle.isAdmin,salesController.filterSalesReportbyDate)
 
 
 

@@ -62,10 +62,17 @@
                   
                 </li>
                 <li class="menu-item active">
-                    <a class="menu-link" href="/admin/orderslist"> <i class="icon material-icons md-monetization_on"></i>
-                        <span class="text">Orders</span>
+                    <a class="menu-link" style="background-color: #3F2520;" href="/admin/orderslist"> <i class="icon material-icons md-monetization_on" style="color: aliceblue;"></i>
+                        <span class="text" style="color: aliceblue;">Orders</span>
                     </a>
                    
+                </li>
+
+                <li class="menu-item">
+                    <a class="menu-link"  href="/admin/sales"> <i class="icon material-icons md-receipt" ></i>
+                        <span class="text" >Sales report</span>
+                    </a>
+                  
                 </li>
               
             </ul>
@@ -142,13 +149,13 @@
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
                             <span>
-                                <i class="material-icons md-calendar_today"></i> <b><%= orderData.createdate %></b>
+                                <i class="material-icons md-calendar_today"></i> <b><%= new Date (orderData.createdate ).toLocaleDateString() %></b>
                             </span> <br>
                             <small class="text-muted">Order ID: <%= orderData.orderid %></small>
                         </div>
                         <div class="col-lg-6 col-md-6 ms-auto text-md-end">
                             <% if (orderData.status === "Delivered" ||  orderData.status === "Cancelled") { %>
-                                <a class="btn btn-primary" onclick="back()">Back</a>
+                                <a class="btn btn-primary " style="background-color: rgb(255, 236, 178); color: black;" onclick="back()">Back</a>
                             <% } else { %>
                                 <select id="status" class="form-select d-inline-block mb-lg-0 mb-15 mw-200">
                                     <option>Change status</option>
@@ -158,7 +165,7 @@
                                     <option>Delivered</option>
                                     <option>Returned</option>
                                 </select>
-                                <a class="btn btn-primary" onclick="changeStatus('<%= orderData._id %>')">Save</a>
+                                <a class="btn btn-primary" onclick="changeStatus('<%= orderData._id %>')" style="background-color: #3F2520;">Save</a>
                            <% } %>
                            
                           
@@ -170,11 +177,11 @@
                     <div class="row mb-50 mt-20 order-info-wrap">
                         <div class="col-md-4">
                             <article class="icontext align-items-start">
-                                <span class="icon icon-sm rounded-circle bg-primary-light">
-                                    <i class="text-primary material-icons md-person"></i>
+                                <span class="icon icon-sm rounded-circle bg-white">
+                                    <i class="material-icons md-person" style="color: #3F2520;"></i>
                                 </span>
                                 <div class="text">
-                                    <h6 class="mb-1">Customer</h6>
+                                    <h6 class="mb-1" style="color: black;">Customer</h6>
                                     <p class="mb-1">
                                        <%= orderData.user.username %> <br> <%= orderData.user.email %> <br> <%= orderData.user.mobile %>
                                     </p>
@@ -184,33 +191,33 @@
                         </div> 
                         <div class="col-md-4">
                             <article class="icontext align-items-start">
-                                <span class="icon icon-sm rounded-circle bg-primary-light">
-                                    <i class="text-primary material-icons md-local_shipping"></i>
+                                <span class="icon icon-sm rounded-circle bg-white">
+                                    <i class="material-icons md-local_shipping" style="color: #3F2520;"></i>
                                 </span>
                                 <div class="text">
-                                    <h6 class="mb-1">Order info</h6>
+                                    <h6 class="mb-1" style="color: black;">Order info</h6>
                                     <p class="mb-1">
-                                        <!-- Shipping: Fargo express  -->
+                                      
                                         <br> Pay method: <%= orderData.paymentmethod %> 
                                         <br> Status: <%= orderData.status %>
                                     </p>
-                                    <!-- <a href="#">Download info</a> -->
+                                    
                                 </div>
                             </article>
                         </div> <!-- col// -->
                         <div class="col-md-4">
                             <article class="icontext align-items-start">
-                                <span class="icon icon-sm rounded-circle bg-primary-light">
-                                    <i class="text-primary material-icons md-place"></i>
+                                <span class="icon icon-sm rounded-circle bg-white">
+                                    <i class=" material-icons md-place" style="color: #3F2520;"></i>
                                 </span>
                                 <div class="text">
-                                    <h6 class="mb-1">Deliver to</h6>
+                                    <h6 class="mb-1" style="color: black;">Deliver to</h6>
                                     <p class="mb-1">
                                         City:<%= orderData.address.ucity %> 
                                         <br>Location: <%= orderData.address.ulocation %>
                                         <br>Pincode: <%= orderData.address.upin %>
                                     </p>
-                                    <!-- <a href="#">View profile</a> -->
+                                    
                                 </div>
                             </article>
                         </div> 
@@ -219,8 +226,8 @@
                         <div class="col-lg-12">
                             <div class="table-responsive">
                                 <table class="table">
-                                    <thead>
-                                        <tr>
+                                    <thead style="background-color: #3F2520;">
+                                        <tr style="color:aliceblue;">
                                             <th width="40%">Product</th>
                                             <th width="20%">Unit Price</th>
                                             <th width="20%">Quantity</th>
