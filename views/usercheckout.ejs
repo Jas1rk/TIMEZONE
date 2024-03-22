@@ -223,6 +223,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
+                        <p id="typeerror" style="color: red;"></p>
                         <% if (addressData.length === 0) { %>
                             <div class="card-body text-center" style="background-color: rgb(252, 251, 188); border-radius: 5px; margin-top: 15px; height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                                 <h5>No Address Found !!! Please add</h5>
@@ -238,7 +239,6 @@
                                     <button type="submit" name="submit" value="Submit" style="border-color: black; background-color: transparent; color: black;; width: 545px;"  id="buttonedit" class="btn btn-primary">Add address</button>
                                 </a>
                                 <div class="row">
-                                    <p id="typeerror" style="color: red;"></p>
                                     <%if(locals.addressData){%>
                                         <% addressData.forEach(element => { %>
                                     <div class="col-lg-12">
@@ -508,6 +508,8 @@
 </body>
 <script>
    
+    console.log(document.getElementById('typeerror'));
+    console.log(document.getElementById('typeerror1'));
 
 
     let selectAddressId = null
@@ -552,7 +554,7 @@
                         } else if (response.status === "onlinepayment"){
                             const orderDetails = response.orderDetails
                                var options = {
-                                        "key": "zp_test_ymZP4ImziZlWcK", 
+                                        "key": "rzp_test_ymZP4ImziZlWcK", 
                                         "amount": response.razorpayOrder.amount, 
                                         "currency": "INR",
                                         "name": "TimeZone", 
@@ -560,9 +562,8 @@
                                         "image": "https://example.com/your_logo",
                                         "order_id": response.razorpayOrder.id,
                                         "handler": function (response){
-                                                    alert(response.razorpay_payment_id);
-                                                    alert(response.razorpay_order_id);
-                                                    alert(response.razorpay_signature)
+                                                   successgreen(response , orderDetails)
+
                                                 },
                                                                                     
                                         "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
@@ -578,16 +579,29 @@
                                         }
                                     };
                                     var rzp1 = new Razorpay(options);
-                                 
-                                        rzp1.open();
-                                      
+                                     rzp1.open(); 
                         }
                     }
                    
                 });
-            
-       
+        
     }
+}
+
+function successgreen(response , orderDetails){
+    $.ajax({
+        url:'/razorsuccess',
+        method:'post',
+        data:{
+            response,
+            orderDetails
+        },
+        success:(response)=>{
+            if(response.status === 'success'){
+                window.location.href = '/success'
+            }
+        }
+    })
 }
 
 </script>

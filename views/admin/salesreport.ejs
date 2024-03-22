@@ -86,6 +86,7 @@
             <div class="col-search">
               
             </div>
+            
             <div class="col-nav">
                 <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
                 <ul class="nav">
@@ -95,27 +96,16 @@
                             <span class="badge rounded-pill">3</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
                     </li>
-                    <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-                            <a class="dropdown-item text-brand" href="#"><img src="/admin-assets/imgs/theme/flag-us.png" alt="English">English</a>
-                          
-                        </div>
-                    </li>
+                    
                     <li class="dropdown nav-item">
                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="/admin-assets/imgs/people/avatar2.jpg" alt="User"></a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
+                            
+                            
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger" href="#"><i class="material-icons md-exit_to_app"></i>Logout</a>
                         </div>
@@ -143,9 +133,7 @@
                         <div class="col-lg-12">
                             <header class="border-bottom mb-4 pb-4">
                                 <div class="row d-flex justify-content-between">
-                                    <!-- <div class="col-lg-5 col-6 me-auto">
-                                        <input type="text" placeholder="Search..." class="form-control">
-                                    </div> -->
+                                 
                                     <p id="err" class="text-danger"></p>
                                     <p id="err1" class="text-danger"></p>
                                     <div class="col-lg-4 col-6  d-flex ">
@@ -180,6 +168,7 @@
                                             <th>Date</th>
                                             <th>Coupen</th>
                                             <th>Discount</th>
+                                            <th>Total</th>
                                             <th class="text-end">Payment Method</th>
                                            
                                         </tr>
@@ -193,10 +182,10 @@
                                             <td><b><%= element.orderid %></b></td>
                                             <td><%= element.user.email %></td>
                                             <td><%= new Date (element.createdate).toLocaleDateString() %></td>
-                                               
                                             <td>No Coupen</td>
                                             <td>No discount</td>
-                                            <td class="text-end">Cash</td>
+                                            <td><%= element.totalamount %></td>  
+                                            <td class="text-end"><%= element.paymentmethod %></td>
                                             
                                         </tr>
                                         <% }) %>
@@ -205,12 +194,41 @@
                                 </table>
                                 
                             </div> 
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead style="background-color: #3F2520;  ">
+                                        <tr style="color: aliceblue;">
+                                            <th>Total Orders</th>
+                                            <th>Total Order Amounts</th>
+                                            <th>Total Discounts</th>
+                                           
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody style="color: black;">
+
+                                      
+                                         
+                                      
+                                        <tr>
+                                            <td><b><%= orderCount %></b></td>
+                                            <td><%= totalAmount %></td>
+                                            <td>total</td>
+                                          
+                                            
+                                        </tr>
+                                      
+                                      
+                                    </tbody>
+                                </table>
+                                
+                            </div> 
                         </div> 
                       
-                    </div> <!-- row end// -->
-                </div> <!-- card-body // -->
-            </div> <!-- card end// -->
-            <div class="pagination-area mt-30 mb-50">
+                    </div> 
+                </div> 
+            </div> 
+            <!-- <div class="pagination-area mt-30 mb-50">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-start">
                         <li class="page-item active"><a class="page-link" href="#">01</a></li>
@@ -221,7 +239,7 @@
                         <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
                     </ul>
                 </nav>
-            </div>
+            </div> -->
         </section>
         <footer class="main-footer font-xs">
             <div class="row pb-30 pt-15">
@@ -293,7 +311,8 @@
                 <td>${new Date(order.createdate).toLocaleDateString()}</td>
                 <td>No Coupon</td>
                 <td>No Discount</td>
-                <td class="text-end">Cash</td>
+                <td>${order.totalamount}</td>
+                <td class="text-end">${order.paymentmethod}</td>
             `;
             tbody.appendChild(row)
         })

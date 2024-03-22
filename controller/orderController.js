@@ -6,10 +6,12 @@ const Cart = require('../model/cartModel')
 const Product = require('../model/productModel')
 const generateOrderid =  require('../controller/genarator')
 const Razorpay = require('razorpay')
+const crypto = require('crypto')
 
+const {razorpayKeyId,razorpayKeySecret} = process.env
 let razorInstance = new Razorpay({ 
-    key_id: 'zp_test_ymZP4ImziZlWcK',
-   key_secret: '95HXuXE1nLLqZuTGfuO56MNf'
+    key_id: razorpayKeyId,
+   key_secret: razorpayKeySecret
  })
 
   
@@ -86,7 +88,7 @@ const placeOrderPost = async(req,res)=>{
            var options = {
             amount: cartData.total * 100,
             currency: "INR",
-            receipt: "" + orderidGenarate
+            receipt:""+orderidGenarate
             
           }
           console.log('options',options)
@@ -102,6 +104,30 @@ const placeOrderPost = async(req,res)=>{
             }
           })
        }   
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
+const razorpaySuccess = async(req,res)=>{
+    try{
+        const {orderDetails,response} = req.body
+        const userData = await User.findOne({email:req.session.user.email})
+        console.log(userData)
+        if(userData){
+            let hmac = crypto.createHmac('sha256',razorpayKeySecret);
+            hmac.update(response.razorpay_order_id+"|"+ response.razorpay_payment_id)
+            hmac=hmac.digest("hex")
+
+            if(hmac == response.razorpay_signature){
+                const orderGet = await Order.create(orderDetails)
+                if(orderGet){
+                    res.json({status:'success'})
+                }
+            }else{
+                console.log('there is error in success')
+            }
+        }
     }catch(err){
         console.log(err.message)
     }
@@ -292,5 +318,6 @@ module.exports = {
     adminOrderList,
     adminOrderDetails,
     statusChanging,
-    orderReturn
+    orderReturn,
+    razorpaySuccess
 }

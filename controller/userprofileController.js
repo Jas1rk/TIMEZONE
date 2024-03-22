@@ -91,7 +91,7 @@ const addAddressPost = async (req, res) => {
     try {
 
         const userFind = await User.findOne({ email: req.session.user.email })
-      
+        
         if (userFind) {
             const { name, mobile, address, pincode, location, city, sate, country, addresstype } = req.body
             const addressData = await new Address({

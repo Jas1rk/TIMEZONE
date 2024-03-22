@@ -1,12 +1,18 @@
 
 const Order = require('../model/orderModel')
+const excel = require('exceljs')
 
 
 
 const salesReportGet = async(req,res)=>{
     try{
         const orderData = await Order.find({status:"Delivered"}).populate('user').sort({_id:-1})
-        res.render('admin/salesreport',{orderData})
+        const orderCount = orderData.length
+        let totalAmount = 0
+        orderData.forEach(order => {
+            totalAmount+=order.totalamount
+        })
+        res.render('admin/salesreport',{orderData,orderCount,totalAmount})
     }catch(err){
         console.log(err.message)
     }
@@ -70,6 +76,9 @@ const filteringDateRange = async(req,res)=>{
         console.log(err.message);
     }
 }
+
+
+
 
 
 module.exports = {
