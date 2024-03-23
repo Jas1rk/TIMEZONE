@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:32 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>TimeZone</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/admin-assets/imgs/theme/favicon.svg">
+    <!-- Template CSS -->
+    <link href="/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="screen-overlay"></div>
+    <aside class="navbar-aside" id="offcanvas_aside">
+        <div class="aside-top">
+            <a href="index.html" class="brand-wrap">
+                <img src="/admin-assets/imgs/theme/logo.svg" class="logo" alt="Evara Dashboard">
+            </a>
+            <div>
+                <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i> </button>
+            </div>
+        </div>
+        <nav>
+            <ul class="menu-aside" >
+                <li class="menu-item  " > 
+                    <a class="menu-link " href="/admin/admindash"> <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/productadmin"> <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Products</span>
+                    </a>
+                  
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/admincategory"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Category</span>
+                    </a>
+                    
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/userList"> <i class="icon material-icons md-store"></i>
+                        <span class="text">User List</span>
+                    </a>
+                  
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/addproduct"> <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Add product</span>
+                    </a>
+                  
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/orderslist"> <i class="icon material-icons md-monetization_on"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                   
+                </li>
+                <li class="menu-item ">
+                    <a class="menu-link" href="/admin/sales"> <i class="icon material-icons md-receipt"></i>
+                        <span class="text">Sales report</span>
+                    </a>
+                  
+                </li>
+                <li class="menu-item active">
+                    <a class="menu-link" style="background-color: #3F2520;" href="/admin/coupons"> <i class="icon material-icons md-account_balance_wallet" style="color: aliceblue;"></i>
+                        <span class="text" style="color: aliceblue;">Coupen</span>
+                    </a>
+                  
+                </li>
+               
+            </ul>
+            <hr>
+            
+            <br>
+            <br>
+        </nav>
+    </aside>
+    <main class="main-wrap">
+        <header class="main-header navbar">
+            <div class="col-search">
+             
+            </div>
+            <div class="col-nav">
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon" href="#">
+                            <i class="material-icons md-notifications animation-shake"></i>
+                            <span class="badge rounded-pill">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
+                    </li>
+                  
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="/admin-assets/imgs/people/avatar2.jpg" alt="User"></a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                           
+                            <a class="dropdown-item text-danger" href="#"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="content-main">
+            <div class="row">
+                <div class="col-12">
+                    <div class="content-header">
+                        <h2 class="content-title" style="color: black;">Create New</h2>
+                        <div>
+                           
+                            <button class="btn btn-md rounded font-sm hover-up" style="background-color: #3F2520;" onclick="addCoupon()">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <p id="fillError" class="text-danger"></p>
+                <p id="exist" class="text-danger"></p>
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <label for="product_title" class="form-label">Coupon name</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="cname" name="cname">
+                                <p id="err1" class="text-danger"></p>
+                            </div>
+                            <div class="row gx-3">
+                                <div class="col-md-4  mb-3">
+                                    <label for="product_sku" class="form-label">Starting Date</label>
+                                    <input type="date" placeholder="Type here" class="form-control" id="csdate" name="csdate">
+                                    <p id="err2" class="text-danger"></p>
+                                </div>
+                                <div class="col-md-4  mb-3">
+                                    <label for="product_color" class="form-label">Ending Date</label>
+                                    <input type="date" placeholder="Type here" class="form-control" id="cedate" name="cedate">
+                                    <p id="err3" class="text-danger"></p>
+                                </div>
+                                <div class="col-md-4  mb-3">
+                                    <label for="product_size" class="form-label">Minimum Purchase</label>
+                                    <input type="number" placeholder="Type here" class="form-control" id="camount" name="camount">
+                                    <p id="err4" class="text-danger"></p>
+                                </div>
+                            </div>
+                            <!-- <div class="mb-4">
+                                <label for="product_brand" class="form-label">Brand</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="product_brand">
+                            </div> -->
+                        </div>
+                    </div> <!-- card end// -->
+                    <!-- <div class="card mb-4">
+                        <div class="card-body">
+                            <div>
+                                <label class="form-label">Description</label>
+                                <textarea placeholder="Type here" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </div> 
+                    -->
+                </div>
+              
+            </div>
+        </section>
+        <footer class="main-footer font-xs">
+            <div class="row pb-30 pt-15">
+                <div class="col-sm-6">
+                    <script>
+                    document.write(new Date().getFullYear())
+                    </script> ©, TimeZone.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end">
+                        All rights reserved
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script src="/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/admin-assets/js/vendors/select2.min.js"></script>
+    <script src="/admin-assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <!-- Main Script -->
+    <script src="/admin-assets/js/main.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</body>
+<script>
+    function addCoupon(){
+        const couponName = document.getElementById('cname').value
+        const satrtindDate = document.getElementById('csdate').value
+        const endingDate = document.getElementById('cedate').value
+        const minimumAmount = document.getElementById('camount').value
+       
+        const existError = document.getElementById('exist')
+        const fillError = document.getElementById('')
+
+        existError.textContent = ""
+
+        $.ajax({
+            url:'/admin/addcoupon',
+            method:'post',
+            data:{
+                couponName,
+                satrtindDate,
+                endingDate,
+                minimumAmount
+            },
+            success:(response)=>{
+                if(response.status === 'creat'){
+                    window.location.href = '/admin/coupons'
+                }else if(response.status === 'exist'){
+                    existError.textContent = "this coupon is exist"
+                }
+            }
+        })
+    }
+</script>
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:32 GMT -->
+</html>

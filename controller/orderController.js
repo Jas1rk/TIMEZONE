@@ -171,10 +171,10 @@ const successPageGet = async(req,res)=>{
     }
 }
 
+
     const cancelOrder = async(req,res)=>{
         try{
         const {id,paymentMethod,userID} = req.body
-        console.log("userrrrrrrrrrr issssss",userID)
         const findOrder =  await Order.findOne({_id:id})
         if(paymentMethod === 'razorpay'){
             const existingWallet = await  Wallet.findOne({user:userID})

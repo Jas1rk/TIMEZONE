@@ -7,6 +7,7 @@ const productcontroller = require('../controller/productController')
 const orderController = require('../controller/orderController')
 const sortController = require('../controller/sortController')
 const salesController = require('../controller/salesController')
+const couponController = require('../controller/couponController')
 const upload = require('../controller/multer/multer')
 const middle = require('../middlewares/auth')
 
@@ -55,6 +56,9 @@ admin_router.get('/sales',middle.isAdmin,salesController.salesReportGet)
 admin_router.post('/sales',middle.isAdmin,salesController.filterSalesReportbyDate)
 admin_router.post('/daterangesales',middle.isAdmin,salesController.filteringDateRange)
 
+admin_router.get('/coupons',middle.isAdmin,couponController.allCouponsGetPage)
+admin_router.get('/addcoupon',middle.isAdmin,couponController.addcouponGet)
+admin_router.post('/addcoupon',middle.isAdmin,couponController.addCouponPost)
 
 
 

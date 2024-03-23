@@ -67,18 +67,19 @@
                     </a>
                    
                 </li>
-                <li class="menu-item active">
-                    <a class="menu-link" style="background-color: #3F2520;" href="/admin/sales"> <i class="icon material-icons md-receipt" style="color: aliceblue;"></i>
-                        <span class="text" style="color: aliceblue;">Sales report</span>
+                <li class="menu-item ">
+                    <a class="menu-link"  href="/admin/sales"> <i class="icon material-icons md-receipt"></i>
+                        <span class="text" >Sales report</span>
                     </a>
                   
                 </li>
                 <li class="menu-item ">
-                    <a class="menu-link" href="/admin/coupons"> <i class="icon material-icons md-account_balance_wallet"></i>
-                        <span class="text">Coupon</span>
+                    <a class="menu-link " style="background-color: #3F2520;" href="/admin/coupons"> <i class="icon material-icons md-account_balance_wallet" style="color: aliceblue;"></i>
+                        <span class="text" style="color: aliceblue;">Coupon</span>
                     </a>
                   
                 </li>
+               
             </ul>
             <hr>
            
@@ -120,12 +121,11 @@
         </header>
         <section class="content-main">
             <div class="content-header">
-                <h2 class="content-title" style="color: black;">Sales Reports</h2>
+                <h2 class="content-title" style="color: black;">Coupons</h2>
                 <div>
                   
-                    <a href="/admin/addproduct" class="btn btn-sm rounded mx-2"  style="background-color: #3F2520; color: aliceblue;">Get Pdf</a>
+                    <a href="/admin/addcoupon" class="btn btn-sm rounded mx-2"  style="background-color: #3F2520; color: aliceblue;">Create New</a>
                     
-                    <a href="/admin/addproduct" class="btn btn-sm rounded" style="background-color: rgb(255, 236, 178);color: black;">Get Excel</a>
                 </div>
             </div>
             
@@ -136,95 +136,45 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <header class="border-bottom mb-4 pb-4">
-                                <div class="row d-flex justify-content-between">
-                                 
-                                    <p id="err" class="text-danger"></p>
-                                    <p id="err1" class="text-danger"></p>
-                                    <div class="col-lg-4 col-6  d-flex ">
-                                        
-                                        <input type="date" id="startdate" class="form-control w-50 mx-2">
-                        
-                                        <input type="date" id="enddate" class="form-control w-50 mx-2">
-                                        
-                                        <a onclick="filterDate()" class="btn  mx-2 text-center" style="background-color: rgb(255, 236, 178);color: black;">Take</a>
-                                    </div>
-                                    
-                                    
-                                    <div class="col-lg-2 col-6">
-                                        
-                                        <select class="form-select" onchange="dateChange()">
-                                            <option>Daily</option>
-                                            <option>Weekly</option>
-                                            <option>Monthly</option>
-                                            <option>Yearly</option>
-                                            
-                                        </select>
-                                        
-                                    </div>
-                                </div>
-                            </header> 
-                            <div class="table-responsive">
-                                <table class="table table-hover">
+                           
+                            <div class="table-responsive ">
+                                <table class="table table-hover ">
                                     <thead style="background-color: #3F2520;  ">
                                         <tr style="color: aliceblue;">
-                                            <th>OrderID</th>
-                                            <th>Email</th>
-                                            <th>Date</th>
-                                            <th>Coupen</th>
-                                            <th>Discount</th>
-                                            <th>Total</th>
-                                            <th class="text-end">Payment Method</th>
+                                            <th>Coupon Code</th>
+                                            <th> Name</th>
+                                            <th>Staring Date</th>
+                                            <th>Ending Date</th>
+                                            <th>Minimum Purchase</th>
+                                            <th class="text-end">Action</th>
                                            
                                         </tr>
                                     </thead>
                                     <tbody style="color: black;">
 
-                                        <% orderData.forEach(element => { %>
+                                     
                                          
-                                      
+                                      <% coupons.forEach(element => { %>
+                                       
                                         <tr>
-                                            <td><b><%= element.orderid %></b></td>
-                                            <td><%= element.user.email %></td>
-                                            <td><%= new Date (element.createdate).toLocaleDateString() %></td>
-                                            <td>No Coupen</td>
-                                            <td>No discount</td>
-                                            <td><%= element.totalamount %></td>  
-                                            <td class="text-end"><%= element.paymentmethod %></td>
+                                            <td><b><%= element.ccode %></b></td>
+                                            <td><%= element.cname %></td>
+                                            <td><%= element.startdate %></td>
+                                            <td><%= element.enddate %></td>
+                                            <td><%= element.minimumpurchase %></td>
+                                            <td class="text-end">
+                                                <button onclick="DeleteCoupon()" class="btn btn-sm btn-brand rounded font-sm mt-" style="border-color: black; background-color: #3F2520; color: white">Delete</button>
+                                            </td>
                                             
                                         </tr>
                                         <% }) %>
+                                    
                                       
                                     </tbody>
                                 </table>
                                 
                             </div> 
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead style="background-color: #3F2520;  ">
-                                        <tr style="color: aliceblue;">
-                                            <th>Total Orders</th>
-                                            <th>Total Order Amounts</th>
-                                            <th>Total Discounts</th>
-                                           
-                                           
-                                        </tr>
-                                    </thead>
-                                    <tbody style="color: black;">
-                                      
-                                        <tr>
-                                            <td><b><%= orderCount %></b></td>
-                                            <td><%= totalAmount %></td>
-                                            <td>total</td>
-                                          
-                                            
-                                        </tr>
-                                      
-                                      
-                                    </tbody>
-                                </table>
-                                
-                            </div> 
+                            
                         </div> 
                       
                     </div> 
@@ -268,76 +218,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 <script>
-    function filterDate() {
-      const startDate =  document.getElementById('startdate').value
-      const endDate = document.getElementById('enddate').value
-
-      const dateError = document.getElementById('err')
-      const dateError1 = document.getElementById('err1')
-
-      dateError.textContent = ""
-      dateError1.textContent =""
-
-
-      if(startDate > endDate){
-        dateError.textContent = "This date should not be future date"
-      } else if(endDate < startDate ){
-        dateError1.textContent = "This date should not be previous date "
-      }else{
-        $.ajax({
-        url:'/admin/sales',
-        method:'post',
-        data:{
-            startDate,
-            endDate
-        },
-        success:(response)=>{
-            if(response.orders){
-               displayOrders(response.orders)
-            }
-        }
-      })
-    }
-      }
-    
-
-    function displayOrders(orders){
-        const tbody = document.querySelector('table tbody')
-        tbody.innerHTML = ""
-
-        orders.forEach(order =>{
-            const row = document.createElement('tr')
-            row.innerHTML = `
-                <td><b>${order.orderid}</b></td>
-                <td>${order.user.email}</td>
-                <td>${new Date(order.createdate).toLocaleDateString()}</td>
-                <td>No Coupon</td>
-                <td>No Discount</td>
-                <td>${order.totalamount}</td>
-                <td class="text-end">${order.paymentmethod}</td>
-            `;
-            tbody.appendChild(row)
-        })
-    }
-
-    function dateChange(){
-        const selectOption = document.querySelector('.form-select').value
-       
-        $.ajax({
-            url:'/admin/daterangesales',
-            method:'post',
-            data:{
-                selectOption
-            },
-            success:(response)=>{
-                if(response.orders){
-                    displayOrders(response.orders)
-                }
-            }
-
-        })
-         
-    }
+  
 </script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-transactions-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:33 GMT -->
