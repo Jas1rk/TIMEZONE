@@ -24,7 +24,7 @@ const addcouponGet = async(req,res)=>{
 const addCouponPost = async(req,res)=>{
     try{
         
-        const {couponName,satrtindDate,endingDate,minimumAmount} = req.body
+        const {couponName,satrtindDate,endingDate,minimumAmount,percentage} = req.body
         const existingCoupon = await Coupon.findOne({cname:couponName})
         if(existingCoupon){
             res.json({status:'exist'})
@@ -35,7 +35,8 @@ const addCouponPost = async(req,res)=>{
              startdate:satrtindDate,
              enddate:endingDate,
              minimumpurchase:minimumAmount,
-             ccode:cid
+             ccode:cid,
+             percentage:percentage
 
            })
            console.log('coupon===>',newCoupon)

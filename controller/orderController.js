@@ -191,7 +191,7 @@ const successPageGet = async(req,res)=>{
                 console.log('wallet created ====>',existingWallet)
                 await newWallet.save()
             }else{
-                console.log('jjjjjjjjj');
+              
                 const tid = generateOrderid();
                 await Wallet.findOneAndUpdate({ user: userID }, {
                     $inc: { walletAmount: findOrder.totalamount },

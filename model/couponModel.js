@@ -19,10 +19,14 @@ const couponSchema = new mongoose.Schema({
     ccode:{
         type:String
     },
+    percentage:{
+        type:Number
+    },
     isblocked:{
         type:Boolean,
         default:false
     }
+    
 },{versionKey:false})
 
 const Coupon = mongoose.model('Coupon',couponSchema)

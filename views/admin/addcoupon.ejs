@@ -155,6 +155,11 @@
                                     <input type="number" placeholder="Type here" class="form-control" id="camount" name="camount">
                                     <p id="err4" class="text-danger"></p>
                                 </div>
+                                <div class="mb-4">
+                                    <label for="product_title" class="form-label">Percentage</label>
+                                    <input type="number" placeholder="Type here" class="form-control" id="cpercentage" name="cpercentage">
+                                    <p id="err5" class="text-danger"></p>
+                                </div>
                             </div>
                             <!-- <div class="mb-4">
                                 <label for="product_brand" class="form-label">Brand</label>
@@ -206,12 +211,85 @@
         const satrtindDate = document.getElementById('csdate').value
         const endingDate = document.getElementById('cedate').value
         const minimumAmount = document.getElementById('camount').value
+        const percentage = document.getElementById('cpercentage').value
        
         const existError = document.getElementById('exist')
-        const fillError = document.getElementById('')
+        const fillError = document.getElementById('fillError')
+        const nameError = document.getElementById('err1')
+        const startDateError = document.getElementById('err2')
+        const endDateError = document.getElementById('err3')
+        const minimumError = document.getElementById('err4')
+        const percentageError = document.getElementById('err5')
+
+
 
         existError.textContent = ""
+        fillError.textContent = ""
+        nameError.textContent = ""
+        startDateError.textContent = ""
+        endDateError.textContent = ""
+        minimumError.textContent = ""
+        percentageError.textContent = ""
 
+        if(couponName === ""){
+            nameError.textContent = "Coupen name is required"
+        }else if(!/^[A-Z]+$/.test(couponName)){
+            nameError.textContent = "Name Should be only capital"
+        }
+
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        yesterday.setHours(0, 0, 0, 0); 
+
+        const lastYearDate = new Date();
+        lastYearDate.setFullYear(lastYearDate.getFullYear() - 1);
+        lastYearDate.setHours(0, 0, 0, 0); 
+
+        const startDate = new Date(satrtindDate);
+        startDate.setHours(0, 0, 0, 0); 
+
+        if (satrtindDate === "") {
+            console.log(satrtindDate);
+            startDateError.textContent = "Starting Date is required";
+        } else if (satrtindDate === endingDate) {
+            startDateError.textContent = "Starting date should not be same with ending date";
+        } else if (startDate.getTime() === yesterday.getTime()) {
+            startDateError.textContent = "The starting date should not be yesterday's date";
+        } else if (startDate <= lastYearDate) {
+            startDateError.textContent = "The starting date should not be from the previous year";
+        } else if (startDate > new Date(endingDate)) {
+            startDateError.textContent = "The starting date shouldn't be a future date";
+        }
+
+
+
+
+        if(endingDate === ""){
+            endDateError.textContent = "Ending date is required"
+        }else if(endingDate < satrtindDate){
+            endDateError.textContent = "Ending date shouldn't be less than previous date"
+        }else if(endingDate === satrtindDate){
+            endDateError.textContent = "The ending date should not be same with satrting date"
+        }
+
+        if(minimumAmount === ""){
+            minimumError.textContent = "The Amount is required"
+        }else if(minimumAmount < 800){
+            minimumError.textContent = "Purchase amount should not less than 800"
+        }
+
+        if(percentage === ""){
+            percentageError.textContent = "The percentage is required"
+        }
+
+        if(nameError.textContent||startDateError.textContent||endDateError.textContent||minimumAmount.textContent||percentageError.textContent){
+           
+            fillError.textContent = "Enter fields"
+            setTimeout(() => {
+                fillError.textContent = ""
+            }, 3000);
+        }else{
+            
         $.ajax({
             url:'/admin/addcoupon',
             method:'post',
@@ -219,7 +297,8 @@
                 couponName,
                 satrtindDate,
                 endingDate,
-                minimumAmount
+                minimumAmount,
+                percentage
             },
             success:(response)=>{
                 if(response.status === 'creat'){
@@ -229,6 +308,9 @@
                 }
             }
         })
+        }
+
+
     }
 </script>
 

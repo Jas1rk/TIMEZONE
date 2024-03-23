@@ -147,6 +147,7 @@
                                             <th>Staring Date</th>
                                             <th>Ending Date</th>
                                             <th>Minimum Purchase</th>
+                                            <th>Discount</th>
                                             <th class="text-end">Action</th>
                                             <th class="text-end">delete</th>
                                            
@@ -165,6 +166,7 @@
                                                   <td><%= element.startdate %></td>
                                                   <td><%= element.enddate %></td>
                                                   <td><%= element.minimumpurchase %></td>
+                                                  <td><%= element.percentage %> %</td>
                                                   <td class="text-end">
                                                       <% if (element.isblocked == true) { %>
                                                           <button onclick="UnblockCoupon('<%= element._id %>')" class="btn btn-sm btn-brand rounded font-sm mt-" style="border-color: black; background-color: rgb(255, 236, 178); color: black">Unblock</button>
