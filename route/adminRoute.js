@@ -59,6 +59,9 @@ admin_router.post('/daterangesales',middle.isAdmin,salesController.filteringDate
 admin_router.get('/coupons',middle.isAdmin,couponController.allCouponsGetPage)
 admin_router.get('/addcoupon',middle.isAdmin,couponController.addcouponGet)
 admin_router.post('/addcoupon',middle.isAdmin,couponController.addCouponPost)
+admin_router.post('/blockcoupon',middle.isAdmin,couponController.blockCoupon)
+admin_router.post('/unblockcoupon',middle.isAdmin,couponController.unblockCoupon)
+admin_router.delete('/deletecoupon',middle.isAdmin,couponController.deleteCoupon)
 
 
 

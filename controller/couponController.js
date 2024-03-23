@@ -49,11 +49,43 @@ const addCouponPost = async(req,res)=>{
 }
 
 
+const blockCoupon = async(req,res)=>{
+    try{
+        const {id} = req.body
+        const block = await Coupon.findByIdAndUpdate(id,{isblocked:true})
+        res.json({status:'blocked'})
+    }catch(err){
+        console.log(err.message)
+    }
+}
 
+
+const unblockCoupon = async(req,res)=>{
+    try{
+        const {id} = req.body
+        const unblock = await Coupon.findByIdAndUpdate(id,{isblocked:false})
+        res.json({status:'unblock'})
+    }catch(err){
+        console.log(err.message)
+    }
+}
+
+const deleteCoupon = async(req,res)=>{
+    try{
+        const {id} = req.body
+        const deletecoupon = await Coupon.findByIdAndDelete(id)
+        res.json({status:'deleted'})
+    }catch(err){
+        console.log(err.message)
+    }
+}
 
 module.exports = {
     addcouponGet,
     allCouponsGetPage,
     addCouponPost,
+    blockCoupon,
+    unblockCoupon,
+    deleteCoupon
     
 }
