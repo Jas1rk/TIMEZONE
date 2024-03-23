@@ -6,6 +6,7 @@ const userCartController = require('../controller/cartController')
 const sortcontroller = require('../controller/sortController')
 const ordercontroller = require('../controller/orderController')
 const wishlistcontroller =  require('../controller/wishlistController')
+const walletcontroller = require('../controller/walletController')
 const middle = require('../middlewares/auth')
 
 
@@ -77,6 +78,8 @@ router.get('/wishlist',middle.isLogged,wishlistcontroller.getWishlistPage)
 router.post('/wishlist',middle.isLogged,wishlistcontroller.addToWishlist)
 router.delete('/deletewishlist',wishlistcontroller.userDeleteWishlist)
 
+
+router.get('/wallet',middle.isLogged,walletcontroller.userWalletGet)
 
 module.exports =  router
 

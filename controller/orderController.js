@@ -4,6 +4,7 @@ const User = require('../model/userModel')
 const Address = require('../model/addressModel')
 const Cart = require('../model/cartModel')
 const Product = require('../model/productModel')
+const Wallet = require('../model/walletModel')
 const generateOrderid =  require('../controller/genarator')
 const Razorpay = require('razorpay')
 const crypto = require('crypto')
@@ -83,7 +84,7 @@ const placeOrderPost = async(req,res)=>{
             status:'Processing',
             orderid:orderidGenarate
            }
-           console.log('cartData ===>',newOrder)
+          
 
            var options = {
             amount: cartData.total * 100,
@@ -94,15 +95,15 @@ const placeOrderPost = async(req,res)=>{
           console.log('options',options)
 
           razorInstance.orders.create(options, async(error,order)=>{
-            console.log(order)
-            console.log(error)
+           
             if(!error){
-                console.log("online paymet successfully")
+                
                 res.json({status:"onlinepayment", razorpayOrder:order,orderDetails:newOrder})
             }else{
                 console.log(error)
             }
           })
+
        }   
     }catch(err){
         console.log(err.message)
@@ -170,38 +171,62 @@ const successPageGet = async(req,res)=>{
     }
 }
 
-const cancelOrder = async(req,res)=>{
-    try{
-      const {id} = req.body
-      const findOrder =  await Order.findOne({_id:id})
-      const updateOrder = await Order.findByIdAndUpdate({_id:id},{
-            $set:{
-                status:'Cancelled'
+    const cancelOrder = async(req,res)=>{
+        try{
+        const {id,paymentMethod,userID} = req.body
+        console.log("userrrrrrrrrrr issssss",userID)
+        const findOrder =  await Order.findOne({_id:id})
+        if(paymentMethod === 'razorpay'){
+            const existingWallet = await  Wallet.findOne({user:userID})
+            const tid = generateOrderid()
+            if(!existingWallet){
+                const newWallet = new Wallet({
+                    user:userID,
+                    walletAmount:findOrder.totalamount,
+                    transactions:[{
+                        tid:tid,
+                        tamount:findOrder.totalamount,
+                    }]
+                })
+                console.log('wallet created ====>',existingWallet)
+                await newWallet.save()
+            }else{
+                console.log('jjjjjjjjj');
+                const tid = generateOrderid();
+                await Wallet.findOneAndUpdate({ user: userID }, {
+                    $inc: { walletAmount: findOrder.totalamount },
+                    $push: { transactions: { tid: tid, tamount: findOrder.totalamount } }
+                });
             }
-        })
-        const checkingOrder = await updateOrder.save()
-        let productSet = []
-        checkingOrder.products.forEach(element =>{
-          let productStore = {
-            productId:element.productId,
-            quantity:element.quantity
-          }
-          productSet.push(productStore)
-
-        })
-        productSet.forEach(async(element)=>{
-            const product =  await Product.findByIdAndUpdate({_id:element.productId},{
-                $inc:{
-                  stock:element.quantity  
+        }
+          const updateOrder = await Order.findByIdAndUpdate({_id:id},{
+                $set:{
+                    status:'Cancelled'
                 }
-            },{new:true})
-        })
-        res.json({status:'cancel'})
-    
-    }catch(err){
-        console.log(err.message);
+            })
+            const checkingOrder = await updateOrder.save()
+            let productSet = []
+            checkingOrder.products.forEach(element =>{
+            let productStore = {
+                productId:element.productId,
+                quantity:element.quantity
+            }
+            productSet.push(productStore)
+
+            })
+            productSet.forEach(async(element)=>{
+                const product =  await Product.findByIdAndUpdate({_id:element.productId},{
+                    $inc:{
+                    stock:element.quantity  
+                    }
+                },{new:true})
+            })
+            res.json({status:'cancel'})
+        
+        }catch(err){
+            console.log(err.message);
+        }
     }
-}
 
 
 const adminOrderList = async(req,res)=>{
@@ -212,7 +237,6 @@ const adminOrderList = async(req,res)=>{
       const productCount = await Order.countDocuments({})
       const numsOfPage = Math.ceil(productCount / sizeOfPage)
       const orders = await Order.find({}).sort({_id:-1}).populate('user').skip(productSkip).limit(sizeOfPage)
-        console.log("sec0000000"+(orders))
       const currentPage = parseInt(pages)
      
       res.render('admin/orderlist',{orders,numsOfPage,currentPage,pages})
@@ -243,7 +267,7 @@ const statusChanging = async(req,res)=>{
         updateStatus.status=status
         const updatetedStatus = await updateStatus.save()
 
-        console.log(updateStatus,'THIS IS STAtu');
+       
         if(updatetedStatus.status === "Cancelled"){
           let productSet = []
           updatetedStatus.products.forEach(element =>{
@@ -275,7 +299,6 @@ const statusChanging = async(req,res)=>{
           })  
           productSet.forEach(async(element)=>{
             const quantity =  element.quantity
-            console.log("helooo",quantity);
             const product = await Product.findByIdAndUpdate({_id:element.productId},{
                 $inc:{
                     stock:element.quantity
