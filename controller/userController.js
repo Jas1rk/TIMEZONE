@@ -209,10 +209,10 @@ const otpVerificationPost = async(req,res)=>{
             await newUser.save()
         }
         console.log('user saved successfully')
-        res.redirect('/login')
+        res.json({status:'ok'})
        } else {
         console.log("invalid otp")
-        res.render('userverifyotp',{message:"Invalid Otp"})
+        res.json({status:'invalid'})
        }
     }catch(err){
         console.log(err);
@@ -294,12 +294,10 @@ const validateForgetPassOtp =async(req,res)=>{
     const storedOtp = req.session.temp.otpVal
     
     if(otp === storedOtp){
-        console.log('otp entered success fully')
-        res.redirect('/newPassPage')
+        res.json({status:'equal'})
           
     }else{
-        res.render('forgotpassotp',{message1:"Invalid Otp"})
-        console.log("invalid otp")
+        res.json({status:'invalid'})
     }
    }catch(err){
     console.log(err)

@@ -44,7 +44,7 @@ router.get('/userlogout',middle.isLogout,usercontroller.userLogout)
 
 router.get('/userprofile',middle.isLogged,userProfileController.userProfile)
 router.get('/changepassword',middle.isLogged,userProfileController.userChangePassword)
-router.post('/changepassword',userProfileController.changePasswordPost)
+router.post('/changepassword',middle.isLogged,userProfileController.changePasswordPost)
 router.get('/address',middle.isLogged,userProfileController.addressGet)
 router.get('/addressadd',middle.isLogged,userProfileController.useraddAddress)
 router.post('/addressadd',userProfileController.addAddressPost)
