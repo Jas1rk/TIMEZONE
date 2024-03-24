@@ -588,7 +588,7 @@
                                         "image": "https://example.com/your_logo",
                                         "order_id": response.razorpayOrder.id,
                                         "handler": function (response){
-                                                   successgreen(response , orderDetails)
+                                                   successgreen(response , orderDetails,cid)
 
                                                 },
                                                                                     
@@ -614,13 +614,14 @@
     }
 }
 
-function successgreen(response , orderDetails){
+function successgreen(response , orderDetails,cid){
     $.ajax({
         url:'/razorsuccess',
         method:'post',
         data:{
             response,
-            orderDetails
+            orderDetails,
+            cid
         },
         success:(response)=>{
             if(response.status === 'success'){

@@ -112,7 +112,7 @@ const placeOrderPost = async(req,res)=>{
 
 const razorpaySuccess = async(req,res)=>{
     try{
-        const {orderDetails,response} = req.body
+        const {orderDetails,response,cid} = req.body
         const userData = await User.findOne({email:req.session.user.email})
         console.log(userData)
         if(userData){
@@ -123,6 +123,22 @@ const razorpaySuccess = async(req,res)=>{
             if(hmac == response.razorpay_signature){
                 const orderGet = await Order.create(orderDetails)
                 if(orderGet){
+                    let productSet = []
+                    orderGet.products.forEach(element =>{
+                      let productStore = {
+                          productId:element.productId,
+                          quantity:element.quantity
+                      }
+                      productSet.push(productStore)
+                    })
+                    productSet.forEach(async(element)=>{
+                      const product = await Product.findByIdAndUpdate({_id:element.productId},{
+                          $inc: {stock: -element.quantity}
+                      },{new: true})
+                    
+                    })
+                    const deleteCart = await Cart.findByIdAndDelete({_id:cid})
+                    console.log('cart deleted',deleteCart)
                     res.json({status:'success'})
                 }
             }else{
