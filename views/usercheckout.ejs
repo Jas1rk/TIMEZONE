@@ -221,6 +221,23 @@
                         <div class="divider mt-50 mb-50"></div>
                     </div>
                 </div>
+                <div class="total-amount">
+                    <div class="right">
+                        <div class="coupon">
+                            <form action="#" target="_blank">
+                                <div class="form-row row justify-content-center">
+                                    <a href="">Click here for coupon</a>
+                                    <div class="form-group col-lg-6">
+                                        <input class="font-medium" name="Coupon" placeholder="Enter Your Coupon">
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <button class="btn  btn-sm"><i class="fi-rs-label mr-10"></i>Apply</button>
+                                    </div>
+                                </div>
+                            </form> 
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <p id="typeerror" style="color: red;"></p>
@@ -283,10 +300,14 @@
                                    
                                 </div>
                             </div> 
+                            
 
                         <%}%>
-
+                        
+                        
+                            
                     </div>
+                    
                     <div class="col-md-6">
                         <div class="order_review">  
                             <div class="mb-20">
@@ -315,6 +336,10 @@
                                         <tr>
                                             <th>SubTotal</th>
                                             <td class="product-subtotal" colspan="2">₹ <%= cartFind.total %></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Discount</th>
+                                            <td colspan="2"><em>0</em></td>
                                         </tr>
                                         <tr>
                                             <th>Shipping</th>
@@ -350,6 +375,7 @@
                             <a class="btn btn-fill-out btn-block mt-30" style="background-color: #3F2520;" onclick="placeOrder('<%= cartFind._id %>')">Place Order</a>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </section>

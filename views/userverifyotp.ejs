@@ -263,6 +263,9 @@
                 window.location.href = '/login'
             }else{
                 otpError.textContent = "Invalid Otp !!! Please Check"
+                setTimeout(() => {
+                    otpError.textContent = ""
+                }, 3000);
             }
         }
      })

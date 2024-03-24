@@ -5,7 +5,7 @@
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:31 GMT -->
 <head>
     <meta charset="utf-8">
-    <title>Evara Dashboard</title>
+    <title>TimeZone</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,6 +18,31 @@
     <!-- Template CSS -->
     <link href="/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
 </head>
+
+<style>
+    .image-preview-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-preview {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.image-preview img {
+    width: 100px; /* Adjust image width as needed */
+    height: auto;
+}
+
+.image-preview button {
+    margin-top: 5px;
+    align-self: center;
+}
+
+</style>
 
 <body>
     <div class="screen-overlay"></div>
@@ -147,7 +172,7 @@
             <form method="post" action="/admin/addproduct" enctype="multipart/form-data">
             <div class="row">
                
-                <div class="col-9">
+                <div class="col-12">
                     <p id="fillError" class="text-danger"></p>
 
                     <div class="content-header">
@@ -217,20 +242,20 @@
                     </div>
                   
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-6">
                     <div class="card mb-4">
                         <div class="card-header"> 
                             <h4>Image</h4>
                         </div>
                         <div class="card-body">
                             <div class="input-upload">
-                                <img id="imagePreview" src="/admin-assets/imgs/theme/upload.svg" alt="">
+                                <div id="imagePreviewContainer"  class="image-preview-container"></div>
                                 <input class="form-control" type="file" multiple  name="image" id="image" accept="image/*">
                                 <p id="imageError" class="text-danger"></p>
                               
                             </div>
                         </div>
-                    </div> <!-- card end// -->
+                    </div> 
                     <div class="card mb-4">
                         <div class="card-header">
                             <h4>Organization</h4>
@@ -376,6 +401,10 @@
         imageError.textContent = "Invalid image file. Please upload a valid image file."
     }
 
+
+
+
+
     if(nameError.textContent||descriptionError.textContent||regularpriceError.textContent||offerprice.textContent||stockError.textContent||colorError.textContent||materialError.textContent||imageError.textContent){
         event.preventDefault()
         fillError.textContent = "Fill all fields"
@@ -386,6 +415,72 @@
 
 
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    var imageInput = document.getElementById('image');
+    var imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    var selectedFiles = [];
+
+    imageInput.addEventListener('change', function() {
+        imagePreviewContainer.innerHTML = '';
+        selectedFiles = [];
+
+        var files = this.files;
+        if (files && files.length > 0) {
+            for (var i = 0; i < files.length; i++) {
+                selectedFiles.push(files[i]);
+                var reader = new FileReader();
+                reader.onload = (function(file) {
+                    return function(e) {
+                        var preview = document.createElement('div');
+                        preview.classList.add('image-preview');
+
+                        var img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.alt = file.name;
+
+                        var deleteButton = document.createElement('button');
+                        deleteButton.style.color = "#3F2520"
+                        deleteButton.innerHTML = 'Delete';
+                        deleteButton.addEventListener('click', function() {
+                            var index = selectedFiles.indexOf(file);
+                            if (index !== -1) {
+                                selectedFiles.splice(index, 1);
+                                preview.remove();
+                                resetInput();
+                            }
+                        });
+
+                        preview.appendChild(img);
+                        preview.appendChild(deleteButton);
+                        imagePreviewContainer.appendChild(preview);
+                    };
+                })(files[i]);
+                reader.readAsDataURL(files[i]);
+            }
+        }
+    });
+
+    function resetInput() {
+        // Clone the file input element, remove the original, and append the clone
+        var newInput = imageInput.cloneNode();
+        imageInput.parentNode.replaceChild(newInput, imageInput);
+        imageInput = newInput;
+
+        // Remove previous change event listener
+        imageInput.removeEventListener('change', imageInputChange);
+
+        // Attach new change event listener
+        imageInput.addEventListener('change', function() {
+            imageInputChange();
+        });
+    }
+
+    function imageInputChange() {
+        // Handle change event for the new input (if needed)
+    }
+});
+
 
 </script>
 

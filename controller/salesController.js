@@ -7,6 +7,7 @@ const excel = require('exceljs')
 const salesReportGet = async(req,res)=>{
     try{
         const orderData = await Order.find({status:"Delivered"}).populate('user').sort({_id:-1})
+        console.log('ggg',orderData)
         const orderCount = orderData.length
         let totalAmount = 0
         orderData.forEach(order => {
