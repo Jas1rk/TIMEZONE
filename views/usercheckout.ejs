@@ -40,6 +40,38 @@
         background-color: #3F2520;
         color: #ffffff
     }
+
+    .coupon-dropdown {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.coupon-dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.coupon-dropdown ul li {
+    margin-bottom: 5px;
+}
+
+.coupon-code-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.copy-icon {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.copy-icon i {
+    color: #007bff; 
+}
 </style>
 <body>
     <header class="header-area header-style-1 header-height-2">
@@ -47,8 +79,8 @@
         <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
             <div class="container">
                 <div class="header-wrap">
-                    <div class="logo logo-width-1">
-                        <a href="/"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
+                    <div class="logo logo-width-1" style="width: 110px; height: 100px; overflow: hidden;">
+                        <a href="/"><img src="assets/imgs/theme/timezone Logo.png"  style="min-width: 100% ;"  alt="logo"></a>
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
@@ -224,20 +256,35 @@
                 <div class="total-amount">
                     <div class="right">
                         <div class="coupon">
-                            <form action="#" target="_blank">
+                           
                                 <div class="form-row row justify-content-center">
-                                    <a href="">Click here for coupon</a>
-                                    <div class="form-group col-lg-6">
-                                        <input class="font-medium" name="Coupon" placeholder="Enter Your Coupon">
+                                    <a href="#" id="couponDropdownToggle">Click here for coupon</a>
+                                    <div id="couponDropdown" class="coupon-dropdown">
+                                        <ul>
+                                            <% couponFind.forEach(element => { %>
+                                             
+                                                <li><span class="coupon-code" onclick="copyCouponCode('<%= element.ccode %>')"><%= element.ccode %></span><span class="copy-icon" onclick="copyCouponCode('<%= element.ccode %>')"><i class="fas fa-clipboard"></i></span></li>
+                                                <% }) %>
+                                      
+                                            </ul>
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <button class="btn  btn-sm"><i class="fi-rs-label mr-10"></i>Apply</button>
+                                        <input class="font-medium" name="Coupon" placeholder="Enter Your Coupon" id="coupon">
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        
+                                    <button class="btn btn-sm" id="apply" style="display: block;" onclick="applyCoupon('<%= cartFind.total  %>','<%= cartFind._id  %>')"><i class="fi-rs-label mr-10"></i>Apply</button>
+                                    <button class="btn btn-sm" id="remove" style="display: none;" onclick="RemoveCoupon()"><i class="fi-rs-label mr-10"></i>Remove</button>
+
                                     </div>
                                 </div>
-                            </form> 
+                        
                         </div>
                     </div>
                 </div>
+                
+                
+                
                 <div class="row">
                     <div class="col-md-6">
                         <p id="typeerror" style="color: red;"></p>
@@ -339,7 +386,7 @@
                                         </tr>
                                         <tr>
                                             <th>Discount</th>
-                                            <td colspan="2"><em>0</em></td>
+                                            <td id="disid" colspan="2">0%</td>
                                         </tr>
                                         <tr>
                                             <th>Shipping</th>
@@ -347,7 +394,7 @@
                                         </tr>
                                         <tr>
                                             <th>Total</th>
-                                            <td colspan="2" class="product-subtotal"><span class="font-xl  fw-900" style="color: #3F2520;">₹ <%= cartFind.total %></span></td>
+                                            <td id="totalAmount" colspan="2" class="product-subtotal"><span class="font-xl  fw-900" style="color: #3F2520;">₹ <%= cartFind.total %></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -496,7 +543,7 @@
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
                 <div class="text-center">
-                    <h5 class="mb-5">Now Loading</h5>
+                    <h5 class="mb-5">Loading</h5>
                     <div class="loader">
                         <div class="bar bar1"></div>
                         <div class="bar bar2"></div>
@@ -592,10 +639,10 @@
 
                                                 },
                                                                                     
-                                        "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
-                                            "name": "Gaurav Kumar", //your customer's name
+                                        "prefill": { 
+                                            "name": "Gaurav Kumar", 
                                             "email": "gaurav.kumar@example.com",
-                                            "contact": "9000090000" //Provide the customer's phone number for better conversion rates 
+                                            "contact": "9000090000" 
                                         },
                                         "notes": {
                                             "address": "Razorpay Corporate Office"
@@ -629,6 +676,48 @@ function successgreen(response , orderDetails,cid){
             }
         }
     })
+}
+
+
+
+document.getElementById("couponDropdownToggle").addEventListener("click", function() {
+    document.getElementById("couponDropdown").style.display = "block";
+});
+
+function copyCouponCode(code) {
+    navigator.clipboard.writeText(code).then(function() {
+        alert("Coupon code copied: " + code);
+        document.getElementById("couponDropdown").style.display = "none"; 
+    }, function(err) {
+        console.error('Failed to copy text: ', err);
+    });
+}
+
+
+function applyCoupon(totalAmount,cid){
+    const coupon = document.getElementById('coupon').value
+    $.ajax({
+        url:'/applycoupon',
+        method:'post',
+        data:{
+           coupon ,
+           totalAmount,
+           cid
+        },
+        success:(response)=>{
+            if(response.status === 'applied'){
+                document.getElementById('totalAmount').innerHTML = response.amountAfterDiscount
+                document.getElementById('disid').innerHTML = response.dicountTotal + '%'
+                document.getElementById('apply').style.display = "none",
+                document.getElementById('remove').style.display = "block"
+            }
+
+        }
+    })
+}
+
+function RemoveCoupon(){
+    window.location.reload()
 }
 
 </script>

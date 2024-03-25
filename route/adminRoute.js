@@ -8,6 +8,7 @@ const orderController = require('../controller/orderController')
 const sortController = require('../controller/sortController')
 const salesController = require('../controller/salesController')
 const couponController = require('../controller/couponController')
+const offerController = require('../controller/offerManagement')
 const upload = require('../controller/multer/multer')
 const middle = require('../middlewares/auth')
 
@@ -63,6 +64,8 @@ admin_router.post('/blockcoupon',middle.isAdmin,couponController.blockCoupon)
 admin_router.post('/unblockcoupon',middle.isAdmin,couponController.unblockCoupon)
 admin_router.delete('/deletecoupon',middle.isAdmin,couponController.deleteCoupon)
 
+
+admin_router.get('/offers',middle.isAdmin,offerController.adminOfferGet)
 
 
 

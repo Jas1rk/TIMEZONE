@@ -3,6 +3,7 @@ const User = require('../model/userModel')
 const Product = require('../model/productModel')
 const Address = require('../model/addressModel')
 const Wishlist = require('../model/wishlistModel')
+const Coupon =  require('../model/couponModel')
 
 
 const userCartGet = async(req,res)=>{
@@ -181,7 +182,9 @@ const userCheckoutGet = async(req,res)=>{
         const userId = req.session.user
         const addressData = await Address.find({user:userId})
         const cartFind = await Cart.findOne({user:userId}).populate('products.productId')
-        res.render('usercheckout',{addressData,cartFind})
+        const couponFind = await Coupon.find({isblocked:false})
+       
+        res.render('usercheckout',{addressData,cartFind,couponFind})
       
        
     }catch(err){

@@ -48,9 +48,9 @@
                     </a>
                   
                 </li>
-                <li class="menu-item active">
-                    <a class="menu-link" style="background-color: #3F2520;" href="/admin/admincategory"> <i class="icon material-icons md-shopping_cart" style="color: aliceblue;"></i>
-                        <span class="text" style="color: aliceblue;">Category</span>
+                <li class="menu-item ">
+                    <a class="menu-link"  href="/admin/admincategory"> <i class="icon material-icons md-shopping_cart" ></i>
+                        <span class="text" >Category</span>
                     </a>
                    
                 </li>
@@ -89,11 +89,12 @@
                   
                 </li>
                 <li class="menu-item ">
-                    <a class="menu-link"  href="/admin/offers"> <i class="icon material-icons md-monetization_on"></i>
-                        <span class="text" >Offers</span>
+                    <a class="menu-link" style="background-color: #3F2520;" href="/admin/offers"> <i class="icon material-icons md-monetization_on" style="color: aliceblue;"></i>
+                        <span class="text" style="color: aliceblue;">Offers</span>
                     </a>
                   
                 </li>
+               
               
             </ul>
             <hr>
@@ -160,8 +161,8 @@
         <section class="content-main">
             <div class="content-header">
                 <div>
-                    <h2 class="content-title card-title">Categories </h2>
-                    <p>Add, edit  category</p>
+                    <h2 class="content-title card-title">Offers</h2>
+                    <p>Add, Offer</p>
                 </div>
                 <div>
                     <input type="text" placeholder="Search Categories" class="form-control bg-white">
@@ -172,28 +173,50 @@
                     <div class="row">
                         <p id="fillerror" class="text-danger"></p>
                         <div class="col-md-3">
-                            <form id="form" method="post" action="/admin/admincategory">
+                            <form id="form" method="post" action="">
                                 <div class="mb-4">
-                                    <label for="product_name"  class="form-label">Name</label>
+                                    <label for="product_name"  class="form-label">Category</label>
                                     <input  type="text" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
-                                    <% if (locals.message1) { %>
-                                        <p id="exist" class="text-danger"><%= locals.message1 %></p>
-                                    <% } %>
-                                    <script>
-                                        setTimeout(() => {
-                                           document.getElementById('exist').style.display= "none" 
-                                        }, 3000);
-                                    </script>
+                                  
+                                       
+                                 
                                     <p id="error1" class="text-danger"></p>
                                 </div>
                                
                                 <div class="mb-4">
-                                    <label class="form-label">Description</label>
-                                    <textarea placeholder="Type here" class="form-control" name="description" id="description" onclick="clrdes()"></textarea>
-                                    <p id="error2" class="text-danger"></p>
+                                    <label for="product_name"  class="form-label">Product</label>
+                                    <input  type="text" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
+                                  
+                                       
+                                 
+                                    <p id="error1" class="text-danger"></p>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name"  class="form-label">Starting Date</label>
+                                    <input  type="date" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
+                                  
+                                       
+                                 
+                                    <p id="error1" class="text-danger"></p>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name"  class="form-label">Ending Date</label>
+                                    <input  type="date" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
+                                  
+                                       
+                                 
+                                    <p id="error1" class="text-danger"></p>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="product_name"  class="form-label">Discount</label>
+                                    <input  type="number" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
+                                  
+                                       
+                                 
+                                    <p id="error1" class="text-danger"></p>
                                 </div>
                                 <div class="d-grid">
-                                    <button class="btn btn-primary" style="background-color: #3F2520;" onclick="createCat()">Create category</button>
+                                    <button class="btn btn-primary" style="background-color: #3F2520;" onclick="createCat()">Add Offer</button>
                                 </div>
                             </form>
                         </div>
@@ -211,55 +234,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% categories.forEach(element => { %>
+                                     
                                       
                                         <tr>
                                           
                                             
-                                            <td><b><%= element.name %></b><small class="text-muted">
-                                                <%= element._id %>
+                                            <td><b>jjj</b><small class="text-muted">
+                                              kkkk
                      
                                             </small></td>
-                                            <td><%= element.description %></td>
-                                            <% if (element.isBlocked==true) { %>
-                                                <td><span class="badge rounded-pill alert-success" >Inactive</span></td>
-                                            <% } else { %>
+                                            <td>hhhh</td>
+                                          
                                                 <td><span class="badge rounded-pill alert-success">Active</span></td>
 
-                                            <% } %>
+                                         
                                             
 
                                             <td>
-                                                <a href="/admin/categoryedit?_id=<%= element._id %>">
-                                                  <button style="background-color:#3F2520; /* Green */
-                                                                  border: none;
-                                                                  color: white;
-                                                                  padding: 4px 8px; /* Adjusted padding for a smaller size */
-                                                                  text-align: center;
-                                                                  text-decoration: none;
-                                                                  display: inline-block;
-                                                                  font-size: 14px; /* Adjusted font size */
-                                                                  margin: 4px 8px;
-                                                                 
-                                                                  cursor: pointer;
-                                                                  border-radius: 4px;">Edit
-                                                  </button>
-                                                </a>
+                                               <p>hiii</p>
                                               </td>
                                               
                                               
 
                                               <td class="custom-align">
-                                                <% if (element.isBlocked === true) { %>
-                                                    <button onclick="unblock('<%= element._id %>')" class="btn btn-sm btn-brand rounded font-sm mt-" style="border-color: black; background-color: rgb(255, 236, 178); color: black">Unblock</button>
-                                                <% } else { %>
-                                                    <button onclick="block('<%= element._id %>')" class="btn btn-sm btn-brand rounded font-sm mt-6" style="border-color: black; background-color: rgb(255, 236, 178); color: black">Block</button>
-                                                <% } %>
+                                           
+                                                    <button onclick="unblock()" class="btn btn-sm btn-brand rounded font-sm mt-" style="border-color: black; background-color: rgb(255, 236, 178); color: black">Unblock</button>
+                                              
                                             </td>
                                             
                                         </tr>
                                     
-                                        <% }) %>
+                                      
                                     </tbody>
                                 </table>
                             </div>
@@ -293,89 +298,89 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 <script>
-    function clrname(){
-        document.getElementById('error1').textContent = ""
-    }
-    function clrdes(){
-        document.getElementById('error2').textContent = ""
-    }
+    // function clrname(){
+    //     document.getElementById('error1').textContent = ""
+    // }
+    // function clrdes(){
+    //     document.getElementById('error2').textContent = ""
+    // }
 
 
-    function createCat(){
+    // function createCat(){
 
    
-     const catname = document.getElementById('name').value.trim()
-     const catdes = document.getElementById('description').value.trim()
+    //  const catname = document.getElementById('name').value.trim()
+    //  const catdes = document.getElementById('description').value.trim()
      
-     const fillError = document.getElementById('fillerror')
-     const nameError = document.getElementById('error1')
-     const descError = document.getElementById('error2')
+    //  const fillError = document.getElementById('fillerror')
+    //  const nameError = document.getElementById('error1')
+    //  const descError = document.getElementById('error2')
      
-     fillError.textContent = ""
-     nameError.textContent = ""
-     descError.textContent = ""
+    //  fillError.textContent = ""
+    //  nameError.textContent = ""
+    //  descError.textContent = ""
 
-     if(catname === ""){
-        nameError.textContent = "Category name is required"
-     }else if(catname.length < 3){
-        nameError.textContent = "Name must be atleast 3 charecter "
-     }else if(!/^[A-Z]+$/.test(catname)){
+    //  if(catname === ""){
+    //     nameError.textContent = "Category name is required"
+    //  }else if(catname.length < 3){
+    //     nameError.textContent = "Name must be atleast 3 charecter "
+    //  }else if(!/^[A-Z]+$/.test(catname)){
 
-        nameError.textContent = "Name can only contain capital letter"
-     }
+    //     nameError.textContent = "Name can only contain capital letter"
+    //  }
 
-     if(catdes === ""){
-        descError.textContent = "Address is required"
-     }else if(!/^[a-zA-Z0-9\s,'/.()-]+$/.test(catdes)){
-        descError.textContent = "Enter valid description"
-     }
+    //  if(catdes === ""){
+    //     descError.textContent = "Address is required"
+    //  }else if(!/^[a-zA-Z0-9\s,'/.()-]+$/.test(catdes)){
+    //     descError.textContent = "Enter valid description"
+    //  }
 
-     if(nameError.textContent!==""||descError.textContent!==""){
-        event.preventDefault()
-         fillError.textContent= "Enter fields"
-         setTimeout(() => {
-            fillError.textContent = ""
-         }, 3000);
-     }
+    //  if(nameError.textContent!==""||descError.textContent!==""){
+    //     event.preventDefault()
+    //      fillError.textContent= "Enter fields"
+    //      setTimeout(() => {
+    //         fillError.textContent = ""
+    //      }, 3000);
+    //  }
 
-    }
+    // }
 
-     function unblock(id) {
-        const _id = id
-        if (_id) {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "question",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, unblock!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href=`/admin/categoryunblock?_id=${_id}`
-                }
-            });
-        }
-    }
-    function block(id) {
-        const _id = id
-        if (_id) {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "question",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, block!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href=`/admin/categoryblock?_id=${_id}`
-                }
-            });
-        }
-    }
+    //  function unblock(id) {
+    //     const _id = id
+    //     if (_id) {
+    //         Swal.fire({
+    //             title: "Are you sure?",
+    //             text: "You won't be able to revert this!",
+    //             icon: "question",
+    //             showCancelButton: true,
+    //             confirmButtonColor: "#3085d6",
+    //             cancelButtonColor: "#d33",
+    //             confirmButtonText: "Yes, unblock!"
+    //         }).then((result) => {
+    //             if (result.isConfirmed) {
+    //                 window.location.href=`/admin/categoryunblock?_id=${_id}`
+    //             }
+    //         });
+    //     }
+    // }
+    // function block(id) {
+    //     const _id = id
+    //     if (_id) {
+    //         Swal.fire({
+    //             title: "Are you sure?",
+    //             text: "You won't be able to revert this!",
+    //             icon: "question",
+    //             showCancelButton: true,
+    //             confirmButtonColor: "#3085d6",
+    //             cancelButtonColor: "#d33",
+    //             confirmButtonText: "Yes, block!"
+    //         }).then((result) => {
+    //             if (result.isConfirmed) {
+    //                 window.location.href=`/admin/categoryblock?_id=${_id}`
+    //             }
+    //         });
+    //     }
+    // }
 
 </script>
 

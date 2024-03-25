@@ -79,6 +79,12 @@
                     </a>
                   
                 </li>
+                <li class="menu-item ">
+                    <a class="menu-link"  href="/admin/offers"> <i class="icon material-icons md-monetization_on"></i>
+                        <span class="text" >Offers</span>
+                    </a>
+                  
+                </li>
             </ul>
             <hr>
            
@@ -277,46 +283,65 @@ function downloadPDF() {
     html2pdf().from(table).save();
 }
 
-
 function downloadExcel() {
-        
-        var table = document.getElementById('table');
-        var tableData = [];
-        var rows = table.rows;
-        for (var i = 0; i < rows.length; i++) {
-            var rowData = [];
-            var cells = rows[i].cells;
-            for (var j = 0; j < cells.length; j++) {
+    var table = document.getElementById('table');
+    var tableData = [];
+    var rows = table.rows;
+    for (var i = 0; i < rows.length; i++) {
+        var rowData = [];
+        var cells = rows[i].cells;
+        for (var j = 0; j < cells.length; j++) {
             rowData.push(cells[j].innerText);
-            }
-            tableData.push(rowData);
         }
+        tableData.push(rowData);
+    }
 
-        
-        var worksheet = XLSX.utils.aoa_to_sheet(tableData);
-        var workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-        var excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    var worksheet = XLSX.utils.aoa_to_sheet(tableData);
 
-        
-        saveAsExcelFile(excelBuffer, 'table_data.xlsx');
+    
+    var wscols = [];
+    for (var i = 0; i < table.rows[0].cells.length; i++) {
+        wscols.push({ wch: 20 }); 
+    }
+    worksheet['!cols'] = wscols;
+
+   
+    var style = {
+        font: { bold: true },
+        alignment: { horizontal: "center" },
+        border: { top: { style: "thin" }, bottom: { style: "thin" }, left: { style: "thin" }, right: { style: "thin" } }
+    };
+    for (var i = 0; i < tableData.length; i++) {
+        for (var j = 0; j < tableData[i].length; j++) {
+            var cellAddress = XLSX.utils.encode_cell({ r: i, c: j });
+            if (!worksheet[cellAddress]) worksheet[cellAddress] = {};
+            Object.assign(worksheet[cellAddress], style);
         }
+    }
 
-        function saveAsExcelFile(buffer, fileName) {
-        var data = new Blob([buffer], { type: 'application/octet-stream' });
-        var url = window.URL.createObjectURL(data);
-        var link = document.createElement('a');
-        link.href = url;
-        link.download = fileName;
-        link.click();
-        setTimeout(function () {
-            window.URL.revokeObjectURL(url);
-        }, 100);
-        }
+    var workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    var excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+    saveAsExcelFile(excelBuffer, 'table_data.xlsx');
+}
+
+function saveAsExcelFile(buffer, fileName) {
+    var data = new Blob([buffer], { type: 'application/octet-stream' });
+    var url = window.URL.createObjectURL(data);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    link.click();
+    setTimeout(function () {
+        window.URL.revokeObjectURL(url);
+    }, 100);
+}
 
 
 
-        
+
+
     function filterDate() {
       const startDate =  document.getElementById('startdate').value
       const endDate = document.getElementById('enddate').value

@@ -79,6 +79,12 @@
                     </a>
                   
                 </li>
+                <li class="menu-item ">
+                    <a class="menu-link"  href="/admin/offers"> <i class="icon material-icons md-monetization_on"></i>
+                        <span class="text" >Offers</span>
+                    </a>
+                  
+                </li>
                
             </ul>
             <hr>
@@ -136,7 +142,7 @@
                         <div class="card-body">
                             <div class="mb-4">
                                 <label for="product_title" class="form-label">Coupon name</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="cname" name="cname">
+                                <input type="text" placeholder="Type here" class="form-control" id="cname" name="cname" onkeyup="nameErr()">
                                 <p id="err1" class="text-danger"></p>
                             </div>
                             <div class="row gx-3">
@@ -161,21 +167,10 @@
                                     <p id="err5" class="text-danger"></p>
                                 </div>
                             </div>
-                            <!-- <div class="mb-4">
-                                <label for="product_brand" class="form-label">Brand</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="product_brand">
-                            </div> -->
-                        </div>
-                    </div> <!-- card end// -->
-                    <!-- <div class="card mb-4">
-                        <div class="card-body">
-                            <div>
-                                <label class="form-label">Description</label>
-                                <textarea placeholder="Type here" class="form-control" rows="4"></textarea>
-                            </div>
+                          
                         </div>
                     </div> 
-                    -->
+                  
                 </div>
               
             </div>
@@ -206,6 +201,10 @@
 
 </body>
 <script>
+     function nameErr(){
+        document.getElementById('err1').textContent = ''
+     }
+    
     function addCoupon(){
         const couponName = document.getElementById('cname').value
         const satrtindDate = document.getElementById('csdate').value
@@ -280,6 +279,8 @@
 
         if(percentage === ""){
             percentageError.textContent = "The percentage is required"
+        }else if(percentage > 100){
+            percentageError.textContent = "Percentage should not be greater 100"
         }
 
         if(nameError.textContent||startDateError.textContent||endDateError.textContent||minimumAmount.textContent||percentageError.textContent){

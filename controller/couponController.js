@@ -1,4 +1,6 @@
 const Coupon = require('../model/couponModel')
+const User = require('../model/userModel')
+const Cart = require('../model/cartModel')
 const generateCoupon = require('../controller/couponcodeGenarator')
 
 
@@ -27,21 +29,25 @@ const addCouponPost = async(req,res)=>{
         const {couponName,satrtindDate,endingDate,minimumAmount,percentage} = req.body
         const existingCoupon = await Coupon.findOne({cname:couponName})
         if(existingCoupon){
+        
             res.json({status:'exist'})
-        }else{
-            const cid = generateCoupon()
-           const newCoupon = new Coupon({
-             cname:couponName,
-             startdate:satrtindDate,
-             enddate:endingDate,
-             minimumpurchase:minimumAmount,
-             ccode:cid,
-             percentage:percentage
+        }else {
 
-           })
-           console.log('coupon===>',newCoupon)
-           await newCoupon.save()
-           res.json({status:'creat'})
+            const couponcode = generateCoupon()
+             const newCoupon = new Coupon({
+              cname:couponName,
+              startdate:satrtindDate,
+              enddate:endingDate,
+              minimumpurchase:minimumAmount,
+              ccode:couponcode,
+              percentage:percentage
+ 
+            })
+ 
+            console.log('coupon===> CREATED',newCoupon)
+            await newCoupon.save()
+            res.json({status:'creat'})
+         
         }
 
     }catch(err){
@@ -81,12 +87,55 @@ const deleteCoupon = async(req,res)=>{
     }
 }
 
+
+const userApplyCoupon = async (req, res) => {
+    try {
+        const { coupon , totalAmount,cid } = req.body;
+        const userID = req.session.user;
+        const cartFInd = await Cart.findOne({_id:cid})
+        const findUser = await User.findById(userID);
+        if (!findUser) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const findCoupon = await Coupon.findOne({ ccode: coupon });
+        if (!findCoupon) {
+            return res.status(404).json({ message: "Coupon not found." });
+        }
+
+        if (!findUser.appliedCoupons) {
+            findUser.appliedCoupons = [];
+        }
+        let totalAountOfOrder = cartFInd.total
+        let dicountTotal = findCoupon.percentage
+        let discountAmount = (totalAountOfOrder * dicountTotal) / 100
+        let amountAfterDiscount = totalAountOfOrder - discountAmount
+       
+        const isCouponApplied = findUser.appliedCoupons.includes(findCoupon._id);
+        if (!isCouponApplied) {
+            findUser.appliedCoupons.push(findCoupon._id);
+            await findUser.save();
+            console.log('Coupon applied successfully.');
+            res.json({status:'applied',amountAfterDiscount,dicountTotal})
+        } else {
+            console.log('This coupon has already been applied.');
+            return res.status(400).json({ message: "This coupon has already been applied." });
+        }
+    } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+
+
 module.exports = {
     addcouponGet,
     allCouponsGetPage,
     addCouponPost,
     blockCoupon,
     unblockCoupon,
-    deleteCoupon
+    deleteCoupon,
+    userApplyCoupon
     
 }

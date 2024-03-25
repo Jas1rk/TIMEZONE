@@ -7,6 +7,7 @@ const sortcontroller = require('../controller/sortController')
 const ordercontroller = require('../controller/orderController')
 const wishlistcontroller =  require('../controller/wishlistController')
 const walletcontroller = require('../controller/walletController')
+const couponController = require('../controller/couponController')
 const middle = require('../middlewares/auth')
 
 
@@ -35,7 +36,7 @@ router.get('/newarraival',usercontroller.newArraivals)
 router.get('/sort',sortcontroller.sortItems)
 router.get('/filter',sortcontroller.filterCategory)
 router.post('/search',sortcontroller.searchProducts)
-
+router.post('/searchorder',sortcontroller.searchOrder)
 // router.get('/filtercat',sortcontroller.filterProducts)
 
 
@@ -80,6 +81,8 @@ router.delete('/deletewishlist',wishlistcontroller.userDeleteWishlist)
 
 
 router.get('/wallet',middle.isLogged,walletcontroller.userWalletGet)
+
+router.post('/applycoupon',couponController.userApplyCoupon)
 
 module.exports =  router
 

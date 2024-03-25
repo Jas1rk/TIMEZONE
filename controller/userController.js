@@ -193,6 +193,7 @@ const  otpVerification =  (req,res)=>{
 
 const otpVerificationPost = async(req,res)=>{
     try{
+       
        const otp =  req.body.otp
        const storedOtp = req.session.temp.otpVal; 
        if(otp === storedOtp){
@@ -207,6 +208,7 @@ const otpVerificationPost = async(req,res)=>{
                 password:hashedpass
             });
             await newUser.save()
+            
         }
         console.log('user saved successfully')
         res.json({status:'ok'})

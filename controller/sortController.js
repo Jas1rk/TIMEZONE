@@ -1,5 +1,6 @@
 const Product = require('../model/productModel')
 const Category = require('../model/categoryModel')
+const Order = require('../model/orderModel')
 
 const sortItems = async(req,res)=>{
     try{
@@ -87,7 +88,6 @@ const filterCategory = async(req,res)=>{
         const searchProducts = await Product.find({pname:{
             $regex: searchDataValue , $options: 'i'
         }})
-        console.log(searchProducts)
         res.json({status:"searched",searchProducts})
 
     }catch(err){
@@ -96,11 +96,24 @@ const filterCategory = async(req,res)=>{
  }
 
 
+ const searchOrder = async(req,res)=>{
+    try{
+       
+        const {searchDataValue} = req.body
+        console.log(searchDataValue)
+        const searchOrders = await Order.find({createdate:searchDataValue})
+        console.log(searchOrders)
+        res.json({status:'searched',searchOrders})
+    }catch(err){
+        console.log(err.message)
+    }
+ }
 
 module.exports = {
     sortItems,
     filterCategory,
     searchProducts,
+    searchOrder
     // filterProducts
     
 }

@@ -1,8 +1,7 @@
 const mongoose = require('mongoose')
 const couponSchema = new mongoose.Schema({
     user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
+     type:Array
     },
     cname:{
         type:String

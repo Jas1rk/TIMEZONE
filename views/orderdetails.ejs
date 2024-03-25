@@ -30,6 +30,87 @@
       padding: 8px;
       text-align: left;
     }
+
+    .search-result {
+        display: none;
+        position: absolute;
+        height: auto;
+        
+    }
+
+    .no-product-found {
+        position: absolute;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    #searchResultsContainer {
+        background-color: rgb(255, 255, 255); 
+        position: absolute;
+        z-index: 1;
+        width: 719px;
+        flex-wrap: wrap;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+       padding-bottom: 2px;
+       
+    }
+
+    .product-container {
+        width: 200px;
+        margin: 10px;
+        text-align: left;
+    }
+
+    .product-container img {
+        margin-left: -2px;
+        max-width: 20%;
+        height: auto;
+        transform: rotate(0deg);
+        transition: transform 0.5s ease; 
+
+       
+    }
+
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: -50px;
+       
+    }
+
+    .product-info p {
+        margin: -5px 0;
+        font-size: 12px;
+        font-weight:bolder;
+        margin-top: -1px;
+        color: black;
+    }
+
+  
+    .rotate-90 {
+        transform: rotate(90deg);
+    }
+
+    .rotate-180 {
+        transform: rotate(180deg);
+    }
+
+    .rotate-270 {
+        transform: rotate(270deg);
+    }
+
+    .product-action-1 .action-btn:hover .fi-rs-heart,
+.product-action-1 .action-btn.hover-up:hover .fi-rs-heart {
+    color: #3F2520;
+}
+
   </style>
 <body>
     <header class="header-area header-style-5">
@@ -37,41 +118,16 @@
         <div class="header-bottom sticky-bar sticky-white-bg">
             <div class="container">
                 <div class="header-wrap header-space-between position-relative">
-                    <div class="logo logo-width-1">
-                        <a href="index.html"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
+                    <div class="logo logo-width-1" style="width: 110px; height: 100px; overflow: hidden;">
+                        <a href="/"><img src="assets/imgs/theme/timezone Logo.png"  style="min-width: 100% ;"  alt="logo"></a>
                     </div>
                     <div class="main-menu main-menu-grow main-menu-padding-1 main-menu-lh-1 main-menu-mrg-1 hm3-menu-padding d-none d-lg-block hover-boder">
                         <nav>
                             <ul>
                                 <li><a class="active" href="index.html">Home </i></a>
-                                    <!-- <ul class="sub-menu">
-                                        <li><a href="index.html">Home 1</a></li>
-                                        <li><a href="index-2.html">Home 2</a></li>
-                                        <li><a href="index-3.html">Home 3</a></li>
-                                        <li><a href="index-4.html">Home 4</a></li>
-                                    </ul> -->
+                                   
                                 </li>
-                                <li><a href="shop-grid-right.html">Shop <i class="fi-rs-angle-down"></i></a>
-                                    <ul class="sub-menu">
-                                        <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
-                                        <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
-                                        <li><a href="shop-list-right.html">Shop List – Right Sidebar</a></li>
-                                        <li><a href="shop-list-left.html">Shop List – Left Sidebar</a></li>
-                                        <li><a href="shop-fullwidth.html">Shop - Wide</a></li>
-                                        <li><a href="#">Single Product <i class="fi-rs-angle-right"></i></a>
-                                            <ul class="level-menu">
-                                                <li><a href="shop-product-right.html">Product – Right Sidebar</a></li>
-                                                <li><a href="shop-product-left.html">Product – Left Sidebar</a></li>
-                                                <li><a href="shop-product-full.html">Product – No sidebar</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="shop-filter.html">Shop – Filter</a></li>
-                                        <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
-                                        <li><a href="shop-cart.html">Shop – Cart</a></li>
-                                        <li><a href="shop-checkout.html">Shop – Checkout</a></li>
-                                        <li><a href="shop-compare.html">Shop – Compare</a></li>
-                                    </ul>
-                                </li>
+                                
                                
                               
                                 <li><a href="#">Pages <i class="fi-rs-angle-down"></i></a>
@@ -94,10 +150,20 @@
                     </div>
                     <div class="header-action-right">
                         <div class="search-style-2">
-                            <form action="#">
-                              
-                                <input type="text" placeholder="Search for items…">
-                            </form>
+                           
+                            <input id="inputtype" type="text" placeholder="Search for orders . . ." onkeyup="searchProduct()"> 
+                            
+                           <div class="search-result">
+
+                               <div id="searchResultsContainer">
+
+                               </div>
+
+                           </div> 
+
+                           <h5 class="no-product-found">No products found</h5>
+                          
+                               
                         </div>
                         <div class="header-action-2">
                             <div class="header-action-icon-2">
@@ -219,7 +285,7 @@
         </div>
     </div>
     <main class="main">
-        <div class="page-header breadcrumb-wrap">
+        <!-- <div class="page-header breadcrumb-wrap">
             <div class="container">
                 <div class="breadcrumb">
                     <a href="index.html" rel="nofollow">Home</a>
@@ -227,7 +293,7 @@
                     <span></span> Account
                 </div>
             </div>
-        </div>
+        </div> -->
         <section class="pt-150 pb-150">
             <div class="container">
                 <div class="row">
@@ -485,8 +551,98 @@
     <script src="assets/js/plugins/jquery.theia.sticky.js"></script>
     <!-- Template  JS -->
     <script src="assets/js/maind134.js?v=3.4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </body>
 
+<script>
+    
+    const inputElement = document.getElementById('inputtype');
+    let timeoutId;
+
+    function debounce(func, delay) {
+        return function () {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                func();
+            }, delay);
+        };
+    }
+
+    function showSearchResult() {
+        const searchResult = document.querySelector('.search-result');
+        searchResult.style.display = 'block';
+    }
+
+    function hideSearchResult() {
+        const searchResult = document.querySelector('.search-result');
+        searchResult.style.display = 'none';
+    }
+
+    function showNoProductFound() {
+        const noProductFound = document.querySelector('.no-product-found');
+        noProductFound.style.display = 'block';
+    }
+
+    function hideNoProductFound() {
+        const noProductFound = document.querySelector('.no-product-found');
+        noProductFound.style.display = 'none';
+    }
+
+    function searchProduct() {
+        const searchDataValue = inputElement.value.trim();
+
+        if (searchDataValue !== "") {
+            showSearchResult();
+            debounce(() => {
+                $.ajax({
+                    url: "/searchorder",
+                    method: "post",
+                    data: {
+                        searchDataValue
+                    },
+                    success: (response) => {
+                        const searchResultsContainer = document.getElementById('searchResultsContainer')
+                        searchResultsContainer.innerHTML = ""
+
+                        if (response.searchOrders.length > 0) {
+                            response.searchOrders.forEach(element => {
+                                const productContainer = document.createElement('div');
+                                productContainer.classList.add('product-container');
+
+                                const productElement = document.createElement('div');
+                                productElement.innerHTML = `
+                                <a href="/vieworder?_id=${element._id}">
+                                   
+                                    <div class="product-info">
+                                        <p>${element.orderid}</p>
+                                       
+                                    </div>
+                            
+                                `;
+
+                                productContainer.appendChild(productElement);
+                                searchResultsContainer.appendChild(productContainer);
+                            });
+                            hideNoProductFound();
+                        } else {
+                            hideSearchResult();
+                            showNoProductFound();
+                        }
+                    }
+                })
+            }, 500)();
+        } else {
+            hideSearchResult();
+            hideNoProductFound();
+        }
+
+
+
+    }
+
+
+</script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/page-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:11:15 GMT -->
 </html>
