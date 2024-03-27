@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const couponSchema = new mongoose.Schema({
     user:{
-     type:Array
+        type:Array,
+        default:[]
     },
     cname:{
         type:String

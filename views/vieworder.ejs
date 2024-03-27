@@ -20,14 +20,14 @@
 </head>
 <style>
     .modal-content{
-        width: 50%; /* You can adjust the width as needed */
+        width: 50%; 
         margin: 10% auto;
         text-align: center;
 
     }
   
 
-  /* Move the checkboxes to the left */
+ 
   .modal-content input[type="checkbox"] {
     float: left;
     clear: both;
@@ -128,10 +128,8 @@
                             </nav>
                         </div>
                     </div>
-                    <!-- <div class="hotline d-none d-lg-block">
-                        <p><i class="fi-rs-headset"></i><span>Hotline</span> 1900 - 888 </p>
-                    </div> -->
-                    <p class="mobile-promotion">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</p>
+                  
+                    
                     <div class="header-action-right d-block d-lg-none">
                         <div class="header-action-2">
                             <div class="header-action-icon-2">
@@ -163,8 +161,8 @@
     <div class="mobile-header-active mobile-header-wrapper-style">
         <div class="mobile-header-wrapper-inner">
             <div class="mobile-header-top">
-                <div class="mobile-header-logo">
-                    <a href="index.html"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
+                <div class="logo logo-width-1" style="width: 110px; height: 100px; overflow: hidden;">
+                    <a href="/"><img src="assets/imgs/theme/timezone Logo.png"  style="min-width: 100% ;"  alt="logo"></a>
                 </div>
                 <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
                     <button class="close-style search-close">
@@ -224,7 +222,7 @@
         <section class="mt-50 mb-50">
             <div class="container">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12" id="report">
                         <div class="table-responsive">
                             <table class="table shopping-summery text-center clean">
                                 <thead>
@@ -244,18 +242,20 @@
                                   
                                     <tr>
                                         
-                                        <td class="image product-thumbnail"><img src="/uploads/<%= element.productId.images[0] %>" alt="#"><p>
+                                        <td class="image product-thumbnail"><img src="/uploads/<%= element.productId.images[0] %>" alt="#"><p style="color: black;">
                                             <%= element.productId.pname %>
                                         </p></td>
                                         
                                         <td class="product-des product-name">
                                            
-                                            <p class="font-xs"><%= orderData.address.uname %>
-                                                <br> <%= orderData.address.uaddress %>
-                                                <br><%= orderData.address.ulocation %>
-                                            </p>
+                                            <h6 class="font-xs">   <%= orderData.address.uname %>
+                                                <br>  <%= orderData.address.uaddress %>
+                                                <br>  <%= orderData.address.ulocation %>
+                                                <br>  <%= orderData.address.umobile %>
+                                                <br>   <%= orderData.address.upin %>
+                                            </h6>
                                         </td>
-                                        <td class="price" data-title="Price"><span><%= element.productId.offprice * element.quantity %> </span></td>
+                                        <td class="price" data-title="Price"><span style="color: black;"><%= element.productId.offprice * element.quantity %> </span></td>
                                         <td class="text-center" data-title="Stock">
                                             <div class="detail-qty border radius  m-auto">
                                               
@@ -302,60 +302,65 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <% if (orderData.status === "Delivered") { %>
-                                       
-                                        <a onclick="openReturnModal('<%= orderData._id %>')" style="background-color: #3F2520;" class="btn">Return order</a>
-
-                                       
-                                        <div id="returnModal" class="modal">
-                                           
-                                          <div class="modal-content">
-                                            <span class="close" onclick="closeReturnModal()">&times;</span>
-                                            <h5>Select reason for return:</h5>
-                                            <p id="errormessage" class="text-danger"></p>
-                                            <input type="checkbox" id="reasonIncorrectItem" name="returnReason" value="Incorrect Item">
-                                            <label for="reasonIncorrectItem">Incorrect Item</label><br>
-                                            <input type="checkbox" id="reasonItemDamaged" name="returnReason" value="Item Damaged">
-                                            <label for="reasonItemDamaged">Item Damaged</label><br>
-                                            <input type="checkbox" id="reasonSizeFitIssue" name="returnReason" value="Size/Fit Issue">
-                                            <label for="reasonSizeFitIssue">Size/Fit Issue</label><br>
-                                            
-                                            <button onclick="submitReturn('<%= orderData._id %>')">Submit</button>
-                                          </div>
-                                        </div>
-                                                                                  
-                                         
-                                     
-                                    <% }else if(orderData.status === 'Cancelled') { %>
-                                        <a href="/orders" class="btn " style="border-color: black; background-color: transparent; color: black;">Back</a>
-
-
-                                  <%  }else { %>
-                                    <a onclick="cancelOrder('<%= orderData._id %>','<%= orderData.paymentmethod %>','<%= orderData.user._id %>')" class="btn " style="border-color: black; background-color: transparent; color: black;">Cancel order</a>
-
-                                 <% } %>
+                    
 
 
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <% if (orderData.status === "Delivered") { %>
+                        <div class="d-flex justify-content-end gap-3">               
+                        <a onclick="openReturnModal('<%= orderData._id %>')" style="background-color: #3F2520; width: 15rem;" class="btn">Return order</a>
+                        <a onclick="downloadInvoice()" style="background-color: rgb(255, 236, 178) ; color: black; width: 15rem;" class="btn">Download invoice</a>
+                    </div>
+                        <div id="returnModal" class="modal">
+                           
+                          <div class="modal-content">
+                            <span class="close" onclick="closeReturnModal()">&times;</span>
+                            <h5>Select reason for return:</h5>
+                            <p id="errormessage" class="text-danger"></p>
+                            <input type="checkbox" id="reasonIncorrectItem" name="returnReason" value="Incorrect Item">
+                            <label for="reasonIncorrectItem">Incorrect Item</label><br>
+                            <input type="checkbox" id="reasonItemDamaged" name="returnReason" value="Item Damaged">
+                            <label for="reasonItemDamaged">Item Damaged</label><br>
+                            <input type="checkbox" id="reasonSizeFitIssue" name="returnReason" value="Size/Fit Issue">
+                            <label for="reasonSizeFitIssue">Size/Fit Issue</label><br>
+                            
+                            <button onclick="submitReturn('<%= orderData._id %>')">Submit</button>
+                          </div>
+                        </div>
+                                                                  
+                         
+                     
+                    <% }else if(orderData.status === 'Cancelled') { %>
+                        <div class="d-flex justify-content-end">
+                        <a href="/orders" class="btn " style="border-color: black; background-color: transparent; color: black;">Back</a>
+                    </div>
+
+                  <%  }else { %>
+                    <div class="d-flex justify-content-end">
+                    <a onclick="cancelOrder('<%= orderData._id %>','<%= orderData.paymentmethod %>','<%= orderData.user._id %>')" class="btn " style="border-color: black; background-color: transparent; color: black;">Cancel order</a>
+                </div>
+                 <% } %>
                 </div>
             </div>
         </section>
     </main>
     <footer class="main">
-        <section class="newsletter p-30 text-white wow fadeIn animated">
+        <section class="newsletter p-30 text-white wow fadeIn animated" style="background-color: rgb(255, 236, 178);">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-7 mb-md-3 mb-lg-0">
                         <div class="row align-items-center">
                             <div class="col flex-horizontal-center">
-                                <img class="icon-email" src="assets/imgs/theme/icons/icon-email.svg" alt="">
-                                <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4>
+                                <img class="icon-email" style="color: aliceblue;" src="assets/imgs/theme/icons/icon-email.svg" alt="">
+                                <h4 class="font-size-20 mb-0 ml-3" style="color: black;">Sign up to Newsletter</h4>
                             </div>
                             <div class="col my-4 my-md-0 des">
-                                <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>$25 coupon for first shopping.</strong></h5>
+                                <h5 class="font-size-15 ml-4 mb-0" style="color: black;">...and receive <strong>$25 coupon for first
+                                        shopping.</strong></h5>
                             </div>
                         </div>
                     </div>
@@ -365,7 +370,7 @@
                             <input type="email" class="form-control bg-white font-small" placeholder="Enter your email">
                             <button class="btn bg-dark text-white" type="submit">Subscribe</button>
                         </form>
-                        <!-- End Subscribe Form -->
+                      
                     </div>
                 </div>
             </div>
@@ -375,8 +380,8 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
                         <div class="widget-about font-md mb-md-5 mb-lg-0">
-                            <div class="logo logo-width-1 wow fadeIn animated">
-                                <a href="index.html"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
+                            <div class="logo logo-width-1" style="width: 110px; height: 100px; overflow: hidden;">
+                                <a href="/"><img src="assets/imgs/theme/timezone Logo.png"  style="min-width: 100% ;"  alt="logo"></a>
                             </div>
                             <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contact</h5>
                             <p class="wow fadeIn animated">
@@ -496,6 +501,8 @@
     integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
 </body>
 <script>
 
@@ -589,6 +596,11 @@ returnReasonCheckboxes.forEach(checkbox => {
 
 function back(){
     window.location.back()
+}
+
+function downloadInvoice() {
+    const table = document.getElementById("report")
+    html2pdf().from(table).save();
 }
 
 </script>

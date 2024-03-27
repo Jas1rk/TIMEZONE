@@ -7,8 +7,14 @@ const generateCoupon = require('../controller/couponcodeGenarator')
 
 const allCouponsGetPage = async(req,res)=>{
     try{
-        const coupons = await Coupon.find({})
-        res.render('admin/coupens',{coupons})
+        const pages = req.query.page || 1
+        const sizeOfPage = 4
+        const couponSkip = (pages-1) * sizeOfPage
+        const couponCount = await Coupon.countDocuments()
+        const numsOfPage = await Math.ceil(couponCount / sizeOfPage )
+        const coupons = await Coupon.find({}).sort({_id:-1}).skip(couponSkip).limit(sizeOfPage)
+        const currentPage = parseInt(pages)
+        res.render('admin/coupens',{coupons,numsOfPage,currentPage})
     }catch(err){
         console.log(err.message)
     }

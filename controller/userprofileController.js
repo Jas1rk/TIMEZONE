@@ -206,7 +206,7 @@ const useraccountEditPost = async (req, res) => {
     try {
 
         const { name, email, mobile } = req.body
-        const userData = await User.findOne({ email: req.session.user.email })
+        const userData = await User.findOne({ email: req.user.email })
 
         if (userData) {
             const editProfile = await User.findOneAndUpdate({ email: req.session.user.email }, {

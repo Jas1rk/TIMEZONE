@@ -208,18 +208,37 @@
                     </div> 
                 </div> 
             </div> 
-            <!-- <div class="pagination-area mt-30 mb-50">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-start">
-                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                        <li class="page-item"><a class="page-link" href="#">02</a></li>
-                        <li class="page-item"><a class="page-link" href="#">03</a></li>
-                        <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">16</a></li>
-                        <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
-                    </ul>
-                </nav>
-            </div> -->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-start">
+                    <% if (currentPage > 1) { %>
+                        <li class="page-item">
+                            <a class="page-link" style="width: 70px;" href="/admin/coupons?page=<%= currentPage - 1 %>">Preview</a>
+                        </li>
+                    <% } %>
+        
+                    <% if (currentPage <= 2) { %>
+                        <% for (let i = 1; i <= Math.min(numsOfPage, 2); i++) { %>
+                            <li class="page-item  <% if (i === currentPage) { %>active<% } %> ">
+                                <a class="page-link" href="/admin/coupons?page=<%= i %>"><%= i %></a>
+                            </li>
+                        <% } %>
+                    <% } else { %>
+                        <li class="page-item disabled">
+                            <span class="page-link">1</span>
+                        </li>
+                        <li class="page-item active">
+                            <span class="page-link"><%= currentPage %></span>
+                        </li>
+                    <% } %>
+        
+                    <% if (currentPage < numsOfPage) { %>
+                        <li class="page-item">
+                            <a class="page-link" style="width:50px ;" href="/admin/coupons?page=<%= currentPage + 1 %>">Next</a>
+                        </li>
+                    <% } %>
+                </ul>
+            </nav>
+        </div>
         </section>
         <footer class="main-footer font-xs">
             <div class="row pb-30 pt-15">
