@@ -117,7 +117,7 @@
             <div class="container">
                 <div class="header-wrap header-space-between position-relative">
                     <div class="logo logo-width-1 d-block d-lg-none">
-                        <a href="index.html"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
+                        <a href="/"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
                     </div>
                     <div class="header-nav d-none d-lg-flex">
 
@@ -126,13 +126,8 @@
                         <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
                             <nav>
                                 <ul>
-                                    <li><a class="active" href="index.html">Home <i class="fi-rs-angle-down"></i></a>
-                                        <!-- <ul class="sub-menu">
-                                            <li><a href="index.html">Home 1</a></li>
-                                            <li><a href="index-2.html">Home 2</a></li>
-                                            <li><a href="index-3.html">Home 3</a></li>
-                                            <li><a href="index-4.html">Home 4</a></li>
-                                        </ul> -->
+                                    <li><a class="active" href="/">Home </a>
+                                      
                                     </li>
                                     <li>
                                         <a href="page-about.html">About</a>
@@ -144,8 +139,8 @@
                                             <li><a href="page-about.html">About Us</a></li>
                                             <li><a href="page-contact.html">Contact</a></li>
                                             <li><a href="page-account.html">My Account</a></li>
-                                            <li><a href="page-login-register.html">login/register</a></li>
-                                            <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
+                                            <li><a href="page-login-register.html">login</a></li>
+                                          
                                             <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
                                             <li><a href="page-terms.html">Terms of Service</a></li>
                                             <li><a href="page-404.html">404 Page</a></li>
@@ -265,7 +260,7 @@
                                         
                                         <ul>
                                             <% couponFind.forEach(element => { %>
-                                             
+                                                <input type="hidden" id="couponcode" value="<%= element.ccode %>">
                                                 <li><span class="coupon-code" style="color: black; " onclick="copyCouponCode('<%= element.ccode %>')">Coupon:   <%= element.ccode %></span><span class="copy-icon" onclick="copyCouponCode('<%= element.ccode %>')"><i class="fas fa-clipboard"></i></span></li>
                                                 <% }) %>
                                       
@@ -581,12 +576,13 @@
     <script src="assets/js/shopd134.js?v=3.4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </body>
 <script>
    
-    console.log(document.getElementById('typeerror'));
-    console.log(document.getElementById('typeerror1'));
+    
 
 
     let selectAddressId = null
@@ -605,18 +601,37 @@
     function placeOrder(cid) {
         const paymentoption = document.querySelector('input[name ="payment_option"]:checked')
         if(!paymentoption){
-            document.getElementById('typeerror1').textContent = "Please select payment method before placing the order."
+            // document.getElementById('typeerror1').textContent = "Please select payment method before placing the order."
+            Swal.fire({
+                        icon: "warning",
+                        title: "Oops...",
+                        text: "Select any payment method!",
+                        iconColor:"#3F2520",
+                        customClass: {
+                            confirmButton: 'black-ok-button'
+                    },
 
-          setTimeout(() => {
-            document.getElementById('typeerror1').textContent = ''
-          }, 3000);
+                    });
+
+         
         }
       
         
         if (selectAddressId === null) {
-            document.getElementById('typeerror').textContent = "Please select an address before placing the order."
+            // document.getElementById('typeerror').textContent = "Please select an address before placing the order."
+            Swal.fire({
+                        icon: "warning",
+                        title: "Oops...",
+                        text: "Select the address!",
+                        iconColor:"#3F2520",
+                        customClass: {
+                            confirmButton: 'black-ok-button'
+                    },
+
+                    });
         } else {
-            
+            const couponcode = document.getElementById('couponcode').value
+            alert(couponcode)
             const handlePayment =  paymentoption.value
             $.ajax({
                 url: '/placeorder',
@@ -625,6 +640,7 @@
                     cid,
                     handlePayment,
                     selectAddressId,
+                    couponcode
                 },
                
                     success: (response) => {
@@ -693,7 +709,24 @@ document.getElementById("couponDropdownToggle").addEventListener("click", functi
 
 function copyCouponCode(code) {
     navigator.clipboard.writeText(code).then(function() {
-        alert("Coupon code copied: " + code);
+        const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "success",
+                title: "Coupon copied to clipboard",
+                color: 'black',
+                iconColor:'#3F2520'
+                })
+               
         document.getElementById("couponDropdown").style.display = "none"; 
     }, function(err) {
         console.error('Failed to copy text: ', err);
@@ -701,7 +734,7 @@ function copyCouponCode(code) {
 }
 
 
-function applyCoupon(totalAmount,cid){
+function applyCoupon(totalAmount,cartid){
     const coupon = document.getElementById('coupon').value
     $.ajax({
         url:'/applycoupon',
@@ -709,14 +742,65 @@ function applyCoupon(totalAmount,cid){
         data:{
            coupon ,
            totalAmount,
-           cid
+           cartid
         },
         success:(response)=>{
             if(response.status === 'applied'){
+                const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+                });
+                Toast.fire({
+                icon: "success",
+                title: "Coupon applied successfully",
+                color: 'black',
+                iconColor:'#3F2520'
+                })
+               
                 document.getElementById('totalAmount').innerHTML = response.amountAfterDiscount
                 document.getElementById('disid').innerHTML = response.dicountTotal + '%'
                 document.getElementById('apply').style.display = "none",
                 document.getElementById('remove').style.display = "block"
+            }else if(response.status === 'userapplied'){
+                Swal.fire({
+                        icon: "warning",
+                        title: "Oops...",
+                        text: "You have aready applied this coupon!",
+                        iconColor:"#3F2520",
+                        customClass: {
+                            confirmButton: 'black-ok-button'
+                    },
+
+                    });
+            }else if(response.status === "notreachpurchaseAmount"){
+                Swal.fire({
+                        icon: "warning",
+                        title: "Oops...",
+                        text: "Total amount is less!",
+                        iconColor:"#3F2520",
+                        customClass: {
+                            confirmButton: 'black-ok-button'
+                    },
+
+                    });
+            }else if(response.status === 'couponblocked'){
+                Swal.fire({
+                        icon: "warning",
+                        title: "Oops...",
+                        text: "This coupon is unavailable!",
+                        iconColor:"#3F2520",
+                        customClass: {
+                            confirmButton: 'black-ok-button'
+                    },
+
+                    });
             }
 
         }

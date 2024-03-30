@@ -5,6 +5,7 @@ const Address = require('../model/addressModel')
 const Cart = require('../model/cartModel')
 const Product = require('../model/productModel')
 const Wallet = require('../model/walletModel')
+const Coupon = require('../model/couponModel')
 const generateOrderid =  require('../controller/genarator')
 const Razorpay = require('razorpay')
 const crypto = require('crypto')
@@ -21,7 +22,7 @@ const placeOrderPost = async(req,res)=>{
     try{
        const userId = req.session.user
        const userData = await User.findOne({_id:userId})
-       const {cid,handlePayment,selectAddressId} = req.body
+       const {cid,handlePayment,selectAddressId,couponcode} = req.body
        const addressData = await Address.findOne({_id:selectAddressId}) 
 
        let cartData;
@@ -36,6 +37,8 @@ const placeOrderPost = async(req,res)=>{
             }
             return productStore
           })
+
+
           const orderidGenarate = generateOrderid()
           const newOrder = new Order({
                user:userData,
@@ -63,6 +66,8 @@ const placeOrderPost = async(req,res)=>{
           
           })
           const deleteCart = await Cart.findByIdAndDelete({_id:cid})
+          const coupon  = await Coupon.findOne({ccode:couponcode})
+          await Coupon.findOneAndUpdate({ccode:couponcode},{$push:{user:userId}})
           res.json({status:"ordersuccess"})
           
        } else if(handlePayment == "razorpay") {
@@ -194,13 +199,13 @@ const successPageGet = async(req,res)=>{
         const findOrder =  await Order.findOne({_id:id})
         if(paymentMethod === 'razorpay'){
             const existingWallet = await  Wallet.findOne({user:userID})
-            const tid = generateOrderid()
+            const transactionId = generateOrderid()
             if(!existingWallet){
                 const newWallet = new Wallet({
                     user:userID,
                     walletAmount:findOrder.totalamount,
                     transactions:[{
-                        tid:tid,
+                        tid:transactionId,
                         tamount:findOrder.totalamount,
                     }]
                 })
@@ -275,11 +280,12 @@ const adminOrderDetails = async(req,res)=>{
 
 const statusChanging = async(req,res)=>{
     try{
-       
+       const userId = req.session.user
+       console.log('useridddd',userId);
         const {id, status} = req.body
         const findOrder = await Order.findOne({_id:id})
         const updateStatus = await Order.findById(id)
-
+        const transactionId = generateOrderid()
         updateStatus.status=status
         const updatetedStatus = await updateStatus.save()
 
@@ -303,6 +309,29 @@ const statusChanging = async(req,res)=>{
           })
 
         }else if(updatetedStatus.status === "Returned"){
+            const paymentMethod =  findOrder.paymentmethod
+            if(paymentMethod === 'razorpay'){
+                const findWallet = await Wallet.findOne({user:userId})
+                console.log('foount user===>>',findWallet)
+                if(!findWallet){
+                    const newWallet = new Wallet({
+                        user:userId,
+                        walletAmount:findOrder.totalamount,
+                        transactions:[{
+                            tid:transactionId,
+                            tamount:findOrder.totalamount,
+                        }]
+                    })
+                    console.log('wallet created ====>',newWallet)
+                    await newWallet.save()
+                }else{
+                    console.log('the wallet is exist')
+                    await Wallet.findOneAndUpdate({ user: userId }, {
+                        $inc: { walletAmount: findOrder.totalamount },
+                        $push: { transactions: { tid: transactionId, tamount: findOrder.totalamount } }
+                    });
+                }
+            }
            
             let productSet = []
             updatetedStatus.products.forEach(element =>{

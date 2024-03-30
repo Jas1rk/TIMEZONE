@@ -96,40 +96,44 @@ const deleteCoupon = async(req,res)=>{
 
 const userApplyCoupon = async (req, res) => {
     try {
-        const { coupon , totalAmount,cid } = req.body;
+    
+        const { coupon , totalAmount,cartid } = req.body;
         const userID = req.session.user;
-        const cartFInd = await Cart.findOne({_id:cid})
-        const findUser = await User.findById(userID);
-        if (!findUser) {
-            return res.status(404).json({ message: "User not found." });
-        }
+        const cartFInd = await Cart.findOne({_id:cartid})
+        const couponFind = await Coupon.findOne({ccode:coupon,isblocked:false})
+        console.log(couponFind);
+        if(couponFind){
+           
+            if(!couponFind.user.includes(userID)){
+                console.log('hereeereeeeeeeeee')
+                if(totalAmount >= couponFind.minimumpurchase){
+                    console.log('totalprice is greater than purchase amount')
+                let totalAountOfOrder = cartFInd.total
+                let dicountTotal = couponFind.percentage
+                let discountAmount = (totalAountOfOrder * dicountTotal) / 100
+                let amountAfterDiscount = totalAountOfOrder - discountAmount
+                 
+                res.json({status:'applied',amountAfterDiscount,dicountTotal})
+                console.log('couopon applied successfully')
+            }else{
+             
+               res.json({status:'notreachpurchaseAmount'})
+             
+                }
+            }else{
+                console.log('user applied this coupuon')
+                res.json({status:'userapplied'})          
+              }
 
-        const findCoupon = await Coupon.findOne({ ccode: coupon });
-        if (!findCoupon) {
-            return res.status(404).json({ message: "Coupon not found." });
+        }else{
+            res.json({status:'couponblocked'})
+            console.log('coupon cannot find')
         }
-
-        if (!findUser.appliedCoupons) {
-            findUser.appliedCoupons = [];
-        }
-        let totalAountOfOrder = cartFInd.total
-        let dicountTotal = findCoupon.percentage
-        let discountAmount = (totalAountOfOrder * dicountTotal) / 100
-        let amountAfterDiscount = totalAountOfOrder - discountAmount
        
-        const isCouponApplied = findUser.appliedCoupons.includes(findCoupon._id);
-        if (!isCouponApplied) {
-            findUser.appliedCoupons.push(findCoupon._id);
-            await findUser.save();
-            console.log('Coupon applied successfully.');
-            res.json({status:'applied',amountAfterDiscount,dicountTotal})
-        } else {
-            console.log('This coupon has already been applied.');
-            return res.status(400).json({ message: "This coupon has already been applied." });
-        }
+       
     } catch (err) {
         console.log(err.message);
-        return res.status(500).json({ message: "Internal Server Error" });
+       
     }
 };
 
@@ -145,3 +149,5 @@ module.exports = {
     userApplyCoupon
     
 }
+
+

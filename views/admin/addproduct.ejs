@@ -18,37 +18,19 @@
 
     <!-- Template CSS -->
     <link href="/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
-    <link  href="/path/to/cropper.css" rel="stylesheet">    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs/dist/cropper.min.css">  
 </head>
 
 <style>
-    .image-preview-container {
-    display: flex;
-    flex-wrap: wrap;
-}
+  .thumbnails-container {
+            display: flex;
+            overflow-x: auto;
+        }
 
-.image-preview {
-    display: flex;
-    flex-direction: column;
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-
-.image-preview img {
-    width: 100px; /* Adjust image width as needed */
-    height: auto;
-}
-
-.image-preview button {
-    margin-top: 5px;
-    align-self: center;
-}
-img {
-  display: block;
-
-  /* This rule is very important, please don't ignore this */
-  max-width: 100%;
-}
+        .thumbnail {
+            margin-right: 10px;
+           
+        }
 
 </style>
 
@@ -257,17 +239,61 @@ img {
                   
                 </div>
                 <div class="col-lg-6">
-                    <div class="card mb-4">
+                    <div class="card mb-3">
                         <div class="card-header"> 
+                            <p id="imageError" class="text-danger"></p>
                             <h4>Image</h4>
                         </div>
                         <div class="card-body">
-                            <div class="input-upload">
-                                <div id="imagePreviewContainer"  class="image-preview-container"></div>
-                                <input class="form-control" type="file" multiple  name="image" id="image" accept="image/*">
-                                <p id="imageError" class="text-danger"></p>
+                            <div class="input-upload" style="margin-bottom: 20px;">
+                                <img src="/admin-assets/imgs/theme/upload.svg" alt="" id="imgView1">
+                                <input class="form-control" type="file" multiple  name="image" id="image1" accept="image/*" onchange="viewImage1(event) , viewImage(event, 1)">
+                               
+                            </div>
+                            <div class="image-cropper d-flex align-items-center"
+                            style="display:none; width: 150px; height: 200px; margin-bottom: 20px;">
+                            <img src="" id="croppedImg1" alt="">
+                            <button type="button" id="saveButton1" class="btn-sm btn-primary">Save</button>
+                        </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-upload" style="margin-bottom: 20px;">
+                                <img src="/admin-assets/imgs/theme/upload.svg" alt="" id="imgView2">
+                                <input class="form-control" type="file" multiple  name="image" id="image2" accept="image/*" onchange="viewImage2(event),viewImage(event,2)">
+                               
                               
                             </div>
+                            <div class="image-cropper d-flex align-items-center"
+                            style="display:none; width: 150px; height: 200px; margin-bottom: 20px;">
+                            <img src="" id="croppedImg2" alt="">
+                            <button type="button" id="saveButton2" class="btn-sm btn-primary">Save</button>
+                        </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-upload" style="margin-bottom: 20px;">
+                                <img src="/admin-assets/imgs/theme/upload.svg" alt="" id="imgView3">
+                                <input class="form-control" type="file" multiple  name="image" id="image3" accept="image/*" onchange="viewImage3(event),viewImage(event,3)">
+                              
+                              
+                            </div>
+                            <div class="image-cropper d-flex align-items-center"
+                            style="display:none; width: 150px; height: 200px; margin-bottom: 20px;">
+                            <img src="" id="croppedImg3" alt="">
+                            <button type="button" id="saveButton3" class="btn-sm btn-primary">Save</button>
+                        </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-upload" style="margin-bottom: 20px;">
+                                <img src="/admin-assets/imgs/theme/upload.svg" alt="" id="imgView4">
+                                <input class="form-control" type="file" multiple  name="image" id="image4" accept="image/*" onchange="viewImage4(event),viewImage(event,4)">
+                               
+                              
+                            </div>
+                            <div class="image-cropper d-flex align-items-center"
+                            style="display:none; width: 150px; height: 200px; margin-bottom: 20px;">
+                            <img src="" id="croppedImg4" alt="">
+                            <button type="button" id="saveButton4" class="btn-sm btn-primary">Save</button>
+                        </div>
                         </div>
                     </div> 
                     <div class="card mb-4">
@@ -316,9 +342,10 @@ img {
     <script src="/admin-assets/js/vendors/perfect-scrollbar.js"></script>
     <script src="/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
     <!-- Main Script -->
-    <script src="/admin-assets/js/main.js" type="text/javascript"></script>
-    <script src="/path/to/cropper.js"></script>    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>   
+    <script src="/admin-assets/js/main.js" type="text/javascript"></script>   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs/dist/cropper.min.js"></script>
+
 </body>
 <script>
     function addproductValidatiion(){
@@ -330,7 +357,7 @@ img {
     const stock = document.getElementById('stock').value.trim()
     const color = document.getElementById('color').value.trim()
     const meterial = document.getElementById('meterial').value.trim()
-    const image = document.getElementById('image').value
+    // const image = document.getElementById('image').value
    
    
 
@@ -409,19 +436,19 @@ img {
         materialError.textContent = "Letter must be atleast 3 charecter"
 
 
-    if(image === ""){
-        imageError.textContent = "Image is required"
-    }else if(image.length < 3){
-        imageError.textContent = "Image should be atleast 3"
-    }else if(!/\.(png|jpe?g|gif|bmp|svg)$/.test(image)){
-        imageError.textContent = "Invalid image file. Please upload a valid image file."
-    }
+    // if(image === ""){
+    //     imageError.textContent = "Image is required"
+    // }else if(image.length < 3){
+    //     imageError.textContent = "Image should be atleast 3"
+    // }else if(!/\.(png|jpe?g|gif|bmp|svg)$/.test(image)){
+    //     imageError.textContent = "Invalid image file. Please upload a valid image file."
+    // }
 
 
 
 
 
-    if(nameError.textContent||descriptionError.textContent||regularpriceError.textContent||offerprice.textContent||stockError.textContent||colorError.textContent||materialError.textContent||imageError.textContent){
+    if(nameError.textContent||descriptionError.textContent||regularpriceError.textContent||offerprice.textContent||stockError.textContent||colorError.textContent||materialError.textContent){
         event.preventDefault()
         fillError.textContent = "Fill all fields"
         setTimeout(() => {
@@ -432,79 +459,130 @@ img {
 
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    var imageInput = document.getElementById('image');
-    var imagePreviewContainer = document.getElementById('imagePreviewContainer');
 
-    if (imagePreviewContainer) {
-        console.log(imagePreviewContainer)
-        imageInput.addEventListener('change', function() {
-            var files = this.files;
+        function viewImage1(event) {
+            document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+        }
 
-            if (files && files.length > 0) {
-                for (var i = 0; i < files.length; i++) {
-                    // Initialize FileReader
-                    var reader = new FileReader();
-                    reader.onload = (function(file) {
-                        return function(e) {
-                            // Create a new div for the image preview
-                            var preview = document.createElement('div');
-                            preview.classList.add('image-preview');
+        function viewImage2(event) {
+            document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
+        }
 
-                            // Create a new img element for the image
-                            var img = document.createElement('img');
-                            img.src = e.target.result;
-                            img.alt = file.name;
+        function viewImage3(event) {
+            document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
+        }
 
-                            // Initialize Cropper.js on the new image
-                            // var cropper = new Cropper(img, {
-                            //     // Cropper.js options
-                            //     aspectRatio: 1,
-                            //     viewMode: 1,
-                            //     autoCropArea: 1,
-                            //     movable: false,
-                            //     zoomable: false,
-                            //     rotatable: false,
-                            //     scalable: false,
-                            //     crop: function(event) {
-                            //         // Handle the crop event
-                            //         console.log(event.detail.x);
-                            //         console.log(event.detail.y);
-                            //         console.log(event.detail.width);
-                            //         console.log(event.detail.height);
-                            //     }
-                            // });
+        function viewImage4(event) {
+            document.getElementById('imgView4').src = URL.createObjectURL(event.target.files[0])
+        }
 
-                            // Append the image to the preview container
-                            preview.appendChild(img);
 
-                            // Optionally, add a delete button
-                            var deleteButton = document.createElement('button');
-                            deleteButton.innerHTML = 'Delete';
-                            deleteButton.addEventListener('click', function() {
-                                // Destroy the Cropper instance
+        function viewImage(event, index) {
+            let input = event.target;
+            let reader = new FileReader();
 
-                                // cropper.destroy();
-                                
-                                // Remove the preview div
-                                preview.remove();
-                            });
-                            preview.appendChild(deleteButton);
+            reader.onload = function () {
+                let dataURL = reader.result;
+                let image = document.getElementById('imgView' + index);
+                image.src = dataURL;
 
-                            // Append the preview to the image preview container
-                            imagePreviewContainer.appendChild(preview);
-                        };
-                    })(files[i]);
+                // Initialize Cropper.js on the image
+                let cropper = new Cropper(image, {
+                    aspectRatio: 1.1, // Square aspect ratio
+                    viewMode: 1,
+                    guides: true,
+                    background: false,
+                    autoCropArea: 1,
+                    zoomable: true
+                });
 
-                    // Read the file as a data URL
-                    reader.readAsDataURL(files[i]);
-                }
+
+                // Show the image cropper container
+                let cropperContainer = document.querySelector('#croppedImg' + index).parentNode;
+                cropperContainer.style.display = 'block';
+
+                // Update the cropped image when the "Save" button is clicked
+                let saveButton = document.querySelector('#saveButton' + index);
+                saveButton.addEventListener('click', async function () {
+                    let croppedCanvas = cropper.getCroppedCanvas();
+                    let croppedImage = document.getElementById("croppedImg" + index);
+                    croppedImage.src = croppedCanvas.toDataURL('image/jpeg', 1.0);
+
+                    // Generate a unique name for the cropped image file based on the current timestamp
+                    let timestamp = new Date().getTime();
+                    let fileName = `cropped-img-${timestamp}-${index}.png`;
+
+                    await croppedCanvas.toBlob(blob => {
+                        let input = document.getElementById('image' + index);
+                        let imgFile = new File([blob], fileName, blob)
+                        const fileList = new DataTransfer();
+                        fileList.items.add(imgFile);
+                        input.files = fileList.files
+                    });
+                    // cropperContainer.style.display = 'none';
+                });
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+
+       
+        const selectedImages = [];
+        document.getElementById("imageInput").addEventListener("change", handleFileSelect);
+
+        function handleFileSelect(event) {
+            // Target the container for displaying thumbnails
+            const addedImagesContainer = document.getElementById("addedImagesContainer");
+
+            // Clear previous content
+            addedImagesContainer.innerHTML = "";
+
+            const files = event.target.files;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+
+                // Add the file to the selected images array
+                selectedImages.push(file);
+
+                // Create thumbnail element
+                const thumbnail = document.createElement("div");
+                thumbnail.classList.add("thumbnail");
+
+                // Create image element
+                const img = document.createElement("img");
+                img.src = URL.createObjectURL(file);
+                img.alt = "thumbnail";
+
+                // Set a fixed width for the image
+                img.style.width = "50px"; // Adjust the width as needed
+                img.style.height = "auto";
+
+                // Create remove icon
+                const removeIcon = document.createElement("span");
+                removeIcon.classList.add("remove-icon");
+                removeIcon.innerHTML = "&times;"; // Multiplication symbol as a cross
+
+                // Event listener to remove the image on icon click
+                removeIcon.addEventListener("click", function () {
+                    // Remove the file from the selected images array
+                    const index = selectedImages.indexOf(file);
+                    if (index !== -1) {
+                        selectedImages.splice(index, 1);
+                    }
+
+                    // Remove the thumbnail from the container
+                    thumbnail.remove();
+                });
+
+                // Append elements to thumbnail
+                thumbnail.appendChild(img);
+                thumbnail.appendChild(removeIcon);
+
+                // Append thumbnail to the container
+                addedImagesContainer.appendChild(thumbnail);
             }
-        });
-    } else {
-        console.error("imagePreviewContainer not found. Unable to handle image previews.");
-    }
-});
+        }
+
 
 </script>
 
