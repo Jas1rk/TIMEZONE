@@ -6,6 +6,8 @@ const Category = require('../model/categoryModel')
 const Cart = require('../model/cartModel')
 const Wishlist = require('../model/wishlistModel')
 const dotenv = require('dotenv').config()
+const Wallet = require('../model/walletModel')
+const refferelCode = require('../controller/couponcodeGenarator')
 
 
 
@@ -26,6 +28,8 @@ const userhome  = async(req,res)=>{
         const headerStatusCart = cartFind ? cartFind.products.length : 0
         const findWishlist =  await Wishlist.findOne({user:userId}).populate('products.productId')
         const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
+
+        
         res.render('homepage',{
             products,
             categories,
@@ -80,7 +84,8 @@ const userloginPost =  async(req,res)=>{
             res.render('userlogin',{message:"user has been blocked "})
         }
         req.session.user = loggedUser
-        
+       
+
         res.redirect('/')
     }else{
         console.log('invalid password')
@@ -105,8 +110,9 @@ const registerget = (req,res)=>{
 
 const registerPost = async(req,res)=>{
  try{
-    console.log(req.body,"body");
-    const {username,email,mobile,password1,password2} = req.body
+    const refferel = refferelCode()
+  
+    const {username,email,mobile,password1,password2 , otherrefferalcode} = req.body
     if(!username,!email,!mobile,!password1,!password2){
        console.log('all fields required')
     }
@@ -122,7 +128,7 @@ const registerPost = async(req,res)=>{
         }else{
            const otpVal =  await emailVerification(email);
              console.log("oldotpto mail:",otpVal)
-             req.session.temp = {username, email, mobile, password1, password2, otpVal};
+             req.session.temp = {username, email, mobile, password1, password2, otpVal , refferel , otherrefferalcode};
     
             res.redirect('/verify')
            }
@@ -193,11 +199,12 @@ const  otpVerification =  (req,res)=>{
 
 const otpVerificationPost = async(req,res)=>{
     try{
-       
+      
        const otp =  req.body.otp
        const storedOtp = req.session.temp.otpVal; 
        if(otp === storedOtp){
-        const {username,email,mobile,password1} = req.session.temp
+        const {username,email,mobile,password1, refferel ,otherrefferalcode} = req.session.temp
+        console.log('this is ',refferel)
         const hashedpass =  await bcrypt.hash(password1,10)
         const existingUser = await User.findOne({email:email})
         if(!existingUser){
@@ -205,13 +212,22 @@ const otpVerificationPost = async(req,res)=>{
                 username,
                 email,
                 mobile,
-                password:hashedpass
+                password:hashedpass,
+                refferelCode:refferel,
+                otherRefferel:otherrefferalcode
+
             });
             await newUser.save()
-            
+            const wallet = new Wallet({
+                user:newUser._id
+
+            })
+            await wallet.save()
+            console.log('wallet created',wallet)
+            console.log('user saved successfully',newUser)
+            res.json({status:'ok'})
         }
-        console.log('user saved successfully')
-        res.json({status:'ok'})
+      
        } else {
         console.log("invalid otp")
         res.json({status:'invalid'})
@@ -226,7 +242,6 @@ const otpVerificationPost = async(req,res)=>{
 const registerResendOtp = async(req,res)=>{
     try{
        const userEmail = req.session.temp.email
-       console.log(userEmail)
        const resendOtp = await emailVerification(userEmail);
        req.session.temp.otpVal = resendOtp 
        console.log('changed otp', req.session.temp.otpVal);

@@ -16,9 +16,9 @@ const offerSchema  = new mongoose.Schema({
         
     },
     percentage:{
-       type:number 
+       type:Number 
     }
-
+  
 
 },{versionKey:false})
 

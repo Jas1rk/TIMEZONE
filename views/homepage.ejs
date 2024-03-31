@@ -476,11 +476,11 @@
                                                   
                                                 </div>
                                                 <h2 class="title text-truncate"><a href="/products?_id=<%= products[i]._id %>"><%= products[i].description %></a></h2>
-                                                <!-- <div class="rating-result" title="90%">
-                                                    <span>
-                                                        <span>90%</span>
-                                                    </span>
-                                                </div> -->
+                                                <!-- <div class="rating-result" title="90%"> -->
+                                                    <% var percentage = (products[i].regprice - products[i].offprice)/ products[i].regprice * 100 %>
+                                                        <span><%= percentage.toFixed(0) %> %</span>
+                                                    
+                                                <!-- </div> -->
                                                 <div class="product-price">
                                                     <span>₹<%= products[i].offprice %></span>
                                                     <span class="old-price">₹<%= products[i].regprice %></span>

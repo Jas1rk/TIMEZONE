@@ -98,33 +98,34 @@ const userApplyCoupon = async (req, res) => {
     try {
     
         const { coupon , totalAmount,cartid } = req.body;
-        const userID = req.session.user;
+        const userID = req.session.user._id;
         const cartFInd = await Cart.findOne({_id:cartid})
         const couponFind = await Coupon.findOne({ccode:coupon,isblocked:false})
-        console.log(couponFind);
+       
         if(couponFind){
-           
-            if(!couponFind.user.includes(userID)){
+            console.log('--===>>',couponFind)
+               
+            if(couponFind.user.includes(userID)){
+                console.log('user applied this coupuon')
+                res.json({status:'userapplied'})   
+            }else{
                 console.log('hereeereeeeeeeeee')
-                if(totalAmount >= couponFind.minimumpurchase){
-                    console.log('totalprice is greater than purchase amount')
+                if(cartFInd.total > couponFind.minimumpurchase){
+                 
                 let totalAountOfOrder = cartFInd.total
                 let dicountTotal = couponFind.percentage
                 let discountAmount = (totalAountOfOrder * dicountTotal) / 100
-                let amountAfterDiscount = totalAountOfOrder - discountAmount
-                 
+                let amountAfterDiscount = Math.ceil(totalAountOfOrder - discountAmount)
+                
                 res.json({status:'applied',amountAfterDiscount,dicountTotal})
                 console.log('couopon applied successfully')
             }else{
              
                res.json({status:'notreachpurchaseAmount'})
+            }      
              
-                }
-            }else{
-                console.log('user applied this coupuon')
-                res.json({status:'userapplied'})          
-              }
-
+        }
+             
         }else{
             res.json({status:'couponblocked'})
             console.log('coupon cannot find')

@@ -20,11 +20,15 @@ let razorInstance = new Razorpay({
 
 const placeOrderPost = async(req,res)=>{
     try{
-       const userId = req.session.user
+       const userId = req.session.user._id
        const userData = await User.findOne({_id:userId})
-       const {cid,handlePayment,selectAddressId,couponcode} = req.body
-       const addressData = await Address.findOne({_id:selectAddressId}) 
-
+       const {cid,handlePayment,selectAddressId,couponcode, totalprice} = req.body
+       console.log('total====>>',totalprice)
+       
+        const addressData = await Address.findOne({_id:selectAddressId}) 
+        const orderidGenarate = generateOrderid()
+        const transactionId1 = generateOrderid()
+        const transactionId2 = generateOrderid()
        let cartData;
        let cartProduct;
 
@@ -39,18 +43,35 @@ const placeOrderPost = async(req,res)=>{
           })
 
 
-          const orderidGenarate = generateOrderid()
+         
           const newOrder = new Order({
                user:userData,
                address:addressData,
                products:cartProduct,
-               totalamount:cartData.total,
+               totalamount:totalprice,
                paymentmethod:handlePayment,
                status:'Processing',
                orderid:orderidGenarate
 
           })
           const getOrder = await newOrder.save()
+          const referalCodeFind = userData.otherRefferel
+          const otherUser = await User.findOne({refferelCode:referalCodeFind})
+          if(getOrder){
+            const findOrder = await Order.find({user:userId})
+            if(findOrder.length == 1){
+                const userPayment = parseInt(250)
+                const refferedUserPayment = parseInt(500)
+                const userwalletChecking = await Wallet.findOneAndUpdate({user:userId},{
+                    $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment } }
+                })
+                const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
+                    $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment } }
+                })
+              
+              }
+
+          }
           let productSet = []
           getOrder.products.forEach(element =>{
             let productStore = {
@@ -71,7 +92,7 @@ const placeOrderPost = async(req,res)=>{
           res.json({status:"ordersuccess"})
           
        } else if(handlePayment == "razorpay") {
-        const orderidGenarate = generateOrderid()
+       
         cartData = await Cart.findOne({_id:cid}).populate('products.productId')
         cartProduct = cartData.products.map((element)=>{
             let productStore = {
@@ -84,7 +105,7 @@ const placeOrderPost = async(req,res)=>{
             user:userData,
             address:addressData,
             products:cartProduct,
-            totalamount:cartData.total,
+            totalamount:totalprice,
             paymentmethod:handlePayment,
             status:'Processing',
             orderid:orderidGenarate
@@ -92,7 +113,7 @@ const placeOrderPost = async(req,res)=>{
           
 
            var options = {
-            amount: cartData.total * 100,
+            amount: totalprice * 100,
             currency: "INR",
             receipt:""+orderidGenarate
             
@@ -117,9 +138,11 @@ const placeOrderPost = async(req,res)=>{
 
 const razorpaySuccess = async(req,res)=>{
     try{
-        const {orderDetails,response,cid} = req.body
+        const userID = req.session.user._id
+        const {orderDetails,response,cid,couponcode} = req.body
         const userData = await User.findOne({email:req.session.user.email})
-        console.log(userData)
+        const transactionId1 = generateOrderid()
+        const transactionId2 = generateOrderid()
         if(userData){
             let hmac = crypto.createHmac('sha256',razorpayKeySecret);
             hmac.update(response.razorpay_order_id+"|"+ response.razorpay_payment_id)
@@ -142,7 +165,28 @@ const razorpaySuccess = async(req,res)=>{
                       },{new: true})
                     
                     })
+                    const referalCodeFind = userData.otherRefferel
+                    const otherUser = await User.findOne({refferelCode:referalCodeFind})
+                    if(orderGet){
+                      const findOrder = await Order.find({user:userID})
+                      if(findOrder.length == 1){
+                          const userPayment = parseInt(250)
+                          const refferedUserPayment = parseInt(500)
+                          const userwalletChecking = await Wallet.findOneAndUpdate({user:userID},{
+                              $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment } }
+                          })
+                          const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
+                              $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment } }
+                          })
+                        
+          
+                      }
+          
+                      
+                    }
                     const deleteCart = await Cart.findByIdAndDelete({_id:cid})
+                    const coupon  = await Coupon.findOne({ccode:couponcode})
+                        await Coupon.findOneAndUpdate({ccode:couponcode},{$push:{user:userID}})
                     console.log('cart deleted',deleteCart)
                     res.json({status:'success'})
                 }
@@ -197,29 +241,15 @@ const successPageGet = async(req,res)=>{
         try{
         const {id,paymentMethod,userID} = req.body
         const findOrder =  await Order.findOne({_id:id})
+        const transactonId = generateOrderid();
         if(paymentMethod === 'razorpay'){
-            const existingWallet = await  Wallet.findOne({user:userID})
-            const transactionId = generateOrderid()
-            if(!existingWallet){
-                const newWallet = new Wallet({
-                    user:userID,
-                    walletAmount:findOrder.totalamount,
-                    transactions:[{
-                        tid:transactionId,
-                        tamount:findOrder.totalamount,
-                    }]
-                })
-                console.log('wallet created ====>',existingWallet)
-                await newWallet.save()
-            }else{
-              
-                const tid = generateOrderid();
-                await Wallet.findOneAndUpdate({ user: userID }, {
+         
+              const wallet =  await Wallet.findOneAndUpdate({ user: userID }, {
                     $inc: { walletAmount: findOrder.totalamount },
-                    $push: { transactions: { tid: tid, tamount: findOrder.totalamount } }
+                    $push: { transactions: { tid: transactonId, tamount: findOrder.totalamount } }
                 });
-            }
-        }
+            
+           }
           const updateOrder = await Order.findByIdAndUpdate({_id:id},{
                 $set:{
                     status:'Cancelled'
@@ -281,7 +311,6 @@ const adminOrderDetails = async(req,res)=>{
 const statusChanging = async(req,res)=>{
     try{
        const userId = req.session.user
-       console.log('useridddd',userId);
         const {id, status} = req.body
         const findOrder = await Order.findOne({_id:id})
         const updateStatus = await Order.findById(id)
@@ -311,26 +340,12 @@ const statusChanging = async(req,res)=>{
         }else if(updatetedStatus.status === "Returned"){
             const paymentMethod =  findOrder.paymentmethod
             if(paymentMethod === 'razorpay'){
-                const findWallet = await Wallet.findOne({user:userId})
-                console.log('foount user===>>',findWallet)
-                if(!findWallet){
-                    const newWallet = new Wallet({
-                        user:userId,
-                        walletAmount:findOrder.totalamount,
-                        transactions:[{
-                            tid:transactionId,
-                            tamount:findOrder.totalamount,
-                        }]
-                    })
-                    console.log('wallet created ====>',newWallet)
-                    await newWallet.save()
-                }else{
-                    console.log('the wallet is exist')
-                    await Wallet.findOneAndUpdate({ user: userId }, {
+                 
+                  const wallet =  await Wallet.findOneAndUpdate({ user: userId }, {
                         $inc: { walletAmount: findOrder.totalamount },
                         $push: { transactions: { tid: transactionId, tamount: findOrder.totalamount } }
                     });
-                }
+                
             }
            
             let productSet = []

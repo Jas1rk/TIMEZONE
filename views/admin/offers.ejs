@@ -173,24 +173,22 @@
                     <div class="row">
                         <p id="fillerror" class="text-danger"></p>
                         <div class="col-md-3">
-                            <form id="form" method="post" action="">
+                        
                                 <div class="mb-4">
                                     <label for="product_name"  class="form-label">Category</label>
-                                    <input  type="text" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
-                                  
+                                    <select class="form-select" id="select">
+                              
+                                        <option id="category">All category</option>
+                                        <% categories.forEach(element => { %>
+                                         
                                        
-                                 
-                                    <p id="error1" class="text-danger"></p>
+                                            <option value=""><%= element.name %></option>
+                                            <% }) %>
+                                    </select>
+                                  
                                 </div>
                                
-                                <div class="mb-4">
-                                    <label for="product_name"  class="form-label">Product</label>
-                                    <input  type="text" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
-                                  
-                                       
-                                 
-                                    <p id="error1" class="text-danger"></p>
-                                </div>
+                               
                                 <div class="mb-4">
                                     <label for="product_name"  class="form-label">Starting Date</label>
                                     <input  type="date" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
@@ -218,7 +216,7 @@
                                 <div class="d-grid">
                                     <button class="btn btn-primary" style="background-color: #3F2520;" onclick="createCat()">Add Offer</button>
                                 </div>
-                            </form>
+                        
                         </div>
                         <div class="col-md-9">
                             <div class="table-responsive">
@@ -268,25 +266,12 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div> <!-- .col// -->
-                    </div> <!-- .row // -->
-                </div> <!-- card body .// -->
-            </div> <!-- card .// -->
-        </section> <!-- content-main end// -->
-        <!-- <footer class="main-footer font-xs">
-            <div class="row pb-30 pt-15">
-                <div class="col-sm-6">
-                    <script>
-                    document.write(new Date().getFullYear())
-                    </script> ©, Evara - HTML Ecommerce Template .
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end">
-                        All rights reserved
+                        </div> 
                     </div>
-                </div>
-            </div>
-        </footer> -->
+                </div> 
+            </div> 
+        </section>
+      
     </main>
     <script src="/admin-assets//js/vendors/jquery-3.6.0.min.js"></script>
     <script src="/admin-assets//js/vendors/bootstrap.bundle.min.js"></script>
@@ -382,6 +367,12 @@
     //     }
     // }
 
+
+     function createCat(){
+        const options = document.getElementById('productsoption')
+        console.log(options)
+        alert(options)
+     }
 </script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-categories.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->

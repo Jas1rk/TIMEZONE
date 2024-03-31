@@ -261,7 +261,7 @@
                                         <ul>
                                             <% couponFind.forEach(element => { %>
                                                 <input type="hidden" id="couponcode" value="<%= element.ccode %>">
-                                                <li><span class="coupon-code" style="color: black; " onclick="copyCouponCode('<%= element.ccode %>')">Coupon:   <%= element.ccode %></span><span class="copy-icon" onclick="copyCouponCode('<%= element.ccode %>')"><i class="fas fa-clipboard"></i></span></li>
+                                                <li><span class="coupon-code" style="color: black; " onclick="copyCouponCode('<%= element.ccode %>')">Coupon:   <%= element.ccode %></span></li>
                                                 <% }) %>
                                       
                                             </ul>
@@ -271,7 +271,7 @@
                                     </div>
                                     <div class="form-group col-lg-6">
                                         
-                                    <button class="btn btn-sm" id="apply" style="display: block;" onclick="applyCoupon('<%= cartFind.total  %>','<%= cartFind._id  %>')"><i class="fi-rs-label mr-10"></i>Apply</button>
+                                    <button class="btn btn-sm" id="apply" style="display: block;" onclick="applyCoupon('<%= cartFind._id  %>')"><i class="fi-rs-label mr-10"></i>Apply</button>
                                     <button class="btn btn-sm" id="remove" style="display: none;" onclick="RemoveCoupon()"><i class="fi-rs-label mr-10"></i>Remove</button>
 
                                     </div>
@@ -392,7 +392,7 @@
                                         </tr>
                                         <tr>
                                             <th>Total</th>
-                                            <td id="totalAmount" colspan="2" class="product-subtotal"><span class="font-xl  fw-900" style="color: #3F2520;">₹ <%= cartFind.total %></span></td>
+                                            <td id="totalAmount" colspan="2" class="product-subtotal"><%= cartFind.total %></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -630,8 +630,12 @@
 
                     });
         } else {
-            const couponcode = document.getElementById('couponcode').value
-            alert(couponcode)
+            const couponcode = document.getElementById('coupon').value
+            const price = document.getElementById('totalAmount').innerHTML
+             const totalprice = price
+            
+           
+         
             const handlePayment =  paymentoption.value
             $.ajax({
                 url: '/placeorder',
@@ -640,7 +644,9 @@
                     cid,
                     handlePayment,
                     selectAddressId,
-                    couponcode
+                    couponcode,
+                    totalprice
+                    
                 },
                
                     success: (response) => {
@@ -685,13 +691,15 @@
 }
 
 function successgreen(response , orderDetails,cid){
+    const couponcode = document.getElementById('couponcode').value
     $.ajax({
         url:'/razorsuccess',
         method:'post',
         data:{
             response,
             orderDetails,
-            cid
+            cid,
+            couponcode
         },
         success:(response)=>{
             if(response.status === 'success'){
@@ -734,14 +742,14 @@ function copyCouponCode(code) {
 }
 
 
-function applyCoupon(totalAmount,cartid){
+function applyCoupon(cartid){
     const coupon = document.getElementById('coupon').value
     $.ajax({
         url:'/applycoupon',
         method:'post',
         data:{
            coupon ,
-           totalAmount,
+       
            cartid
         },
         success:(response)=>{

@@ -66,6 +66,7 @@ admin_router.delete('/deletecoupon',middle.isAdmin,couponController.deleteCoupon
 
 
 admin_router.get('/offers',middle.isAdmin,offerController.adminOfferGet)
+admin_router.post('/offers',middle.isAdmin,offerController.adminCreateOffer)
 
 
 

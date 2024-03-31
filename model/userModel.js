@@ -20,6 +20,13 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    refferelCode:{
+        type:String
+    },
+    otherRefferel:{
+        type:String
+    },
+
     isBlocked:{
         type:Boolean,
         default:false
