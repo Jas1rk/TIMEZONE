@@ -250,11 +250,11 @@
                                 <input class="form-control" type="file" multiple  name="image" id="image1" accept="image/*" onchange="viewImage1(event) , viewImage(event, 1)">
                                
                             </div>
-                            <div class="image-cropper d-flex align-items-center"
+                            <div class="image-cropper d-flex align-items-center gap-4"
                             style="display:none; width: 150px; height: 200px; margin-bottom: 20px;">
                             <img src="" id="croppedImg1" alt="">
                             <button type="button" id="saveButton1" class="btn-sm btn-primary">Save</button>
-                        </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="input-upload" style="margin-bottom: 20px;">
@@ -263,7 +263,7 @@
                                
                               
                             </div>
-                            <div class="image-cropper d-flex align-items-center"
+                            <div class="image-cropper d-flex align-items-center gap-4"
                             style="display:none; width: 150px; height: 200px; margin-bottom: 20px;">
                             <img src="" id="croppedImg2" alt="">
                             <button type="button" id="saveButton2" class="btn-sm btn-primary">Save</button>
@@ -276,7 +276,7 @@
                               
                               
                             </div>
-                            <div class="image-cropper d-flex align-items-center"
+                            <div class="image-cropper d-flex align-items-center gap-4"
                             style="display:none; width: 150px; height: 200px; margin-bottom: 20px;">
                             <img src="" id="croppedImg3" alt="">
                             <button type="button" id="saveButton3" class="btn-sm btn-primary">Save</button>
@@ -289,7 +289,7 @@
                                
                               
                             </div>
-                            <div class="image-cropper d-flex align-items-center"
+                            <div class="image-cropper d-flex align-items-center gap-4"
                             style="display:none; width: 150px; height: 200px; margin-bottom: 20px;">
                             <img src="" id="croppedImg4" alt="">
                             <button type="button" id="saveButton4" class="btn-sm btn-primary">Save</button>
@@ -486,9 +486,9 @@
                 let image = document.getElementById('imgView' + index);
                 image.src = dataURL;
 
-                // Initialize Cropper.js on the image
+                
                 let cropper = new Cropper(image, {
-                    aspectRatio: 1.1, // Square aspect ratio
+                    aspectRatio: 1.1, 
                     viewMode: 1,
                     guides: true,
                     background: false,
@@ -496,6 +496,15 @@
                     zoomable: true
                 });
 
+                const removeIcon = document.createElement("span");
+                removeIcon.classList.add("remove-icon");
+                removeIcon.style.cursor = 'pointer'
+                removeIcon.innerHTML = "&times;"; 
+
+                // Event listener to remove the image on icon click
+                removeIcon.addEventListener("click", function () {
+                    document.getElementById('croppedImg' + index).src = ''
+                });
 
                 // Show the image cropper container
                 let cropperContainer = document.querySelector('#croppedImg' + index).parentNode;
@@ -519,15 +528,15 @@
                         fileList.items.add(imgFile);
                         input.files = fileList.files
                     });
-                    // cropperContainer.style.display = 'none';
                 });
+                document.querySelectorAll('.image-cropper')[index-1].appendChild(removeIcon)
             };
             reader.readAsDataURL(input.files[0]);
         }
 
        
         const selectedImages = [];
-        document.getElementById("imageInput").addEventListener("change", handleFileSelect);
+        // document.getElementById("imageInput").addEventListener("change", handleFileSelect);
 
         function handleFileSelect(event) {
             // Target the container for displaying thumbnails

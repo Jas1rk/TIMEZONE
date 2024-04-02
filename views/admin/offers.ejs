@@ -178,11 +178,11 @@
                                     <label for="product_name"  class="form-label">Category</label>
                                     <select class="form-select" id="select">
                               
-                                        <option id="category">All category</option>
+                                        <option id="category" value="All category">All category</option>
                                         <% categories.forEach(element => { %>
                                          
                                        
-                                            <option value=""><%= element.name %></option>
+                                            <option value="<%= element.name %>"><%= element.name %></option>
                                             <% }) %>
                                     </select>
                                   
@@ -191,7 +191,7 @@
                                
                                 <div class="mb-4">
                                     <label for="product_name"  class="form-label">Starting Date</label>
-                                    <input  type="date" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
+                                    <input  type="date" placeholder="Type here" class="form-control" id="endingDate"  name="name" />
                                   
                                        
                                  
@@ -199,7 +199,7 @@
                                 </div>
                                 <div class="mb-4">
                                     <label for="product_name"  class="form-label">Ending Date</label>
-                                    <input  type="date" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
+                                    <input  type="date" placeholder="Type here" class="form-control" id="startingDate"  name="name"/>
                                   
                                        
                                  
@@ -207,7 +207,7 @@
                                 </div>
                                 <div class="mb-4">
                                     <label for="product_name"  class="form-label">Discount</label>
-                                    <input  type="number" placeholder="Type here" class="form-control" id="name"  name="name" onclick="clrname()"/>
+                                    <input  type="number" placeholder="Type here" class="form-control" id="discount"  name="name" onclick="clrname()"/>
                                   
                                        
                                  
@@ -281,6 +281,7 @@
     <!-- Main Script -->
     <script src="/admin-assets//js/main.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 <script>
     // function clrname(){
@@ -369,9 +370,22 @@
 
 
      function createCat(){
-        const options = document.getElementById('productsoption')
-        console.log(options)
-        alert(options)
+        const selectCategory = document.getElementById('select').value
+        const startingDate = document.getElementById('startingDate').value
+        const endingDate = document.getElementById('endingDate').value
+        const categoryDiscount = document.getElementById('discount').value
+       
+        $.ajax({
+            url:'/admin/offers',
+            method:'post',
+            data:{
+                selectCategory,
+                startingDate,
+                endingDate,
+                categoryDiscount
+            }
+        })
+       
      }
 </script>
 

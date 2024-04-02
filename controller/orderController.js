@@ -23,7 +23,7 @@ const placeOrderPost = async(req,res)=>{
        const userId = req.session.user._id
        const userData = await User.findOne({_id:userId})
        const {cid,handlePayment,selectAddressId,couponcode, totalprice} = req.body
-       console.log('total====>>',totalprice)
+       
        
         const addressData = await Address.findOne({_id:selectAddressId}) 
         const orderidGenarate = generateOrderid()
@@ -68,6 +68,7 @@ const placeOrderPost = async(req,res)=>{
                 const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
                     $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment } }
                 })
+                console.log('other====>>>>>',otherUserWallet)
               
               }
 
@@ -187,6 +188,7 @@ const razorpaySuccess = async(req,res)=>{
                     const deleteCart = await Cart.findByIdAndDelete({_id:cid})
                     const coupon  = await Coupon.findOne({ccode:couponcode})
                         await Coupon.findOneAndUpdate({ccode:couponcode},{$push:{user:userID}})
+                        console.log('coupon find======>>>>>>>>>',coupon)
                     console.log('cart deleted',deleteCart)
                     res.json({status:'success'})
                 }

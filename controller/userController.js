@@ -18,7 +18,8 @@ const userhome  = async(req,res)=>{
         const pages = req.query.page || 1
         const sizeOfPage = 9
         const productSkip = (pages-1)*sizeOfPage
-        const productCount = await Product.find({isBlocked:false}).count()
+        console.log('skip=====>>>>>',productSkip)
+        const productCount = await Product.countDocuments({})
         const numofPage = Math.ceil(productCount/sizeOfPage)
         const products = await Product.find({isBlocked:false}).skip(productSkip).limit(sizeOfPage)
         const categories = await Category.find({isBlocked:false})
@@ -46,6 +47,7 @@ const userhome  = async(req,res)=>{
 
 const newArraivals = async(req,res)=>{
   try {
+    const userId = req.session.user
     const pages = req.query.page || 1
     const sizeOfPage = 6
     const productSkip = (pages-1)*sizeOfPage
@@ -55,7 +57,12 @@ const newArraivals = async(req,res)=>{
     const currentPage = parseInt(pages,10)
     const products = await Product.find({isBlocked:false}).sort({_id:-1}).limit(sizeOfPage).skip(productSkip)
     const categories = await Category.find({isBlocked:false})
-    res.render('homepage',{products,categories,numofPage,currentPage})
+
+    const cartFind = await Cart.findOne({user:userId}).populate('products.productId')
+    const headerStatusCart = cartFind ? cartFind.products.length : 0
+    const findWishlist =  await Wishlist.findOne({user:userId}).populate('products.productId')
+    const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
+    res.render('homepage',{products,categories,numofPage,currentPage,headerStatusCart,headerStatusWishlist})
   } catch (error) {
     console.log(error)
   }

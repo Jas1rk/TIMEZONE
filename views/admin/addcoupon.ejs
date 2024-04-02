@@ -241,9 +241,7 @@
 
         
 
-        // const startDate = new Date(satrtindDate);
-        // startDate.setHours(0, 0, 0, 0); 
-        // const currentDate = new Date()
+      
        
         
         const oneYearLater = new Date();
@@ -275,8 +273,10 @@
 
         if(minimumAmount === ""){
             minimumError.textContent = "The Amount is required"
-        }else if(minimumAmount < 800){
+        }else if(minimumAmount < 800 ){
             minimumError.textContent = "Purchase amount should not less than 800"
+        }else if(!/^(0|[1-9]\d*)$/.test(minimumAmount)){
+            minimumError.textContent = "Purchase amount should not be 0"
         }
 
         if(percentage === ""){
@@ -286,7 +286,7 @@
         }
 
         if(nameError.textContent||startDateError.textContent||endDateError.textContent||minimumAmount.textContent||percentageError.textContent){
-           
+          
             fillError.textContent = "Enter fields"
             setTimeout(() => {
                 fillError.textContent = ""
