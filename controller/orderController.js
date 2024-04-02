@@ -23,7 +23,7 @@ const placeOrderPost = async(req,res)=>{
        const userId = req.session.user._id
        const userData = await User.findOne({_id:userId})
        const {cid,handlePayment,selectAddressId,couponcode, totalprice} = req.body
-       console.log('total====>>',totalprice)
+       
        
         const addressData = await Address.findOne({_id:selectAddressId}) 
         const orderidGenarate = generateOrderid()
@@ -33,6 +33,8 @@ const placeOrderPost = async(req,res)=>{
        let cartProduct;
 
        if(handlePayment == 'cash on delevery'){
+          
+           
           cartData = await Cart.findOne({_id:cid}).populate('products.productId')
           cartProduct = cartData.products.map((element)=>{
             let productStore = {
@@ -42,6 +44,10 @@ const placeOrderPost = async(req,res)=>{
             return productStore
           })
 
+          if(totalprice > 1000) {
+            res.json({status:'higherthanthousand'})
+            console.log('the amount is greater 1000')
+           }else{
 
          
           const newOrder = new Order({
@@ -59,15 +65,17 @@ const placeOrderPost = async(req,res)=>{
           const otherUser = await User.findOne({refferelCode:referalCodeFind})
           if(getOrder){
             const findOrder = await Order.find({user:userId})
-            if(findOrder.length == 1){
+            if(findOrder.length === 1){
                 const userPayment = parseInt(250)
                 const refferedUserPayment = parseInt(500)
                 const userwalletChecking = await Wallet.findOneAndUpdate({user:userId},{
-                    $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment } }
+                    $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit'} }
                 })
+                console.log('waleettilootkeerriiii=====>>>>>>>>>',userwalletChecking)
                 const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
-                    $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment } }
+                    $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit'} }
                 })
+                console.log('other====>>>>>',otherUserWallet)
               
               }
 
@@ -90,6 +98,8 @@ const placeOrderPost = async(req,res)=>{
           const coupon  = await Coupon.findOne({ccode:couponcode})
           await Coupon.findOneAndUpdate({ccode:couponcode},{$push:{user:userId}})
           res.json({status:"ordersuccess"})
+
+        }
           
        } else if(handlePayment == "razorpay") {
        
@@ -167,26 +177,27 @@ const razorpaySuccess = async(req,res)=>{
                     })
                     const referalCodeFind = userData.otherRefferel
                     const otherUser = await User.findOne({refferelCode:referalCodeFind})
-                    if(orderGet){
+                    
                       const findOrder = await Order.find({user:userID})
-                      if(findOrder.length == 1){
+                      if(findOrder.length === 1){
                           const userPayment = parseInt(250)
                           const refferedUserPayment = parseInt(500)
                           const userwalletChecking = await Wallet.findOneAndUpdate({user:userID},{
-                              $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment } }
+                              $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit'} }
                           })
                           const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
-                              $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment } }
+                              $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit'} }
                           })
                         
           
                       }
           
                       
-                    }
+                    
                     const deleteCart = await Cart.findByIdAndDelete({_id:cid})
                     const coupon  = await Coupon.findOne({ccode:couponcode})
                         await Coupon.findOneAndUpdate({ccode:couponcode},{$push:{user:userID}})
+                        console.log('coupon find======>>>>>>>>>',coupon)
                     console.log('cart deleted',deleteCart)
                     res.json({status:'success'})
                 }
@@ -246,7 +257,7 @@ const successPageGet = async(req,res)=>{
          
               const wallet =  await Wallet.findOneAndUpdate({ user: userID }, {
                     $inc: { walletAmount: findOrder.totalamount },
-                    $push: { transactions: { tid: transactonId, tamount: findOrder.totalamount } }
+                    $push: { transactions: { tid: transactonId, tamount: findOrder.totalamount , tstatus:'credit' } }
                 });
             
            }

@@ -31,7 +31,7 @@ router.post('/newPassPage',usercontroller.UserNewPassPost)
 
 
 router.get('/products',middle.isproductBlock,usercontroller.productList)
-router.get('/newarraival',usercontroller.newArraivals)
+router.get('/newarraival',middle.isproductBlock,usercontroller.newArraivals)
 
 router.get('/sort',sortcontroller.sortItems)
 router.get('/filter',sortcontroller.filterCategory)

@@ -46,18 +46,18 @@ const filterCategory = async(req,res)=>{
         if(catData &&  filter){
             if(filter === "pricelowtohighProducts"){
 
-                 data = await Product.find({category:findCat._id}).sort({offprice:1})
+                 data = await Product.find({category:findCat._id,isBlocked:false}).sort({offprice:1})
 
             }else if(filter === "pricehightolowProducts"){
-                  data = await Product.find({category:findCat._id}).sort({offprice:-1})
+                  data = await Product.find({category:findCat._id,isBlocked:false}).sort({offprice:-1})
             }else if(filter === "nameascendindProducts"){
-                data = await Product.find({category:findCat._id}).sort({pname:-1})
+                data = await Product.find({category:findCat._id,isBlocked:false}).sort({pname:-1})
             }else if(filter === "namedescendingProducts"){
-                data = await Product.find({category:findCat._id}).sort({pname:1})
+                data = await Product.find({category:findCat._id,isBlocked:false}).sort({pname:1})
             }
         }else {
 
-            data = await Product.find({category:findCat._id})
+            data = await Product.find({category:findCat._id,isBlocked:false})
  
         }
        

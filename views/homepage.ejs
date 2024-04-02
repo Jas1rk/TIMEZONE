@@ -502,14 +502,14 @@
                                             <ul class="pagination justify-content-start">
                                                 <% if (currentPage > 1) { %>
                                                     <li class="page-item">
-                                                        <a class="page-link" style="width: 70px;" href="/productadmin?page=<%= currentPage - 1 %>">Preview</a>
+                                                        <a class="page-link" style="width: 70px;" href="/?page=<%= currentPage - 1 %>">Preview</a>
                                                     </li>
                                                 <% } %>
                                     
                                                 <% if (currentPage <= 2) { %>
                                                     <% for (let i = 1; i <= Math.min(numofPage, 2); i++) { %>
                                                         <li class="page-item  <% if (i === currentPage) { %>active<% } %> ">
-                                                            <a class="page-link" href="/productadmin?page=<%= i %>"><%= i %></a>
+                                                            <a class="page-link" href="/?page=<%= i %>"><%= i %></a>
                                                         </li>
                                                     <% } %>
                                                 <% } else { %>
@@ -523,7 +523,7 @@
                                     
                                                 <% if (currentPage < numofPage) { %>
                                                     <li class="page-item">
-                                                        <a class="page-link" style="width:50px ;" href="/productadmin?page=<%= currentPage + 1 %>">Next</a>
+                                                        <a class="page-link" style="width:50px ;" href="/?page=<%= currentPage + 1 %>">Next</a>
                                                     </li>
                                                 <% } %>
                                             </ul>
