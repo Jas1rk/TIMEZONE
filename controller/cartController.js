@@ -74,7 +74,6 @@ const addToCart = async(req,res)=>{
            res.json({status:true})
        }
       
-      
     }catch(err){
         console.log(err.message)
     }
@@ -183,7 +182,7 @@ const userCheckoutGet = async(req,res)=>{
         const addressData = await Address.find({user:userId})
         const cartFind = await Cart.findOne({user:userId}).populate('products.productId')
         const couponFind = await Coupon.find({isblocked:false})
-        console.log('the coupon is ',couponFind);
+        
        
         res.render('usercheckout',{addressData,cartFind,couponFind})
       

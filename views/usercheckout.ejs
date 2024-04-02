@@ -605,6 +605,7 @@
     
     function placeOrder(cid) {
         const paymentoption = document.querySelector('input[name ="payment_option"]:checked')
+       
         if(!paymentoption){
             // document.getElementById('typeerror1').textContent = "Please select payment method before placing the order."
             Swal.fire({
@@ -658,6 +659,18 @@
                         if (response.status === 'ordersuccess') {
                             
                             window.location.href = "/success";
+                         }else if (response.status === 'higherthanthousand'){
+                                        Swal.fire({
+                                        icon: "warning",
+                                        title: "Oops...",
+                                        text: "The amount is greater than 1000 !! COD is not available",
+                                        iconColor:"#3F2520",
+                                        customClass: {
+                                            confirmButton: 'black-ok-button'
+                                    },
+
+                                    });
+                         
                         } else if (response.status === "onlinepayment"){
                             const orderDetails = response.orderDetails
                                var options = {
