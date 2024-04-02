@@ -29,6 +29,7 @@ const placeOrderPost = async(req,res)=>{
         const orderidGenarate = generateOrderid()
         const transactionId1 = generateOrderid()
         const transactionId2 = generateOrderid()
+        const transactionID = generateOrderid()
        let cartData;
        let cartProduct;
 
@@ -71,11 +72,11 @@ const placeOrderPost = async(req,res)=>{
                 const userwalletChecking = await Wallet.findOneAndUpdate({user:userId},{
                     $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit'} }
                 })
-                console.log('waleettilootkeerriiii=====>>>>>>>>>',userwalletChecking)
+               
                 const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
                     $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit'} }
                 })
-                console.log('other====>>>>>',otherUserWallet)
+              
               
               }
 
@@ -140,6 +141,43 @@ const placeOrderPost = async(req,res)=>{
             }
           })
 
+       }else if(handlePayment == 'Wallet'){
+            const findWallet = await Wallet.findOne({user:userId})
+            if(findWallet.walletAmount < totalprice){
+                console.log('amount is less')
+            }else{
+                const orderFromWallet = await Wallet.findOneAndUpdate({user:userId},{
+                    $inc:{walletAmount:-totalprice},
+                        $push:{transactions:{
+                            tid:transactionID,tamount:totalprice, tstatus:'debit'
+                        }}
+                })
+                if(orderFromWallet){
+                    const newOrder = new Order({
+                        user:userData,
+                        address:addressData,
+                        products:cartProduct,
+                        totalamount:totalprice,
+                        paymentmethod:handlePayment,
+                        status:'Processing',
+                        orderid:orderidGenarate
+                    })
+                    const ordercreated = await newOrder.save()
+                    let productSet = []
+                    ordercreated.products.forEach(element =>{
+                        let produstStore = {
+                        productId:element.productId,
+                        quantity:element.quantity
+                  } 
+                  productSet.push(produstStore)     
+              })
+              
+
+
+                }
+                
+                
+            }
        }   
     }catch(err){
         console.log(err.message)

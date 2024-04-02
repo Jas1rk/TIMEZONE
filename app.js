@@ -5,26 +5,9 @@ const userRoute = require('./route/userRoute')
 const adminRoute = require('./route/adminRoute')
 const mongoose = require('mongoose')
 const nocache = require('nocache')
+const mongodb = require('./config/db')
 
-
-
-
-
-mongoose.connect("mongodb://localhost:27017/TimeZone")
-
-mongoose.connection.on('connected',()=>{
-    console.log('mongodb Connected');
-})
-
-mongoose.connection.on('disconnected',()=>{
-    console.log('mongodb disConnected');
-})
-
-mongoose.connection.on('error',()=>{
-    console.log('mongodb error');
-})
-
-
+mongodb()
 
 app.set('view engine','ejs')
 
