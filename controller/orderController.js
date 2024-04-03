@@ -124,7 +124,7 @@ const placeOrderPost = async(req,res)=>{
             orderid:orderidGenarate
            }
           
-
+           console.log('for new one',newOrder)
            var options = {
             amount: totalprice * 100,
             currency: "INR",
@@ -134,7 +134,7 @@ const placeOrderPost = async(req,res)=>{
           console.log('options',options)
 
           razorInstance.orders.create(options, async(error,order)=>{
-           
+           console.log("order is",order)
             if(!error){
                 
                 res.json({status:"onlinepayment", razorpayOrder:order,orderDetails:newOrder})
@@ -144,8 +144,10 @@ const placeOrderPost = async(req,res)=>{
           })
 
        }else if(handlePayment == 'Wallet'){
+
             const findWallet = await Wallet.findOne({user:userId})
             if(findWallet.walletAmount < totalprice){
+                res.json({status:'lessamount'})
                 console.log('amount is less')
             }else{
                 const orderFromWallet = await Wallet.findOneAndUpdate({user:userId},{
@@ -155,6 +157,15 @@ const placeOrderPost = async(req,res)=>{
                         }}
                 })
                 if(orderFromWallet){
+                    cartData = await Cart.findOne({_id:cid}).populate('products.productId')
+                    cartProduct = cartData.products.map((element)=>{
+                      let productStore = {
+                          productId:element.productId,
+                          quantity:element.quantity
+                      }
+                      return productStore
+                    })
+                   
                     const newOrder = new Order({
                         user:userData,
                         address:addressData,
@@ -165,19 +176,28 @@ const placeOrderPost = async(req,res)=>{
                         orderid:orderidGenarate
                     })
                     const ordercreated = await newOrder.save()
+                   
                     let productSet = []
                     ordercreated.products.forEach(element =>{
                         let produstStore = {
                         productId:element.productId,
                         quantity:element.quantity
                   } 
-                  productSet.push(produstStore)     
+                  productSet.push(produstStore)  
+                 
               })
+              productSet.forEach(async(element)=>{
+                 const product = await Product.findByIdAndUpdate({_id:element.productId},{
+                    $inc:{stock:-element.quantity}
+                 },{new:true})
+              })
+
+              const deleteCart = await Cart.findByIdAndDelete({_id:cid})
+              const coupon  = await Coupon.findOne({ccode:couponcode})
+              await Coupon.findOneAndUpdate({ccode:couponcode},{$push:{user:userId}})
+              res.json({status:"walletordersuccess"})
               
-
-
                 }
-                
                 
             }
        }   
@@ -188,8 +208,10 @@ const placeOrderPost = async(req,res)=>{
 
 const razorpaySuccess = async(req,res)=>{
     try{
+        console.log('heloooooooooo')
         const userID = req.session.user._id
         const {orderDetails,response,cid,couponcode} = req.body
+        console.log('orderDEtails???????======<><><><>',orderDetails)
         const userData = await User.findOne({email:req.session.user.email})
         const transactionId1 = generateOrderid()
         const transactionId2 = generateOrderid()
@@ -200,6 +222,7 @@ const razorpaySuccess = async(req,res)=>{
 
             if(hmac == response.razorpay_signature){
                 const orderGet = await Order.create(orderDetails)
+                console.log('order confirmed=====>>>>>>>>>>>>>>>',orderGet)
                 if(orderGet){
                     let productSet = []
                     orderGet.products.forEach(element =>{
@@ -232,16 +255,15 @@ const razorpaySuccess = async(req,res)=>{
           
                       }
           
-                      
-                    
                     const deleteCart = await Cart.findByIdAndDelete({_id:cid})
                     const coupon  = await Coupon.findOne({ccode:couponcode})
                         await Coupon.findOneAndUpdate({ccode:couponcode},{$push:{user:userID}})
-                        console.log('coupon find======>>>>>>>>>',coupon)
+                       
                     console.log('cart deleted',deleteCart)
                     res.json({status:'success'})
                 }
             }else{
+
                 console.log('there is error in success')
             }
         }
@@ -443,6 +465,17 @@ const orderReturn = async(req,res)=>{
     }
 }
 
+
+const orderCancelIndividual = async(req,res)=>{
+    try{
+        const {productQuantity,productPice,productid} = req.body
+        console.log(productQuantity,productPice,productid.pname)
+
+    }catch(err){
+        console.error(err.message)
+    }
+}
+
 module.exports = {
     placeOrderPost,
     successPageGet,
@@ -453,5 +486,6 @@ module.exports = {
     adminOrderDetails,
     statusChanging,
     orderReturn,
-    razorpaySuccess
+    razorpaySuccess,
+    orderCancelIndividual
 }

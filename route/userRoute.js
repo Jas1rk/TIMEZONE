@@ -73,6 +73,7 @@ router.post('/cancelorder',ordercontroller.cancelOrder)
 router.get('/success',middle.isLogged,ordercontroller.successPageGet)
 router.post('/return',ordercontroller.orderReturn)
 router.post('/razorsuccess',ordercontroller.razorpaySuccess)
+router.post('/individualcancel',ordercontroller.orderCancelIndividual)
 
 
 router.get('/wishlist',middle.isLogged,wishlistcontroller.getWishlistPage)
