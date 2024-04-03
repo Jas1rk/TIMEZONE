@@ -48,7 +48,10 @@
     border: 1px solid #ccc;
     width: 30%;
     z-index: 5;
-    /* padding: 10px; */
+    overflow: scroll;
+}
+.coupon-dropdown::-webkit-scrollbar {
+  width: 0;
 }
 
 .coupon-dropdown ul {
@@ -256,16 +259,38 @@
                            
                                 <div class="form-row row justify-content-center">
                                     <a href="#" id="couponDropdownToggle">Click here for coupon</a>
-                                    <div id="couponDropdown" class="coupon-dropdown" style=" justify-content: center;">
+                                    <div id="couponDropdown" class="coupon-dropdown" >
                                         
-                                        <ul>
+                                        <ul style="display: flex; width: 300px; ">
                                             <% couponFind.forEach(element => { %>
-                                                <input type="hidden" id="couponcode" value="<%= element.ccode %>">
-                                                <li><span class="coupon-code" style="color: black; " onclick="copyCouponCode('<%= element.ccode %>')">Coupon:   <%= element.ccode %></span></li>
+                                                <div class="col-lg-6">
+                                                    <div class="card mb-3 mb-lg-0">
+                                                        <div class="card-header" style="background-color: #3F2520;">
+                                                            <h5 class="mb-0" style="color: aliceblue;"><%= element.cname %></h5>
+                                                        </div>
+                                                     
+                                                             
+                                                                <div class="card-body" style="background-color: #ffffff; border :1px solid #3F2520 ; margin-top: 5px; " >
+                                                                    <address>
+                                                                      
+                                                                       <br><h6>Discount : <%= element.percentage %>%</h6>
+                                                                       <input type="hidden" id="couponcode" value="<%= element.ccode %>">
+                                                                       <br><li><span class="coupon-code" style="color: black; " onclick="copyCouponCode('<%= element.ccode %>')">Coupon code:   <%= element.ccode %></span></li>
+                                                                        <br><h6>MInimum Purchase : <%= element.minimumpurchase %></h6>
+                                                                      
+                                                                    </address>
+                                                             
+                                                                  
+                                                                </div>
+                                                           
+                                                       
+                                                    </div>
+                                                </div>
                                                 <% }) %>
                                       
                                             </ul>
                                     </div>
+                                   
                                     <div class="form-group col-lg-6">
                                         <input class="font-medium" name="Coupon" placeholder="Enter Your Coupon" id="coupon">
                                     </div>
@@ -608,15 +633,28 @@
        
         if(!paymentoption){
             // document.getElementById('typeerror1').textContent = "Please select payment method before placing the order."
+          
             Swal.fire({
-                        icon: "warning",
-                        title: "Oops...",
-                        text: "Select any payment method!",
-                        iconColor:"#3F2520",
-                        customClass: {
-                            confirmButton: 'black-ok-button'
+                    title: "Select any payment option",
+                    icon: "warning",
+                    customClass: {
+                        confirmButton: 'black-ok-button'
                     },
-
+                    showClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                        `
+                    },
+                    hideClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeOutDown
+                        animate__faster
+                        `
+                    },
+                    iconColor: "#3F2520"
                     });
 
          
@@ -625,15 +663,28 @@
         
         if (selectAddressId === null) {
             // document.getElementById('typeerror').textContent = "Please select an address before placing the order."
+           
             Swal.fire({
-                        icon: "warning",
-                        title: "Oops...",
-                        text: "Select the address!",
-                        iconColor:"#3F2520",
-                        customClass: {
-                            confirmButton: 'black-ok-button'
+                    title: "Select address",
+                    icon: "warning",
+                    customClass: {
+                        confirmButton: 'black-ok-button'
                     },
-
+                    showClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                        `
+                    },
+                    hideClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeOutDown
+                        animate__faster
+                        `
+                    },
+                    iconColor: "#3F2520"
                     });
         } else {
             const couponcode = document.getElementById('coupon').value
@@ -660,18 +711,59 @@
                             
                             window.location.href = "/success";
                          }else if (response.status === 'higherthanthousand'){
-                                        Swal.fire({
-                                        icon: "warning",
-                                        title: "Oops...",
-                                        text: "The amount is greater than 1000 !! COD is not available",
-                                        iconColor:"#3F2520",
-                                        customClass: {
-                                            confirmButton: 'black-ok-button'
-                                    },
-
-                                    });
+                                    
+                    Swal.fire({
+                    title: "The amount is greater than 1000 !! COD is not available",
+                    icon: "warning",
+                    customClass: {
+                        confirmButton: 'black-ok-button'
+                    },
+                    showClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                        `
+                    },
+                    hideClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeOutDown
+                        animate__faster
+                        `
+                    },
+                    iconColor: "#3F2520"
+                    });
                          
-                        } else if (response.status === "onlinepayment"){
+                        } else if(response.status === 'walletordersuccess'){
+                            window.location.href = "/success";
+                        }
+                        else if(response.status === 'lessamount'){
+                     
+                    Swal.fire({
+                    title: "Insufficient balance !!! Check your Wallet",
+                    icon: "warning",
+                    customClass: {
+                        confirmButton: 'black-ok-button'
+                    },
+                    showClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                        `
+                    },
+                    hideClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeOutDown
+                        animate__faster
+                        `
+                    },
+                    iconColor: "#3F2520"
+                    });
+                    }
+                        else if (response.status === "onlinepayment"){
                             const orderDetails = response.orderDetails
                                var options = {
                                         "key": "rzp_test_ymZP4ImziZlWcK", 
@@ -683,7 +775,7 @@
                                         "order_id": response.razorpayOrder.id,
                                         "handler": function (response){
                                                    successgreen(response , orderDetails,cid)
-
+                                                 console.log(orderDetails);
                                                 },
                                                                                     
                                         "prefill": { 
@@ -700,8 +792,8 @@
                                     };
                                     var rzp1 = new Razorpay(options);
                                      rzp1.open(); 
-                        }
                     }
+                 }
                    
                 });
         
@@ -710,6 +802,7 @@
 
 function successgreen(response , orderDetails,cid){
     const couponcode = document.getElementById('couponcode').value
+  
     $.ajax({
         url:'/razorsuccess',
         method:'post',
@@ -795,15 +888,28 @@ function applyCoupon(cartid){
                 document.getElementById('apply').style.display = "none",
                 document.getElementById('remove').style.display = "block"
             }else if(response.status === 'userapplied'){
+              
                 Swal.fire({
-                        icon: "warning",
-                        title: "Oops...",
-                        text: "You have aready applied this coupon!",
-                        iconColor:"#3F2520",
-                        customClass: {
-                            confirmButton: 'black-ok-button'
+                    title: "You have aready applied this coupon!",
+                    icon: "warning",
+                    customClass: {
+                        confirmButton: 'black-ok-button'
                     },
-
+                    showClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                        `
+                    },
+                    hideClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeOutDown
+                        animate__faster
+                        `
+                    },
+                    iconColor: "#3F2520"
                     });
             }else if(response.status === "notreachpurchaseAmount"){
                 Swal.fire({
@@ -817,15 +923,28 @@ function applyCoupon(cartid){
 
                     });
             }else if(response.status === 'couponblocked'){
+               
                 Swal.fire({
-                        icon: "warning",
-                        title: "Oops...",
-                        text: "This coupon is unavailable!",
-                        iconColor:"#3F2520",
-                        customClass: {
-                            confirmButton: 'black-ok-button'
+                    title: "This coupon is unavailable!",
+                    icon: "warning",
+                    customClass: {
+                        confirmButton: 'black-ok-button'
                     },
-
+                    showClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeInUp
+                        animate__faster
+                        `
+                    },
+                    hideClass: {
+                        popup: `
+                        animate__animated
+                        animate__fadeOutDown
+                        animate__faster
+                        `
+                    },
+                    iconColor: "#3F2520"
                     });
             }
 
