@@ -76,8 +76,10 @@ const placeOrderPost = async(req,res)=>{
                 const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
                     $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit'} }
                 })
-              
-              
+
+                console.log('other====>>>>>',otherUserWallet)
+                    
+
               }
 
           }
