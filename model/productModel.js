@@ -49,6 +49,7 @@ const productSchema = mongoose.Schema({
         
       },
      
+     
 
       isBlocked:{
         type:Boolean,

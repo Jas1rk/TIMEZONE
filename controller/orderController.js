@@ -73,12 +73,12 @@ const placeOrderPost = async(req,res)=>{
                     $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit'} }
                 })
                
-                const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
+               if(otherUser){ const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
                     $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit'} }
                 })
 
                 console.log('other====>>>>>',otherUserWallet)
-                    
+                    }
 
               }
 
@@ -468,8 +468,29 @@ const orderReturn = async(req,res)=>{
 
 const orderCancelIndividual = async(req,res)=>{
     try{
-        const {productQuantity,productPice,productid} = req.body
-        console.log(productQuantity,productPice,productid.pname)
+        const userID = req.session.user
+        const {productPice,productid,orderID} = req.body
+        const productQuantity = parseInt(req.body.productQuantity)
+        const transactionId = generateOrderid()
+        const findOrder = await Order.findOne({_id:orderID})
+        const productToCancel = findOrder.products.find(product => product.productId.toString() === productid);
+        const paymentMethod = findOrder.paymentmethod
+        if(paymentMethod === 'razorpay'){
+            const wallet =  await Wallet.findOneAndUpdate({ user: userID }, {
+                $inc: { walletAmount:productPice },
+                $push: { transactions: { tid: transactionId, tamount: productPice , tstatus:'credit' } }
+            });
+        
+       
+        }
+        productToCancel.productStatus = true
+        findOrder.totalamount -=productPice;
+        findOrder.save()
+        console.log(paymentMethod)
+        await Product.updateOne({ _id: productid }, { $inc: { stock: productQuantity } });
+        res.json({status:true})
+        
+         
 
     }catch(err){
         console.error(err.message)
