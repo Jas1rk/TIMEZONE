@@ -22,7 +22,11 @@ const orderSchema = new mongoose.Schema({
         },
         total:{
             type:Number
-        }
+        },
+        productStatus:{
+            type:Boolean,
+            default:false
+          },
 
     }],
     totalamount:{

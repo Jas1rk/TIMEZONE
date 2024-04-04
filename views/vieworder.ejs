@@ -268,7 +268,14 @@
                                             <span><%= new Date (orderData.createdate).toLocaleDateString() %> </span>
                                         </td>
                                         <td><%= orderData.paymentmethod %></td>
-                                        <td>  <a style="background-color: #3F2520;" class="btn" onclick="cancelIndividual('<%= element.productId._id %>','<%= element.productId.offprice * element.quantity %>','<%= element.quantity %>')">Cancel</a></td>
+                                        <% if (element.productStatus === true) { %>
+                                            <td><span class="badge rounded-pill alert-warning">cancelled</span></td>
+                                        <% } else { %>
+                                            <td>
+                                                <a style="background-color: #3F2520;" class="btn" onclick="cancelIndividual('<%= element.productId._id %>','<%= element.productId.offprice * element.quantity %>','<%= element.quantity %>','<%= orderData._id %>')">Cancel</a>
+                                            </td>
+                                        <% } %>
+                                        
                                     </tr>
                                    
                                     <% }) %>
@@ -508,14 +515,20 @@
 </body>
 <script>
 
-    function cancelIndividual(productid,productPice,productQuantity){
+    function cancelIndividual(productid,productPice,productQuantity,orderID){
          $.ajax({
             url:'/individualcancel',
             method:'post',
             data:{
                 productid,
                 productPice,
-                productQuantity
+                productQuantity,
+                orderID
+            },
+            success:(response)=>{
+                if(response.status === true){
+                    window.location.reload()
+                }
             }
          })
     }
