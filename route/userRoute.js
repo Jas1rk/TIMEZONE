@@ -73,6 +73,9 @@ router.post('/cancelorder',ordercontroller.cancelOrder)
 router.get('/success',middle.isLogged,ordercontroller.successPageGet)
 router.post('/return',ordercontroller.orderReturn)
 router.post('/razorsuccess',ordercontroller.razorpaySuccess)
+router.post('/razorpayfailed',ordercontroller.razorpayFailed)
+router.post('/payagain',ordercontroller.payAgain)
+router.post('/paymentsucces',ordercontroller.pendingPaymentSuccess)
 router.post('/individualcancel',ordercontroller.orderCancelIndividual)
 
 

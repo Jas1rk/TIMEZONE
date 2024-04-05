@@ -256,7 +256,7 @@
                                                 <br>   <%= orderData.address.upin %>
                                             </h6>
                                         </td>
-                                        <td class="price" data-title="Price"><span id="totalprice" style="color: black;"><%= element.productId.offprice * element.quantity %> </span></td>
+                                        <td class="price" data-title="Price"><span id="totalprice" style="color: black;"><%= element.price * element.quantity %> </span></td>
                                         <td class="text-center" data-title="Stock">
                                             <div class="detail-qty border radius  m-auto">
                                               
@@ -270,11 +270,14 @@
                                         <td><%= orderData.paymentmethod %></td>
                                         <% if (element.productStatus === true) { %>
                                             <td><span class="badge rounded-pill alert-warning">cancelled</span></td>
-                                        <% } else { %>
-                                            <td>
-                                                <a style="background-color: #3F2520;" class="btn" onclick="cancelIndividual('<%= element.productId._id %>','<%= element.productId.offprice * element.quantity %>','<%= element.quantity %>','<%= orderData._id %>')">Cancel</a>
-                                            </td>
-                                        <% } %>
+                                        <% } else if(orderData.productStatus === 'payment failed') { %>
+                                            <td><span class="badge rounded-pill alert-warning">cancelled</span></td>
+                                            <% } else{ %>
+                                                <td>
+                                                    <a style="background-color: #3F2520;" class="btn" onclick="cancelIndividual('<%= element.productId._id %>','<%= element.productId.offprice * element.quantity %>','<%= element.quantity %>','<%= orderData._id %>')">Cancel</a>
+                                                </td>
+
+                                      <%  } %>
                                         
                                     </tr>
                                    
@@ -306,7 +309,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="cart_total_label">Total</td>
-                                                    <td class="cart_total_amount"><strong><span class="font-xl fw-900 text-brand"><%= orderData.totalamount %></span></strong></td>
+                                                    <td class="cart_total_amount" id="totalamount"><strong><span class="font-xl fw-900 text-brand"><%= orderData.totalamount %></strong></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -348,11 +351,16 @@
                         <a href="/orders" class="btn " style="border-color: black; background-color: transparent; color: black;">Back</a>
                     </div>
 
-                  <%  }else { %>
+                  <%  }else if(orderData.status === 'payment failed'){ %>
                     <div class="d-flex justify-content-end">
-                    <a onclick="cancelOrder('<%= orderData._id %>','<%= orderData.paymentmethod %>','<%= orderData.user._id %>')" class="btn " style="border-color: black; background-color: transparent; color: black;">Cancel order</a>
+                    <a onclick="payAgain('<%= orderData._id %>','<%= orderData.paymentmethod %>','<%= orderData.user._id %>','<%= orderData.totalamount %>')" class="btn " style="border-color: black; background-color: transparent; color: black;">Pay Again</a>
                 </div>
-                 <% } %>
+                 <% }else { %>
+                    <div class="d-flex justify-content-end">
+                        <a onclick="cancelOrder('<%= orderData._id %>','<%= orderData.paymentmethod %>','<%= orderData.user._id %>')" class="btn " style="border-color: black; background-color: transparent; color: black;">Cancel order</a>
+                       
+                    </div>
+               <%  } %>
                 </div>
             </div>
         </section>
@@ -511,6 +519,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 </body>
 <script>
@@ -628,6 +637,76 @@ function back(){
 function downloadInvoice() {
     const table = document.getElementById("report")
     html2pdf().from(table).save();
+}
+
+function payAgain(orderid){
+    const totalprice = document.getElementById('totalamount').textContent
+
+    $.ajax({
+        url:'/payagain',
+        method:'post',
+        data:{
+            orderid,
+            totalprice
+        },
+        success:(response)=>{
+            if(response.status === 'onlinepayment'){
+               
+                const orderDetails = response.orderDetails
+                console.log(orderDetails);
+                              var options = {
+                                        "key": "rzp_test_ymZP4ImziZlWcK", 
+                                        "amount": response.razorpayOrder.amount, 
+                                        "currency": "INR",
+                                        "name": "TimeZone", 
+                                        "description": "Test Transaction",
+                                        "image": "https://example.com/your_logo",
+                                        "order_id": response.razorpayOrder.id,
+                                        "handler": function (response){
+                                           
+                                                   successgreen(response , orderDetails)
+                                                  },
+                                                                                    
+                                        "prefill": { 
+                                            "name": "Gaurav Kumar", 
+                                            "email": "gaurav.kumar@example.com",
+                                            "contact": "9000090000" 
+                                        },
+                                        "notes": {
+                                            "address": "Razorpay Corporate Office"
+                                        },
+                                        "theme": {
+                                            "color": "#3F2520"
+                                        }
+                                    };
+                                    var rzp1 = new Razorpay(options);
+                                    rzp1.open()
+                                
+            }
+        }
+    })
+    
+   
+}
+
+function successgreen(response , orderDetails){
+
+
+
+$.ajax({
+    url:'/paymentsucces',
+    method:'post',
+    data:{
+        response,
+        orderDetails,
+       
+    },
+    success:(response)=>{
+        if(response.status === 'success'){
+            window.location.href = '/success'
+        }
+    }
+})
 }
 
 </script>
