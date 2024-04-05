@@ -447,6 +447,7 @@
                                    
                                 </div>
                             </div>
+                            <input type="hidden" name="cart" id="cart" value="<%= cartFind._id %>">
                             <a class="btn btn-fill-out btn-block mt-30" style="background-color: #3F2520;" onclick="placeOrder('<%= cartFind._id %>')">Place Order</a>
                         </div>
                     </div>
@@ -775,8 +776,7 @@
                                         "order_id": response.razorpayOrder.id,
                                         "handler": function (response){
                                                    successgreen(response , orderDetails,cid)
-                                                 console.log(orderDetails);
-                                                },
+                                                  },
                                                                                     
                                         "prefill": { 
                                             "name": "Gaurav Kumar", 
@@ -787,10 +787,13 @@
                                             "address": "Razorpay Corporate Office"
                                         },
                                         "theme": {
-                                            "color": "#3399cc"
+                                            "color": "#3F2520"
                                         }
                                     };
                                     var rzp1 = new Razorpay(options);
+                                    rzp1.on('payment.failed',function (response){
+                                         failedRed(orderDetails,cid)
+                                    })
                                      rzp1.open(); 
                     }
                  }
@@ -801,6 +804,7 @@
 }
 
 function successgreen(response , orderDetails,cid){
+
     const couponcode = document.getElementById('couponcode').value
   
     $.ajax({
@@ -815,6 +819,33 @@ function successgreen(response , orderDetails,cid){
         success:(response)=>{
             if(response.status === 'success'){
                 window.location.href = '/success'
+            }
+        }
+    })
+}
+
+function failedRed(orderDetails ,cid){
+    //  const cartId = document.getElementById('cart').value
+    const couponcode = document.getElementById('coupon').value
+    const price = document.getElementById('totalAmount').innerHTML
+   const totalprice = price
+   const paymentoption = document.querySelector('input[name ="payment_option"]:checked')
+   const handlePayment =  paymentoption.value
+
+    $.ajax({
+        url:'/razorpayfailed',
+        method:'post',
+        data:{
+            orderDetails,
+            totalprice,
+            couponcode,
+            selectAddressId,
+            handlePayment,
+            cid
+        },
+        success:(response)=>{
+            if(response.status === 'failed'){
+                window.history.back()
             }
         }
     })

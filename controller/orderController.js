@@ -40,10 +40,12 @@ const placeOrderPost = async(req,res)=>{
           cartProduct = cartData.products.map((element)=>{
             let productStore = {
                 productId:element.productId,
-                quantity:element.quantity
+                quantity:element.quantity,
+                price:element.price
             }
             return productStore
           })
+          console.log('cart product =====>>>',cartProduct)
 
           if(totalprice > 1000) {
             res.json({status:'higherthanthousand'})
@@ -87,7 +89,8 @@ const placeOrderPost = async(req,res)=>{
           getOrder.products.forEach(element =>{
             let productStore = {
                 productId:element.productId,
-                quantity:element.quantity
+                quantity:element.quantity,
+                price:element.price
             }
             productSet.push(productStore)
           })
@@ -110,7 +113,8 @@ const placeOrderPost = async(req,res)=>{
         cartProduct = cartData.products.map((element)=>{
             let productStore = {
                 productId:element.productId,
-                quantity:element.quantity
+                quantity:element.quantity,
+                price:element.price
             }
             return productStore
           })
@@ -124,7 +128,7 @@ const placeOrderPost = async(req,res)=>{
             orderid:orderidGenarate
            }
           
-           console.log('for new one',newOrder)
+          
            var options = {
             amount: totalprice * 100,
             currency: "INR",
@@ -134,12 +138,12 @@ const placeOrderPost = async(req,res)=>{
           console.log('options',options)
 
           razorInstance.orders.create(options, async(error,order)=>{
-           console.log("order is",order)
+          
             if(!error){
                 
                 res.json({status:"onlinepayment", razorpayOrder:order,orderDetails:newOrder})
             }else{
-                console.log(error)
+                res.json({status:'razorpayfailed'})
             }
           })
 
@@ -161,7 +165,8 @@ const placeOrderPost = async(req,res)=>{
                     cartProduct = cartData.products.map((element)=>{
                       let productStore = {
                           productId:element.productId,
-                          quantity:element.quantity
+                          quantity:element.quantity,
+                          price:element.price
                       }
                       return productStore
                     })
@@ -208,10 +213,9 @@ const placeOrderPost = async(req,res)=>{
 
 const razorpaySuccess = async(req,res)=>{
     try{
-        console.log('heloooooooooo')
+
         const userID = req.session.user._id
         const {orderDetails,response,cid,couponcode} = req.body
-        console.log('orderDEtails???????======<><><><>',orderDetails)
         const userData = await User.findOne({email:req.session.user.email})
         const transactionId1 = generateOrderid()
         const transactionId2 = generateOrderid()
@@ -222,13 +226,13 @@ const razorpaySuccess = async(req,res)=>{
 
             if(hmac == response.razorpay_signature){
                 const orderGet = await Order.create(orderDetails)
-                console.log('order confirmed=====>>>>>>>>>>>>>>>',orderGet)
                 if(orderGet){
                     let productSet = []
                     orderGet.products.forEach(element =>{
                       let productStore = {
                           productId:element.productId,
-                          quantity:element.quantity
+                          quantity:element.quantity,
+                          price:element.price
                       }
                       productSet.push(productStore)
                     })
@@ -269,6 +273,145 @@ const razorpaySuccess = async(req,res)=>{
         }
     }catch(err){
         console.log(err.message)
+    }
+}
+
+const razorpayFailed = async(req,res)=>{
+
+    try{
+        const {orderDetails,cid,selectAddressId,totalprice,handlePayment,couponcode} = req.body
+        const userId = req.session.user
+        const address = await Address.findOne({_id:selectAddressId})
+        const findUser = await User.findOne({_id:userId})
+        const orderidGenarate = generateOrderid()
+    
+    
+        if(findUser){
+           const  cartData = await Cart.findOne({_id:cid}).populate('products.productId')
+           console.log('dattaaaa====>>>',cartData)
+          const   cartProduct = cartData.products.map((element)=>{
+                let productStore = {
+                    productId:element.productId,
+                    quantity:element.quantity,
+                    price:element.price
+                }
+                return productStore
+              })
+              console.log('cart dattttt====>>>>.',cartProduct)
+            const newOrder =  new Order({
+                user:userId,
+                address:address,
+                products:cartProduct,
+                totalamount:totalprice,
+                paymentmethod:handlePayment,
+                status:'payment failed',
+                orderid:orderidGenarate
+            })
+            await newOrder.save()
+            const deleteCart = await Cart.findByIdAndDelete({_id:cid})
+            console.log("cart deleted===>>>>",deleteCart)
+                    const coupon  = await Coupon.findOne({ccode:couponcode})
+                    await Coupon.findOneAndUpdate({ccode:couponcode},{$push:{user:userId}})
+            console.log('coupon applied ====>',coupon)
+            
+            res.json({status:'failed'})
+        }
+    }catch(err){
+        console.error(err.message)
+    }
+}
+
+const payAgain = async(req,res)=>{
+    try{
+        const {orderid ,totalprice} = req.body
+        const findOrder = await Order.findOne({_id:orderid})
+        const orderidGenarate = generateOrderid()
+        if(findOrder){
+            var options = {
+                amount: totalprice * 100,
+                currency: "INR",
+                receipt:""+orderidGenarate
+                
+              }
+              console.log('options',options)
+
+              razorInstance.orders.create(options, async(error,order)=>{
+                console.log("order===>>>",order)
+               
+                if(!error){
+                    
+                    res.json({status:"onlinepayment",razorpayOrder:order,orderDetails:orderid})
+                }else{
+                    console.log('error')
+                    res.json({status:'razorpayfailed'})
+                }
+              })
+
+        }
+    }catch(err){
+        console.error(err.message)
+    }
+}
+
+const pendingPaymentSuccess = async(req,res)=>{
+    try{
+        const userID = req.session.user._id
+        const {orderDetails,response,cid,couponcode} = req.body
+        const userData = await User.findOne({email:req.session.user.email})
+        const transactionId1 = generateOrderid()
+        const transactionId2 = generateOrderid()
+        if(userData){
+            let hmac = crypto.createHmac('sha256',razorpayKeySecret);
+            hmac.update(response.razorpay_order_id+"|"+ response.razorpay_payment_id)
+            hmac=hmac.digest("hex")
+
+            if(hmac == response.razorpay_signature){
+                const orderGet = await Order.findOneAndUpdate({_id:orderDetails},{$set:{status:'Processing'}})
+                console.log("jjjjj",orderGet)
+                if(orderGet){
+                    let productSet = []
+                    orderGet.products.forEach(element =>{
+                      let productStore = {
+                          productId:element.productId,
+                          quantity:element.quantity,
+                          price:element.price
+                      }
+                      productSet.push(productStore)
+                    })
+                    productSet.forEach(async(element)=>{
+                      const product = await Product.findByIdAndUpdate({_id:element.productId},{
+                          $inc: {stock: -element.quantity}
+                      },{new: true})
+                    
+                    })
+                    const referalCodeFind = userData.otherRefferel
+                    const otherUser = await User.findOne({refferelCode:referalCodeFind})
+                    
+                      const findOrder = await Order.find({user:userID})
+                      if(findOrder.length === 1){
+                          const userPayment = parseInt(250)
+                          const refferedUserPayment = parseInt(500)
+                          const userwalletChecking = await Wallet.findOneAndUpdate({user:userID},{
+                              $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit'} }
+                          })
+                          const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
+                              $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit'} }
+                          })
+                       
+                      }
+          
+                     
+                 
+                    res.json({status:'success'})
+                }
+            }else{
+
+                console.log('there is error in success')
+            }
+        }
+
+    }catch(err){
+        console.error(err)
     }
 }
  
@@ -397,7 +540,8 @@ const statusChanging = async(req,res)=>{
           updatetedStatus.products.forEach(element =>{
             let productStore = {
                 productId:element.productId,
-                quantity:element.quantity
+                quantity:element.quantity,
+                price:element.price
             }
             productSet.push(productStore)
            
@@ -425,7 +569,8 @@ const statusChanging = async(req,res)=>{
             updatetedStatus.products.forEach(element =>{
             let productStore = {
                 productId:element.productId,
-                quantity:element.quantity
+                quantity:element.quantity,
+                price:element.price
             }
             productSet.push(productStore)
            
@@ -508,5 +653,8 @@ module.exports = {
     statusChanging,
     orderReturn,
     razorpaySuccess,
+    razorpayFailed,
+    payAgain,
+    pendingPaymentSuccess,
     orderCancelIndividual
 }
