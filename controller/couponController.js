@@ -37,8 +37,9 @@ const addCouponPost = async(req,res)=>{
         if(existingCoupon){
         
             res.json({status:'exist'})
-        }else {
-
+        }else if(minimumAmount < 800) {
+            res.json({status:'minimum'})
+        }else{
             const couponcode = generateCoupon()
              const newCoupon = new Coupon({
               cname:couponName,
@@ -53,8 +54,10 @@ const addCouponPost = async(req,res)=>{
             console.log('coupon===> CREATED',newCoupon)
             await newCoupon.save()
             res.json({status:'creat'})
-         
         }
+            
+         
+        
 
     }catch(err){
         console.log(err.message)

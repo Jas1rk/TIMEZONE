@@ -1,14 +1,146 @@
 const Admin = require('../model/adminModel')
-const bcrypt = require('bcrypt')
+const Order = require('../model/orderModel')
+const Product = require('../model/productModel')
+const Category  = require('../model/categoryModel')
+const User = require('../model/userModel')
+const chart = require('chart.js')
 
 
-const  adminDashGet = (req,res)=>{
-    try{
-        res.render('admin/adminhome')
-    }catch(error){
-        console.log(error)
+    const  adminDashGet = async(req,res)=>{
+        try{
+            const [orders,totalOrders,totalProduct,totalCategory , totalUsers] = await Promise.all([
+                Order.find({status:'Delivered'}).populate('products.productId'),
+                Order.find({}).count(),
+                Product.find({}).count(),
+                Category.find({}).count(),
+                User.find({}).count()
+
+            ])
+           
+           
+            let profit = 0
+            orders.forEach(order => {
+                profit +=order.totalamount
+            })
+          
+            const bestSellingProducts = await Order.aggregate([
+                {$match:{status:'Delivered'}},
+                {$unwind:'$products'},
+                {$group:{_id:'$products.productId', totalQauntity:{$sum:'$products.quantity'}}},
+                {$sort:{totalQauntity:-1}},
+                {$limit:10},
+                {
+                    $lookup:{
+                        from:'products',
+                        localField:'_id',
+                        foreignField:'_id',
+                        as:'productInfo'
+                    }
+                },
+                {$unwind:'$productInfo'},
+                {$project:{
+                    name:'$productInfo.pname',
+                    images:'$productInfo.images',
+                    totalQauntity:1
+                }}
+
+            ])
+         
+            
+            const topCategories = await Order.aggregate([
+                {$match:{status:'Delivered'}},
+                {$unwind:'$products'},
+                {
+                    $lookup: {
+                        from: 'products',
+                        localField: 'products.productId',
+                        foreignField: '_id',
+                        as: 'productInfo'
+                    }
+                },
+                {$unwind:'$productInfo'},
+                {
+                    $lookup: {
+                        from: 'categories',
+                        localField: 'productInfo.category',
+                        foreignField: '_id',
+                        as: 'categoryInfo'
+                    }
+                },
+                { $unwind: '$categoryInfo' },
+                { $group: { _id: '$categoryInfo._id', totalQuantity: { $sum: '$products.quantity' } } },
+                { $sort: { totalQuantity: -1 } },
+                { $limit: 10 },
+                { $lookup: { from: 'categories', localField: '_id', foreignField: '_id', as: 'category' } },
+                { $unwind: '$category' },
+                { $project: { name: '$category.name', totalQuantity: 1 } }
+            ])
+
+           
+
+            res.render('admin/adminhome',{
+                totalOrders,
+                profit,
+                totalProduct,
+                totalCategory,
+                bestSellingProducts,
+                topCategories,
+                totalUsers
+            })
+        }catch(error){
+            console.log(error)
+        }
     }
-}
+
+
+    const displayMonthlyData = async (req, res) => {
+        try {
+            const monthlySales = Array.from({ length: 12 }, () => 0);
+            const orders = await Order.find({ status: "Delivered" });
+    
+            for (const order of orders) {
+                if (order.createdate instanceof Date) {
+                    const month = order.createdate.getMonth();
+                    monthlySales[month] += order.totalamount;
+                } else {
+                    console.warn(`Invalid createdAt date for order ${order._id}`);
+                }
+            }
+    
+            res.json({ monthlySales });
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    };
+    
+
+    const displayYearlyData = async (req, res) => {
+        try {
+            const START_YEAR = 2022;
+            const currentYear = new Date().getFullYear();
+            const yearlySales = Array.from({ length: currentYear - START_YEAR + 1 }, () => 0);
+    
+            const orders = await Order.find({ status: "Delivered" });
+    
+            for (const order of orders) {
+               
+                if (order.createdate instanceof Date) {
+                    const year = order.createdate.getFullYear();
+                    yearlySales[year - START_YEAR] += order.totalamount;
+                } else {
+                    console.warn(`Invalid createdAt date for order ${order._id}`);
+                }
+            }
+    
+            res.json({ yearlySales, START_YEAR });
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    };
+    
+
 
 const adiminlogGet = (req,res)=>{
     try{
@@ -50,7 +182,7 @@ const adminlogPost = async(req,res)=>{
 
 
 const logoutAdmin = async(req,res)=>{
-    console.log('hello')
+   
     try{
         req.session.destroy((err)=>{
             if(err){
@@ -71,7 +203,10 @@ module.exports = {
     adiminlogGet,
     adminlogPost,
     adminDashGet,
-    logoutAdmin
+    logoutAdmin,
+    displayMonthlyData,
+    displayYearlyData
+
 }
 
 

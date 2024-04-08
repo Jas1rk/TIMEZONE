@@ -225,27 +225,31 @@
                                         <tr style="color: aliceblue;">
                                           
                                             <th>Name</th>
-                                            <th>Description</th>
-                                            <th>Status</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Discount</th>
                                             <th>Edit</th>
                                             <th class="text-end">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                      
-                                      
+                                      <% offers.forEach(element => { %>
+                                       
+                                    
                                         <tr>
                                           
                                             
-                                            <td><b>jjj</b><small class="text-muted">
+                                            <td><%= element.category %><b></b><small class="text-muted">
                                               kkkk
                      
                                             </small></td>
-                                            <td>hhhh</td>
+                                            <td><%= element.startingDate %></td>
                                           
-                                                <td><span class="badge rounded-pill alert-success">Active</span></td>
+                                               <td><%= element.endingDate %></td>
+                                               <td><%= element.percentage %></td>
 
-                                         
+                                                <!-- <td><span class="badge rounded-pill alert-success">Active</span></td> -->
                                             
 
                                             <td>
@@ -256,12 +260,12 @@
 
                                               <td class="custom-align">
                                            
-                                                    <button onclick="unblock()" class="btn btn-sm btn-brand rounded font-sm mt-" style="border-color: black; background-color: rgb(255, 236, 178); color: black">Unblock</button>
+                                                    <button onclick="unblock()" class="btn btn-sm btn-brand rounded font-sm mt-" style="border-color: black; background-color: rgb(255, 236, 178); color: black">Delete</button>
                                               
                                             </td>
                                             
                                         </tr>
-                                    
+                                        <% }) %>
                                       
                                     </tbody>
                                 </table>
