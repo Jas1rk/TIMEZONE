@@ -271,13 +271,14 @@
             endDateError.textContent = "The ending date should not be same with satrting date"
         }
 
-        if(minimumAmount === ""){
-            minimumError.textContent = "The Amount is required"
-        }else if(minimumAmount < 800 ){
-            minimumError.textContent = "Purchase amount should not less than 800"
-        }else if(!/^(0|[1-9]\d*)$/.test(minimumAmount)){
-            minimumError.textContent = "Purchase amount should not be 0"
+        if (minimumAmount === "") {
+            minimumError.textContent = "The Amount is required";
+      
+        } else if (!/^(0|[1-9]\d*)$/.test(minimumAmount)) {
+            minimumError.textContent = "Purchase amount should be a non-negative integer";
         }
+
+
 
         if(percentage === ""){
             percentageError.textContent = "The percentage is required"
@@ -308,6 +309,11 @@
                     window.location.href = '/admin/coupons'
                 }else if(response.status === 'exist'){
                     existError.textContent = "this coupon is exist"
+                }else if(response.status === 'minimum'){
+                    minimumError.textContent = 'The minimum amount should be greater 800'
+                    setTimeout(() => {
+                       minimumError.textContent = ""
+                    }, 3000);
                 }
             }
         })

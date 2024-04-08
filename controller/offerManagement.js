@@ -6,9 +6,13 @@ const Offer = require('../model/offerModel')
 
 const adminOfferGet = async(req,res)=>{
     try{
-      
-        const categories = await Category.find({ isBlocked:false})
-        res.render('admin/offers',{categories})
+        const [offers,categories] = await Promise.all([
+            Category.find({ isBlocked:false}),
+            Offer.find({}),
+        ])
+       
+        
+        res.render('admin/offers',{categories,offers})
     }catch(err){
         console.log(err)
     }

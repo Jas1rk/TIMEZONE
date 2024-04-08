@@ -18,7 +18,8 @@ const middle = require('../middlewares/auth')
 
 
 admin_router.get('/admindash',middle.isAdmin,admincontroller.adminDashGet)
-
+admin_router.get('/monthlydata',middle.isAdmin,admincontroller.displayMonthlyData)
+admin_router.get('/yearlydata',middle.isAdmin,admincontroller.displayYearlyData)
 admin_router.get('/',admincontroller.adiminlogGet)
 admin_router.post('/',admincontroller.adminlogPost)
 admin_router.get('/logout',admincontroller.logoutAdmin)
