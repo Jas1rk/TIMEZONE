@@ -1,6 +1,8 @@
 
 const Order = require('../model/orderModel')
 const excel = require('exceljs')
+const fs = require('fs')
+const PDFDocument = require('pdfkit')
 
 
 
@@ -70,7 +72,7 @@ const filteringDateRange = async(req,res)=>{
 
         const filterData = await Order.find({
             status:'Delivered',
-            createdate:{$gte:startDate, $lte:endDate}
+            createdate:{$gt:startDate, $lt:endDate}
         }).populate('user')
         res.json({orders:filterData})
     }catch(err){
@@ -79,11 +81,109 @@ const filteringDateRange = async(req,res)=>{
 }
 
 
+const genaratePDF = async(req,res)=>{
+    try{
+    
+        const doc = new PDFDocument();
 
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename=sales_report.pdf');
+
+        doc.pipe(res);
+
+        doc.fontSize(24).text('Sales Report', { align: 'center' });
+        doc.moveDown();
+
+        const headers = ['OrderID', 'Email', 'Date', 'Coupon', 'Discount', 'Total', 'Payment Method'];
+
+        const orderData = [
+            { orderid: '1', email: 'example@example.com', createdate: new Date(), totalamount: 100, paymentmethod: 'Cash' }
+           
+        ];
+        const orders = await Order.find().populate('user');
+        const table = {
+            headers,
+            rows: orders.map(order => [
+                order.orderid,
+                order.user.email, 
+                new Date(order.createdate).toLocaleDateString(),
+                'No Coupon',
+                'No Discount',
+                order.totalamount,
+                order.paymentmethod
+            ])
+        };
+       
+        drawTable(doc, {
+            x: 60,
+            y: doc.y,
+            width: 500,
+            headers: table.headers,
+            rows: table.rows
+        });
+
+      
+        doc.end();
+
+    }catch(err){
+        console.error(err.message)
+    }
+}
+
+function drawTable(doc, options) {
+    const {
+        x,
+        y,
+        width,
+        headers,
+        rows
+    } = options;
+
+    const headerHeight = 24;
+    const rowHeight = 24;
+    const cellPadding = -15; 
+
+  
+    doc.fillColor('#000').font('Helvetica').fontSize(10);
+
+   
+    headers.forEach((header, i) => {
+        doc.text(header, x + i * width / headers.length, y, {
+            width: width / headers.length,
+            align: 'center'
+        });
+    });
+
+   
+    doc.moveDown();
+
+  
+    rows.forEach((row, i) => {
+        const rowY = y + headerHeight + (i + 1) * rowHeight;
+        row.forEach((cell, j) => {
+           
+            const cellWidth = width / headers.length;
+
+          
+            if (headers[j] === 'Email') {
+                doc.text(cell.toString(), x + j * cellWidth + cellPadding, rowY, {
+                    width: cellWidth * 1.5  - 2 * cellPadding, 
+                    align: 'center'
+                });
+            } else {
+                doc.text(cell.toString(), x + j * cellWidth + cellPadding, rowY, {
+                    width: cellWidth - 2 * cellPadding, 
+                    align: 'center'
+                });
+            }
+        });
+    });
+}
 
 
 module.exports = {
     salesReportGet,
     filterSalesReportbyDate,
-    filteringDateRange
+    filteringDateRange,
+    genaratePDF
 }
