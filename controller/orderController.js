@@ -72,11 +72,11 @@ const placeOrderPost = async(req,res)=>{
                 const userPayment = parseInt(250)
                 const refferedUserPayment = parseInt(500)
                 const userwalletChecking = await Wallet.findOneAndUpdate({user:userId},{
-                    $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit'} }
+                    $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit' , walletremarks : 'refferal'} }
                 })
                
                if(otherUser){ const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
-                    $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit'} }
+                    $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
                 })
 
                 console.log('other====>>>>>',otherUserWallet)
@@ -157,7 +157,7 @@ const placeOrderPost = async(req,res)=>{
                 const orderFromWallet = await Wallet.findOneAndUpdate({user:userId},{
                     $inc:{walletAmount:-totalprice},
                         $push:{transactions:{
-                            tid:transactionID,tamount:totalprice, tstatus:'debit'
+                            tid:transactionID,tamount:totalprice, tstatus:'debit', walletremarks : 'order'
                         }}
                 })
                 if(orderFromWallet){
@@ -250,10 +250,10 @@ const razorpaySuccess = async(req,res)=>{
                           const userPayment = parseInt(250)
                           const refferedUserPayment = parseInt(500)
                           const userwalletChecking = await Wallet.findOneAndUpdate({user:userID},{
-                              $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit'} }
+                              $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
                           })
                           const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
-                              $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit'} }
+                              $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
                           })
                         
           
@@ -367,7 +367,6 @@ const pendingPaymentSuccess = async(req,res)=>{
 
             if(hmac == response.razorpay_signature){
                 const orderGet = await Order.findOneAndUpdate({_id:orderDetails},{$set:{status:'Processing'}})
-                console.log("jjjjj",orderGet)
                 if(orderGet){
                     let productSet = []
                     orderGet.products.forEach(element =>{
@@ -392,10 +391,10 @@ const pendingPaymentSuccess = async(req,res)=>{
                           const userPayment = parseInt(250)
                           const refferedUserPayment = parseInt(500)
                           const userwalletChecking = await Wallet.findOneAndUpdate({user:userID},{
-                              $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit'} }
+                              $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
                           })
                           const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
-                              $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit'} }
+                              $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
                           })
                        
                       }
@@ -462,7 +461,7 @@ const successPageGet = async(req,res)=>{
          
               const wallet =  await Wallet.findOneAndUpdate({ user: userID }, {
                     $inc: { walletAmount: findOrder.totalamount },
-                    $push: { transactions: { tid: transactonId, tamount: findOrder.totalamount , tstatus:'credit' } }
+                    $push: { transactions: { tid: transactonId, tamount: findOrder.totalamount , tstatus:'credit' , walletremarks : 'order cancel'} }
                 });
             
            }
@@ -560,7 +559,7 @@ const statusChanging = async(req,res)=>{
                  
                   const wallet =  await Wallet.findOneAndUpdate({ user: userId }, {
                         $inc: { walletAmount: findOrder.totalamount },
-                        $push: { transactions: { tid: transactionId, tamount: findOrder.totalamount } }
+                        $push: { transactions: { tid: transactionId, tamount: findOrder.totalamount , tstatus:'credit' , walletremarks : 'order return'} }
                     });
                 
             }
@@ -623,7 +622,7 @@ const orderCancelIndividual = async(req,res)=>{
         if(paymentMethod === 'razorpay'){
             const wallet =  await Wallet.findOneAndUpdate({ user: userID }, {
                 $inc: { walletAmount:productPice },
-                $push: { transactions: { tid: transactionId, tamount: productPice , tstatus:'credit' } }
+                $push: { transactions: { tid: transactionId, tamount: productPice , tstatus:'credit' ,walletremarks:'order cancel'} }
             });
         
        
