@@ -23,6 +23,9 @@ const walletSchema = new mongoose.Schema({
         tstatus:{
             type:String,
             
+        },
+        walletremarks:{
+            type:String
         }
     }]
 },{versionKey:false})
