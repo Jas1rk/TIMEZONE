@@ -845,14 +845,14 @@ function failedRed(orderDetails ,cid){
         },
         success:(response)=>{
             if(response.status === 'failed'){
-                window.history.back()
+                window.location.href = '/vieworder'
             }
         }
     })
 }
 
 
-
+ 
 document.getElementById("couponDropdownToggle").addEventListener("click", function() {
     document.getElementById("couponDropdown").style.display = "block";
 });

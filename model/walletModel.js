@@ -16,7 +16,7 @@ const walletSchema = new mongoose.Schema({
         tamount:{
             type:Number
         },
-        tdate:{
+        tdate:{ 
             type:Date,
             default:Date.now()
         },

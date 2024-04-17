@@ -147,7 +147,7 @@
                                  
                                     <p id="err" class="text-danger"></p>
                                     <p id="err1" class="text-danger"></p>
-                                    <div class="col-lg-4 col-6  d-flex ">
+                                    <div class="col-lg-4 col-6  d-flex " style="display:none !important" id="costumdate">
                                         
                                         <input type="date" id="startdate" class="form-control w-50 mx-2">
                         
@@ -164,6 +164,7 @@
                                             <option>Weekly</option>
                                             <option>Monthly</option>
                                             <option>Yearly</option>
+                                           <option value="custom">Costum</option>
                                             
                                         </select>
                                         
@@ -415,7 +416,11 @@ function saveAsExcelFile(buffer, fileName) {
     }
 
     function dateChange(){
+
         const selectOption = document.querySelector('.form-select').value
+        if(selectOption === 'custom'){
+            document.getElementById('costumdate').style.display = 'block'
+        }
        
         $.ajax({
             url:'/admin/daterangesales',

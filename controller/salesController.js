@@ -29,7 +29,7 @@ const filterSalesReportbyDate = async(req,res)=>{
 
      const filterData = await Order.find({
         status:"Delivered",
-        createdate:{$gt: startingDate , $lt: endingDate}
+        createdate:{$gte: startingDate , $lte: endingDate}
      }).populate('user')
      console.log(filterData)
      res.json({orders:filterData})
