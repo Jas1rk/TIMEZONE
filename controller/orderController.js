@@ -6,6 +6,7 @@ const Cart = require('../model/cartModel')
 const Product = require('../model/productModel')
 const Wallet = require('../model/walletModel')
 const Coupon = require('../model/couponModel')
+const Wishlist = require('../model/wishlistModel')
 const generateOrderid =  require('../controller/genarator')
 const Razorpay = require('razorpay')
 const crypto = require('crypto')
@@ -435,9 +436,20 @@ const orderDetails = async(req,res)=>{
 const userOrderView = async(req,res)=>{
     try{
         const orderId =  req.query._id
-        const orderData = await Order.findOne({_id:orderId})
+        const userID = req.session.user
+        const orderData = await Order.findOne({_id:orderId}).populate('products.productId')
+        console.log('This is the user order========<><><><.,.',orderData)
+        const cartFind = await Cart.findOne({user:userID}).populate('products.productId')
+        const headerStatusCart = cartFind ? cartFind.products.length : 0
+        const findWishlist =  await Wishlist.findOne({user:userID}).populate('products.productId')
+        const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
+
         .populate('products.productId')
-        res.render('vieworder',{orderData})
+        res.render('vieworder',{
+            orderData,
+            headerStatusCart,
+            headerStatusWishlist
+        })
     }catch(err){
         console.log(err.message)
     }

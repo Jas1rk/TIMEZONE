@@ -1,13 +1,27 @@
 const Address = require('../model/addressModel')
 const User = require('../model/userModel')
+const Cart = require('../model/cartModel')
+const Wishlist = require('../model/wishlistModel')
 const bcrypt = require('bcrypt')
 
 const userProfile = async (req, res) => {
     try {
+      
         if (req.session.user) {
             const profileData = await User.findOne({ email: req.session.user.email })
+            const cartFind = await Cart.findOne({user:req.session.user})
+               .populate('products.productId')
+            const headerStatusCart = cartFind ? cartFind.products.length : 0
+            const findWishlist =  await Wishlist.findOne({user:req.session.user})
+               .populate('products.productId')
+            const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
 
-            res.render('userprofile', { profileData })
+            res.render('userprofile', { 
+                profileData,
+                headerStatusCart ,
+                headerStatusWishlist
+            })
+
         } else {
             res.redirect('/login')
         }
