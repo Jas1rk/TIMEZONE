@@ -881,7 +881,15 @@ const inputElement = document.getElementById('inputtype');
     const paymentFailed = url.get('paymentFailed')
 
     if(paymentFailed === 'true'){
-        alert('payment failed')
+                  Swal.fire({
+                        title: "Payment Failed!",
+                      
+                        icon: "error",
+                        customClass: {
+                            confirmButton: 'black-ok-button'
+                        },
+                        iconColor: '#3F2520'
+                    })
     }
 
 </script>

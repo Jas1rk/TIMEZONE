@@ -7,27 +7,28 @@ const sortItems = async(req,res)=>{
         const catData = req.query._id
         const shop = req.query.shop
          if(shop == "pricetolow"){
+            const getCategoryData = await Category.find({isBlocked:false})
             const data = await Product.find({isBlocked:false}).sort({offprice:1})
             const products = await Product.find({isBlocked:false}).sort({_id:-1}).limit(3)
-            res.render('productsright',{data,products,catData})
+            res.render('productsright',{data,products,catData,getCategoryData})
 
          }else if(shop == "pricetohigh"){
-
+                const getCategoryData = await Category.find({isBlocked:false})
                 const data = await Product.find({isBlocked:false}).sort({offprice:-1})
                 const products = await Product.find({isBlocked:false}).sort({_id:-1}).limit(3)
-                res.render('productsright',{data,products,catData}) 
+                res.render('productsright',{data,products,catData,getCategoryData}) 
 
          }else if(shop =="atoz"){
-
+            const getCategoryData = await Category.find({isBlocked:false})
             const data = await Product.find({isBlocked:false}).sort({pname:1})
             const products = await Product.find({isBlocked:false}).sort({_id:-1}).limit(3)
-            res.render('productsright',{data,products,catData}) 
+            res.render('productsright',{data,products,catData,getCategoryData}) 
 
          }else if(shop == "ztoa"){
-
+            const getCategoryData = await Category.find({isBlocked:false})
             const data = await Product.find({isBlocked:false}).sort({pname:-1})
             const products = await Product.find({isBlocked:false}).sort({_id:-1}).limit(3)
-            res.render('productsright',{data,products,catData})  
+            res.render('productsright',{data,products,catData,getCategoryData})  
          }
     }catch(err){
         console.log(err.message)
@@ -41,7 +42,7 @@ const filterCategory = async(req,res)=>{
         const catData = req.query._id
         const filter = req.query.filter
         const findCat = await Category.findById({_id:catData})
-
+        const getCategoryData = await Category.find({isBlocked:false})
         let data= []
         if(catData &&  filter){
             if(filter === "pricelowtohighProducts"){
@@ -62,7 +63,7 @@ const filterCategory = async(req,res)=>{
         }
        
         const products = await Product.find({isBlocked:false}).sort({_id:-1}).limit(3)
-        res.render('productsright',{data,products,catData})
+        res.render('productsright',{data,products,catData,getCategoryData})
         
     }catch(err){
         console.log(err.message)
