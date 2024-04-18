@@ -28,6 +28,8 @@ router.post('/forgetOtpValidation',usercontroller.validateForgetPassOtp)
 router.post('/forgetresend',usercontroller.forgetResendPost)
 router.get('/newPassPage',middle.isUser,usercontroller.UserNewPassGet)
 router.post('/newPassPage',usercontroller.UserNewPassPost)
+router.get('/about',usercontroller.aboutGet)
+router.get('/contact',usercontroller.contactGet)
 
 
 router.get('/products',middle.isproductBlock,usercontroller.productList)

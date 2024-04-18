@@ -413,6 +413,24 @@ const productList = async(req,res)=>{
     }
 }
 
+const aboutGet = async(req,res)=>{
+    try{
+        res.render('about')
+
+    }catch(err){
+        console.error(err.message)
+    }
+}
+
+
+const contactGet = async(req,res)=>{
+    try{
+        res.render('contact')
+    }catch(err){
+        console.error(err.message)
+    }
+}
+
 
 
 
@@ -434,7 +452,9 @@ module.exports = {
     productList,
     newArraivals,
     registerResendOtp,
-    forgetResendPost
+    forgetResendPost,
+    aboutGet,
+    contactGet
     
 
 }
