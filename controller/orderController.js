@@ -46,11 +46,10 @@ const placeOrderPost = async(req,res)=>{
             }
             return productStore
           })
-          console.log('cart product =====>>>',cartProduct)
+        
 
           if(totalprice > 1000) {
             res.json({status:'higherthanthousand'})
-            console.log('the amount is greater 1000')
            }else{
 
          
@@ -245,20 +244,25 @@ const razorpaySuccess = async(req,res)=>{
                     })
                     const referalCodeFind = userData.otherRefferel
                     const otherUser = await User.findOne({refferelCode:referalCodeFind})
-                    
+                    console.log('this is the other user',otherUser)
                       const findOrder = await Order.find({user:userID})
+                      console.log('find the order ====>>',findOrder)
                       if(findOrder.length === 1){
                           const userPayment = parseInt(250)
                           const refferedUserPayment = parseInt(500)
                           const userwalletChecking = await Wallet.findOneAndUpdate({user:userID},{
                               $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
                           })
-                          if(otherUser){const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
+                          
+                              const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
                               $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
                           })
-                          }
+                         
           
                       }
+                     if(otherUser){
+
+                     
           
                     const deleteCart = await Cart.findByIdAndDelete({_id:cid})
                     const coupon  = await Coupon.findOne({ccode:couponcode})
@@ -266,7 +270,9 @@ const razorpaySuccess = async(req,res)=>{
                        
                     console.log('cart deleted',deleteCart)
                     res.json({status:'success'})
+                     }   
                 }
+            
             }else{
 
                 console.log('there is error in success')
