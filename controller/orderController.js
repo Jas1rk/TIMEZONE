@@ -253,10 +253,10 @@ const razorpaySuccess = async(req,res)=>{
                           const userwalletChecking = await Wallet.findOneAndUpdate({user:userID},{
                               $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
                           })
-                          const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
+                          if(otherUser){const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
                               $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
                           })
-                        
+                          }
           
                       }
           
