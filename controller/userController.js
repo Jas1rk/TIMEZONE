@@ -156,6 +156,7 @@ const emailVerification = async (email) => {
     
       const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
+        service:'gmail',
         port: 587,
         secure: false,
         requireTLS: true,
