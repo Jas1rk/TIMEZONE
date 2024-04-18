@@ -178,38 +178,24 @@
         <div class="header-bottom header-bottom-bg-color sticky-bar">
             <div class="container">
                 <div class="header-wrap header-space-between position-relative">
-                    <div class="logo logo-width-1 d-block d-lg-none">
-                        <a href="index.html"><img src="assets/imgs/theme/logo.svg" alt="logo"></a>
+                    <div class="logo logo-width-1d-block d-lg-none" style="width: 110px; height: 100px; overflow: hidden;">
+                        <a href="/"><img src="assets/imgs/theme/timezone Logo.png"  style="min-width: 100% ;"  alt="logo"></a>
                     </div>
                     <div class="header-nav d-none d-lg-flex">
 
                         <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
                             <nav>
                                 <ul>
-                                    <li><a class="active" href="index.html">Home</a>
-                                        <ul class="sub-menu">
-                                            
-                                        </ul>
+                                    <li><a class="active" href="/">Home </a>
+                                     
                                     </li>
                                     <li>
-                                        <a href="page-about.html">About</a>
+                                        <a href="/about">About</a>
                                     </li>
-                                   
-                                    
-                                    <li><a href="#">Pages <i class="fi-rs-angle-down"></i></a>
-                                        <ul class="sub-menu">
-                                            <li><a href="page-about.html">About Us</a></li>
-                                            <li><a href="page-contact.html">Contact</a></li>
-                                            <li><a href="page-account.html">My Account</a></li>
-                                            <li><a href="page-login-register.html">login/register</a></li>
-                                            <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
-                                            <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
-                                            <li><a href="page-terms.html">Terms of Service</a></li>
-                                            <li><a href="page-404.html">404 Page</a></li>
-                                        </ul>
-                                    </li>
+                                
+                                
                                     <li>
-                                        <a href="page-contact.html">Contact</a>
+                                        <a href="/contact">Contact</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -269,7 +255,7 @@
                    
                     <nav>
                         <ul class="mobile-menu">
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="index.html">Home</a>
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="/">Home</a>
                                
                             </li>
                            
@@ -325,7 +311,7 @@
 
                                     <!-- products to cart -->
                                     <% orderData.products.forEach(element => { %>
-                                  
+                                 
                                     <tr>
                                         
                                         <td class="image product-thumbnail"><img src="/uploads/<%= element.productId.images[0] %>" alt="#"><p style="color: black;">
@@ -355,8 +341,7 @@
                                         <td><%= orderData.paymentmethod %></td>
                                         <% if (element.productStatus === true) { %>
                                             <td><span class="badge rounded-pill alert-warning">cancelled</span></td>
-                                        <% } else if(orderData.productStatus === 'payment failed') { %>
-                                            <td><span class="badge rounded-pill alert-warning">cancelled</span></td>
+                                      
                                             <% } else{ %>
                                                 <td>
                                                     <a style="background-color: #3F2520;" class="btn" onclick="cancelIndividual('<%= element.productId._id %>','<%= element.productId.offprice * element.quantity %>','<%= element.quantity %>','<%= orderData._id %>')">Cancel</a>
@@ -393,6 +378,15 @@
                                                     <td class="cart_total_amount"> <i class="ti-gift mr-5"></i> Free Shipping</td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="cart_total_label">Status</td>
+                                                    <% if (orderData.status === 'payment failed' || orderData.status === 'Cancelled' || orderData.status === "Returned") { %>
+                                                        
+                                                        <td><span class="badge rounded-pill alert-warning"><%= orderData.status %></span></td>
+                                                    <% }else{ %>
+                                                        <td><span class="badge rounded-pill alert-success"><%= orderData.status %></span></td>
+                                                  <%  } %>
+                                                </tr>
+                                                <tr>
                                                     <td class="cart_total_label">Total</td>
                                                     <td class="cart_total_amount" id="totalamount"><strong><span class="font-xl fw-900 text-brand"><%= orderData.totalamount %></strong></td>
                                                 </tr>
@@ -406,7 +400,7 @@
                             </div>
                         </div>
                     </div>
-
+                    
                     <% if (orderData.status === "Delivered") { %>
                         <div class="d-flex justify-content-end gap-3">               
                         <a onclick="openReturnModal('<%= orderData._id %>')" style="background-color: #3F2520; width: 15rem;" class="btn">Return order</a>
@@ -439,7 +433,10 @@
                   <%  }else if(orderData.status === 'payment failed'){ %>
                     <div class="d-flex justify-content-end">
                     <a onclick="payAgain('<%= orderData._id %>','<%= orderData.paymentmethod %>','<%= orderData.user._id %>','<%= orderData.totalamount %>')" class="btn " style="border-color: black; background-color: transparent; color: black;">Pay Again</a>
+                    
                 </div>
+
+                
                  <% }else { %>
                     <div class="d-flex justify-content-end">
                         <a onclick="cancelOrder('<%= orderData._id %>','<%= orderData.paymentmethod %>','<%= orderData.user._id %>')" class="btn " style="border-color: black; background-color: transparent; color: black;">Cancel order</a>
@@ -880,6 +877,12 @@ const inputElement = document.getElementById('inputtype');
     }
 
 
+    const url = new URLSearchParams(window.location.search)
+    const paymentFailed = url.get('paymentFailed')
+
+    if(paymentFailed === 'true'){
+        alert('payment failed')
+    }
 
 </script>
 
