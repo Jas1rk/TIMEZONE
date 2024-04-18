@@ -134,7 +134,8 @@ const registerPost = async(req,res)=>{
            
         }else{
            const otpVal =  await emailVerification(email);
-             console.log("oldotpto mail:",otpVal)
+           console.log("OTP :===>>>",otpVal)
+           
              req.session.temp = {username, email, mobile, password1, password2, otpVal , refferel , otherrefferalcode};
     
             res.redirect('/verify')
@@ -151,7 +152,8 @@ const registerPost = async(req,res)=>{
 const emailVerification = async (email) => {
     try {
      const otpVal = Math.floor(Math.random(4) * 10000).toString();
-      console.log("otp is entering")
+      console.log("otp is entering",otpVal)
+    
       const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
@@ -165,9 +167,8 @@ const emailVerification = async (email) => {
           rejectUnauthorized: false,
         },
       });
-  
       let mailOptions = {
-        from: process.env.EMAIL,
+        from:process.env.EMAIL_USER,
         to: email,
         subject: "TimeZone",
         text: `Your OTP is :${otpVal}`,
@@ -182,14 +183,14 @@ const emailVerification = async (email) => {
                 </div>
             </div>`
       };
-
+    // console.log('This is the mail ',mailOptions)
     
 
       let info = await transporter.sendMail(mailOptions);
-      console.log(info)
-      return otpVal  
+       console.log("information==>>",info)
+      return otpVal
     } catch (error) {
-      console.log(error)
+      console.log("this is the error=",error)
       throw error
     }
   };

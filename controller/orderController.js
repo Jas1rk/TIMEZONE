@@ -313,9 +313,7 @@ const razorpayFailed = async(req,res)=>{
             console.log("cart deleted===>>>>",deleteCart)
                     const coupon  = await Coupon.findOne({ccode:couponcode})
                     await Coupon.findOneAndUpdate({ccode:couponcode},{$push:{user:userId}})
-            console.log('coupon applied ====>',coupon)
-            
-            res.json({status:'failed'})
+            res.json({status:'failed',orderDetails:newOrder})
         }
     }catch(err){
         console.error(err.message)
@@ -368,6 +366,7 @@ const pendingPaymentSuccess = async(req,res)=>{
 
             if(hmac == response.razorpay_signature){
                 const orderGet = await Order.findOneAndUpdate({_id:orderDetails},{$set:{status:'Processing'}})
+                console.log('orderDataaa====',orderGet)
                 if(orderGet){
                     let productSet = []
                     orderGet.products.forEach(element =>{
@@ -444,7 +443,7 @@ const userOrderView = async(req,res)=>{
         const findWishlist =  await Wishlist.findOne({user:userID}).populate('products.productId')
         const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
 
-        .populate('products.productId')
+       
         res.render('vieworder',{
             orderData,
             headerStatusCart,
