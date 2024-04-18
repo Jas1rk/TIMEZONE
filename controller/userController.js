@@ -160,15 +160,15 @@ const emailVerification = async (email) => {
         secure: false,
         requireTLS: true,
         auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.APP_PASSWORD
+          user: process.env.user,
+          pass: process.env.password
         },
         tls: {
           rejectUnauthorized: false,
         },
       });
       let mailOptions = {
-        from:process.env.EMAIL_USER,
+        from:process.env.user,
         to: email,
         subject: "TimeZone",
         text: `Your OTP is :${otpVal}`,
