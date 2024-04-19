@@ -226,6 +226,26 @@ const razorpaySuccess = async(req,res)=>{
             hmac=hmac.digest("hex")
 
             if(hmac == response.razorpay_signature){
+                const referalCodeFind = userData.otherRefferel
+                    console.log('rferal code',referalCodeFind)
+                    const otherUser = await User.findOne({refferelCode:referalCodeFind})
+                    console.log('i user the code this ',otherUser)
+                      const findOrder = await Order.find({user:userID})
+                      console.log('this is the order ',findOrder)
+                      if(findOrder.length === 1){
+                          const userPayment = parseInt(250)
+                          const refferedUserPayment = parseInt(500)
+                          const userwalletChecking = await Wallet.findOneAndUpdate({user:userID},{
+                              $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
+                          })
+                          console.log('refer code use cheythu',userwalletChecking)
+                          const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
+                              $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
+                          })
+                          console.log('aa naariye refer cheythapo kity',otherUserWallet)
+                        
+          
+                      }
                 const orderGet = await Order.create(orderDetails)
                 if(orderGet){
                     let productSet = []
@@ -243,22 +263,7 @@ const razorpaySuccess = async(req,res)=>{
                       },{new: true})
                     
                     })
-                    const referalCodeFind = userData.otherRefferel
-                    const otherUser = await User.findOne({refferelCode:referalCodeFind})
                     
-                      const findOrder = await Order.find({user:userID})
-                      if(findOrder.length === 1){
-                          const userPayment = parseInt(250)
-                          const refferedUserPayment = parseInt(500)
-                          const userwalletChecking = await Wallet.findOneAndUpdate({user:userID},{
-                              $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
-                          })
-                          const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
-                              $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
-                          })
-                        
-          
-                      }
           
                     const deleteCart = await Cart.findByIdAndDelete({_id:cid})
                     const coupon  = await Coupon.findOne({ccode:couponcode})
@@ -289,7 +294,7 @@ const razorpayFailed = async(req,res)=>{
     
         if(findUser){
            const  cartData = await Cart.findOne({_id:cid}).populate('products.productId')
-           console.log('dattaaaa====>>>',cartData)
+          
           const   cartProduct = cartData.products.map((element)=>{
                 let productStore = {
                     productId:element.productId,
@@ -298,7 +303,6 @@ const razorpayFailed = async(req,res)=>{
                 }
                 return productStore
               })
-              console.log('cart dattttt====>>>>.',cartProduct)
             const newOrder =  new Order({
                 user:userId,
                 address:address,

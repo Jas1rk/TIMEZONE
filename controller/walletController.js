@@ -21,7 +21,7 @@ const userWalletGet = async(req,res)=>{
           }}
 
         ])
-       console.log('hellooo====',findWallet)
+      
         
         
         const cartFind = await Cart.findOne({user:userId}).populate('products.productId')

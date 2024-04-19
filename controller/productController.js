@@ -42,9 +42,7 @@ const addProductPost = async (req, res) => {
         const images = req.files
         const catData = await Category.findOne({name:category})
         const imageFile = images.map(elements => elements.filename)
-       if(images.length < 3){
         
-       }
         const newProduct = new Product({
             pname,
             description,
