@@ -19,6 +19,82 @@
     <link rel="stylesheet" href="assets/css/maind134.css?v=3.4">
 </head>
 <style>
+    .search-result {
+        display: none;
+        position: absolute;
+        height: auto;
+        
+    }
+
+    .no-product-found {
+        position: absolute;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    #searchResultsContainer {
+        background-color: rgb(255, 255, 255); 
+        position: absolute;
+        z-index: 1;
+        width: 750px;
+        flex-wrap: wrap;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+       padding-bottom: 2px;
+       
+    }
+
+    .product-container {
+        width: 200px;
+        margin: 10px;
+        text-align: left;
+    }
+
+    .product-container img {
+        margin-left: -2px;
+        max-width: 20%;
+        height: auto;
+        transform: rotate(0deg);
+        transition: transform 0.5s ease; 
+
+       
+    }
+
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: -50px;
+       
+    }
+
+    .product-info p {
+        margin: -5px 0;
+        font-size: 12px;
+        font-weight:bolder;
+        margin-top: -1px;
+        color: black;
+    }
+
+  
+    .rotate-90 {
+        transform: rotate(90deg);
+    }
+
+    .rotate-180 {
+        transform: rotate(180deg);
+    }
+
+    .rotate-270 {
+        transform: rotate(270deg);
+    }
+
+
 .input-radio {
         width: 15px;  
         height: 15px; 
@@ -89,24 +165,33 @@
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
-                            <form action="#">
+                           
+                            <input id="inputtype" type="text" placeholder="Search for products . . ." onkeyup="searchProduct()"> 
+                            
+                           <div class="search-result">
+
+                               <div id="searchResultsContainer">
+
+                               </div>
+
+                           </div> 
+
+                           <h5 class="no-product-found">No products found</h5>
+                          
                                
-                                    
-                                <input type="text" placeholder="Search for items...">
-                            </form>
                         </div>
                         <div class="header-action-right">
                             <div class="header-action-2">
                                 <div class="header-action-icon-2">
-                                    <a href="shop-wishlist.html">
+                                    <a href="/wishlist">
                                         <img class="svgInject" alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
-                                        <span class="pro-count blue">4</span>
+                                        <span class="pro-count blue"><%= headerStatusWishlist %></span>
                                     </a>
                                 </div>
                                 <div class="header-action-icon-2">
-                                    <a class="mini-cart-icon" href="shop-cart.html">
+                                    <a class="mini-cart-icon" href="/usercart">
                                         <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
-                                        <span class="pro-count blue">2</span>
+                                        <span class="pro-count blue"><%= headerStatusCart %></span>
                                     </a>
                                 
                                 </div>
@@ -148,15 +233,15 @@
                     <div class="header-action-right d-block d-lg-none">
                         <div class="header-action-2">
                             <div class="header-action-icon-2">
-                                <a href="shop-wishlist.html">
+                                <a href="/wishlist">
                                     <img alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
-                                    <span class="pro-count white">4</span>
+                                    <span class="pro-count white"><%= headerStatusWishlist %></span>
                                 </a>
                             </div>
                             <div class="header-action-icon-2">
-                                <a class="mini-cart-icon" href="shop-cart.html">
+                                <a class="mini-cart-icon" href="/usercart">
                                     <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
-                                    <span class="pro-count white">2</span>
+                                    <span class="pro-count white"><%= headerStatusCart %></span>
                                 </a>
                                
                             </div>
@@ -188,10 +273,16 @@
             </div>
             <div class="mobile-header-content-area">
                 <div class="mobile-search search-style-3 mobile-header-border">
-                    <form action="#">
-                        <input type="text" placeholder="Search for items…">
-                        <button type="submit"><i class="fi-rs-search"></i></button>
-                    </form>
+                    
+                        <input type="text" placeholder="Search for items…" onkeyup="searchProduct()">
+                        <div class="search-result">
+
+                            <div id="searchResultsContainer">
+
+                            </div>
+
+                        </div> 
+                  
                 </div>
                 <div class="mobile-menu-wrap mobile-header-border">
                                        <nav>
@@ -618,7 +709,7 @@
         const paymentoption = document.querySelector('input[name ="payment_option"]:checked')
        
         if(!paymentoption){
-            // document.getElementById('typeerror1').textContent = "Please select payment method before placing the order."
+           
           
             Swal.fire({
                     title: "Select any payment option",
@@ -648,7 +739,7 @@
       
         
         if (selectAddressId === null) {
-            // document.getElementById('typeerror').textContent = "Please select an address before placing the order."
+           
            
             Swal.fire({
                     title: "Select address",
@@ -972,6 +1063,94 @@ function applyCoupon(cartid){
 function RemoveCoupon(){
     window.location.reload()
 }
+
+
+
+const inputElement = document.getElementById('inputtype');
+    let timeoutId;
+
+    function debounce(func, delay) {
+        return function () {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                func();
+            }, delay);
+        };
+    }
+
+    function showSearchResult() {
+        const searchResult = document.querySelector('.search-result');
+        searchResult.style.display = 'block';
+    }
+
+    function hideSearchResult() {
+        const searchResult = document.querySelector('.search-result');
+        searchResult.style.display = 'none';
+    }
+
+    function showNoProductFound() {
+        const noProductFound = document.querySelector('.no-product-found');
+        noProductFound.style.display = 'block';
+    }
+
+    function hideNoProductFound() {
+        const noProductFound = document.querySelector('.no-product-found');
+        noProductFound.style.display = 'none';
+    }
+
+    function searchProduct() {
+        const searchDataValue = inputElement.value.trim();
+
+        if (searchDataValue !== "") {
+            showSearchResult();
+            debounce(() => {
+                $.ajax({
+                    url: "/search",
+                    method: "post",
+                    data: {
+                        searchDataValue
+                    },
+                    success: (response) => {
+                        const searchResultsContainer = document.getElementById('searchResultsContainer')
+                        searchResultsContainer.innerHTML = ""
+
+                        if (response.searchProducts.length > 0) {
+                            response.searchProducts.forEach(element => {
+                                const productContainer = document.createElement('div');
+                                productContainer.classList.add('product-container');
+
+                                const productElement = document.createElement('div');
+                                productElement.innerHTML = `
+                                <a href="/products?_id=${element._id}">
+                                    <img src="/uploads/${element.images[0]}" alt="product">
+                                    <div class="product-info">
+                                        <p>${element.pname}</p>
+                                        <p>₹${element.offprice}</p>
+                                    </div>
+                            
+                                `;
+
+                                productContainer.appendChild(productElement);
+                                searchResultsContainer.appendChild(productContainer);
+                            });
+                            hideNoProductFound();
+                        } else {
+                            hideSearchResult();
+                            showNoProductFound();
+                        }
+                    }
+                })
+            }, 500)();
+        } else {
+            hideSearchResult();
+            hideNoProductFound();
+        }
+
+
+
+    }
+
+
 
 </script>
 
