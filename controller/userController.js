@@ -18,7 +18,6 @@ const userhome  = async(req,res)=>{
         const pages = req.query.page || 1
         const sizeOfPage = 9
         const productSkip = (pages-1)*sizeOfPage
-        console.log('skip=====>>>>>',productSkip)
         const productCount = await Product.countDocuments({})
         const numofPage = Math.ceil(productCount/sizeOfPage)
         const products = await Product.find({isBlocked:false}).skip(productSkip).limit(sizeOfPage)

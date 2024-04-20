@@ -84,13 +84,12 @@ const quantityIncrement = async(req,res)=>{
     try{
         const user = req.session.user
         const {id} = req.body
-        const parseQuantity = parseInt(req.body.quantity)
         const findQuantity = await Cart.findOne({user:user,'products.productId':id})
         const productData = await Product.findById({_id:id})
         const stock = productData.stock
         const price = productData.offprice
         
-        let total = 0
+       
         findQuantity.products.forEach(element=>{
                         if(element.productId == id){
                             if(element.quantity < stock){
@@ -181,10 +180,19 @@ const userCheckoutGet = async(req,res)=>{
         const userId = req.session.user
         const addressData = await Address.find({user:userId})
         const cartFind = await Cart.findOne({user:userId}).populate('products.productId')
+        const findWishlist =  await Wishlist.findOne({user:req.session.user}).populate('products.productId')
+        const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
+        const headerStatusCart = cartFind ? cartFind.products.length : 0
         const couponFind = await Coupon.find({isblocked:false})
         
        
-        res.render('usercheckout',{addressData,cartFind,couponFind})
+        res.render('usercheckout',{
+            addressData,
+            cartFind,
+            couponFind,
+            headerStatusCart,
+            headerStatusWishlist
+        })
       
        
     }catch(err){

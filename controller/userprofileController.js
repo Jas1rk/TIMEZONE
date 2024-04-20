@@ -86,7 +86,18 @@ const addressGet = async (req, res) => {
         const userId = req.session.user
         const addressData = await Address.find({ user: userId })
         const userData = await User.findOne({email:req.session.user.email})
-        res.render('address', { addressData,userData })
+        const cartFind = await Cart.findOne({user:req.session.user}).populate('products.productId')
+       
+        const headerStatusCart = cartFind ? cartFind.products.length : 0
+        const findWishlist =  await Wishlist.findOne({user:req.session.user}).populate('products.productId')
+      
+        const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
+        res.render('address', {
+             addressData,
+             userData,
+             headerStatusCart,
+             headerStatusWishlist
+         })
 
     } catch (err) {
         console.log(err.message)
@@ -154,7 +165,17 @@ const addressEditGet = async(req,res)=>{
         const addressID = req.query._id
         req.session.addressid = addressID
         const addressDataId = await Address.findOne({_id:addressID})
-        res.render('addressedit',{addressDataId})
+        const cartFind = await Cart.findOne({user:req.session.user}).populate('products.productId')
+       
+        const headerStatusCart = cartFind ? cartFind.products.length : 0
+        const findWishlist =  await Wishlist.findOne({user:req.session.user}).populate('products.productId')
+      
+        const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
+        res.render('addressedit',{
+            addressDataId,
+            headerStatusCart,
+            headerStatusWishlist
+        })
        
     }catch(err){
         console.log(err.message)
@@ -201,7 +222,13 @@ const addressEditPost = async(req,res)=>{
 const userAccount = async (req, res) => {
     try {
         const accountData = await User.findOne({ email: req.session.user.email })
-        res.render('useraccount', { accountData })
+        const cartFind = await Cart.findOne({user:req.session.user})
+               .populate('products.productId')
+            const headerStatusCart = cartFind ? cartFind.products.length : 0
+            const findWishlist =  await Wishlist.findOne({user:req.session.user})
+               .populate('products.productId')
+            const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
+        res.render('useraccount', { accountData ,headerStatusCart,headerStatusWishlist})
     } catch (err) {
         console.log(err.message)
     }
@@ -210,7 +237,17 @@ const userAccount = async (req, res) => {
 const userAccountEdit = async (req, res) => {
     try {
         const accountData = await User.findOne({ email: req.session.user.email })
-        res.render('editaccount', { accountData })
+        const cartFind = await Cart.findOne({user:req.session.user})
+               .populate('products.productId')
+            const headerStatusCart = cartFind ? cartFind.products.length : 0
+            const findWishlist =  await Wishlist.findOne({user:req.session.user})
+               .populate('products.productId')
+            const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
+        res.render('editaccount', { 
+            accountData ,
+            headerStatusCart,
+            headerStatusWishlist
+        })
     } catch (err) {
         console.log(err.message)
     }
