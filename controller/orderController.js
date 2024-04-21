@@ -63,13 +63,10 @@ const placeOrderPost = async(req,res)=>{
           })
           const getOrder = await newOrder.save()
           const referalCodeFind = userData.otherRefferel
-          console.log("this is user used the code ====>>",referalCodeFind)
           const otherUser = await User.findOne({refferelCode:referalCodeFind})
-          console.log('user findi====>>',otherUser)
           if(getOrder){
               if(referalCodeFind&&otherUser){
                   const findOrder = await Order.find({user:userId})
-                  console.log('this is the order finding',findOrder)
                   if(findOrder.length == 1){
                       const userPayment = parseInt(250)
                       const transactionId1 = generateOrderid()
@@ -77,22 +74,18 @@ const placeOrderPost = async(req,res)=>{
                       $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit' , walletremarks : 'refferal'} }
                 })
 
-                console.log('this user has got the ===',userwalletChecking)
-
+                
                 const transactionId2 = generateOrderid()
                 const refferedUserPayment = parseInt(500)
                const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
                     $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
                 })
 
-                console.log('other====>>>>>',otherUserWallet)
-                    
-
               }
             }
 
           }
-          console.log('it overed the block')
+         
           let productSet = []
           getOrder.products.forEach(element =>{
             let productStore = {
@@ -160,7 +153,7 @@ const placeOrderPost = async(req,res)=>{
             const findWallet = await Wallet.findOne({user:userId})
             if(findWallet.walletAmount < totalprice){
                 res.json({status:'lessamount'})
-                console.log('amount is less')
+                
             }else{
                 const orderFromWallet = await Wallet.findOneAndUpdate({user:userId},{
                     $inc:{walletAmount:-totalprice},
@@ -235,13 +228,10 @@ const razorpaySuccess = async(req,res)=>{
 
                 const orderGet = await Order.create(orderDetails)
                 const referalCodeFind = userData.otherRefferel
-                console.log('this is the  refererd code  code',referalCodeFind)
                 const otherUser = await User.findOne({refferelCode:referalCodeFind})
-                console.log('this is the other user',otherUser)
                 if(orderGet){
                     if(referalCodeFind&&otherUser){
                       const findOrder = await Order.find({user:userID})
-                      console.log('find the order ====>>',findOrder)
                       if(findOrder.length === 1){
                           const userPayment = parseInt(250)
                        
@@ -249,14 +239,14 @@ const razorpaySuccess = async(req,res)=>{
                           const userwalletChecking = await Wallet.findOneAndUpdate({user:userID},{
                               $inc:{walletAmount:userPayment},  $push: { transactions: { tid: transactionId1, tamount: userPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
                           })
-                          console.log('user has got some money ',userwalletChecking)
+
                              const refferedUserPayment = parseInt(500)
                               const transactionId2 = generateOrderid()
                               const otherUserWallet = await Wallet.findOneAndUpdate({user:otherUser._id},{
                               $inc:{walletAmount:refferedUserPayment},  $push: { transactions: { tid: transactionId2, tamount: refferedUserPayment ,  tstatus:'credit', walletremarks : 'refferal'} }
                           })
                         
-                          console.log('user has got when he reffered ===',otherUserWallet)
+                         
                       }
           
                       }
@@ -669,7 +659,6 @@ const orderCancelIndividual = async(req,res)=>{
         productToCancel.productStatus = true
         findOrder.totalamount -=productPice;
         findOrder.save()
-        console.log(paymentMethod)
         await Product.updateOne({ _id: productid }, { $inc: { stock: productQuantity } });
         res.json({status:true})
         
