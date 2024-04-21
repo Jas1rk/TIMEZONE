@@ -51,7 +51,6 @@ const addCouponPost = async(req,res)=>{
  
             })
  
-            console.log('coupon===> CREATED',newCoupon)
             await newCoupon.save()
             res.json({status:'creat'})
         }
@@ -106,13 +105,12 @@ const userApplyCoupon = async (req, res) => {
         const couponFind = await Coupon.findOne({ccode:coupon,isblocked:false})
        
         if(couponFind){
-            console.log('--===>>',couponFind)
+        
                
             if(couponFind.user.includes(userID)){
-                console.log('user applied this coupuon')
                 res.json({status:'userapplied'})   
             }else{
-                console.log('hereeereeeeeeeeee')
+               
                 if(cartFInd.total > couponFind.minimumpurchase){
                  
                 let totalAountOfOrder = cartFInd.total
@@ -121,7 +119,7 @@ const userApplyCoupon = async (req, res) => {
                 let amountAfterDiscount = Math.ceil(totalAountOfOrder - discountAmount)
                 
                 res.json({status:'applied',amountAfterDiscount,dicountTotal})
-                console.log('couopon applied successfully')
+              
             }else{
              
                res.json({status:'notreachpurchaseAmount'})
@@ -131,7 +129,7 @@ const userApplyCoupon = async (req, res) => {
              
         }else{
             res.json({status:'couponblocked'})
-            console.log('coupon cannot find')
+         
         }
        
        

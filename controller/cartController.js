@@ -31,7 +31,6 @@ const addToCart = async(req,res)=>{
        const userId = req.session.user
        const {id,price} = req.body;
        const userData= await User.findById({_id:userId._id})
-       const productData = await Product.findOne({_id:id})
        const cartData = await Cart.findOne({user:userData._id})
 
        if(cartData){ 
@@ -201,7 +200,6 @@ const userCheckoutGet = async(req,res)=>{
 const userCheckoutPage = async(req,res)=>{
     try{
         const userId = req.session.user
-        const addressData = await Address.find({user:userId})
         const cartFind = await Cart.findOne({user:userId}).populate('products.productId')
         cartFind.products.forEach(element => {
             

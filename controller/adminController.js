@@ -158,7 +158,6 @@ const adminlogPost = async(req,res)=>{
       const email = req.body.email
       const password = req.body.password
       const findAdmin = await Admin.findOne({email:email})
-      console.log(findAdmin)
       if(findAdmin){
         if(findAdmin.password === password){
                 req.session.admin = email

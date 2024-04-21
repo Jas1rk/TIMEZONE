@@ -23,7 +23,6 @@ const admincategoryPost = async(req,res)=>{
                 description:description
             })
             await newCategory.save()
-            console.log(newCategory)
             res.redirect('/admin/admincategory')
         }else{
             const categories = await Category.find({})
@@ -39,7 +38,6 @@ const admincategoryPost = async(req,res)=>{
 const adminCategoryBlock = async(req,res)=>{
     try{
         const categories = req.query._id
-        console.log(categories)
         const data = await Category.findByIdAndUpdate(categories,{isBlocked:true})
         res.redirect('/admin/admincategory')
 
@@ -51,7 +49,6 @@ const adminCategoryBlock = async(req,res)=>{
 const adminCategoryUnblock = async(req,res)=>{
     try{
         const categories = req.query._id
-        console.log(categories)
         const data = await Category.findByIdAndUpdate(categories,{isBlocked:false})
         res.redirect('/admin/admincategory')
 
