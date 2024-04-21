@@ -120,10 +120,8 @@ const quantityDecrement = async(req,res)=>{
     try{
        const user = req.session.user
        const {id} = req.body
-       const parseQuantity = parseInt(req.body.quantity)
        const productData = await Product.findOne({_id:id})
        const quantityData = await Cart.findOne({user:user,'products.productId':id})
-       const stock = productData.stock
        const price = productData.offprice
 
       quantityData.products.forEach(element => {
@@ -150,7 +148,7 @@ const quantityDecrement = async(req,res)=>{
 const cartDelete = async(req,res)=>{
     try{
      const userId = req.session.user
-     const {id,quantity} = req.body
+     const {id} = req.body
      const findCart = await Cart.findOne({user:userId,'products.productId':id})
      if(findCart){
         const productTodelete = findCart.products.find(product => product.productId == id)

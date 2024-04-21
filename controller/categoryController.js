@@ -15,11 +15,10 @@ const admincategory = async(req,res)=>{
 const admincategoryPost = async(req,res)=>{
     try{
         const {name,description} = req.body
-        console.log(req.body)
        
         const existingCategory = await Category.findOne({name:name})
         if(!existingCategory){
-            const newCategory = await new Category({
+            const newCategory =  new Category({
                 name:name,
                 description:description
             })
@@ -84,7 +83,6 @@ const adminCategoryEditPost = async(req,res)=>{
         const editId = await Category.findById({_id:req.session.catId})
         if(existingCategory && existingCategory._id.toString() !== req.session.catId){
             
-            console.log('Name already exists in another category');
             res.render('admin/admincategoryedit',{mess:'Name already exists in another category',editId})
             return;
         }
