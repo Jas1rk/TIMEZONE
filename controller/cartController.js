@@ -87,7 +87,7 @@ const quantityIncrement = async(req,res)=>{
         const productData = await Product.findById({_id:id})
         const stock = productData.stock
         const price = productData.offprice
-        
+        console.log('this is the price ')
        
         findQuantity.products.forEach(element=>{
                         if(element.productId == id){
