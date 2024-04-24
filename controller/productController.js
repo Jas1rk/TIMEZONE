@@ -91,7 +91,6 @@ const adminEditProductPost = async (req, res) => {
         const catData = await Category.findOne({name:category})
        
         const newImages = images.map(elements => elements.filename)
-        console.log("nw images is"+newImages)
         if (images.length > 0) {
             await Product.findByIdAndUpdate({ _id: productId }, { $push: { images: { $each: newImages } } })
         }
