@@ -227,8 +227,3 @@ module.exports = {
   userCheckoutGet,
   userCheckoutPage,
 };
-
-
-
-
-

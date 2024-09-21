@@ -1,340 +1,567 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
-
-
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:31 GMT -->
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>TimeZone</title>
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="/admin-assets/imgs/theme/timezone Logo.png">   
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="/admin-assets/imgs/theme/timezone Logo.png"
+    />
 
     <!-- Template CSS -->
     <link href="/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs/dist/cropper.min.css">  
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/cropperjs/dist/cropper.min.css"
+    />
+  </head>
 
-<style>
-  .thumbnails-container {
-            display: flex;
-            overflow-x: auto;
-        }
+  <style>
+    .thumbnails-container {
+      display: flex;
+      overflow-x: auto;
+    }
 
-        .thumbnail {
-            margin-right: 10px;
-           
-        }
+    .thumbnail {
+      margin-right: 10px;
+    }
+  </style>
 
-</style>
-
-<body>
+  <body>
     <div class="screen-overlay"></div>
     <aside class="navbar-aside" id="offcanvas_aside">
-        <div class="aside-top">
-            <div class="logo logo-width-1" style="width: 110px; height: 100px; overflow: hidden;">
-                <a href="/"><img src="/admin-assets/imgs/theme/timezone Logo.png"  style="min-width: 100% ;"  alt="logo"></a>
-            </div>
-            <div>
-                <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i> </button>
-            </div>
+      <div class="aside-top">
+        <div
+          class="logo logo-width-1"
+          style="width: 110px; height: 100px; overflow: hidden"
+        >
+          <a href="/"
+            ><img
+              src="/admin-assets/imgs/theme/timezone Logo.png"
+              style="min-width: 100%"
+              alt="logo"
+          /></a>
         </div>
-        <nav>
-            <ul class="menu-aside">
-                <li class="menu-item">
-                    <a class="menu-link" href="/admin/admindash"> <i class="icon material-icons md-home"></i>
-                        <span class="text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="/admin/productadmin"> <i class="icon material-icons md-shopping_bag"></i>
-                        <span class="text">Products</span>
-                    </a>
-                   
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="/admin/admincategory"> <i class="icon material-icons md-shopping_cart"></i>
-                        <span class="text">Category</span>
-                    </a>
-                   
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="/admin/userlist"> <i class="icon material-icons md-store"></i>
-                        <span class="text">User List</span>
-                    </a>
-                  
-                </li>
-                <li class="menu-item active">
-                    <a class="menu-link" style="background-color: #3F2520;" href="/admin/addproduct"> <i class="icon material-icons md-add_box" style="color: aliceblue;"></i>
-                        <span class="text" style="color: aliceblue;">Add product</span>
-                    </a>
-                   
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="/admin/orderslist"> <i class="icon material-icons md-monetization_on"></i>
-                        <span class="text">Orders</span>
-                    </a>
-                   
-                </li>
+        <div>
+          <button class="btn btn-icon btn-aside-minimize">
+            <i class="text-muted material-icons md-menu_open"></i>
+          </button>
+        </div>
+      </div>
+      <nav>
+        <ul class="menu-aside">
+          <li class="menu-item">
+            <a class="menu-link" href="/admin/admindash">
+              <i class="icon material-icons md-home"></i>
+              <span class="text">Dashboard</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="/admin/productadmin">
+              <i class="icon material-icons md-shopping_bag"></i>
+              <span class="text">Products</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="/admin/admincategory">
+              <i class="icon material-icons md-shopping_cart"></i>
+              <span class="text">Category</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="/admin/userlist">
+              <i class="icon material-icons md-store"></i>
+              <span class="text">User List</span>
+            </a>
+          </li>
+          <li class="menu-item active">
+            <a
+              class="menu-link"
+              style="background-color: #3f2520"
+              href="/admin/addproduct"
+            >
+              <i
+                class="icon material-icons md-add_box"
+                style="color: aliceblue"
+              ></i>
+              <span class="text" style="color: aliceblue">Add product</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="/admin/orderslist">
+              <i class="icon material-icons md-monetization_on"></i>
+              <span class="text">Orders</span>
+            </a>
+          </li>
 
-                <li class="menu-item">
-                    <a class="menu-link"  href="/admin/sales"> <i class="icon material-icons md-receipt" ></i>
-                        <span class="text" >Sales report</span>
-                    </a>
-                  
-                </li>
-                <li class="menu-item ">
-                    <a class="menu-link" href="/admin/coupons"> <i class="icon material-icons md-account_balance_wallet"></i>
-                        <span class="text">Coupon</span>
-                    </a>
-                  
-                </li>
-                <li class="menu-item ">
-                    <a class="menu-link"  href="/admin/offers"> <i class="icon material-icons md-monetization_on"></i>
-                        <span class="text" >Offers</span>
-                    </a>
-                  
-                </li>
-                
-            </ul>
-            <hr>
-           
-            <br>
-            <br>
-        </nav>
+          <li class="menu-item">
+            <a class="menu-link" href="/admin/sales">
+              <i class="icon material-icons md-receipt"></i>
+              <span class="text">Sales report</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="/admin/coupons">
+              <i class="icon material-icons md-account_balance_wallet"></i>
+              <span class="text">Coupon</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="/admin/offers">
+              <i class="icon material-icons md-monetization_on"></i>
+              <span class="text">Offers</span>
+            </a>
+          </li>
+        </ul>
+        <hr />
+
+        <br />
+        <br />
+      </nav>
     </aside>
     <main class="main-wrap">
-        <header class="main-header navbar">
-            <div class="col-search">
-                <form class="searchform">
-                    <!-- <div class="input-group">
+      <header class="main-header navbar">
+        <div class="col-search">
+          <form class="searchform">
+            <!-- <div class="input-group">
                         <input list="search_terms" type="text" class="form-control" placeholder="Search term">
                         <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
                     </div> -->
-                    <datalist id="search_terms">
-                        <option value="Products">
-                        <option value="New orders">
-                        <option value="Apple iphone">
-                        <option value="Ahmed Hassan">
-                    </datalist>
-                </form>
-            </div>
-            <div class="col-nav">
-                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link btn-icon" href="#">
-                            <i class="material-icons md-notifications animation-shake"></i>
-                            <span class="badge rounded-pill">3</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
-                    </li>
-                    <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-                            <a class="dropdown-item text-brand" href="#"><img src="/admin-assets/imgs/theme/flag-us.png" alt="English">English</a>
-                            <a class="dropdown-item" href="#"><img src="/admin-assets/imgs/theme/flag-fr.png" alt="Français">Français</a>
-                            <a class="dropdown-item" href="#"><img src="/admin-assets/imgs/theme/flag-jp.png" alt="Français">日本語</a>
-                            <a class="dropdown-item" href="#"><img src="/admin-assets/imgs/theme/flag-cn.png" alt="Français">中国人</a>
-                        </div>
-                    </li>
-                    <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="/admin-assets/imgs/people/avatar2.jpg" alt="User"></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="/admin"><i class="material-icons md-exit_to_app"></i>Logout</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </header>
-        <section class="content-main">
-            <form method="post" action="/admin/addproduct" enctype="multipart/form-data">
-            <div class="row">
-               
-                <div class="col-12">
-                    <p id="fillError" class="text-danger"></p>
+            <datalist id="search_terms">
+              <option value="Products"></option>
+              <option value="New orders"></option>
+              <option value="Apple iphone"></option>
+              <option value="Ahmed Hassan"></option>
+            </datalist>
+          </form>
+        </div>
+        <div class="col-nav">
+          <button
+            class="btn btn-icon btn-mobile me-auto"
+            data-trigger="#offcanvas_aside"
+          >
+            <i class="material-icons md-apps"></i>
+          </button>
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link btn-icon" href="#">
+                <i class="material-icons md-notifications animation-shake"></i>
+                <span class="badge rounded-pill">3</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn-icon darkmode" href="#">
+                <i class="material-icons md-nights_stay"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="requestfullscreen nav-link btn-icon"
+                ><i class="material-icons md-cast"></i
+              ></a>
+            </li>
+            <li class="dropdown nav-item">
+              <a
+                class="dropdown-toggle"
+                data-bs-toggle="dropdown"
+                href="#"
+                id="dropdownLanguage"
+                aria-expanded="false"
+                ><i class="material-icons md-public"></i
+              ></a>
+              <div
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="dropdownLanguage"
+              >
+                <a class="dropdown-item text-brand" href="#"
+                  ><img
+                    src="/admin-assets/imgs/theme/flag-us.png"
+                    alt="English"
+                  />English</a
+                >
+                <a class="dropdown-item" href="#"
+                  ><img
+                    src="/admin-assets/imgs/theme/flag-fr.png"
+                    alt="Français"
+                  />Français</a
+                >
+                <a class="dropdown-item" href="#"
+                  ><img
+                    src="/admin-assets/imgs/theme/flag-jp.png"
+                    alt="Français"
+                  />日本語</a
+                >
+                <a class="dropdown-item" href="#"
+                  ><img
+                    src="/admin-assets/imgs/theme/flag-cn.png"
+                    alt="Français"
+                  />中国人</a
+                >
+              </div>
+            </li>
+            <li class="dropdown nav-item">
+              <a
+                class="dropdown-toggle"
+                data-bs-toggle="dropdown"
+                href="#"
+                id="dropdownAccount"
+                aria-expanded="false"
+              >
+                <img
+                  class="img-xs rounded-circle"
+                  src="/admin-assets/imgs/people/avatar2.jpg"
+                  alt="User"
+              /></a>
+              <div
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="dropdownAccount"
+              >
+                <a class="dropdown-item" href="#"
+                  ><i class="material-icons md-perm_identity"></i>Edit
+                  Profile</a
+                >
+                <a class="dropdown-item" href="#"
+                  ><i class="material-icons md-settings"></i>Account Settings</a
+                >
+                <a class="dropdown-item" href="#"
+                  ><i class="material-icons md-account_balance_wallet"></i
+                  >Wallet</a
+                >
+                <a class="dropdown-item" href="#"
+                  ><i class="material-icons md-receipt"></i>Billing</a
+                >
+                <a class="dropdown-item" href="#"
+                  ><i class="material-icons md-help_outline"></i>Help center</a
+                >
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-danger" href="/admin"
+                  ><i class="material-icons md-exit_to_app"></i>Logout</a
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+      </header>
+      <section class="content-main">
+        <form
+          method="post"
+          action="/admin/addproduct"
+          enctype="multipart/form-data"
+        >
+          <div class="row">
+            <div class="col-12">
+              <p id="fillError" class="text-danger"></p>
 
-                    <div class="content-header">
-                        <h2 class="content-title">Add New Product</h2>
-                        
-                        <div>
-                           
-                            <button  class="btn btn-md rounded font-sm hover-up " onclick="addproductValidatiion()" style="background-color: #3F2520;">Publish</button>
-                        </div>
-                    </div>
+              <div class="content-header">
+                <h2 class="content-title">Add New Product</h2>
+
+                <div>
+                  <button
+                    class="btn btn-md rounded font-sm hover-up"
+                    onclick="addproductValidatiion()"
+                    style="background-color: #3f2520"
+                  >
+                    Publish
+                  </button>
                 </div>
-                <div class="col-lg-6">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h4>Details</h4>
-                        </div>
-                        <div class="card-body">
-                           
-                                <div class="mb-4">
-                                    <label for="product_name" class="form-label">Product Name</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="name" name="pname">
-                                    <p id="nameError" class="text-danger"></p>
-                                </div>
-                                <div class="mb-4">
-                                    <label class="form-label">Description</label>
-                                    <textarea placeholder="Type here" class="form-control" rows="4" name="description" id="description"></textarea>
-                                    <p id="descriptionError" class="text-danger"></p>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Regular price</label>
-                                            <div class="row gx-2">
-                                                <input placeholder="₹" type="numder" class="form-control" name="regularprice" id="regularprice">
-                                                <p id="regpriceError" class="text-danger"></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Offer price</label>
-                                            <input placeholder="₹" type="number" class="form-control" name="offerprice" id="offprice">
-                                            <p id="offpriceError" class="text-danger"></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Item Stock</label>
-                                            <input placeholder="Type here" type="number" class="form-control" name="stock" id="stock">
-                                            <p id="stockError" class="text-danger"></p>
-                                        </div>
-                                    </div>
-                                    <div class="mb-4">
-                                        <label class="form-label">Colour</label>
-                                        <input type="text" placeholder="Type here" class="form-control" id="color" name="color">
-                                        <p id="colorError" class="text-danger"></p>
-                                    </div>
-                                </div>
-                                <div class="mb-4">
-                                    <label class="form-label">Material</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="meterial" name="meterial">
-                                    <p id="materialError" class="text-danger"></p>
-                                </div>
-                               
-                            
-                        </div>
-                    </div>
-                  
-                </div>
-                <div class="col-lg-6">
-                    <div class="card mb-3">
-                        <div class="card-header"> 
-                            <p id="imageError" class="text-danger"></p>
-                            <h4>Image</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="input-upload" style="margin-bottom: 20px;">
-                                <img src="/admin-assets/imgs/theme/upload.svg" alt="" id="imgView1">
-                                <input class="form-control" type="file" multiple  name="image" id="image1" accept="image/*" onchange="viewImage1(event) , viewImage(event, 1)">
-                               
-                            </div>
-                            <div class="image-cropper d-flex align-items-center gap-4"
-                            style="display:none; width: 150px; height: 200px; margin-bottom: 20px;">
-                            <img src="" id="croppedImg1" alt="">
-                            <button type="button" id="saveButton1" class="btn-sm btn-primary">Save</button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="input-upload" style="margin-bottom: 20px;">
-                                <img src="/admin-assets/imgs/theme/upload.svg" alt="" id="imgView2">
-                                <input class="form-control" type="file" multiple  name="image" id="image2" accept="image/*" onchange="viewImage2(event),viewImage(event,2)">
-                               
-                              
-                            </div>
-                            <div class="image-cropper d-flex align-items-center gap-4"
-                            style="display:none; width: 150px; height: 200px; margin-bottom: 20px;">
-                            <img src="" id="croppedImg2" alt="">
-                            <button type="button" id="saveButton2" class="btn-sm btn-primary">Save</button>
-                        </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="input-upload" style="margin-bottom: 20px;">
-                                <img src="/admin-assets/imgs/theme/upload.svg" alt="" id="imgView3">
-                                <input class="form-control" type="file" multiple  name="image" id="image3" accept="image/*" onchange="viewImage3(event),viewImage(event,3)">
-                              
-                              
-                            </div>
-                            <div class="image-cropper d-flex align-items-center gap-4"
-                            style="display:none; width: 150px; height: 200px; margin-bottom: 20px;">
-                            <img src="" id="croppedImg3" alt="">
-                            <button type="button" id="saveButton3" class="btn-sm btn-primary">Save</button>
-                        </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="input-upload" style="margin-bottom: 20px;">
-                                <img src="/admin-assets/imgs/theme/upload.svg" alt="" id="imgView4">
-                                <input class="form-control" type="file" multiple  name="image" id="image4" accept="image/*" onchange="viewImage4(event),viewImage(event,4)">
-                               
-                              
-                            </div>
-                            <div class="image-cropper d-flex align-items-center gap-4"
-                            style="display:none; width: 150px; height: 200px; margin-bottom: 20px;">
-                            <img src="" id="croppedImg4" alt="">
-                            <button type="button" id="saveButton4" class="btn-sm btn-primary">Save</button>
-                        </div>
-                        </div>
-                    </div> 
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h4>Category</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row gx-2">
-                                <div class="col-sm-6 mb-3">
-                                    <label class="form-label">Category</label>
-                                    <select name="category" class="form-select" id="product_category">
-                                        <% categories.forEach(element => { %>
-                                          
-                                        <option>
-                                             <%= element.name %>
-                                         </option>
-                                        <% }) %>
-                                    </select>
-                                </div>
-                              
-                            </div>
-                        </div>
-                    </div> 
-                </div>
+              </div>
             </div>
+            <div class="col-lg-6">
+              <div class="card mb-4">
+                <div class="card-header">
+                  <h4>Details</h4>
+                </div>
+                <div class="card-body">
+                  <div class="mb-4">
+                    <label for="product_name" class="form-label"
+                      >Product Name</label
+                    >
+                    <input
+                      type="text"
+                      placeholder="Type here"
+                      class="form-control"
+                      id="name"
+                      name="pname"
+                    />
+                    <p id="nameError" class="text-danger"></p>
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label">Description</label>
+                    <textarea
+                      placeholder="Type here"
+                      class="form-control"
+                      rows="4"
+                      name="description"
+                      id="description"
+                    ></textarea>
+                    <p id="descriptionError" class="text-danger"></p>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="mb-4">
+                        <label class="form-label">Regular price</label>
+                        <div class="row gx-2">
+                          <input
+                            placeholder="₹"
+                            type="numder"
+                            class="form-control"
+                            name="regularprice"
+                            id="regularprice"
+                          />
+                          <p id="regpriceError" class="text-danger"></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="mb-4">
+                        <label class="form-label">Offer price</label>
+                        <input
+                          placeholder="₹"
+                          type="number"
+                          class="form-control"
+                          name="offerprice"
+                          id="offprice"
+                        />
+                        <p id="offpriceError" class="text-danger"></p>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="mb-4">
+                        <label class="form-label">Item Stock</label>
+                        <input
+                          placeholder="Type here"
+                          type="number"
+                          class="form-control"
+                          name="stock"
+                          id="stock"
+                        />
+                        <p id="stockError" class="text-danger"></p>
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <label class="form-label">Colour</label>
+                      <input
+                        type="text"
+                        placeholder="Type here"
+                        class="form-control"
+                        id="color"
+                        name="color"
+                      />
+                      <p id="colorError" class="text-danger"></p>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label">Material</label>
+                    <input
+                      type="text"
+                      placeholder="Type here"
+                      class="form-control"
+                      id="meterial"
+                      name="meterial"
+                    />
+                    <p id="materialError" class="text-danger"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="card mb-3">
+                <div class="card-header">
+                  <p id="imageError" class="text-danger"></p>
+                  <h4>Image</h4>
+                </div>
+                <div class="card-body">
+                  <div class="input-upload" style="margin-bottom: 20px">
+                    <img
+                      src="/admin-assets/imgs/theme/upload.svg"
+                      alt=""
+                      id="imgView1"
+                    />
+                    <input
+                      class="form-control"
+                      type="file"
+                      multiple
+                      name="image"
+                      id="image1"
+                      accept="image/*"
+                      onchange="viewImage1(event) , viewImage(event, 1)"
+                    />
+                  </div>
+                  <div
+                    class="image-cropper d-flex align-items-center gap-4"
+                    style="
+                      display: none;
+                      width: 150px;
+                      height: 200px;
+                      margin-bottom: 20px;
+                    "
+                  >
+                    <img src="" id="croppedImg1" alt="" />
+                    <button
+                      type="button"
+                      id="saveButton1"
+                      class="btn-sm btn-primary"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="input-upload" style="margin-bottom: 20px">
+                    <img
+                      src="/admin-assets/imgs/theme/upload.svg"
+                      alt=""
+                      id="imgView2"
+                    />
+                    <input
+                      class="form-control"
+                      type="file"
+                      multiple
+                      name="image"
+                      id="image2"
+                      accept="image/*"
+                      onchange="viewImage2(event),viewImage(event,2)"
+                    />
+                  </div>
+                  <div
+                    class="image-cropper d-flex align-items-center gap-4"
+                    style="
+                      display: none;
+                      width: 150px;
+                      height: 200px;
+                      margin-bottom: 20px;
+                    "
+                  >
+                    <img src="" id="croppedImg2" alt="" />
+                    <button
+                      type="button"
+                      id="saveButton2"
+                      class="btn-sm btn-primary"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="input-upload" style="margin-bottom: 20px">
+                    <img
+                      src="/admin-assets/imgs/theme/upload.svg"
+                      alt=""
+                      id="imgView3"
+                    />
+                    <input
+                      class="form-control"
+                      type="file"
+                      multiple
+                      name="image"
+                      id="image3"
+                      accept="image/*"
+                      onchange="viewImage3(event),viewImage(event,3)"
+                    />
+                  </div>
+                  <div
+                    class="image-cropper d-flex align-items-center gap-4"
+                    style="
+                      display: none;
+                      width: 150px;
+                      height: 200px;
+                      margin-bottom: 20px;
+                    "
+                  >
+                    <img src="" id="croppedImg3" alt="" />
+                    <button
+                      type="button"
+                      id="saveButton3"
+                      class="btn-sm btn-primary"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="input-upload" style="margin-bottom: 20px">
+                    <img
+                      src="/admin-assets/imgs/theme/upload.svg"
+                      alt=""
+                      id="imgView4"
+                    />
+                    <input
+                      class="form-control"
+                      type="file"
+                      multiple
+                      name="image"
+                      id="image4"
+                      accept="image/*"
+                      onchange="viewImage4(event),viewImage(event,4)"
+                    />
+                  </div>
+                  <div
+                    class="image-cropper d-flex align-items-center gap-4"
+                    style="
+                      display: none;
+                      width: 150px;
+                      height: 200px;
+                      margin-bottom: 20px;
+                    "
+                  >
+                    <img src="" id="croppedImg4" alt="" />
+                    <button
+                      type="button"
+                      id="saveButton4"
+                      class="btn-sm btn-primary"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card mb-4">
+                <div class="card-header">
+                  <h4>Category</h4>
+                </div>
+                <div class="card-body">
+                  <div class="row gx-2">
+                    <div class="col-sm-6 mb-3">
+                      <label class="form-label">Category</label>
+                      <select
+                        name="category"
+                        class="form-select"
+                        id="product_category"
+                      >
+                        <% categories.forEach(element => { %>
+
+                        <option><%= element.name %></option>
+                        <% }) %>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </form>
-        </section>
-        <footer class="main-footer font-xs">
-            <div class="row pb-30 pt-15">
-                <div class="col-sm-6">
-                    <script>
-                    document.write(new Date().getFullYear())
-                    </script> ©, TimeZone.
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end">
-                        All rights reserved
-                    </div>
-                </div>
-            </div>
-        </footer>
+      </section>
+      <footer class="main-footer font-xs">
+        <div class="row pb-30 pt-15">
+          <div class="col-sm-6">
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            ©, TimeZone.
+          </div>
+          <div class="col-sm-6">
+            <div class="text-sm-end">All rights reserved</div>
+          </div>
+        </div>
+      </footer>
     </main>
     <script src="/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
     <script src="/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
@@ -342,259 +569,265 @@
     <script src="/admin-assets/js/vendors/perfect-scrollbar.js"></script>
     <script src="/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
     <!-- Main Script -->
-    <script src="/admin-assets/js/main.js" type="text/javascript"></script>   
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <script src="/admin-assets/js/main.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cropperjs/dist/cropper.min.js"></script>
+  </body>
+  <script>
+    function addproductValidatiion() {
+      const name = document.getElementById("name").value.trim();
+      const description = document.getElementById("description").value.trim();
+      const regularprice = document.getElementById("regularprice").value;
+      const offerprice = document.getElementById("offprice").value;
+      const stock = document.getElementById("stock").value.trim();
+      const color = document.getElementById("color").value.trim();
+      const meterial = document.getElementById("meterial").value.trim();
+      // const image = document.getElementById('image').value
 
-</body>
-<script>
-    function addproductValidatiion(){
-    
-    const name  = document.getElementById('name').value.trim()
-    const description = document.getElementById('description').value.trim()
-    const regularprice = document.getElementById('regularprice').value
-    const offerprice =  document.getElementById('offprice').value
-    const stock = document.getElementById('stock').value.trim()
-    const color = document.getElementById('color').value.trim()
-    const meterial = document.getElementById('meterial').value.trim()
-    // const image = document.getElementById('image').value
-   
-   
+      const fillError = document.getElementById("fillError");
+      const nameError = document.getElementById("nameError");
+      const descriptionError = document.getElementById("descriptionError");
+      const regularpriceError = document.getElementById("regpriceError");
+      const offerpriceError = document.getElementById("offpriceError");
+      const stockError = document.getElementById("stockError");
+      const colorError = document.getElementById("colorError");
+      const materialError = document.getElementById("materialError");
+      const imageError = document.getElementById("imageError");
 
-    const fillError = document.getElementById('fillError')
-    const nameError = document.getElementById('nameError')
-    const descriptionError = document.getElementById('descriptionError')
-    const regularpriceError = document.getElementById('regpriceError')
-    const offerpriceError  = document.getElementById('offpriceError')
-    const stockError = document.getElementById('stockError')
-    const colorError =  document.getElementById('colorError')
-    const materialError =  document.getElementById('materialError')
-    const imageError = document.getElementById('imageError')
+      fillError.textContent = "";
+      nameError.textContent = "";
+      descriptionError.textContent = "";
+      regularpriceError.textContent = "";
+      offerpriceError.textContent = "";
+      stockError.textContent = "";
+      colorError.textContent = "";
+      materialError.textContent = "";
+      imageError.textContent = "";
 
-    fillError.textContent = ""
-    nameError.textContent = ""
-    descriptionError.textContent = ""
-    regularpriceError.textContent = ""
-    offerpriceError.textContent = ""
-    stockError.textContent = ""
-    colorError.textContent = ""
-    materialError.textContent = ""
-    imageError.textContent = ""
+      if (name === "") {
+        nameError.textContent = "Name is required";
+      } else if (!/^[A-Z]+$/.test(name)) {
+        nameError.textContent = "Name bust be captal";
+      } else if (name.length < 3) {
+        nameError.textContent = "Name atleast 3 charecter";
+      }
 
-    if(name === ""){
-        nameError.textContent = "Name is required"
-    }else if (!/^[A-Z]+$/.test(name)){
-        nameError.textContent = "Name bust be captal"
-    }else if(name.length < 3){
-        nameError.textContent = "Name atleast 3 charecter"
-    
-    
-    }
-     
-    
-    if(description === ""){
-        descriptionError.textContent = "Description is required."
-    }else if(!/^[a-zA-Z0-9\s,'/.()-]+$/.test(description)){
-        descriptionError.textContent = "Enter a valid description."
-    }
+      if (description === "") {
+        descriptionError.textContent = "Description is required.";
+      } else if (!/^[a-zA-Z0-9\s,'/.()-]+$/.test(description)) {
+        descriptionError.textContent = "Enter a valid description.";
+      }
 
-    if(regularprice === ""){
-        regularpriceError.textContent = "Regular price is required."
-    }else if(parseInt(regularprice) < parseInt(offerprice)){
-        regularpriceError.textContent = "Regular price must be higher than the offer price."
-    }else if(/-/.test(regularprice)){
-        regularpriceError.textContent = "Regular price should not contain a hyphen ("-")."
-    }
+      if (regularprice === "") {
+        regularpriceError.textContent = "Regular price is required.";
+      } else if (parseInt(regularprice) < parseInt(offerprice)) {
+        regularpriceError.textContent =
+          "Regular price must be higher than the offer price.";
+      } else if (/-/.test(regularprice)) {
+        regularpriceError.textContent =
+          "Regular price should not contain a hyphen (" - ").";
+      }
 
-    if(offerprice === ""){
-        offerpriceError.textContent = "Offer price is required."
-    }else if(parseInt(offerprice) > parseInt(regularprice)){
-        offerpriceError.textContent = " Offer price must be lower than the regular price."
-    }else if(/-/.test(offerprice)){
-        offerpriceError.textContent = "Offer price should not contain a hyphen ("-")."
-    }
+      if (offerprice === "") {
+        offerpriceError.textContent = "Offer price is required.";
+      } else if (parseInt(offerprice) > parseInt(regularprice)) {
+        offerpriceError.textContent =
+          " Offer price must be lower than the regular price.";
+      } else if (/-/.test(offerprice)) {
+        offerpriceError.textContent =
+          "Offer price should not contain a hyphen (" - ").";
+      }
 
-    if(stock === ""){
-        stockError.textContent = "Stock is required"
-    }else if(!/^(0|[1-9]\d*)$/.test(stock)){
-        stockError.textContent = "Invalid stock value. It should not contain zero, hyphen, or dot."
-    }
+      if (stock === "") {
+        stockError.textContent = "Stock is required";
+      } else if (!/^(0|[1-9]\d*)$/.test(stock)) {
+        stockError.textContent =
+          "Invalid stock value. It should not contain zero, hyphen, or dot.";
+      }
 
-    if(color === ""){
-        colorError.textContent = "Colour is required"
-    }else if(!/^[A-Za-z]+$/.test(color)){
-        colorError.textContent = "It should contain only letters."
-    }else if(color.length < 3){
-        colorError.textContent = "Letter must be atleast 3 charecter"
-    }
+      if (color === "") {
+        colorError.textContent = "Colour is required";
+      } else if (!/^[A-Za-z]+$/.test(color)) {
+        colorError.textContent = "It should contain only letters.";
+      } else if (color.length < 3) {
+        colorError.textContent = "Letter must be atleast 3 charecter";
+      }
 
-    if(meterial === ""){
-        materialError.textContent = "Meterial is required"
-    }else if(!/^[A-Za-z]+$/.test(meterial)){
-        materialError.textContent = "It should contain only letters."
-    }else if(meterial.length < 3)
-        materialError.textContent = "Letter must be atleast 3 charecter"
+      if (meterial === "") {
+        materialError.textContent = "Meterial is required";
+      } else if (!/^[A-Za-z]+$/.test(meterial)) {
+        materialError.textContent = "It should contain only letters.";
+      } else if (meterial.length < 3)
+        materialError.textContent = "Letter must be atleast 3 charecter";
 
+      // if(image === ""){
+      //     imageError.textContent = "Image is required"
+      // }else if(image.length < 3){
+      //     imageError.textContent = "Image should be atleast 3"
+      // }else if(!/\.(png|jpe?g|gif|bmp|svg)$/.test(image)){
+      //     imageError.textContent = "Invalid image file. Please upload a valid image file."
+      // }
 
-    // if(image === ""){
-    //     imageError.textContent = "Image is required"
-    // }else if(image.length < 3){
-    //     imageError.textContent = "Image should be atleast 3"
-    // }else if(!/\.(png|jpe?g|gif|bmp|svg)$/.test(image)){
-    //     imageError.textContent = "Invalid image file. Please upload a valid image file."
-    // }
-
-
-
-
-
-    if(nameError.textContent||descriptionError.textContent||regularpriceError.textContent||offerprice.textContent||stockError.textContent||colorError.textContent||materialError.textContent){
-        event.preventDefault()
-        fillError.textContent = "Fill all fields"
+      if (
+        nameError.textContent ||
+        descriptionError.textContent ||
+        regularpriceError.textContent ||
+        offerprice.textContent ||
+        stockError.textContent ||
+        colorError.textContent ||
+        materialError.textContent
+      ) {
+        event.preventDefault();
+        fillError.textContent = "Fill all fields";
         setTimeout(() => {
-            fillError.textContent = ""
+          fillError.textContent = "";
         }, 3000);
+      }
     }
 
+    function viewImage1(event) {
+      document.getElementById("imgView1").src = URL.createObjectURL(
+        event.target.files[0]
+      );
+    }
 
-}
+    function viewImage2(event) {
+      document.getElementById("imgView2").src = URL.createObjectURL(
+        event.target.files[0]
+      );
+    }
 
+    function viewImage3(event) {
+      document.getElementById("imgView3").src = URL.createObjectURL(
+        event.target.files[0]
+      );
+    }
 
-        function viewImage1(event) {
-            document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
-        }
+    function viewImage4(event) {
+      document.getElementById("imgView4").src = URL.createObjectURL(
+        event.target.files[0]
+      );
+    }
 
-        function viewImage2(event) {
-            document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
-        }
+    function viewImage(event, index) {
+      let input = event.target;
+      let reader = new FileReader();
 
-        function viewImage3(event) {
-            document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
-        }
+      reader.onload = function () {
+        let dataURL = reader.result;
+        let image = document.getElementById("imgView" + index);
+        image.src = dataURL;
 
-        function viewImage4(event) {
-            document.getElementById('imgView4').src = URL.createObjectURL(event.target.files[0])
-        }
+        let cropper = new Cropper(image, {
+          aspectRatio: 1.1,
+          viewMode: 1,
+          guides: true,
+          background: false,
+          autoCropArea: 1,
+          zoomable: true,
+        });
 
+        const removeIcon = document.createElement("span");
+        removeIcon.classList.add("remove-icon");
+        removeIcon.style.cursor = "pointer";
+        removeIcon.innerHTML = "&times;";
 
-        function viewImage(event, index) {
-            let input = event.target;
-            let reader = new FileReader();
+        // Event listener to remove the image on icon click
+        removeIcon.addEventListener("click", function () {
+          document.getElementById("croppedImg" + index).src = "";
+        });
 
-            reader.onload = function () {
-                let dataURL = reader.result;
-                let image = document.getElementById('imgView' + index);
-                image.src = dataURL;
+        // Show the image cropper container
+        let cropperContainer = document.querySelector(
+          "#croppedImg" + index
+        ).parentNode;
+        cropperContainer.style.display = "block";
 
-                
-                let cropper = new Cropper(image, {
-                    aspectRatio: 1.1, 
-                    viewMode: 1,
-                    guides: true,
-                    background: false,
-                    autoCropArea: 1,
-                    zoomable: true
-                });
+        // Update the cropped image when the "Save" button is clicked
+        let saveButton = document.querySelector("#saveButton" + index);
+        saveButton.addEventListener("click", async function () {
+          let croppedCanvas = cropper.getCroppedCanvas();
+          let croppedImage = document.getElementById("croppedImg" + index);
+          croppedImage.src = croppedCanvas.toDataURL("image/jpeg", 1.0);
 
-                const removeIcon = document.createElement("span");
-                removeIcon.classList.add("remove-icon");
-                removeIcon.style.cursor = 'pointer'
-                removeIcon.innerHTML = "&times;"; 
+          // Generate a unique name for the cropped image file based on the current timestamp
+          let timestamp = new Date().getTime();
+          let fileName = `cropped-img-${timestamp}-${index}.png`;
 
-                // Event listener to remove the image on icon click
-                removeIcon.addEventListener("click", function () {
-                    document.getElementById('croppedImg' + index).src = ''
-                });
+          await croppedCanvas.toBlob((blob) => {
+            let input = document.getElementById("image" + index);
+            let imgFile = new File([blob], fileName, blob);
+            const fileList = new DataTransfer();
+            fileList.items.add(imgFile);
+            input.files = fileList.files;
+          });
+        });
+        document
+          .querySelectorAll(".image-cropper")
+          [index - 1].appendChild(removeIcon);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
 
-                // Show the image cropper container
-                let cropperContainer = document.querySelector('#croppedImg' + index).parentNode;
-                cropperContainer.style.display = 'block';
+    const selectedImages = [];
+    // document.getElementById("imageInput").addEventListener("change", handleFileSelect);
 
-                // Update the cropped image when the "Save" button is clicked
-                let saveButton = document.querySelector('#saveButton' + index);
-                saveButton.addEventListener('click', async function () {
-                    let croppedCanvas = cropper.getCroppedCanvas();
-                    let croppedImage = document.getElementById("croppedImg" + index);
-                    croppedImage.src = croppedCanvas.toDataURL('image/jpeg', 1.0);
+    function handleFileSelect(event) {
+      // Target the container for displaying thumbnails
+      const addedImagesContainer = document.getElementById(
+        "addedImagesContainer"
+      );
 
-                    // Generate a unique name for the cropped image file based on the current timestamp
-                    let timestamp = new Date().getTime();
-                    let fileName = `cropped-img-${timestamp}-${index}.png`;
+      // Clear previous content
+      addedImagesContainer.innerHTML = "";
 
-                    await croppedCanvas.toBlob(blob => {
-                        let input = document.getElementById('image' + index);
-                        let imgFile = new File([blob], fileName, blob)
-                        const fileList = new DataTransfer();
-                        fileList.items.add(imgFile);
-                        input.files = fileList.files
-                    });
-                });
-                document.querySelectorAll('.image-cropper')[index-1].appendChild(removeIcon)
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
+      const files = event.target.files;
 
-       
-        const selectedImages = [];
-        // document.getElementById("imageInput").addEventListener("change", handleFileSelect);
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
 
-        function handleFileSelect(event) {
-            // Target the container for displaying thumbnails
-            const addedImagesContainer = document.getElementById("addedImagesContainer");
+        // Add the file to the selected images array
+        selectedImages.push(file);
 
-            // Clear previous content
-            addedImagesContainer.innerHTML = "";
+        // Create thumbnail element
+        const thumbnail = document.createElement("div");
+        thumbnail.classList.add("thumbnail");
 
-            const files = event.target.files;
+        // Create image element
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        img.alt = "thumbnail";
 
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
+        // Set a fixed width for the image
+        img.style.width = "50px"; // Adjust the width as needed
+        img.style.height = "auto";
 
-                // Add the file to the selected images array
-                selectedImages.push(file);
+        // Create remove icon
+        const removeIcon = document.createElement("span");
+        removeIcon.classList.add("remove-icon");
+        removeIcon.innerHTML = "&times;"; // Multiplication symbol as a cross
 
-                // Create thumbnail element
-                const thumbnail = document.createElement("div");
-                thumbnail.classList.add("thumbnail");
+        // Event listener to remove the image on icon click
+        removeIcon.addEventListener("click", function () {
+          // Remove the file from the selected images array
+          const index = selectedImages.indexOf(file);
+          if (index !== -1) {
+            selectedImages.splice(index, 1);
+          }
 
-                // Create image element
-                const img = document.createElement("img");
-                img.src = URL.createObjectURL(file);
-                img.alt = "thumbnail";
+          // Remove the thumbnail from the container
+          thumbnail.remove();
+        });
 
-                // Set a fixed width for the image
-                img.style.width = "50px"; // Adjust the width as needed
-                img.style.height = "auto";
+        // Append elements to thumbnail
+        thumbnail.appendChild(img);
+        thumbnail.appendChild(removeIcon);
 
-                // Create remove icon
-                const removeIcon = document.createElement("span");
-                removeIcon.classList.add("remove-icon");
-                removeIcon.innerHTML = "&times;"; // Multiplication symbol as a cross
+        // Append thumbnail to the container
+        addedImagesContainer.appendChild(thumbnail);
+      }
+    }
+  </script>
 
-                // Event listener to remove the image on icon click
-                removeIcon.addEventListener("click", function () {
-                    // Remove the file from the selected images array
-                    const index = selectedImages.indexOf(file);
-                    if (index !== -1) {
-                        selectedImages.splice(index, 1);
-                    }
-
-                    // Remove the thumbnail from the container
-                    thumbnail.remove();
-                });
-
-                // Append elements to thumbnail
-                thumbnail.appendChild(img);
-                thumbnail.appendChild(removeIcon);
-
-                // Append thumbnail to the container
-                addedImagesContainer.appendChild(thumbnail);
-            }
-        }
-
-
-</script>
-
-
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:32 GMT -->
+ 
 </html>

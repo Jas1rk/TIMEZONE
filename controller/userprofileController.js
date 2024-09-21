@@ -1,296 +1,332 @@
-const Address = require('../model/addressModel')
-const User = require('../model/userModel')
-const Cart = require('../model/cartModel')
-const Wishlist = require('../model/wishlistModel')
-const bcrypt = require('bcrypt')
+const Address = require("../model/addressModel");
+const User = require("../model/userModel");
+const Cart = require("../model/cartModel");
+const Wishlist = require("../model/wishlistModel");
+const bcrypt = require("bcrypt");
 
 const userProfile = async (req, res) => {
-    try {
-      
-        if (req.session.user) {
-            const profileData = await User.findOne({ email: req.session.user.email })
-            const cartFind = await Cart.findOne({user:req.session.user})
-               .populate('products.productId')
-            const headerStatusCart = cartFind ? cartFind.products.length : 0
-            const findWishlist =  await Wishlist.findOne({user:req.session.user})
-               .populate('products.productId')
-            const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
+  try {
+    if (req.session.user) {
+      const profileData = await User.findOne({ email: req.session.user.email });
+      const cartFind = await Cart.findOne({ user: req.session.user }).populate(
+        "products.productId"
+      );
+      const headerStatusCart = cartFind ? cartFind.products.length : 0;
+      const findWishlist = await Wishlist.findOne({
+        user: req.session.user,
+      }).populate("products.productId");
+      const headerStatusWishlist = findWishlist
+        ? findWishlist.products.length
+        : 0;
 
-            res.render('userprofile', { 
-                profileData,
-                headerStatusCart ,
-                headerStatusWishlist
-            })
-
-        } else {
-            res.redirect('/login')
-        }
-
-
-    } catch (err) {
-        console.log(err.message)
+      res.render("userprofile", {
+        profileData,
+        headerStatusCart,
+        headerStatusWishlist,
+      });
+    } else {
+      res.redirect("/login");
     }
-}
-
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
 const userChangePassword = async (req, res) => {
-    try {
-        res.render('changepassword')
-    } catch (err) {
-        console.log(err.message)
-    }
-}
+  try {
+    res.render("changepassword");
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
 const changePasswordPost = async (req, res) => {
-    try {
-        const { currectPass, newPass, confirmPass } = req.body
-        if (currectPass.trim() === '' || newPass.trim() === '' || confirmPass.trim() === '') {
+  try {
+    const { currectPass, newPass, confirmPass } = req.body;
+    if (
+      currectPass.trim() === "" ||
+      newPass.trim() === "" ||
+      confirmPass.trim() === ""
+    ) {
+    } else {
+      const user = await User.findOne({ email: req.session.user.email });
 
+      const comparePass = user.password;
+
+      const isValid = await bcrypt.compare(currectPass, comparePass);
+      if (isValid) {
+        if (
+          newPass.length >= 6 &&
+          /[a-zA-Z]/.test(newPass) &&
+          /\d/.test(newPass)
+        ) {
+          if (newPass === confirmPass) {
+            const securedPass = await bcrypt.hash(newPass, 10);
+            const updatePass = await User.findOneAndUpdate(
+              { email: req.session.user.email },
+              { $set: { password: securedPass } }
+            );
+            console.log("pasword updated", updatePass);
+            res.json({ status: "success" });
+          } else {
+            console.log("passwords are  not correct");
+            res.json({ status: "confirmerror" });
+          }
         } else {
-            const user = await User.findOne({ email: req.session.user.email })
-
-            const comparePass = user.password;
-
-            const isValid = await bcrypt.compare(currectPass, comparePass)
-            if (isValid) {
-              
-                if (newPass.length >= 6 && /[a-zA-Z]/.test(newPass) && /\d/.test(newPass)) {
-
-                    if (newPass === confirmPass) {
-                        const securedPass = await bcrypt.hash(newPass, 10);
-                        const updatePass = await User.findOneAndUpdate({ email: req.session.user.email }, { $set: { password: securedPass } })
-                        console.log('pasword updated', updatePass)
-                        res.json({ status: "success" })
-                    } else {
-                        console.log('passwords are  not correct')
-                        res.json({ status: "confirmerror" })
-                    }
-
-                } else {
-                    console.log('Password should Alphebet number and 6 charecter')
-                    res.json({ status: "newpasserror" })
-                }
-
-            } else {
-                console.log('current password  not correct')
-                res.json({ status: "currenterror" })
-            }
+          console.log("Password should Alphebet number and 6 charecter");
+          res.json({ status: "newpasserror" });
         }
-    } catch (err) {
-        console.log(err.message)
+      } else {
+        console.log("current password  not correct");
+        res.json({ status: "currenterror" });
+      }
     }
-}
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
 const addressGet = async (req, res) => {
-    try {
-        const userId = req.session.user
-        const addressData = await Address.find({ user: userId })
-        const userData = await User.findOne({email:req.session.user.email})
-        const cartFind = await Cart.findOne({user:req.session.user}).populate('products.productId')
-       
-        const headerStatusCart = cartFind ? cartFind.products.length : 0
-        const findWishlist =  await Wishlist.findOne({user:req.session.user}).populate('products.productId')
-      
-        const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
-        res.render('address', {
-             addressData,
-             userData,
-             headerStatusCart,
-             headerStatusWishlist
-         })
+  try {
+    const userId = req.session.user;
+    const addressData = await Address.find({ user: userId });
+    const userData = await User.findOne({ email: req.session.user.email });
+    const cartFind = await Cart.findOne({ user: req.session.user }).populate(
+      "products.productId"
+    );
 
-    } catch (err) {
-        console.log(err.message)
-    }
-}
+    const headerStatusCart = cartFind ? cartFind.products.length : 0;
+    const findWishlist = await Wishlist.findOne({
+      user: req.session.user,
+    }).populate("products.productId");
+
+    const headerStatusWishlist = findWishlist
+      ? findWishlist.products.length
+      : 0;
+    res.render("address", {
+      addressData,
+      userData,
+      headerStatusCart,
+      headerStatusWishlist,
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
 const useraddAddress = async (req, res) => {
-    try {
-        res.render('useraddresss')
-    } catch (err) {
-        console.log(err.message)
-    }
-}
+  try {
+    res.render("useraddresss");
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
 const addAddressPost = async (req, res) => {
-    try {
+  try {
+    const userFind = await User.findOne({ email: req.session.user.email });
 
-        const userFind = await User.findOne({ email: req.session.user.email })
-        
-        if (userFind) {
-            const { name, mobile, address, pincode, location, city, sate, country, addresstype } = req.body
-            const addressData = await new Address({
-                user: userFind._id,
-                uname: name,
-                umobile: mobile,
-                uaddress: address,
-                upin: pincode,
-                ulocation: location,
-                ucity: city,
-                ustate: sate,
-                ucountry: country,
-                uaddresstype: addresstype
-
-            })
-            await addressData.save()
-            res.json({ status: "success" })
-        } else {
-            console.log("Cannot find User")
-
-        }
-
-    } catch (err) {
-        console.log(err)
+    if (userFind) {
+      const {
+        name,
+        mobile,
+        address,
+        pincode,
+        location,
+        city,
+        sate,
+        country,
+        addresstype,
+      } = req.body;
+      const addressData = await new Address({
+        user: userFind._id,
+        uname: name,
+        umobile: mobile,
+        uaddress: address,
+        upin: pincode,
+        ulocation: location,
+        ucity: city,
+        ustate: sate,
+        ucountry: country,
+        uaddresstype: addresstype,
+      });
+      await addressData.save();
+      res.json({ status: "success" });
+    } else {
+      console.log("Cannot find User");
     }
-}
+  } catch (err) {
+    console.log(err);
+  }
+};
 
+const deletAddress = async (req, res) => {
+  try {
+    console.log("deleeeted");
+    const addressID = req.query._id;
+    console.log(addressID);
+    const addressData = await Address.deleteOne({ _id: addressID });
+    console.log("address deleted", addressData);
+    res.redirect("/address");
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
+const addressEditGet = async (req, res) => {
+  try {
+    const addressID = req.query._id;
+    req.session.addressid = addressID;
+    const addressDataId = await Address.findOne({ _id: addressID });
+    const cartFind = await Cart.findOne({ user: req.session.user }).populate(
+      "products.productId"
+    );
 
-const deletAddress = async(req,res)=>{
-    try{
-        console.log('deleeeted')
-       const addressID = req.query._id
-       console.log(addressID)
-       const addressData = await Address.deleteOne({_id:addressID})
-       console.log('address deleted',addressData)
-       res.redirect('/address')
+    const headerStatusCart = cartFind ? cartFind.products.length : 0;
+    const findWishlist = await Wishlist.findOne({
+      user: req.session.user,
+    }).populate("products.productId");
 
-    }catch(err){
-        console.log(err.message)
-    }
-}
+    const headerStatusWishlist = findWishlist
+      ? findWishlist.products.length
+      : 0;
+    res.render("addressedit", {
+      addressDataId,
+      headerStatusCart,
+      headerStatusWishlist,
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
-const addressEditGet = async(req,res)=>{
-    try{
-        const addressID = req.query._id
-        req.session.addressid = addressID
-        const addressDataId = await Address.findOne({_id:addressID})
-        const cartFind = await Cart.findOne({user:req.session.user}).populate('products.productId')
-       
-        const headerStatusCart = cartFind ? cartFind.products.length : 0
-        const findWishlist =  await Wishlist.findOne({user:req.session.user}).populate('products.productId')
-      
-        const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
-        res.render('addressedit',{
-            addressDataId,
-            headerStatusCart,
-            headerStatusWishlist
-        })
-       
-    }catch(err){
-        console.log(err.message)
-    }
-}
+const addressEditPost = async (req, res) => {
+  try {
+    const findAddress = await Address.findOne({ _id: req.session.addressid });
+    if (findAddress) {
+      const {
+        name,
+        mobile,
+        address,
+        pincode,
+        location,
+        city,
+        sate,
+        country,
+        addresstype,
+      } = req.body;
+      const uData = {
+        uname: name,
+        umobile: mobile,
+        uaddress: address,
+        upin: pincode,
+        ulocation: location,
+        ucity: city,
+        ustate: sate,
+        ucountry: country,
+        uaddresstype: addresstype,
+      };
+      console.log(uData);
+      const updateAddress = await Address.updateOne(
+        { _id: findAddress._id },
+        { $set: uData }
+      );
 
-const addressEditPost = async(req,res)=>{
-    try{
-       
-      const findAddress = await Address.findOne({_id:req.session.addressid})
-      if(findAddress){
-        const { name, mobile, address, pincode, location, city, sate, country, addresstype } = req.body
-        const uData = {
-            uname: name,
-            umobile: mobile,
-            uaddress: address,
-            upin: pincode,
-            ulocation: location,
-            ucity: city,
-            ustate: sate,
-            ucountry: country,
-            uaddresstype: addresstype
-        }
-        console.log(uData)
-        const updateAddress = await Address.updateOne({_id:findAddress._id},{$set:uData})
-       
-        console.log("updatted data",updateAddress);
-        if(updateAddress.modifiedCount===1){
-            res.json({status:"success"})
-        }else{
-            console.log('no changes found')
-        }
-       
-      }else{
-        console.log('connot find ')
+      console.log("updatted data", updateAddress);
+      if (updateAddress.modifiedCount === 1) {
+        res.json({ status: "success" });
+      } else {
+        console.log("no changes found");
       }
-      
-     
-    }catch(err){
-        console.log(err.message)
+    } else {
+      console.log("connot find ");
     }
-}
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
 const userAccount = async (req, res) => {
-    try {
-        const accountData = await User.findOne({ email: req.session.user.email })
-        const cartFind = await Cart.findOne({user:req.session.user})
-               .populate('products.productId')
-            const headerStatusCart = cartFind ? cartFind.products.length : 0
-            const findWishlist =  await Wishlist.findOne({user:req.session.user})
-               .populate('products.productId')
-            const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
-        res.render('useraccount', { accountData ,headerStatusCart,headerStatusWishlist})
-    } catch (err) {
-        console.log(err.message)
-    }
-}
+  try {
+    const accountData = await User.findOne({ email: req.session.user.email });
+    const cartFind = await Cart.findOne({ user: req.session.user }).populate(
+      "products.productId"
+    );
+    const headerStatusCart = cartFind ? cartFind.products.length : 0;
+    const findWishlist = await Wishlist.findOne({
+      user: req.session.user,
+    }).populate("products.productId");
+    const headerStatusWishlist = findWishlist
+      ? findWishlist.products.length
+      : 0;
+    res.render("useraccount", {
+      accountData,
+      headerStatusCart,
+      headerStatusWishlist,
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
 const userAccountEdit = async (req, res) => {
-    try {
-        const accountData = await User.findOne({ email: req.session.user.email })
-        const cartFind = await Cart.findOne({user:req.session.user})
-               .populate('products.productId')
-            const headerStatusCart = cartFind ? cartFind.products.length : 0
-            const findWishlist =  await Wishlist.findOne({user:req.session.user})
-               .populate('products.productId')
-            const headerStatusWishlist = findWishlist ? findWishlist.products.length :0
-        res.render('editaccount', { 
-            accountData ,
-            headerStatusCart,
-            headerStatusWishlist
-        })
-    } catch (err) {
-        console.log(err.message)
-    }
-}
+  try {
+    const accountData = await User.findOne({ email: req.session.user.email });
+    const cartFind = await Cart.findOne({ user: req.session.user }).populate(
+      "products.productId"
+    );
+    const headerStatusCart = cartFind ? cartFind.products.length : 0;
+    const findWishlist = await Wishlist.findOne({
+      user: req.session.user,
+    }).populate("products.productId");
+    const headerStatusWishlist = findWishlist
+      ? findWishlist.products.length
+      : 0;
+    res.render("editaccount", {
+      accountData,
+      headerStatusCart,
+      headerStatusWishlist,
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
 const useraccountEditPost = async (req, res) => {
-    try {
+  try {
+    const { name, email, mobile } = req.body;
+    const userData = await User.findOne({ email: req.user.email });
 
-        const { name, email, mobile } = req.body
-        const userData = await User.findOne({ email: req.user.email })
-
-        if (userData) {
-            const editProfile = await User.findOneAndUpdate({ email: req.session.user.email }, {
-                $set: {
-                    username: name,
-                    email: email,
-                    mobile: mobile
-                }
-            })
-            console.log("updateddata", editProfile)
-            res.json({ status: 'success' })
+    if (userData) {
+      const editProfile = await User.findOneAndUpdate(
+        { email: req.session.user.email },
+        {
+          $set: {
+            username: name,
+            email: email,
+            mobile: mobile,
+          },
         }
-    } catch (err) {
-        console.log(err.message)
+      );
+      console.log("updateddata", editProfile);
+      res.json({ status: "success" });
     }
-}
-
-
-
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
 module.exports = {
-    userProfile,
-    userChangePassword,
-    useraddAddress,
-    addressGet,
-    userAccount,
-    changePasswordPost,
-    userAccountEdit,
-    useraccountEditPost,
-    addAddressPost,
-    addressEditGet,
-    addressEditPost,
-    deletAddress
-}
-
-
+  userProfile,
+  userChangePassword,
+  useraddAddress,
+  addressGet,
+  userAccount,
+  changePasswordPost,
+  userAccountEdit,
+  useraccountEditPost,
+  addAddressPost,
+  addressEditGet,
+  addressEditPost,
+  deletAddress,
+};
