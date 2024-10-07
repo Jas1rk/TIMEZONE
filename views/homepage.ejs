@@ -1,973 +1,1020 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-
-
-
-
-
-
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>TimeZone</title>
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/theme/timezone Logo.png">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="assets/imgs/theme/timezone Logo.png"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css"></script>
 
-    <!-- Template CSS -->
-    <link rel="stylesheet" href="assets/css/maind134.css?v=3.4">
-</head>
-<style>
+    <link rel="stylesheet" href="assets/css/maind134.css?v=3.4" />
+  </head>
+  <style>
     .search-result {
-        display: none;
-        position: absolute;
-        height: auto;
-        
+      display: none;
+      position: absolute;
+      height: auto;
     }
 
     .no-product-found {
-        position: absolute;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        margin-top: 10px;
+      position: absolute;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-top: 10px;
     }
 
     #searchResultsContainer {
-        background-color: rgb(255, 255, 255); 
-        position: absolute;
-        z-index: 1;
-        width: 750px;
-        flex-wrap: wrap;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-       padding-bottom: 2px;
-       
+      background-color: rgb(255, 255, 255);
+      position: absolute;
+      z-index: 1;
+      width: 750px;
+      flex-wrap: wrap;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+      padding-bottom: 2px;
     }
 
     .product-container {
-        width: 200px;
-        margin: 10px;
-        text-align: left;
+      width: 200px;
+      margin: 10px;
+      text-align: left;
     }
 
     .product-container img {
-        margin-left: -2px;
-        max-width: 20%;
-        height: auto;
-        transform: rotate(0deg);
-        transition: transform 0.5s ease; 
-
-       
+      margin-left: -2px;
+      max-width: 20%;
+      height: auto;
+      transform: rotate(0deg);
+      transition: transform 0.5s ease;
     }
 
     .product-info {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: -50px;
-       
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: -50px;
     }
 
     .product-info p {
-        margin: -5px 0;
-        font-size: 12px;
-        font-weight:bolder;
-        margin-top: -1px;
-        color: black;
+      margin: -5px 0;
+      font-size: 12px;
+      font-weight: bolder;
+      margin-top: -1px;
+      color: black;
     }
 
-  
     .rotate-90 {
-        transform: rotate(90deg);
+      transform: rotate(90deg);
     }
 
     .rotate-180 {
-        transform: rotate(180deg);
+      transform: rotate(180deg);
     }
 
     .rotate-270 {
-        transform: rotate(270deg);
+      transform: rotate(270deg);
     }
 
     .product-action-1 .action-btn:hover .fi-rs-heart,
-.product-action-1 .action-btn.hover-up:hover .fi-rs-heart {
-    color: #3F2520;
-}
+    .product-action-1 .action-btn.hover-up:hover .fi-rs-heart {
+      color: #3f2520;
+    }
+  </style>
 
-
-</style>
-
-
-
-<body>
-  
-    <header class="header-area header-style-2 header-height-2">
-       
-        <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
-            <div class="container">
-                <div class="header-wrap">
-                    <div class="logo logo-width-1" style="width: 110px; height: 100px; overflow: hidden;">
-                        <a href="/"><img src="assets/imgs/theme/timezone Logo.png"  style="min-width: 100% ;"  alt="logo"></a>
-                    </div>
-                    <div class="header-right">
-                        <div class="search-style-2">
-                           
-                            <input id="inputtype" type="text" placeholder="Search for products . . ." onkeyup="searchProduct()"> 
-                            
-                           <div class="search-result">
-
-                               <div id="searchResultsContainer">
-
-                               </div>
-
-                           </div> 
-
-                           <h5 class="no-product-found">No products found</h5>
-                          
-                               
-                        </div>
-                       
-                        <div class="header-action-right">
-                            <div class="header-action-2">
-                              
-                                <div class="header-action-icon-2">
-                                    <a href="/wishlist">
-                                        <img class="svgInject" alt="TimeZone" src="assets/imgs/theme/icons/icon-heart.svg">
-                                        <span class="pro-count blue"><%= headerStatusWishlist %></span>
-                                    </a>
-                                
-                                </div>
-                                <div class="header-action-icon-2">
-                                    <a class="mini-cart-icon" href="usercart">
-                                        <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
-
-                                        <span class="pro-count blue"><%= headerStatusCart %></span>
-                                    </a>
-                                   
-                                </div>
-                                <div class="header-action-icon-2">
-                                    <a href="/userprofile">
-                                        <img class="svgInject" alt="Evara" src="assets/imgs/theme/icons/pngwing.com.png">
-                                        
-                                    </a>
-                                
-                                </div>
-                               
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <body>
+    <header class="header-area header-style-2 header-height-1">
+      <div class="header-middle  d-none d-lg-block">
+        <div class="container">
+          <div class="header-wrap">
+            <div
+              class="logo logo-width-1"
+              style="width: 110px; height: 100px; overflow: hidden"
+            >
+              <a href="/"
+                ><img
+                  src="assets/imgs/theme/timezone Logo.png"
+                  style="min-width: 100%"
+                  alt="logo"
+              /></a>
             </div>
-        </div>
-        <div class="header-bottom header-bottom-bg-color sticky-bar">
-            <div class="container">
-                <div class="header-wrap header-space-between position-relative">
-                    <div class="logo logo-width-1d-block d-lg-none" style="width: 110px; height: 100px; overflow: hidden;">
-                        <a href="/"><img src="assets/imgs/theme/timezone Logo.png"  style="min-width: 100% ;"  alt="logo"></a>
-                    </div>
-                    <div class="header-nav d-none d-lg-flex" style="z-index: -1;">
-                     
-                        <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
-                            <nav>
-                                <ul>
-                                    <li><a class="active" href="/">Home </a>
-                                     
-                                    </li>
-                                    <li>
-                                        <a href="/about">About</a>
-                                    </li>
-                                
-                                
-                                    <li>
-                                        <a href="/contact">Contact</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                   
-                    <div class="header-action-right d-block d-lg-none">
-                        <div class="header-action-2">
-                            <div class="header-action-icon-2">
-                                <a href="/wishlist">
-                                    <img alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
-                                    <span class="pro-count white"><%= headerStatusWishlist %></span>
-                                </a>
-                            </div>
-                            <div class="header-action-icon-2">
-                                <a class="mini-cart-icon" href="/usercart">
-                                    <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
-                                    <span class="pro-count white"><%= headerStatusCart %></span>
-                                </a>
-                               
-                            </div>
-                            <div class="header-action-icon-2 d-block d-lg-none">
-                                <div class="burger-icon burger-icon-white">
-                                    <span class="burger-icon-top"></span>
-                                    <span class="burger-icon-mid"></span>
-                                    <span class="burger-icon-bottom"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="header-right">
+              <div class="search-style-2">
+                <input
+                  id="inputtype"
+                  type="text"
+                  placeholder="Search for products . . ."
+                  onkeyup="searchProduct()"
+                />
+
+                <div class="search-result">
+                  <div id="searchResultsContainer"></div>
                 </div>
+
+                <h5 class="no-product-found">No products found</h5>
+              </div>
+
+              <div class="header-action-right">
+                <div class="header-action-2">
+                  <div class="header-action-icon-2">
+                    <a href="/wishlist">
+                      <img
+                        class="svgInject"
+                        alt="TimeZone"
+                        src="assets/imgs/theme/icons/icon-heart.svg"
+                      />
+                      <span class="pro-count blue"
+                        ><%= headerStatusWishlist %></span
+                      >
+                    </a>
+                  </div>
+                  <div class="header-action-icon-2">
+                    <a class="mini-cart-icon" href="usercart">
+                      <img
+                        alt="Evara"
+                        src="assets/imgs/theme/icons/icon-cart.svg"
+                      />
+
+                      <span class="pro-count blue"
+                        ><%= headerStatusCart %></span
+                      >
+                    </a>
+                  </div>
+                  <div class="header-action-icon-2">
+                    <a href="/userprofile">
+                      <img
+                        class="svgInject"
+                        alt="Evara"
+                        src="assets/imgs/theme/icons/pngwing.com.png"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+      <div class="header-bottom header-bottom-bg-color sticky-bar">
+        <div class="container">
+          <div class="header-wrap header-space-between position-relative">
+            <div
+              class="logo logo-width-1d-block d-lg-none"
+              style="width: 110px; height: 100px; overflow: hidden"
+            >
+              <a href="/"
+                ><img
+                  src="assets/imgs/theme/timezone Logo.png"
+                  style="min-width: 100%"
+                  alt="logo"
+              /></a>
+            </div>
+            <div class="header-nav d-none d-lg-flex" style="z-index: -1">
+              <div
+                class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block"
+              >
+                <nav>
+                  <ul>
+                    <li><a class="active" href="/">Home </a></li>
+                    <li>
+                      <a href="/about">About</a>
+                    </li>
+
+                    <li>
+                      <a href="/contact">Contact</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+            <div class="header-action-right d-block d-lg-none">
+              <div class="header-action-2">
+                <div class="header-action-icon-2">
+                  <a href="/wishlist">
+                    <img
+                      alt="Evara"
+                      src="assets/imgs/theme/icons/icon-heart.svg"
+                    />
+                    <span class="pro-count white"
+                      ><%= headerStatusWishlist %></span
+                    >
+                  </a>
+                </div>
+                <div class="header-action-icon-2">
+                  <a class="mini-cart-icon" href="/usercart">
+                    <img
+                      alt="Evara"
+                      src="assets/imgs/theme/icons/icon-cart.svg"
+                    />
+                    <span class="pro-count white"><%= headerStatusCart %></span>
+                  </a>
+                </div>
+                <div class="header-action-icon-2 d-block d-lg-none">
+                  <div class="burger-icon burger-icon-white">
+                    <span class="burger-icon-top"></span>
+                    <span class="burger-icon-mid"></span>
+                    <span class="burger-icon-bottom"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
     <div class="mobile-header-active mobile-header-wrapper-style">
-        <div class="mobile-header-wrapper-inner">
-            <div class="mobile-header-top">
-                <div class="logo logo-width-1d-block d-lg-none" style="width: 110px; height: 100px; overflow: hidden;">
-                    <a href="/"><img src="assets/imgs/theme/timezone Logo.png"  style="min-width: 100% ;"  alt="logo"></a>
-                </div>
-                <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
-                    <button class="close-style search-close">
-                        <i class="icon-top"></i>
-                        <i class="icon-bottom"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="mobile-header-content-area">
-                <div class="search-style-2">
-                           
-                    <input id="inputtype" type="text" placeholder="Search for products . . ." onkeyup="searchProduct()"> 
-                    
-                   <div class="search-result">
-
-                       <div id="searchResultsContainer">
-
-                       </div>
-
-                   </div> 
-
-                   <h5 class="no-product-found">No products found</h5>
-                  
-                       
-                </div>
-                <div class="mobile-menu-wrap mobile-header-border">
-                 
-                    <!-- mobile menu start -->
-                    <nav>
-                        <ul class="mobile-menu">
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="/">Home</a>
-                              
-                            </li>
-                      
-                            
-                          
-                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="/about">About Us</a></li>
-                                    <li><a href="/contact">Contact</a></li>
-                                    <li><a href="/userprofile">My Account</a></li>
-                                    <li><a href="/login">login</a></li>
-                                    <li><a href="/userlogout">logout</a></li>
-                            
-                                    <li><a href="*">404 Page</a></li>
-                                </ul>
-                            </li>
-                           
-                        </ul>
-                    </nav>
-                    <!-- mobile menu end -->
-                </div>
-            
-               
-            </div>
+      <div class="mobile-header-wrapper-inner">
+        <div class="mobile-header-top">
+          <div
+            class="logo logo-width-1d-block d-lg-none"
+            style="width: 110px; height: 100px; overflow: hidden"
+          >
+            <a href="/"
+              ><img
+                src="assets/imgs/theme/timezone Logo.png"
+                style="min-width: 100%"
+                alt="logo"
+            /></a>
+          </div>
+          <div
+            class="mobile-menu-close close-style-wrap close-style-position-inherit"
+          >
+            <button class="close-style search-close">
+              <i class="icon-top"></i>
+              <i class="icon-bottom"></i>
+            </button>
+          </div>
         </div>
+        <div class="mobile-header-content-area">
+          <div class="search-style-2">
+            <input
+              id="inputtype"
+              type="text"
+              placeholder="Search for products . . ."
+              onkeyup="searchProduct()"
+            />
+
+            <div class="search-result">
+              <div id="searchResultsContainer"></div>
+            </div>
+
+            <h5 class="no-product-found">No products found</h5>
+          </div>
+          <div class="mobile-menu-wrap mobile-header-border">
+            <nav>
+              <ul class="mobile-menu">
+                <li class="menu-item-has-children">
+                  <span class="menu-expand"></span><a href="/">Home</a>
+                </li>
+
+                <li class="menu-item-has-children">
+                  <span class="menu-expand"></span><a href="#">Pages</a>
+                  <ul class="dropdown">
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/userprofile">My Account</a></li>
+                    <li><a href="/login">login</a></li>
+                    <li><a href="/userlogout">logout</a></li>
+
+                    <li><a href="*">404 Page</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
     </div>
     <main class="main">
-        <section class="home-slider position-relative">
-            <div class="hero-slider-1 style-2 dot-style-1 dot-style-1-position-1">
-
-                
-
-                <div class="single-hero-slider single-animation-wrap">
-                    <div class="container">
-                        <div class="slider-1-height-2 slider-animated-1">
-                            <div class="hero-slider-content-2">
-                                <h5 class="animated">Tech Promotions</h5>
-                                <h3 class="animated fw-900">FIND THE</h3>
-                                <h3 class="animated fw-900 text-brand">PERFECT GIFT</h3>
-                                <h5 class="animated">A NEW LOOK FOR YOUR WATCH</h5>
-                                <!-- <a class="animated btn btn-brush btn-brush-1" href="shop-product-right.html"> Shop Now </a> -->
-                            </div>
-                            <div class="single-slider-img single-slider-img-1">
-                                <img class="animated" src="assets/imgs/slider/header2.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-hero-slider single-animation-wrap">
-                    <div class="container">
-                        <div class="slider-1-height-2 slider-animated-1">
-                            <div class="hero-slider-content-2">
-                                <h5 class="animated">Upcoming Offer</h5>
-                                <h3 class="animated fw-900">Day-Date 40 with</h3>
-                                <h2 class="animated fw-900 text-brand">ombré dial</h2>
-                                <p class="animated">A symphony of shade</p>
-                                <h5 class="animated">The harmony of contrasts
-New watches 2024</h5>
-                               
-                            </div>
-                            <div class="single-slider-img single-slider-img-1">
-                                <img class="animated" src="assets/imgs/slider/header1.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="slider-arrow hero-slider-1-arrow"></div>
-        </section>
-        <section class="product-tabs pt-25 pb-20 wow fadeIn animated">
-           
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="widget-category mb-30">
-                            <h5 class="section-title style-1 mb-30 wow fadeIn animated">Category</h5>
-                            <ul class="categories">
-                                 <% for( let i = 0; i < categories.length; i++ ) { %>
-                            
-                                <li><a href="/filter?_id=<%= categories[i]._id  %>"><%= categories[i].name %></a></li>
-                                
-                                <% } %>
-                            </ul>
-                        </div>
-                        <div class="widget-category mb-30">
-                            <h5 class="section-title style-1 mb-30 wow fadeIn animated">Sort by</h5>
-                            <ul class="categories">
-                                <!-- <li><a href="shop-grid-right.html">Popularity</a></li>
-                                <li><a href="shop-grid-right.html">Average rating</a></li> -->
-                                <li><a href="/sort?shop=pricetolow">Price: Low to High</a></li>
-                                <li><a href="/sort?shop=pricetohigh">Price: High to Low</a></li>
-                            </ul>
-                        </div>
-                        <div class="widget-category mb-30">
-                            <h5 class="section-title style-1 mb-30 wow fadeIn animated">Sort</h5>
-                            <ul class="categories">
-                                <li><a href="/sort?shop=atoz">aA - zZ</a></li>
-                                <li><a href="/sort?shop=ztoa">zZ - aA</a></li>
-                               
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-9">
-                        <div class="tab-header">
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                  <a href="/"><button class="nav-link " id="nav-tab-one" >Featured</button></a>
-                                </li>
-                                
-                                <li class="nav-item" role="presentation">
-                                  <a href="/newarraival"><button class="nav-link" id="nav-tab-three"  type="button" >New added</button></a>
-                                </li>
-                            </ul>
-                           
-                        </div>
-                        <!--End nav-tabs-->
-                        <div class="tab-content wow fadeIn animated" id="myTabContent">
-                            <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
-                                <div class="row product-grid-4">
-                                    <% for( let i =0;   i < products.length; i++ ) { %>
-                                  
-                                     
-                                   
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
-                                        <div class="product-cart-wrap mb-30">
-                                            <div class="product-img-action-wrap">
-                                                <div class="product-img product-img-zoom">
-                                                    <a href="/products?_id=<%= products[i]._id %>">
-                                                        <% if (products[i].stock === 0) { %>
-                                                            
-                                                            <div class="out-of-stock-label">
-                                                                <h5 style="color: rgb(255, 255, 255); position: absolute; top: 10px; left: 50%; transform: translateX(-50%); background-color: rgba(255, 0, 0, 0.8); padding: 10px; text-align: center; width: 100%; z-index: 1; margin-top: 170px;">Out of stock</h5>
-                                                            </div>
-                                                            
-                                                        <% } %>
-                                                        
-                                                        <img class="default-img" src="/uploads/<%= products[i].images[0] %>" alt="">
-                                                        <img class="hover-img" src="/uploads/<%= products[i].images[1] %>" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="product-action-1">
-
-                                                    <a aria-label="Add To Wishlist"  class="action-btn hover-up"  onclick="addToWishlist('<%= products[i]._id %>')"><i class="fi-rs-heart" style="color: aliceblue;"></i></a>
-                                                   
-                                                </div>
-                                              
-                                            </div>
-                                           
-                                            
-                                            <div class="product-content-wrap">
-                                                <div class="product-category">
-                                                    <a href="/products?_id=<%= products[i]._id %>"><%= products[i].pname %></a>
-                                                  
-                                                </div>
-                                                <h2 class="title text-truncate"><a href="/products?_id=<%= products[i]._id %>"><%= products[i].description %></a></h2>
-                                                <!-- <div class="rating-result" title="90%"> -->
-                                                    <% var percentage = (products[i].regprice - products[i].offprice)/ products[i].regprice * 100 %>
-                                                        <span><%= percentage.toFixed(0) %> %</span>
-                                                    
-                                                <!-- </div> -->
-                                                <div class="product-price">
-                                                    <span>₹<%= products[i].offprice %></span>
-                                                    <span class="old-price">₹<%= products[i].regprice %></span>
-                                                </div>
-                                                <div class="product-action-1 show">
-                                                   
-                                                    <a aria-label="Add To Cart" class="action-btn hover-up " onclick="addtocart('<%= products[i]._id %>','<%= products[i].offprice %>')"><i class="fi-rs-shopping-bag-add"></i></a>
-                                                </div>
-                                                
-                                            </div>
-                                            
-                                           
-                                        </div>
-                                    </div>
-                                    <% } %>
-                                 
-                                    <div class="pagination-area mt-15 mb-50">
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination justify-content-start">
-                                                <% if (currentPage > 1) { %>
-                                                    <li class="page-item">
-                                                        <a class="page-link" style="width: 70px;" href="/?page=<%= currentPage - 1 %>">Preview</a>
-                                                    </li>
-                                                <% } %>
-                                    
-                                                <% if (currentPage <= 2) { %>
-                                                    <% for (let i = 1; i <= Math.min(numofPage, 2); i++) { %>
-                                                        <li class="page-item  <% if (i === currentPage) { %>active<% } %> ">
-                                                            <a class="page-link" href="/?page=<%= i %>"><%= i %></a>
-                                                        </li>
-                                                    <% } %>
-                                                <% } else { %>
-                                                    <li class="page-item disabled">
-                                                        <span class="page-link">1</span>
-                                                    </li>
-                                                    <li class="page-item active">
-                                                        <span class="page-link"><%= currentPage %></span>
-                                                    </li>
-                                                <% } %>
-                                    
-                                                <% if (currentPage < numofPage) { %>
-                                                    <li class="page-item">
-                                                        <a class="page-link" style="width:50px ;" href="/?page=<%= currentPage + 1 %>">Next</a>
-                                                    </li>
-                                                <% } %>
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                    
-                                    
-                                 
-                                </div>
-                                <!--End product-grid-4-->
-                            </div>
-                            <!--En tab one (Featured)-->
-                            <div class="tab-pane fade" id="tab-two" role="tabpanel" aria-labelledby="tab-two">
-                                <div class="row product-grid-4">
-
-
-                                    
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
-                                        <div class="product-cart-wrap mb-30">
-                                            <div class="product-img-action-wrap">
-                                                <div class="product-img product-img-zoom">
-                                                    <a href="shop-product-right.html">
-                                                        <img class="default-img" src="assets/imgs/shop/product-9-1.jpg" alt="">
-                                                        <img class="hover-img" src="assets/imgs/shop/product-9-2.jpg" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="product-action-1">
-                                                    <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
-                                                    <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                                    <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                                </div>
-                                                <div class="product-badges product-badges-position product-badges-mrg">
-                                                    <span class="hot">Hot</span>
-                                                </div>
-                                            </div>
-                                            <div class="product-content-wrap">
-                                                <div class="product-category">
-                                                    <a href="shop-grid-right.html">Donec </a>
-                                                </div>
-                                                <h2><a href="shop-product-right.html">Lorem ipsum dolor</a></h2>
-                                                <div class="rating-result" title="90%">
-                                                    <span>
-                                                        <span>90%</span>
-                                                    </span>
-                                                </div>
-                                                <div class="product-price">
-                                                    <span>$238.85 </span>
-                                                    <span class="old-price">$245.8</span>
-                                                </div>
-                                                <div class="product-action-1 show">
-                                                    <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                  
-                            </div>
-                            <!--En tab two (Popular)-->
-                            <div class="tab-pane fade" id="tab-three" >
-                                <div class="row product-grid-4">
-
-                                  
-                                   
-                                    <% for( let i = 0; i < products.length; i++ ) { %>
-                                  
-                                     
-                                   
-                                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
-                                        <div class="product-cart-wrap mb-30">
-                                            <div class="product-img-action-wrap">
-                                                <div class="product-img product-img-zoom">
-                                                  
-                                                    <a href="shop-product-right.html">
-                                                        <% if (products[i].stock === 0) { %>
-                                                            <div class="out-of-stock-label">
-                                                                <h5 style="color: rgb(255, 255, 255); position: absolute; top: 10px; left: 50%; transform: translateX(-50%); background-color: rgba(255, 0, 0, 0.8); padding: 10px; text-align: center; width: 100%; z-index: 1; margin-top: 170px;">Out of stock</h5>
-                                                            </div>
-                                                           <% } %>
-                                                        <img class="default-img" src="/uploads/<%= products[i].images[0] %>" alt="">
-                                                        <img class="hover-img" src="/uploads/<%= products[i].images[1] %>" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="product-action-1">
-                                                    <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
-                                                    <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                                    <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                                </div>
-                                                <!-- <div class="product-badges product-badges-position product-badges-mrg">
-                                                    <span class="hot">Hot</span>
-                                                </div> -->
-                                            </div>
-                                            <div class="product-content-wrap">
-                                                <div class="product-category">
-                                                    <a href="shop-grid-right.html"><%= products[i].pname %></a>
-                                                </div>
-                                                <h2><a href="shop-product-right.html"><%= products[i].description %></a></h2>
-                                                <div class="rating-result" title="90%">
-                                                    <!-- <span>
-                                                        <span>90%</span>
-                                                    </span> -->
-                                                </div>
-                                                <div class="product-price">
-                                                    <span>$<%= products[i].offprice %> </span>
-                                                    <span class="old-price">$<%= products[i].regprice %></span>
-                                                </div>
-                                                <div class="product-action-1 show">
-                                                    <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <% } %>
-                                    
-
-                                </div>
-                               
-                            </div>
-                          
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
-        </section>
-       
-        <section class="popular-categories section-padding mt-15">
-         
-        </section>
-        <section class="deals section-padding">
-            
-        </section>
-        <section class="section-padding">
-            <div class="container wow fadeIn animated">
-                <h3 class="section-title mb-20"><span>New</span> Arrivals</h3>
-                <div class="carausel-6-columns-cover position-relative">
-                    <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-2-arrows"></div>
-                    <div class="carausel-6-columns carausel-arrow-center" id="carausel-6-columns-2">
-                       
-                        <% for( let i = 0; i < products.length; i++ ) { %>
-                        
-                     
-                        <div class="product-cart-wrap small hover-up">
-                            <div class="product-img-action-wrap">
-                                <div class="product-img product-img-zoom">
-                                    <a href="shop-product-right.html">
-                                        <img class="default-img" src="/uploads/<%= products[i].images[0] %>" alt="">
-                                        <img class="hover-img" src="/uploads/<%= products[i].images[1] %>" alt="">
-                                    </a>
-                                </div>
-                                <div class="product-action-1">
-                                 
-
-                                <a aria-label="Add To Wishlist"  class="action-btn hover-up"  onclick="addToWishlist('<%= products[i]._id %>')"><i class="fi-rs-heart" style="color: aliceblue;"></i></a>
-                                   
-                                </div>
-                              
-                            </div>
-                            <div class="product-content-wrap">
-                                <h2><a href="shop-product-right.html"><%= products[i].pname %></a></h2>
-                                <div class="rating-result" title="90%">
-                                    <span>
-                                    </span>
-                                </div>
-                                <div class="product-price">
-                                    <span>$<%= products[i].offprice %> </span>
-                                    <span class="old-price">$<%= products[i].regprice %></span>
-                                </div>
-                            </div>
-                        </div>
-                        <% } %>
-                       
-                       
-                     
-                    </div>
-                </div>
-            </div>
-        </section>
-
+      <section class="home-slider position-relative">
+        <div class="hero-slider-1 style-2 dot-style-1 dot-style-1-position-1">
+          <div class="single-hero-slider single-animation-wrap">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 mb-sm-5 mb-md-0">
-                        <div class="banner-img wow fadeIn animated mb-md-4 mb-lg-0">
-                            <img src="assets/imgs/banner/banner-10.jpg" alt="">
-                            <div class="banner-text">
-                                <span>Shoes Zone</span>
-                                <h4>Save 17% on <br>All Items</h4>
-                                <a href="shop-grid-right.html">Shop Now <i class="fi-rs-arrow-right"></i></a>
+              <div class="slider-1-height-2 slider-animated-1">
+                <div class="hero-slider-content-2">
+                  <h5 class="animated">Tech Promotions</h5>
+                  <h3 class="animated fw-900">FIND THE</h3>
+                  <h3 class="animated fw-900 text-brand">PERFECT GIFT</h3>
+                  <h5 class="animated">A NEW LOOK FOR YOUR WATCH</h5>
+                </div>
+                <div class="single-slider-img single-slider-img-1">
+                  <img
+                    class="animated"
+                    src="assets/imgs/slider/header2.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="single-hero-slider single-animation-wrap">
+            <div class="container">
+              <div class="slider-1-height-2 slider-animated-1">
+                <div class="hero-slider-content-2">
+                  <h5 class="animated">Upcoming Offer</h5>
+                  <h3 class="animated fw-900">Day-Date 40 with</h3>
+                  <h2 class="animated fw-900 text-brand">ombré dial</h2>
+                  <p class="animated">A symphony of shade</p>
+                  <h5 class="animated">
+                    The harmony of contrasts New watches 2024
+                  </h5>
+                </div>
+                <div class="single-slider-img single-slider-img-1">
+                  <img
+                    class="animated"
+                    src="assets/imgs/slider/header1.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slider-arrow hero-slider-1-arrow"></div>
+      </section>
+      <section class="product-tabs pt-25 pb-20 wow fadeIn animated">
+        <div class="row" style="margin: 0;">
+          <div class="col-lg-3">
+            <div class="widget-category mb-30">
+              <h5 class="section-title style-1 mb-30 wow fadeIn animated">
+                Category
+              </h5>
+              <ul class="categories">
+                <% for( let i = 0; i < categories.length; i++ ) { %>
+
+                <li>
+                  <a href="/filter?_id=<%= categories[i]._id  %>"
+                    ><%= categories[i].name %></a
+                  >
+                </li>
+
+                <% } %>
+              </ul>
+            </div>
+            <div class="widget-category mb-30">
+              <h5 class="section-title style-1 mb-30 wow fadeIn animated">
+                Sort by
+              </h5>
+              <ul class="categories">
+                <li><a href="/sort?shop=pricetolow">Price: Low to High</a></li>
+                <li><a href="/sort?shop=pricetohigh">Price: High to Low</a></li>
+              </ul>
+            </div>
+            <div class="widget-category mb-30">
+              <h5 class="section-title style-1 mb-30 wow fadeIn animated">
+                Sort
+              </h5>
+              <ul class="categories">
+                <li><a href="/sort?shop=atoz">aA - zZ</a></li>
+                <li><a href="/sort?shop=ztoa">zZ - aA</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="tab-header">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <a href="/"
+                    ><button class="nav-link" id="nav-tab-one">
+                      Featured
+                    </button></a
+                  >
+                </li>
+
+                <li class="nav-item" role="presentation">
+                  <a href="/newarraival"
+                    ><button class="nav-link" id="nav-tab-three" type="button">
+                      New added
+                    </button></a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="tab-content wow fadeIn animated" id="myTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="tab-one"
+                role="tabpanel"
+                aria-labelledby="tab-one"
+              >
+                <div class="row product-grid-4">
+                  <% for( let i =0; i < products.length; i++ ) { %>
+
+                  <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                    <div class="product-cart-wrap mb-30">
+                      <div class="product-img-action-wrap">
+                        <div class="product-img product-img-zoom">
+                          <a href="/products?_id=<%= products[i]._id %>">
+                            <% if (products[i].stock === 0) { %>
+
+                            <div class="out-of-stock-label">
+                              <h5
+                                style="
+                                  color: rgb(255, 255, 255);
+                                  position: absolute;
+                                  top: 10px;
+                                  left: 50%;
+                                  transform: translateX(-50%);
+                                  background-color: rgba(255, 0, 0, 0.8);
+                                  padding: 10px;
+                                  text-align: center;
+                                  width: 100%;
+                                  z-index: 1;
+                                  margin-top: 170px;
+                                "
+                              >
+                                Out of stock
+                              </h5>
                             </div>
+
+                            <% } %>
+
+                            <img
+                              class="default-img"
+                              src="/uploads/<%= products[i].images[0] %>"
+                              alt=""
+                            />
+                            <img
+                              class="hover-img"
+                              src="/uploads/<%= products[i].images[1] %>"
+                              alt=""
+                            />
+                          </a>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 mb-sm-5 mb-md-0">
-                        <h4 class="section-title style-1 mb-30 wow fadeIn animated">Deals & Outlet</h4>
-                        <div class="product-list-small wow fadeIn animated">
-                            <article class="row align-items-center">
-                                <figure class="col-md-4 mb-0">
-                                    <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-3.jpg" alt=""></a>
-                                </figure>
-                                <div class="col-md-8 mb-0">
-                                    <h4 class="title-small">
-                                        <a href="shop-product-right.html">Fish Print Patched T-shirt</a>
-                                    </h4>
-                                    <div class="product-price">
-                                        <span>$238.85 </span>
-                                        <span class="old-price">$245.8</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="row align-items-center">
-                                <figure class="col-md-4 mb-0">
-                                    <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-4.jpg" alt=""></a>
-                                </figure>
-                                <div class="col-md-8 mb-0">
-                                    <h4 class="title-small">
-                                        <a href="shop-product-right.html">Vintage Floral Print Dress</a>
-                                    </h4>
-                                    <div class="product-price">
-                                        <span>$238.85 </span>
-                                        <span class="old-price">$245.8</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="row align-items-center">
-                                <figure class="col-md-4 mb-0">
-                                    <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-5.jpg" alt=""></a>
-                                </figure>
-                                <div class="col-md-8 mb-0">
-                                    <h4 class="title-small">
-                                        <a href="shop-product-right.html">Multi-color Stripe Circle Print T-Shirt</a>
-                                    </h4>
-                                    <div class="product-price">
-                                        <span>$238.85 </span>
-                                        <span class="old-price">$245.8</span>
-                                    </div>
-                                </div>
-                            </article>
+                        <div class="product-action-1">
+                          <a
+                            aria-label="Add To Wishlist"
+                            class="action-btn hover-up"
+                            onclick="addToWishlist('<%= products[i]._id %>')"
+                            ><i class="fi-rs-heart" style="color: aliceblue"></i
+                          ></a>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 mb-sm-5 mb-md-0">
-                        <h4 class="section-title style-1 mb-30 wow fadeIn animated">Top Selling</h4>
-                        <div class="product-list-small wow fadeIn animated">
-                            <article class="row align-items-center">
-                                <figure class="col-md-4 mb-0">
-                                    <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-6.jpg" alt=""></a>
-                                </figure>
-                                <div class="col-md-8 mb-0">
-                                    <h4 class="title-small">
-                                        <a href="shop-product-right.html">Geometric Printed Long Sleeve Blosue</a>
-                                    </h4>
-                                    <div class="product-price">
-                                        <span>$238.85 </span>
-                                        <span class="old-price">$245.8</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="row align-items-center">
-                                <figure class="col-md-4 mb-0">
-                                    <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-7.jpg" alt=""></a>
-                                </figure>
-                                <div class="col-md-8 mb-0">
-                                    <h4 class="title-small">
-                                        <a href="shop-product-right.html">Print Patchwork Maxi Dress</a>
-                                    </h4>
-                                    <div class="product-price">
-                                        <span>$238.85 </span>
-                                        <span class="old-price">$245.8</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="row align-items-center">
-                                <figure class="col-md-4 mb-0">
-                                    <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-8.jpg" alt=""></a>
-                                </figure>
-                                <div class="col-md-8 mb-0">
-                                    <h4 class="title-small">
-                                        <a href="shop-product-right.html">Daisy Floral Print Straps Jumpsuit</a>
-                                    </h4>
-                                    <div class="product-price">
-                                        <span>$238.85 </span>
-                                        <span class="old-price">$245.8</span>
-                                    </div>
-                                </div>
-                            </article>
+                      </div>
+
+                      <div class="product-content-wrap">
+                        <div class="product-category">
+                          <a href="/products?_id=<%= products[i]._id %>"
+                            ><%= products[i].pname %></a
+                          >
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h4 class="section-title style-1 mb-30 wow fadeIn animated">Hot Releases</h4>
-                        <div class="product-list-small wow fadeIn animated">
-                            <article class="row align-items-center">
-                                <figure class="col-md-4 mb-0">
-                                    <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-9.jpg" alt=""></a>
-                                </figure>
-                                <div class="col-md-8 mb-0">
-                                    <h4 class="title-small">
-                                        <a href="shop-product-right.html">Floral Print Casual Cotton Dress</a>
-                                    </h4>
-                                    <div class="product-price">
-                                        <span>$238.85 </span>
-                                        <span class="old-price">$245.8</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="row align-items-center">
-                                <figure class="col-md-4 mb-0">
-                                    <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-1.jpg" alt=""></a>
-                                </figure>
-                                <div class="col-md-8 mb-0">
-                                    <h4 class="title-small">
-                                        <a href="shop-product-right.html">Ruffled Solid Long Sleeve Blouse</a>
-                                    </h4>
-                                    <div class="product-price">
-                                        <span>$238.85 </span>
-                                        <span class="old-price">$245.8</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="row align-items-center">
-                                <figure class="col-md-4 mb-0">
-                                    <a href="shop-product-right.html"><img src="assets/imgs/shop/thumbnail-2.jpg" alt=""></a>
-                                </figure>
-                                <div class="col-md-8 mb-0">
-                                    <h4 class="title-small">
-                                        <a href="shop-product-right.html">Multi-color Print V-neck T-Shirt</a>
-                                    </h4>
-                                    <div class="product-price">
-                                        <span>$238.85 </span>
-                                        <span class="old-price">$245.8</span>
-                                    </div>
-                                </div>
-                            </article>
+                        <h2 class="title text-truncate">
+                          <a href="/products?_id=<%= products[i]._id %>"
+                            ><%= products[i].description %></a
+                          >
+                        </h2>
+                        <% var percentage = (products[i].regprice -
+                        products[i].offprice)/ products[i].regprice * 100 %>
+                        <span><%= percentage.toFixed(0) %> %</span>
+
+                        <!-- </div> -->
+                        <div class="product-price">
+                          <span>₹<%= products[i].offprice %></span>
+                          <span class="old-price"
+                            >₹<%= products[i].regprice %></span
+                          >
+                          >
                         </div>
+                        <div class="product-action-1 show">
+                          <a
+                            aria-label="Add To Cart"
+                            class="action-btn hover-up"
+                            onclick="addtocart('<%= products[i]._id %>','<%= products[i].offprice %>')"
+                            ><i class="fi-rs-shopping-bag-add"></i> ></a
+                          >
+                        </div>
+                      </div>
                     </div>
+                  </div>
+                  <% } %>
+
+                  <div class="pagination-area mt-15 mb-50">
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination justify-content-start">
+                        <% if (currentPage > 1) { %>
+                        <li class="page-item">
+                          <a
+                            class="page-link"
+                            style="width: 70px"
+                            href="/?page=<%= currentPage - 1 %>"
+                            >Preview</a>
+                        </li>
+                        <% } %> <% if (currentPage <= 2) { %> <% for (let i = 1;
+                        i <= Math.min(numofPage, 2); i++) { %>
+                        <li
+                          class="page-item <% if (i === currentPage) { %>active<% } %>"
+                        >
+                          <a class="page-link" href="/?page=<%= i %>"
+                            ><%= i %></a>
+                        </li>
+                        <% } %> <% } else { %>
+                        <li class="page-item disabled">
+                          <span class="page-link">1</span>
+                        </li>
+                        <li class="page-item active">
+                          <span class="page-link"><%= currentPage %></span>
+                        </li>
+                        <% } %> <% if (currentPage < numofPage) { %>
+                        <li class="page-item">
+                          <a
+                            class="page-link"
+                            style="width: 50px"
+                            href="/?page=<%= currentPage + 1 %>"
+                            >Next</a>
+                        </li>
+                        <% } %>
+                      </ul>
+                    </nav>
+                  </div>
                 </div>
-            </div>
-        </section> -->
-        <section class="featured section-padding">
-            <div class="container pb-25">
-                <div class="row">
-                    <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
-                        <div class="banner-features wow fadeIn animated hover-up">
-                            <img src="assets/imgs/theme/icons/feature-1.png" alt="">
-                            <h4 class="bg-1">Free Shipping</h4>
+              </div>
+
+              <div
+                class="tab-pane fade"
+                id="tab-two"
+                role="tabpanel"
+                aria-labelledby="tab-two"
+              >
+                <div class="row product-grid-4">
+                  <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                    <div class="product-cart-wrap mb-30">
+                      <div class="product-img-action-wrap">
+                        <div class="product-img product-img-zoom">
+                          <a href="shop-product-right.html">
+                            <img
+                              class="default-img"
+                              src="assets/imgs/shop/product-9-1.jpg"
+                              alt=""
+                            />
+                            <img
+                              class="hover-img"
+                              src="assets/imgs/shop/product-9-2.jpg"
+                              alt=""
+                            />
+                          </a>
                         </div>
-                    </div>
-                    <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
-                        <div class="banner-features wow fadeIn animated hover-up">
-                            <img src="assets/imgs/theme/icons/feature-2.png" alt="">
-                            <h4 class="bg-3">Online Order</h4>
+                        <div class="product-action-1">
+                          <a
+                            aria-label="Quick view"
+                            class="action-btn hover-up"
+                            data-bs-toggle="modal"
+                            data-bs-target="#quickViewModal"
+                            ><i class="fi-rs-eye"></i> ></a>
+                          <a
+                            aria-label="Add To Wishlist"
+                            class="action-btn hover-up"
+                            href="shop-wishlist.html"
+                            ><i class="fi-rs-heart"></i></a>
+                          <a
+                            aria-label="Compare"
+                            class="action-btn hover-up"
+                            href="shop-compare.html"
+                            ><i class="fi-rs-shuffle"></i> ></a>
+                          >
                         </div>
-                    </div>
-                    <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
-                        <div class="banner-features wow fadeIn animated hover-up">
-                            <img src="assets/imgs/theme/icons/feature-3.png" alt="">
-                            <h4 class="bg-2">Save Money</h4>
+                        <div
+                          class="product-badges product-badges-position product-badges-mrg"
+                        >
+                          <span class="hot">Hot</span>
                         </div>
-                    </div>
-                    <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
-                        <div class="banner-features wow fadeIn animated hover-up">
-                            <img src="assets/imgs/theme/icons/feature-4.png" alt="">
-                            <h4 class="bg-4">Promotions</h4>
+                      </div>
+                      <div class="product-content-wrap">
+                        <div class="product-category">
+                          <a href="shop-grid-right.html">Donec </a>
                         </div>
-                    </div>
-                    <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
-                        <div class="banner-features wow fadeIn animated hover-up">
-                            <img src="assets/imgs/theme/icons/feature-5.png" alt="">
-                            <h4 class="bg-5">Happy Sell</h4>
+                        <h2>
+                          <a href="shop-product-right.html"
+                            >Lorem ipsum dolor</a>
+                        </h2>
+                        <div class="rating-result" title="90%">
+                          <span>
+                            <span>90%</span>
+                          </span>
                         </div>
-                    </div>
-                    <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
-                        <div class="banner-features wow fadeIn animated hover-up">
-                            <img src="assets/imgs/theme/icons/feature-6.png" alt="">
-                            <h4 class="bg-6">24/7 Support</h4>
+                        <div class="product-price">
+                          <span>$238.85 </span>
+                          <span class="old-price">$245.8</span>
                         </div>
+                        <div class="product-action-1 show">
+                          <a
+                            aria-label="Add To Cart"
+                            class="action-btn hover-up"
+                            href="shop-cart.html"
+                            ><i class="fi-rs-shopping-bag-add"></i> ></a>
+                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
+                <div class="tab-pane fade" id="tab-three">
+                  <div class="row product-grid-4">
+                    <% for( let i = 0; i < products.length; i++ ) { %>
+
+                    <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                      <div class="product-cart-wrap mb-30">
+                        <div class="product-img-action-wrap">
+                          <div class="product-img product-img-zoom">
+                            <a href="shop-product-right.html">
+                              <% if (products[i].stock === 0) { %>
+                              <div class="out-of-stock-label">
+                                <h5
+                                  style="
+                                    color: rgb(255, 255, 255);
+                                    position: absolute;
+                                    top: 10px;
+                                    left: 50%;
+                                    transform: translateX(-50%);
+                                    background-color: rgba(255, 0, 0, 0.8);
+                                    padding: 10px;
+                                    text-align: center;
+                                    width: 100%;
+                                    z-index: 1;
+                                    margin-top: 170px;
+                                  "
+                                >
+                                  Out of stock
+                                </h5>
+                              </div>
+                              <% } %>
+                              <img
+                                class="default-img"
+                                src="/uploads/<%= products[i].images[0] %>"
+                                alt=""
+                              />
+                              <img
+                                class="hover-img"
+                                src="/uploads/<%= products[i].images[1] %>"
+                                alt=""
+                              />
+                            </a>
+                          </div>
+                          <div class="product-action-1">
+                            <a
+                              aria-label="Quick view"
+                              class="action-btn hover-up"
+                              data-bs-toggle="modal"
+                              data-bs-target="#quickViewModal"
+                              ><i class="fi-rs-eye"></i> </a>
+                            <a
+                              aria-label="Add To Wishlist"
+                              class="action-btn hover-up"
+                              href="shop-wishlist.html"
+                              ><i class="fi-rs-heart"></i> </a>
+                            
+                            <a
+                              aria-label="Compare"
+                              class="action-btn hover-up"
+                              href="shop-compare.html"
+                              ><i class="fi-rs-shuffle"></i> >
+                            </a>
+                          </div>
+                        </div>
+                        <div class="product-content-wrap">
+                          <div class="product-category">
+                            <a href="shop-grid-right.html"
+                              ><%= products[i].pname %></a>
+                          </div>
+                          <h2>
+                            <a href="shop-product-right.html"
+                              ><%= products[i].description %></a >
+    
+                          </h2>
+                          <div class="rating-result" title="90%">
+                            <span>90%</span>
+                          </div>
+                          <div class="product-price">
+                            <span>$<%= products[i].offprice %> </span>
+                            <span class="old-price"
+                              >$<%= products[i].regprice %></span >
+                          </div>
+                          <div class="product-action-1 show">
+                            <a
+                              aria-label="Add To Cart"
+                              class="action-btn hover-up"
+                              href="shop-cart.html"
+                              ><i class="fi-rs-shopping-bag-add"></i></a>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <% } %>
+                  </div>
+                </div>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="popular-categories section-padding mt-15"></section>
+      <section class="deals section-padding"></section>
+      <section class="section-padding">
+        <div class="container wow fadeIn animated">
+          <h3 class="section-title mb-20"><span>New</span> Arrivals</h3>
+          <div class="carausel-6-columns-cover position-relative">
+            <div
+              class="slider-arrow slider-arrow-2 carausel-6-columns-arrow"
+              id="carausel-6-columns-2-arrows"
+            ></div>
+            <div
+              class="carausel-6-columns carausel-arrow-center"
+              id="carausel-6-columns-2"
+            >
+              <% for( let i = 0; i < products.length; i++ ) { %>
+
+              <div class="product-cart-wrap small hover-up">
+                <div class="product-img-action-wrap">
+                  <div class="product-img product-img-zoom">
+                    <a href="shop-product-right.html">
+                      <img
+                        class="default-img"
+                        src="/uploads/<%= products[i].images[0] %>"
+                        alt=""
+                      />
+                      <img
+                        class="hover-img"
+                        src="/uploads/<%= products[i].images[1] %>"
+                        alt=""
+                      />
+                    </a>
+                  </div>
+                  <div class="product-action-1">
+                    <a
+                      aria-label="Add To Wishlist"
+                      class="action-btn hover-up"
+                      onclick="addToWishlist('<%= products[i]._id %>')"
+                      ><i class="fi-rs-heart" style="color: aliceblue"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="product-content-wrap">
+                  <h2>
+                    <a href="shop-product-right.html"
+                      ><%= products[i].pname %></a>
+                  </h2>
+                  <div class="rating-result" title="90%">
+                    <span> </span>
+                  </div>
+                  <div class="product-price">
+                    <span>$<%= products[i].offprice %> </span>
+                    <span class="old-price">$<%= products[i].regprice %></span>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="featured section-padding">
+        <div class="container pb-25">
+          <div class="row">
+            <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+              <div class="banner-features wow fadeIn animated hover-up">
+                <img src="assets/imgs/theme/icons/feature-1.png" alt="" />
+                <h4 class="bg-1">Free Shipping</h4>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+              <div class="banner-features wow fadeIn animated hover-up">
+                <img src="assets/imgs/theme/icons/feature-2.png" alt="" />
+                <h4 class="bg-3">Online Order</h4>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+              <div class="banner-features wow fadeIn animated hover-up">
+                <img src="assets/imgs/theme/icons/feature-3.png" alt="" />
+                <h4 class="bg-2">Save Money</h4>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+              <div class="banner-features wow fadeIn animated hover-up">
+                <img src="assets/imgs/theme/icons/feature-4.png" alt="" />
+                <h4 class="bg-4">Promotions</h4>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+              <div class="banner-features wow fadeIn animated hover-up">
+                <img src="assets/imgs/theme/icons/feature-5.png" alt="" />
+                <h4 class="bg-5">Happy Sell</h4>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4 mb-md-3 mb-lg-0">
+              <div class="banner-features wow fadeIn animated hover-up">
+                <img src="assets/imgs/theme/icons/feature-6.png" alt="" />
+                <h4 class="bg-6">24/7 Support</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
     <footer class="main">
-        <section class="newsletter p-30 text-white wow fadeIn animated" style="background-color: rgb(255, 236, 178);">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-7 mb-md-3 mb-lg-0">
-                        <div class="row align-items-center">
-                            <div class="col flex-horizontal-center">
-                                <img class="icon-email" style="color: aliceblue;" src="assets/imgs/theme/icons/icon-email.svg" alt="">
-                                <h4 class="font-size-20 mb-0 ml-3" style="color: black;">Sign up to Newsletter</h4>
-                            </div>
-                            <div class="col my-4 my-md-0 des">
-                                <h5 class="font-size-15 ml-4 mb-0" style="color: black;">...and receive <strong>$25 coupon for first
-                                        shopping.</strong></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <!-- Subscribe Form -->
-                        <form class="form-subcriber d-flex wow fadeIn animated">
-                            <input type="email" class="form-control bg-white font-small" placeholder="Enter your email">
-                            <button class="btn bg-dark text-white" type="submit">Subscribe</button>
-                        </form>
-                      
-                    </div>
+      <section
+        class="newsletter p-30 text-white wow fadeIn animated"
+        style="background-color: rgb(255, 236, 178)"
+      >
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-7 mb-md-3 mb-lg-0">
+              <div class="row align-items-center">
+                <div class="col flex-horizontal-center">
+                  <img
+                    class="icon-email"
+                    style="color: aliceblue"
+                    src="assets/imgs/theme/icons/icon-email.svg"
+                    alt=""
+                  />
+                  <h4 class="font-size-20 mb-0 ml-3" style="color: black">
+                    Sign up to Newsletter
+                  </h4>
                 </div>
+                <div class="col my-4 my-md-0 des">
+                  <h5 class="font-size-15 ml-4 mb-0" style="color: black">
+                    ...and receive
+                    <strong>$25 coupon for first shopping.</strong>
+                  </h5>
+                </div>
+              </div>
             </div>
-        </section>
-        <section class="section-padding footer-mid">
-            <div class="container pt-15 pb-20">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="widget-about font-md mb-md-5 mb-lg-0">
-                            <div class="logo logo-width-1" style="width: 110px; height: 100px; overflow: hidden;">
-                                <a href="/"><img src="assets/imgs/theme/timezone Logo.png"  style="min-width: 100% ;"  alt="logo"></a>
-                            </div>
-                            <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contact</h5>
-                            <p class="wow fadeIn animated">
-                                <strong>Address: </strong>562 Wellington Road, Street 32, San Francisco
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Phone: </strong>+01 2222 365 /(+91) 01 2345 6789
-                            </p>
-                            <p class="wow fadeIn animated">
-                                <strong>Hours: </strong>10:00 - 18:00, Mon - Sat
-                            </p>
-                            <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">Follow Us</h5>
-                            <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
-                                <a href="#"><img src="assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
-                                <a href="#"><img src="assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
-                                <a href="#"><img src="assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
-                                <a href="#"><img src="assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
-                                <a href="#"><img src="assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">About</h5>
-                        <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Delivery Information</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Support Center</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-2  col-md-3">
-                        <h5 class="widget-title wow fadeIn animated">My Account</h5>
-                        <ul class="footer-list wow fadeIn animated">
-                            <li><a href="#">Sign In</a></li>
-                            <li><a href="#">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
-                            <li><a href="#">Track My Order</a></li>
-                            <li><a href="#">Help</a></li>
-                            <li><a href="#">Order</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-4">
-                        <h5 class="widget-title wow fadeIn animated">Install App</h5>
-                        <div class="row">
-                            <div class="col-md-8 col-lg-12">
-                                <p class="wow fadeIn animated">From App Store or Google Play</p>
-                                <div class="download-app wow fadeIn animated">
-                                    <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active" src="assets/imgs/theme/app-store.jpg" alt=""></a>
-                                    <a href="#" class="hover-up"><img src="assets/imgs/theme/google-play.jpg" alt=""></a>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
-                                <p class="mb-20 wow fadeIn animated">Secured Payment Gateways</p>
-                                <img class="wow fadeIn animated" src="assets/imgs/theme/payment-method.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-lg-5">
+              <form class="form-subcriber d-flex wow fadeIn animated">
+                <input
+                  type="email"
+                  class="form-control bg-white font-small"
+                  placeholder="Enter your email"
+                />
+                <button class="btn bg-dark text-white" type="submit">
+                  Subscribe
+                </button>
+              </form>
             </div>
-        </section>
-        <div class="container pb-20 wow fadeIn animated">
-            <div class="row">
-                <div class="col-12 mb-20">
-                    <div class="footer-bottom"></div>
-                </div>
-                <div class="col-lg-6">
-                    <p class="float-md-left font-sm text-muted mb-0">&copy; 2022, <strong class="text-brand">Evara</strong> - HTML Ecommerce Template </p>
-                </div>
-                <div class="col-lg-6">
-                    <p class="text-lg-end text-start font-sm text-muted mb-0">
-                        Designed by <a href="http://alithemes.com/" target="_blank">Alithemes.com</a>. All rights reserved
-                    </p>
-                </div>
-            </div>
+          </div>
         </div>
+      </section>
+      <section class="section-padding footer-mid">
+        <div class="container pt-15 pb-20">
+          <div class="row">
+            <div class="col-lg-4 col-md-6">
+              <div class="widget-about font-md mb-md-5 mb-lg-0">
+                <div
+                  class="logo logo-width-1"
+                  style="width: 110px; height: 100px; overflow: hidden"
+                >
+                  <a href="/"
+                    ><img
+                      src="assets/imgs/theme/timezone Logo.png"
+                      style="min-width: 100%"
+                      alt="logo"
+                  /></a>
+                </div>
+                <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">
+                  Contact
+                </h5>
+                <p class="wow fadeIn animated">
+                  <strong>Address: </strong>562 Wellington Road, Street 32, San
+                  Francisco
+                </p>
+                <p class="wow fadeIn animated">
+                  <strong>Phone: </strong>+01 2222 365 /(+91) 01 2345 6789
+                </p>
+                <p class="wow fadeIn animated">
+                  <strong>Hours: </strong>10:00 - 18:00, Mon - Sat
+                </p>
+                <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">
+                  Follow Us
+                </h5>
+                <div
+                  class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0"
+                >
+                  <a href="#"
+                    ><img
+                      src="assets/imgs/theme/icons/icon-facebook.svg"
+                      alt=""
+                  /></a>
+                  <a href="#"
+                    ><img src="assets/imgs/theme/icons/icon-twitter.svg" alt=""
+                  /></a>
+                  <a href="#"
+                    ><img
+                      src="assets/imgs/theme/icons/icon-instagram.svg"
+                      alt=""
+                  /></a>
+                  <a href="#"
+                    ><img
+                      src="assets/imgs/theme/icons/icon-pinterest.svg"
+                      alt=""
+                  /></a>
+                  <a href="#"
+                    ><img src="assets/imgs/theme/icons/icon-youtube.svg" alt=""
+                  /></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-3">
+              <h5 class="widget-title wow fadeIn animated">About</h5>
+              <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Delivery Information</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms &amp; Conditions</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Support Center</a></li>
+              </ul>
+            </div>
+            <div class="col-lg-2 col-md-3">
+              <h5 class="widget-title wow fadeIn animated">My Account</h5>
+              <ul class="footer-list wow fadeIn animated">
+                <li><a href="#">Sign In</a></li>
+                <li><a href="#">View Cart</a></li>
+                <li><a href="#">My Wishlist</a></li>
+                <li><a href="#">Track My Order</a></li>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Order</a></li>
+              </ul>
+            </div>
+            <div class="col-lg-4">
+              <h5 class="widget-title wow fadeIn animated">Install App</h5>
+              <div class="row">
+                <div class="col-md-8 col-lg-12">
+                  <p class="wow fadeIn animated">
+                    From App Store or Google Play
+                  </p>
+                  <div class="download-app wow fadeIn animated">
+                    <a href="#" class="hover-up mb-sm-4 mb-lg-0"
+                      ><img
+                        class="active"
+                        src="assets/imgs/theme/app-store.jpg"
+                        alt=""
+                    /></a>
+                    <a href="#" class="hover-up"
+                      ><img src="assets/imgs/theme/google-play.jpg" alt=""
+                    /></a>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
+                  <p class="mb-20 wow fadeIn animated">
+                    Secured Payment Gateways
+                  </p>
+                  <img
+                    class="wow fadeIn animated"
+                    src="assets/imgs/theme/payment-method.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container pb-20 wow fadeIn animated">
+        <div class="row">
+          <div class="col-12 mb-20">
+            <div class="footer-bottom"></div>
+          </div>
+          <div class="col-lg-6">
+            <p class="float-md-left font-sm text-muted mb-0">
+              &copy; 2024, <strong class="text-brand">Timezone</strong>
+            </p>
+          </div>
+          <div class="col-lg-6">
+            <p class="text-lg-end text-start font-sm text-muted mb-0">
+              Designed by
+              <a href="http://alithemes.com/" target="_blank">Alithemes.com</a>.
+              All rights reserved
+            </p>
+          </div>
+        </div>
+      </div>
     </footer>
-    <!-- Preloader Start -->
     <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="text-center">
-                    <h5 class="mb-5">Loading</h5>
-                    <div class="loader">
-                        <div class="bar bar1"></div>
-                        <div class="bar bar2"></div>
-                        <div class="bar bar3"></div>
-                    </div>
-                </div>
+      <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+          <div class="text-center">
+            <h5 class="mb-5">Loading</h5>
+            <div class="loader">
+              <div class="bar bar1"></div>
+              <div class="bar bar2"></div>
+              <div class="bar bar3"></div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
     <!-- Vendor JS-->
     <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
@@ -990,252 +1037,231 @@ New watches 2024</h5>
     <script src="assets/js/plugins/jquery.vticker-min.js"></script>
     <script src="assets/js/plugins/jquery.theia.sticky.js"></script>
     <script src="assets/js/plugins/jquery.elevatezoom.js"></script>
-    <!-- Template  JS -->
     <script src="assets/js/maind134.js?v=3.4"></script>
     <script src="assets/js/shopd134.js?v=3.4"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
-<script>
-
-function addtocart(id,price) {
-       
-       
-        $.ajax({
-            url: "/usercart",
-            method: "post",
-            data: {
-                id,
-                price
-            },
-            success: (response) => {
-                if (response.status === "viewcart") {
-                  
-                const Toast = Swal.mixin({
-                toast: true,
-                position: "bottom",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-                });
-                Toast.fire({
-                icon: "success",
-                title: "Product added to cart",
-                color: 'black',
-                iconColor:'#3F2520'
-                });
-                     
-                  
-                } else if (response.status === true) {
-                   
-                const Toast = Swal.mixin({
-                toast: true,
-                position: "bottom",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-                });
-                Toast.fire({
-                icon: "success",
-                title: "Product added to cart",
-                color: 'black',
-                iconColor:'#3F2520'
-                });
-
-
-                  
-                }
-                else if(response.status === 'viewcartchecking'){
-                const Toast = Swal.mixin({
-                toast: true,
-                position: "bottom",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-                });
-                Toast.fire({
-                icon: "warning",
-                title: "Product is already in cart",
-                color: 'black',
-                iconColor:'#3F2520'
-                });
-                }
-
-            }
-        })
+  </body>
+  <script>
+    function addtocart(id, price) {
+      $.ajax({
+        url: "/usercart",
+        method: "post",
+        data: {
+          id,
+          price,
+        },
+        success: (response) => {
+          if (response.status === "viewcart") {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "bottom",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              },
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Product added to cart",
+              color: "black",
+              iconColor: "#3F2520",
+            });
+          } else if (response.status === true) {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "bottom",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              },
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Product added to cart",
+              color: "black",
+              iconColor: "#3F2520",
+            });
+          } else if (response.status === "viewcartchecking") {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "bottom",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              },
+            });
+            Toast.fire({
+              icon: "warning",
+              title: "Product is already in cart",
+              color: "black",
+              iconColor: "#3F2520",
+            });
+          }
+        },
+      });
     }
 
-
-
-    const inputElement = document.getElementById('inputtype');
+    const inputElement = document.getElementById("inputtype");
     let timeoutId;
 
     function debounce(func, delay) {
-        return function () {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {
-                func();
-            }, delay);
-        };
+      return function () {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          func();
+        }, delay);
+      };
     }
 
     function showSearchResult() {
-        const searchResult = document.querySelector('.search-result');
-        searchResult.style.display = 'block';
+      const searchResult = document.querySelector(".search-result");
+      searchResult.style.display = "block";
     }
 
     function hideSearchResult() {
-        const searchResult = document.querySelector('.search-result');
-        searchResult.style.display = 'none';
+      const searchResult = document.querySelector(".search-result");
+      searchResult.style.display = "none";
     }
 
     function showNoProductFound() {
-        const noProductFound = document.querySelector('.no-product-found');
-        noProductFound.style.display = 'block';
+      const noProductFound = document.querySelector(".no-product-found");
+      noProductFound.style.display = "block";
     }
 
     function hideNoProductFound() {
-        const noProductFound = document.querySelector('.no-product-found');
-        noProductFound.style.display = 'none';
+      const noProductFound = document.querySelector(".no-product-found");
+      noProductFound.style.display = "none";
     }
 
     function searchProduct() {
-        const searchDataValue = inputElement.value.trim();
+      const searchDataValue = inputElement.value.trim();
 
-        if (searchDataValue !== "") {
-            showSearchResult();
-            debounce(() => {
-                $.ajax({
-                    url: "/search",
-                    method: "post",
-                    data: {
-                        searchDataValue
-                    },
-                    success: (response) => {
-                        const searchResultsContainer = document.getElementById('searchResultsContainer')
-                        searchResultsContainer.innerHTML = ""
+      if (searchDataValue !== "") {
+        showSearchResult();
+        debounce(() => {
+          $.ajax({
+            url: "/search",
+            method: "post",
+            data: {
+              searchDataValue,
+            },
+            success: (response) => {
+              const searchResultsContainer = document.getElementById(
+                "searchResultsContainer"
+              );
+              searchResultsContainer.innerHTML = "";
 
-                        if (response.searchProducts.length > 0) {
-                            response.searchProducts.forEach(element => {
-                                const productContainer = document.createElement('div');
-                                productContainer.classList.add('product-container');
+              if (response.searchProducts.length > 0) {
+                response.searchProducts.forEach((element) => {
+                  const productContainer = document.createElement("div");
+                  productContainer.classList.add("product-container");
 
-                                const productElement = document.createElement('div');
-                                productElement.innerHTML = `
-                                <a href="/products?_id=${element._id}">
-                                    <img src="/uploads/${element.images[0]}" alt="product">
-                                    <div class="product-info">
-                                        <p>${element.pname}</p>
-                                        <p>₹${element.offprice}</p>
-                                    </div>
-                            
-                                `;
-
-                                productContainer.appendChild(productElement);
-                                searchResultsContainer.appendChild(productContainer);
-                            });
-                            hideNoProductFound();
-                        } else {
-                            hideSearchResult();
-                            showNoProductFound();
-                        }
-                    }
-                })
-            }, 500)();
-        } else {
-            hideSearchResult();
-            hideNoProductFound();
-        }
-
+                  const productElement = document.createElement("div");
+                  productElement.innerHTML = `
+                  <a href="/products?_id=${element._id}">
+                  <img src="/uploads/${element.images[0]}" alt="product">
+                  <div class="product-info">
+                  <p>${element.pname}</p>
+                  <p>₹${element.offprice}</p>
+                  </div>
+                  `
+                  productContainer.appendChild(productElement);
+                  searchResultsContainer.appendChild(productContainer);
+                });
+                hideNoProductFound();
+              } else {
+                hideSearchResult();
+                showNoProductFound();
+              }
+            },
+          });
+        }, 500)();
+      } else {
+        hideSearchResult();
+        hideNoProductFound();
+      }
     }
 
-
-    function addToWishlist(pid){
-      
-       $.ajax({
-        url:'/wishlist',
-        method:'post',
-        data:{
-            pid
+    function addToWishlist(pid) {
+      $.ajax({
+        url: "/wishlist",
+        method: "post",
+        data: {
+          pid,
         },
-        success:(response)=>{
-           if(response.status === 'viewwishlist'){
+        success: (response) => {
+          if (response.status === "viewwishlist") {
             const Toast = Swal.mixin({
-                toast: true,
-                position: "bottom",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-                });
-                Toast.fire({
-                icon: "success",
-                title: "Product added to wishlist",
-                color: 'black',
-                iconColor:'#3F2520'
-                })
-               
-                
-               
-           }else if(response.status === true){
+              toast: true,
+              position: "bottom",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              },
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Product added to wishlist",
+              color: "black",
+              iconColor: "#3F2520",
+            });
+          } else if (response.status === true) {
             const Toast = Swal.mixin({
-                toast: true,
-                position: "bottom",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-                });
-                Toast.fire({
-                icon: "success",
-                title: "Product added to wishlist",
-                color: 'black',
-                iconColor:'#3F2520'
-                });
-           } else if(response.status === 'viewwishlistcheck'){
+              toast: true,
+              position: "bottom",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              },
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Product added to wishlist",
+              color: "black",
+              iconColor: "#3F2520",
+            });
+          } else if (response.status === "viewwishlistcheck") {
             const Toast = Swal.mixin({
-                toast: true,
-                position: "bottom",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-                });
-                Toast.fire({
-                icon: "warning",
-                title: "Product is already in wishlist",
-                color: 'black',
-                iconColor:'#3F2520'
-                });
-           }
-        }
-
-       })
+              toast: true,
+              position: "bottom",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              },
+            });
+            Toast.fire({
+              icon: "warning",
+              title: "Product is already in wishlist",
+              color: "black",
+              iconColor: "#3F2520",
+            });
+          }
+        },
+      });
     }
-
-    
-    </script>
-
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->
+  </script>
 </html>
